@@ -4,9 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aamrutham — Pure Mango Bliss</title>
-  <meta name="description" content="Aamrutham brings you rare, rich-tasting mango varieties and mango-based desserts — straight from Bobbili farms to Hyderabad. Coming Summer 2026." />
+  <meta name="description" content="Aamrutham brings you rare, rich-tasting mango varieties straight from Bobbili farms to Hyderabad. Coming Summer 2026." />
+
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=Noto+Serif+Telugu:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=Noto+Serif+Telugu:wght@400;600;700&display=swap" rel="stylesheet" />
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -15,34 +16,371 @@
       theme: {
         extend: {
           colors: {
-            mango: '#F5A623',
-            'mango-dark': '#E07B39',
-            leaf: '#2D5016',
-            'leaf-light': '#4a7c2f',
-            cream: '#FFF8EC',
-            'cream-dark': '#F5EDD8',
-            bark: '#7B3F00',
+            mango: '#F5A623', 'mango-dark': '#E07B39',
+            leaf: '#2D5016', 'leaf-light': '#4a7c2f',
+            cream: '#FEF8F0', 'cream-dark': '#F0E6D3',
+            bark: '#7B3F00', charcoal: '#1C1208',
           }
         }
       }
     }
   </script>
 
-  <!-- AOS — Animate on Scroll -->
+  <!-- AOS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
-
-  <!-- Swiper — Touch Carousels -->
+  <!-- Swiper -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
-  <!-- Font Awesome — Icons -->
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-
-  <!-- Custom CSS (overrides & unique styles) -->
+  <!-- Custom CSS -->
   <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ══════════════════════════════════════════════
+       REDESIGN OVERRIDES — Manam-inspired
+    ══════════════════════════════════════════════ */
+    body { background: #FEF8F0; }
+
+    /* ── Positioning strip (Manam-style top statement) ── */
+    #statement-strip {
+      background: var(--charcoal, #1C1208);
+      padding: 0.9rem 2rem;
+      overflow: hidden;
+      position: relative;
+    }
+    .statement-track {
+      display: flex;
+      gap: 0;
+      white-space: nowrap;
+      animation: marquee 18s linear infinite;
+    }
+    .statement-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 2rem;
+      padding-right: 4rem;
+    }
+    .statement-en {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: white;
+    }
+    .statement-te {
+      font-family: 'Noto Serif Telugu', serif;
+      font-size: 0.85rem;
+      color: var(--mango, #F5A623);
+      font-weight: 600;
+    }
+    .statement-dot {
+      width: 4px; height: 4px;
+      background: var(--mango, #F5A623);
+      border-radius: 50%;
+      display: inline-block;
+    }
+    @keyframes marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── Section banner (olive strip) ── */
+    .section-banner {
+      background: var(--leaf, #2D5016);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .section-banner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(245,166,35,0.08) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .section-banner .banner-en {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: white;
+      line-height: 1.2;
+      position: relative;
+    }
+    .section-banner .banner-te {
+      font-family: 'Noto Serif Telugu', serif;
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: var(--mango, #F5A623);
+      margin-top: 0.4rem;
+      position: relative;
+      display: block;
+    }
+
+    /* ── Hero overrides ── */
+    #hero { background: #FEF8F0; }
+    .hero-title { color: #1C1208; }
+    .hero-title em { color: var(--leaf, #2D5016) !important; font-style: italic; }
+    .hero-subtitle { color: #5a3e2b; }
+
+    /* ── Story overrides ── */
+    #story { background: #FEF8F0; }
+
+    /* ── Process — timeline style ── */
+    .process-timeline {
+      max-width: 900px;
+      margin: 3.5rem auto 0;
+      position: relative;
+    }
+    .process-timeline::before {
+      content: '';
+      position: absolute;
+      left: 52px;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--mango), var(--leaf));
+      opacity: 0.3;
+    }
+    .timeline-step {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+    .timeline-step:last-child { margin-bottom: 0; }
+    .timeline-icon {
+      width: 104px;
+      height: 104px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      border: 3px solid white;
+      box-shadow: 0 4px 20px rgba(44,24,16,0.1);
+      position: relative;
+      z-index: 1;
+    }
+    .timeline-icon .step-num {
+      position: absolute;
+      top: -6px; right: -6px;
+      width: 26px; height: 26px;
+      background: var(--mango);
+      border-radius: 50%;
+      font-size: 0.7rem;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      color: #1C1208;
+    }
+    .timeline-body { padding-top: 0.5rem; }
+    .timeline-body h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: var(--leaf);
+      margin-bottom: 0.2rem;
+    }
+    .timeline-body .timeline-te {
+      font-family: 'Noto Serif Telugu', serif;
+      font-size: 0.9rem;
+      color: var(--mango-dark);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .timeline-body p { font-size: 0.9rem; color: #7a5c3e; line-height: 1.7; }
+
+    /* ── Varieties section ── */
+    #varieties { background: #FEF8F0; }
+
+    /* ── Footer redesign ── */
+    footer {
+      background: #1C1208 !important;
+      padding: 4rem 2rem 2rem;
+    }
+    .footer-cert-grid {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-cert {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .cert-icon {
+      width: 52px; height: 52px;
+      border: 1.5px solid rgba(245,166,35,0.3);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--mango);
+      transition: border-color 0.2s;
+    }
+    .footer-cert:hover .cert-icon { border-color: var(--mango); }
+    .cert-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    /* ── Lifecycle sidebar SVG (the scrolling art) ── */
+    #lifecycle-art {
+      position: fixed;
+      right: 0;
+      top: 0;
+      width: 80px;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.07;
+      overflow: hidden;
+    }
+    #lifecycle-art svg {
+      position: absolute;
+      top: 0;
+      width: 80px;
+      transition: top 0.1s linear;
+    }
+
+    /* ── Quality section ── */
+    #quality { background: #1C1208; }
+    .quality-title { color: var(--mango) !important; }
+
+    @media (max-width: 768px) {
+      #lifecycle-art { display: none; }
+      .process-timeline::before { left: 36px; }
+      .timeline-icon { width: 72px; height: 72px; font-size: 1.5rem; }
+      .footer-cert-grid { gap: 1.5rem; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- ═══════════════════════════════════ NAVBAR ═══════════════════════════════════ -->
+  <!-- ══════════════════ LIFECYCLE ART (fixed sidebar, tells the story as you scroll) ══════════════════ -->
+  <div id="lifecycle-art">
+    <svg viewBox="0 0 80 2400" xmlns="http://www.w3.org/2000/svg" fill="none">
+      <!-- ── Stage 1: Flowering (top — hero) ── -->
+      <path d="M40 30 C38 60 42 100 40 130" stroke="#2D5016" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M40 80 C30 70 18 65 10 60" stroke="#2D5016" stroke-width="2" stroke-linecap="round"/>
+      <path d="M40 80 C50 70 62 65 70 60" stroke="#2D5016" stroke-width="2" stroke-linecap="round"/>
+      <!-- Flowers left -->
+      <circle cx="10" cy="58" r="3" fill="none" stroke="#F5A623" stroke-width="1.5"/>
+      <circle cx="10" cy="58" r="6" fill="none" stroke="#F5A623" stroke-width="0.8" opacity="0.5"/>
+      <circle cx="18" cy="62" r="2.5" fill="none" stroke="#F5A623" stroke-width="1.5"/>
+      <!-- Flowers right -->
+      <circle cx="70" cy="58" r="3" fill="none" stroke="#F5A623" stroke-width="1.5"/>
+      <circle cx="70" cy="58" r="6" fill="none" stroke="#F5A623" stroke-width="0.8" opacity="0.5"/>
+      <circle cx="62" cy="62" r="2.5" fill="none" stroke="#F5A623" stroke-width="1.5"/>
+      <!-- Leaves -->
+      <ellipse cx="12" cy="72" rx="4" ry="11" fill="none" stroke="#2D5016" stroke-width="1.2" transform="rotate(30 12 72)"/>
+      <ellipse cx="68" cy="72" rx="4" ry="11" fill="none" stroke="#2D5016" stroke-width="1.2" transform="rotate(-30 68 72)"/>
+
+      <!-- ── Connecting trunk ── -->
+      <path d="M40 130 C39 200 41 260 40 320" stroke="#2D5016" stroke-width="3" stroke-linecap="round"/>
+
+      <!-- ── Stage 2: Young fruit forming (story section) ── -->
+      <path d="M40 320 C28 305 15 295 5 285" stroke="#2D5016" stroke-width="2" stroke-linecap="round"/>
+      <path d="M40 320 C52 305 65 295 75 285" stroke="#2D5016" stroke-width="2" stroke-linecap="round"/>
+      <!-- Small green mangoes -->
+      <ellipse cx="6" cy="280" rx="5" ry="8" fill="none" stroke="#4a7c2f" stroke-width="1.5" transform="rotate(-10 6 280)"/>
+      <ellipse cx="74" cy="280" rx="5" ry="8" fill="none" stroke="#4a7c2f" stroke-width="1.5" transform="rotate(10 74 280)"/>
+      <ellipse cx="18" cy="290" rx="4" ry="7" fill="none" stroke="#4a7c2f" stroke-width="1.2" transform="rotate(15 18 290)"/>
+      <!-- Leaves -->
+      <ellipse cx="28" cy="298" rx="3.5" ry="10" fill="none" stroke="#2D5016" stroke-width="1" transform="rotate(25 28 298)"/>
+      <ellipse cx="52" cy="298" rx="3.5" ry="10" fill="none" stroke="#2D5016" stroke-width="1" transform="rotate(-25 52 298)"/>
+
+      <!-- ── Connecting trunk ── -->
+      <path d="M40 320 C39 400 41 480 40 560" stroke="#2D5016" stroke-width="3" stroke-linecap="round"/>
+
+      <!-- ── Stage 3: Ripening mangoes (quality/process section) ── -->
+      <path d="M40 560 C25 540 10 525 2 510" stroke="#2D5016" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M40 560 C55 540 70 525 78 510" stroke="#2D5016" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M40 560 C38 535 36 510 34 485" stroke="#2D5016" stroke-width="2" stroke-linecap="round"/>
+      <!-- Ripe mangoes left -->
+      <ellipse cx="4" cy="504" rx="7" ry="11" fill="none" stroke="#F5A623" stroke-width="1.8" transform="rotate(-15 4 504)"/>
+      <ellipse cx="18" cy="515" rx="6" ry="9" fill="none" stroke="#E07B39" stroke-width="1.5" transform="rotate(10 18 515)"/>
+      <!-- Ripe mangoes right -->
+      <ellipse cx="76" cy="504" rx="7" ry="11" fill="none" stroke="#F5A623" stroke-width="1.8" transform="rotate(15 76 504)"/>
+      <ellipse cx="62" cy="515" rx="6" ry="9" fill="none" stroke="#E07B39" stroke-width="1.5" transform="rotate(-10 62 515)"/>
+      <!-- Centre mango -->
+      <ellipse cx="34" cy="478" rx="6" ry="10" fill="none" stroke="#F5A623" stroke-width="1.8"/>
+      <!-- Dense leaves -->
+      <ellipse cx="12" cy="528" rx="3" ry="9" fill="none" stroke="#2D5016" stroke-width="1" transform="rotate(35 12 528)"/>
+      <ellipse cx="34" cy="535" rx="3" ry="9" fill="none" stroke="#2D5016" stroke-width="1" transform="rotate(10 34 535)"/>
+      <ellipse cx="56" cy="530" rx="3" ry="9" fill="none" stroke="#2D5016" stroke-width="1" transform="rotate(-20 56 530)"/>
+
+      <!-- ── Connecting trunk ── -->
+      <path d="M40 560 C39 660 41 760 40 860" stroke="#2D5016" stroke-width="3.5" stroke-linecap="round"/>
+
+      <!-- ── Stage 4: Full mature tree (varieties section) ── -->
+      <path d="M40 860 C20 835 5 810 2 785" stroke="#2D5016" stroke-width="3" stroke-linecap="round"/>
+      <path d="M40 860 C60 835 75 810 78 785" stroke="#2D5016" stroke-width="3" stroke-linecap="round"/>
+      <path d="M40 860 C38 830 35 800 32 768" stroke="#2D5016" stroke-width="2" stroke-linecap="round"/>
+      <path d="M40 900 C22 885 8 868 2 850" stroke="#2D5016" stroke-width="2" stroke-linecap="round"/>
+      <path d="M40 900 C58 885 72 868 78 850" stroke="#2D5016" stroke-width="2" stroke-linecap="round"/>
+      <!-- Many ripe mangoes -->
+      <ellipse cx="3" cy="778" rx="8" ry="12" fill="none" stroke="#F5A623" stroke-width="2" transform="rotate(-15 3 778)"/>
+      <ellipse cx="77" cy="778" rx="8" ry="12" fill="none" stroke="#F5A623" stroke-width="2" transform="rotate(15 77 778)"/>
+      <ellipse cx="32" cy="762" rx="7" ry="11" fill="none" stroke="#E07B39" stroke-width="1.8"/>
+      <ellipse cx="16" cy="792" rx="6" ry="10" fill="none" stroke="#F5A623" stroke-width="1.5" transform="rotate(8 16 792)"/>
+      <ellipse cx="64" cy="792" rx="6" ry="10" fill="none" stroke="#F5A623" stroke-width="1.5" transform="rotate(-8 64 792)"/>
+      <ellipse cx="4" cy="844" rx="7" ry="11" fill="none" stroke="#E07B39" stroke-width="1.8" transform="rotate(-20 4 844)"/>
+      <ellipse cx="76" cy="844" rx="7" ry="11" fill="none" stroke="#E07B39" stroke-width="1.8" transform="rotate(20 76 844)"/>
+      <!-- Leaves cluster -->
+      <ellipse cx="10" cy="808" rx="3" ry="10" fill="none" stroke="#2D5016" stroke-width="1" transform="rotate(40 10 808)"/>
+      <ellipse cx="26" cy="815" rx="3" ry="9" fill="none" stroke="#4a7c2f" stroke-width="1" transform="rotate(15 26 815)"/>
+      <ellipse cx="54" cy="815" rx="3" ry="9" fill="none" stroke="#4a7c2f" stroke-width="1" transform="rotate(-15 54 815)"/>
+      <ellipse cx="70" cy="808" rx="3" ry="10" fill="none" stroke="#2D5016" stroke-width="1" transform="rotate(-40 70 808)"/>
+
+      <!-- ── Trunk continues ── -->
+      <path d="M40 960 C39 1060 41 1160 40 1260" stroke="#2D5016" stroke-width="4" stroke-linecap="round"/>
+
+      <!-- ── Stage 5: Harvest hands (CTA section) ── -->
+      <!-- Left hand / arm reaching up -->
+      <path d="M10 1200 C14 1185 20 1175 26 1168" stroke="#7B3F00" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M26 1168 C30 1162 34 1158 36 1155" stroke="#7B3F00" stroke-width="2" stroke-linecap="round"/>
+      <!-- Fingers suggestion -->
+      <path d="M36 1155 C37 1150 38 1147 38 1144" stroke="#7B3F00" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M36 1155 C38 1151 40 1149 41 1146" stroke="#7B3F00" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- Right hand -->
+      <path d="M70 1200 C66 1185 60 1175 54 1168" stroke="#7B3F00" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M54 1168 C50 1162 46 1158 44 1155" stroke="#7B3F00" stroke-width="2" stroke-linecap="round"/>
+      <path d="M44 1155 C43 1150 42 1147 42 1144" stroke="#7B3F00" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- Mango being picked -->
+      <ellipse cx="40" cy="1135" rx="9" ry="14" fill="none" stroke="#F5A623" stroke-width="2.5"/>
+      <path d="M40 1121 C40 1116 42 1112 43 1108" stroke="#2D5016" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- Leaf on stem -->
+      <ellipse cx="46" cy="1108" rx="3" ry="8" fill="none" stroke="#2D5016" stroke-width="1" transform="rotate(-25 46 1108)"/>
+
+      <!-- ── Trunk continues ── -->
+      <path d="M40 1260 C39 1360 41 1460 40 1560" stroke="#2D5016" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+
+      <!-- ── Stage 6: Crate / packed box (footer) ── -->
+      <!-- Wooden crate outline -->
+      <rect x="8" y="1560" width="64" height="44" rx="3" fill="none" stroke="#7B3F00" stroke-width="2"/>
+      <!-- Crate planks horizontal -->
+      <line x1="8" y1="1575" x2="72" y2="1575" stroke="#7B3F00" stroke-width="1" opacity="0.6"/>
+      <line x1="8" y1="1590" x2="72" y2="1590" stroke="#7B3F00" stroke-width="1" opacity="0.6"/>
+      <!-- Cross slats -->
+      <line x1="30" y1="1560" x2="30" y2="1604" stroke="#7B3F00" stroke-width="1" opacity="0.5"/>
+      <line x1="50" y1="1560" x2="50" y2="1604" stroke="#7B3F00" stroke-width="1" opacity="0.5"/>
+      <!-- Mangoes peeking out -->
+      <ellipse cx="20" cy="1558" rx="7" ry="10" fill="none" stroke="#F5A623" stroke-width="1.8"/>
+      <ellipse cx="40" cy="1555" rx="8" ry="11" fill="none" stroke="#E07B39" stroke-width="2"/>
+      <ellipse cx="60" cy="1558" rx="7" ry="10" fill="none" stroke="#F5A623" stroke-width="1.8"/>
+      <!-- Label tag -->
+      <rect x="28" y="1610" width="24" height="14" rx="2" fill="none" stroke="#F5A623" stroke-width="1.2"/>
+      <line x1="40" y1="1604" x2="40" y2="1610" stroke="#F5A623" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <!-- ══════════════════════════════════ NAVBAR ══════════════════════════════════ -->
   <nav id="navbar">
     <a href="#hero">
       <img src="aam-final.png" alt="Aamrutham" class="nav-logo" />
@@ -56,85 +394,96 @@
     </ul>
   </nav>
 
-  <!-- ═══════════════════════════════════ HERO ════════════════════════════════════ -->
-  <section id="hero">
+  <!-- ══════════════════════════════════ STATEMENT STRIP ══════════════════════════════════ -->
+  <div id="statement-strip">
+    <div class="statement-track">
+      <!-- duplicated for infinite loop -->
+      <div class="statement-item">
+        <span class="statement-en">Not imported</span>
+        <span class="statement-te">దిగుమతి కాదు</span>
+        <span class="statement-dot"></span>
+        <span class="statement-en">Not synthetic</span>
+        <span class="statement-te">రసాయనాలు లేవు</span>
+        <span class="statement-dot"></span>
+        <span class="statement-en">Not hurried</span>
+        <span class="statement-te">తొందర లేదు</span>
+        <span class="statement-dot"></span>
+        <span class="statement-en">Pure Bobbili</span>
+        <span class="statement-te">స్వచ్ఛమైన బొబ్బిలి</span>
+        <span class="statement-dot"></span>
+      </div>
+      <div class="statement-item" aria-hidden="true">
+        <span class="statement-en">Not imported</span>
+        <span class="statement-te">దిగుమతి కాదు</span>
+        <span class="statement-dot"></span>
+        <span class="statement-en">Not synthetic</span>
+        <span class="statement-te">రసాయనాలు లేవు</span>
+        <span class="statement-dot"></span>
+        <span class="statement-en">Not hurried</span>
+        <span class="statement-te">తొందర లేదు</span>
+        <span class="statement-dot"></span>
+        <span class="statement-en">Pure Bobbili</span>
+        <span class="statement-te">స్వచ్ఛమైన బొబ్బిలి</span>
+        <span class="statement-dot"></span>
+      </div>
+    </div>
+  </div>
 
-    <!-- Mango tree line art background -->
+  <!-- ══════════════════════════════════ HERO ══════════════════════════════════ -->
+  <section id="hero">
+    <!-- Mango tree line art background (left side) -->
     <svg class="hero-art" viewBox="0 0 500 700" xmlns="http://www.w3.org/2000/svg" fill="none">
-      <!-- Trunk -->
       <path d="M250 680 C248 640 252 590 246 540 C240 490 255 460 248 420" stroke="#2D5016" stroke-width="8" stroke-linecap="round"/>
-      <!-- Main branches -->
       <path d="M248 480 C230 455 200 430 165 410 C140 396 110 398 80 386" stroke="#2D5016" stroke-width="5" stroke-linecap="round"/>
       <path d="M248 480 C266 455 296 430 331 410 C356 396 386 398 416 386" stroke="#2D5016" stroke-width="5" stroke-linecap="round"/>
       <path d="M248 440 C244 410 240 380 236 345 C232 315 236 295 232 265" stroke="#2D5016" stroke-width="4" stroke-linecap="round"/>
-      <!-- Sub-branches left -->
       <path d="M165 410 C140 388 115 362 88 342" stroke="#2D5016" stroke-width="3" stroke-linecap="round"/>
       <path d="M165 410 C158 382 150 354 140 324" stroke="#2D5016" stroke-width="3" stroke-linecap="round"/>
       <path d="M80 386 C58 368 40 345 22 322" stroke="#2D5016" stroke-width="2.5" stroke-linecap="round"/>
-      <!-- Sub-branches right -->
       <path d="M331 410 C356 388 381 362 408 342" stroke="#2D5016" stroke-width="3" stroke-linecap="round"/>
       <path d="M331 410 C338 382 346 354 356 324" stroke="#2D5016" stroke-width="3" stroke-linecap="round"/>
       <path d="M416 386 C438 368 456 345 474 322" stroke="#2D5016" stroke-width="2.5" stroke-linecap="round"/>
-      <!-- Top branches -->
       <path d="M236 300 C218 274 195 250 168 230" stroke="#2D5016" stroke-width="3" stroke-linecap="round"/>
       <path d="M236 300 C254 274 277 250 304 230" stroke="#2D5016" stroke-width="3" stroke-linecap="round"/>
       <path d="M236 265 C234 240 232 215 228 188" stroke="#2D5016" stroke-width="3" stroke-linecap="round"/>
-
-      <!-- Mango fruits — teardrop shapes using ellipses -->
-      <ellipse cx="80" cy="370" rx="12" ry="18" fill="#F5A623" stroke="#E07B39" stroke-width="1" transform="rotate(-15 80 370)"/>
-      <ellipse cx="110" cy="385" rx="10" ry="15" fill="#F5C842" stroke="#E07B39" stroke-width="1" transform="rotate(10 110 385)"/>
-      <ellipse cx="331" cy="392" rx="12" ry="18" fill="#F5A623" stroke="#E07B39" stroke-width="1" transform="rotate(15 331 392)"/>
-      <ellipse cx="360" cy="376" rx="10" ry="15" fill="#F5C842" stroke="#E07B39" stroke-width="1" transform="rotate(-10 360 376)"/>
-      <ellipse cx="140" cy="312" rx="11" ry="16" fill="#F5A623" stroke="#E07B39" stroke-width="1" transform="rotate(-20 140 312)"/>
-      <ellipse cx="356" cy="312" rx="11" ry="16" fill="#F5A623" stroke="#E07B39" stroke-width="1" transform="rotate(20 356 312)"/>
-      <ellipse cx="168" cy="215" rx="10" ry="15" fill="#F5C842" stroke="#E07B39" stroke-width="1"/>
-      <ellipse cx="304" cy="215" rx="10" ry="15" fill="#F5A623" stroke="#E07B39" stroke-width="1"/>
-      <ellipse cx="228" cy="172" rx="11" ry="17" fill="#F5A623" stroke="#E07B39" stroke-width="1"/>
-      <ellipse cx="248" cy="455" rx="9" ry="14" fill="#F5C842" stroke="#E07B39" stroke-width="1"/>
-
-      <!-- Mango leaves — elongated teardrops -->
-      <ellipse cx="62" cy="340" rx="8" ry="22" fill="#4a7c2f" stroke="#2D5016" stroke-width="0.5" transform="rotate(30 62 340)"/>
-      <ellipse cx="92" cy="348" rx="7" ry="19" fill="#2D5016" stroke="#2D5016" stroke-width="0.5" transform="rotate(-20 92 348)"/>
-      <ellipse cx="420" cy="365" rx="8" ry="22" fill="#4a7c2f" stroke="#2D5016" stroke-width="0.5" transform="rotate(-30 420 365)"/>
-      <ellipse cx="392" cy="352" rx="7" ry="19" fill="#2D5016" stroke="#2D5016" stroke-width="0.5" transform="rotate(20 392 352)"/>
-      <ellipse cx="122" cy="300" rx="7" ry="18" fill="#4a7c2f" stroke="#2D5016" stroke-width="0.5" transform="rotate(40 122 300)"/>
-      <ellipse cx="374" cy="300" rx="7" ry="18" fill="#2D5016" stroke="#2D5016" stroke-width="0.5" transform="rotate(-40 374 300)"/>
-      <ellipse cx="148" cy="198" rx="6" ry="16" fill="#4a7c2f" stroke="#2D5016" stroke-width="0.5" transform="rotate(25 148 198)"/>
-      <ellipse cx="188" cy="215" rx="6" ry="15" fill="#2D5016" stroke="#2D5016" stroke-width="0.5" transform="rotate(-15 188 215)"/>
-      <ellipse cx="322" cy="198" rx="6" ry="16" fill="#4a7c2f" stroke="#2D5016" stroke-width="0.5" transform="rotate(-25 322 198)"/>
-      <ellipse cx="284" cy="215" rx="6" ry="15" fill="#2D5016" stroke="#2D5016" stroke-width="0.5" transform="rotate(15 284 215)"/>
-      <ellipse cx="210" cy="152" rx="6" ry="16" fill="#4a7c2f" stroke="#2D5016" stroke-width="0.5" transform="rotate(30 210 152)"/>
-      <ellipse cx="248" cy="140" rx="6" ry="16" fill="#2D5016" stroke="#2D5016" stroke-width="0.5" transform="rotate(0 248 140)"/>
-      <ellipse cx="268" cy="152" rx="6" ry="16" fill="#4a7c2f" stroke="#2D5016" stroke-width="0.5" transform="rotate(-30 268 152)"/>
-
-      <!-- Small decorative leaves scattered -->
-      <ellipse cx="30" cy="310" rx="5" ry="14" fill="#4a7c2f" opacity="0.7" transform="rotate(50 30 310)"/>
-      <ellipse cx="468" cy="300" rx="5" ry="14" fill="#4a7c2f" opacity="0.7" transform="rotate(-50 468 300)"/>
-      <ellipse cx="200" cy="100" rx="5" ry="13" fill="#4a7c2f" opacity="0.8" transform="rotate(20 200 100)"/>
-      <ellipse cx="300" cy="95" rx="5" ry="13" fill="#2D5016" opacity="0.8" transform="rotate(-20 300 95)"/>
+      <!-- Mangoes (outline only, elegant) -->
+      <ellipse cx="80" cy="370" rx="12" ry="18" fill="none" stroke="#F5A623" stroke-width="1.5" transform="rotate(-15 80 370)"/>
+      <ellipse cx="110" cy="385" rx="10" ry="15" fill="none" stroke="#E07B39" stroke-width="1.2" transform="rotate(10 110 385)"/>
+      <ellipse cx="331" cy="392" rx="12" ry="18" fill="none" stroke="#F5A623" stroke-width="1.5" transform="rotate(15 331 392)"/>
+      <ellipse cx="360" cy="376" rx="10" ry="15" fill="none" stroke="#E07B39" stroke-width="1.2" transform="rotate(-10 360 376)"/>
+      <ellipse cx="140" cy="312" rx="11" ry="16" fill="none" stroke="#F5A623" stroke-width="1.5" transform="rotate(-20 140 312)"/>
+      <ellipse cx="356" cy="312" rx="11" ry="16" fill="none" stroke="#F5A623" stroke-width="1.5" transform="rotate(20 356 312)"/>
+      <ellipse cx="168" cy="215" rx="10" ry="15" fill="none" stroke="#E07B39" stroke-width="1.2"/>
+      <ellipse cx="304" cy="215" rx="10" ry="15" fill="none" stroke="#F5A623" stroke-width="1.2"/>
+      <ellipse cx="228" cy="172" rx="11" ry="17" fill="none" stroke="#F5A623" stroke-width="1.5"/>
+      <!-- Leaves -->
+      <ellipse cx="62" cy="340" rx="8" ry="22" fill="none" stroke="#2D5016" stroke-width="1" transform="rotate(30 62 340)"/>
+      <ellipse cx="92" cy="348" rx="7" ry="19" fill="none" stroke="#4a7c2f" stroke-width="1" transform="rotate(-20 92 348)"/>
+      <ellipse cx="420" cy="365" rx="8" ry="22" fill="none" stroke="#2D5016" stroke-width="1" transform="rotate(-30 420 365)"/>
+      <ellipse cx="122" cy="300" rx="7" ry="18" fill="none" stroke="#4a7c2f" stroke-width="1" transform="rotate(40 122 300)"/>
+      <ellipse cx="374" cy="300" rx="7" ry="18" fill="none" stroke="#2D5016" stroke-width="1" transform="rotate(-40 374 300)"/>
+      <ellipse cx="148" cy="198" rx="6" ry="16" fill="none" stroke="#4a7c2f" stroke-width="1" transform="rotate(25 148 198)"/>
+      <ellipse cx="210" cy="152" rx="6" ry="16" fill="none" stroke="#4a7c2f" stroke-width="1" transform="rotate(30 210 152)"/>
+      <ellipse cx="268" cy="152" rx="6" ry="16" fill="none" stroke="#2D5016" stroke-width="1" transform="rotate(-30 268 152)"/>
     </svg>
 
-    <!-- Logo floats on the right -->
     <img src="aam-final.png" alt="Aamrutham" class="hero-logo" />
 
     <div class="hero-content">
-      <p class="hero-eyebrow">✦ Bobbili Farms · Hyderabad ✦</p>
+      <p class="hero-eyebrow">✦ బొబ్బిలి పొలాలు · హైదరాబాద్ ✦</p>
       <h1 class="hero-title">
         Taste the<br />
-        <em style="color: var(--mango-dark);">ఆమృతం</em><br />
+        <em>ఆమృతం</em><br />
         of Mangoes
       </h1>
       <p class="hero-subtitle">
-        Aam + Amrutham. The finest mango varieties,<br />
-        handpicked and delivered fresh from our farms.<br />
+        ఆమ్ + అమృతం. The finest mango varieties,<br />
+        handpicked and delivered fresh.<br />
         <strong>Coming Summer 2026 · Hyderabad</strong>
       </p>
       <div class="hero-cta-group">
-        <a href="#cta" class="btn-primary">
-          <span>Pre-order Now</span>
-          <span>→</span>
-        </a>
-        <a href="#story" class="btn-secondary">Our Story</a>
+        <a href="#cta" class="btn-primary">Pre-order Now →</a>
+        <a href="#story" class="btn-secondary">మా కథ &nbsp;·&nbsp; Our Story</a>
       </div>
     </div>
 
@@ -146,169 +495,200 @@
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════ STORY ════════════════════════════════════ -->
+  <!-- ══════════════════════════════════ STORY BANNER ══════════════════════════════════ -->
+  <div class="section-banner" data-aos="fade-in">
+    <h2 class="banner-en">Our Story</h2>
+    <span class="banner-te">మా కథ — ఒక పిల్లవాడి ప్రేమ కథ</span>
+  </div>
+
+  <!-- ══════════════════════════════════ STORY ══════════════════════════════════ -->
   <section id="story">
     <div class="story-grid">
 
       <div class="story-text" data-aos="fade-right">
-        <p class="section-eyebrow">Our Story</p>
+        <p class="section-eyebrow">The Beginning</p>
         <h2 class="section-title">Born from a boy's love<br />for mangoes</h2>
 
-        <p>
-          Ever since childhood, mangoes have been more than just a fruit to us —
-          they were joy, they were summer, they were family. That love never faded.
-        </p>
+        <p>Ever since childhood, mangoes have been more than just a fruit —
+        they were joy, they were summer, they were family. That love never faded.</p>
 
         <blockquote class="highlight">
-          "Aam + Amrutham. We believe the perfect mango
+          "ఆమ్ + అమృతం. We believe the perfect mango
           tastes like pure <span class="telugu">అమృతం</span> — divine nectar."
         </blockquote>
 
-        <p>
-          With Aamrutham, our goal is to bring you <strong>undiscovered, rich-tasting
-          mango varieties</strong> you've never tasted before — alongside delightful
-          mango-based desserts. Every fruit is sourced from our own farms in
-          <strong>Bobbili</strong>, grown without chemicals, harvested at peak season.
-        </p>
+        <p>With Aamrutham, our goal is to bring you <strong>undiscovered, rich-tasting
+        mango varieties</strong> you've never tasted before. Every fruit is sourced from
+        our own farms in <strong>బొబ్బిలి · Bobbili</strong>, grown without chemicals,
+        harvested only at peak season.</p>
 
-        <p>
-          Our logo tells the whole story: the boy joyfully plucking the mango from
-          the tree — that's the founder, the pure excitement and real love for mangoes.
-          The girl eagerly waiting — that's <em>you</em>, anticipating that first
-          divine bite. This is the <span class="telugu">ఆమృతం</span> experience we promise.
-        </p>
+        <p>Our logo tells the whole story: the boy joyfully plucking the mango —
+        that's the founder. The girl eagerly waiting — that's <em>you</em>,
+        anticipating that first divine bite. This is the
+        <span class="telugu">ఆమృతం</span> experience we promise.</p>
       </div>
 
       <div class="story-image-wrap" data-aos="fade-left" data-aos-delay="150">
-        <img src="aam-final.png" alt="Aamrutham logo — boy and girl under mango tree" />
-        <div class="story-badge">
-          ✦ Natural Farming · No Chemicals
-        </div>
+        <img src="aam-final.png" alt="Aamrutham — boy and girl under mango tree" />
+        <div class="story-badge">✦ సహజ వ్యవసాయం · Natural Farming</div>
       </div>
 
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════ QUALITY BADGES ══════════════════════════ -->
+  <!-- ══════════════════════════════════ QUALITY BANNER ══════════════════════════════════ -->
+  <div class="section-banner" data-aos="fade-in">
+    <h2 class="banner-en">Our Promise</h2>
+    <span class="banner-te">మా వాగ్దానం — స్వచ్ఛత మాత్రమే</span>
+  </div>
+
+  <!-- ══════════════════════════════════ QUALITY BADGES ══════════════════════════════════ -->
   <section id="quality">
     <div class="quality-inner">
-      <p class="quality-title" data-aos="fade-up">Our Promise to You</p>
-
-      <!-- Swiper carousel (scrollable on mobile, grid on desktop) -->
+      <p class="quality-title" data-aos="fade-up">Every mango. Every time.</p>
       <div class="swiper badges-swiper" data-aos="fade-up" data-aos-delay="100">
         <div class="swiper-wrapper">
-
-          <div class="swiper-slide">
-            <div class="badge-item">
-              <div class="badge-icon"><i class="fa-solid fa-ban fa-lg" style="color:#F5A623;"></i></div>
-              <span class="badge-label">Pesticide<br />Free</span>
-            </div>
-          </div>
-
-          <div class="swiper-slide">
-            <div class="badge-item">
-              <div class="badge-icon"><i class="fa-solid fa-hands fa-lg" style="color:#F5A623;"></i></div>
-              <span class="badge-label">Hand Graded<br />for Quality</span>
-            </div>
-          </div>
-
-          <div class="swiper-slide">
-            <div class="badge-item">
-              <div class="badge-icon"><i class="fa-solid fa-sun fa-lg" style="color:#F5A623;"></i></div>
-              <span class="badge-label">Peak Season<br />Harvest</span>
-            </div>
-          </div>
-
-          <div class="swiper-slide">
-            <div class="badge-item">
-              <div class="badge-icon"><i class="fa-solid fa-leaf fa-lg" style="color:#F5A623;"></i></div>
-              <span class="badge-label">Naturally<br />Ripened</span>
-            </div>
-          </div>
-
-          <div class="swiper-slide">
-            <div class="badge-item">
-              <div class="badge-icon"><i class="fa-solid fa-seedling fa-lg" style="color:#F5A623;"></i></div>
-              <span class="badge-label">Own Farm<br />Bobbili</span>
-            </div>
-          </div>
-
-          <div class="swiper-slide">
-            <div class="badge-item">
-              <div class="badge-icon"><i class="fa-solid fa-truck-fast fa-lg" style="color:#F5A623;"></i></div>
-              <span class="badge-label">Same-Day<br />Delivery</span>
-            </div>
-          </div>
-
+          <div class="swiper-slide"><div class="badge-item">
+            <div class="badge-icon"><i class="fa-solid fa-ban fa-lg" style="color:#F5A623;"></i></div>
+            <span class="badge-label">Pesticide Free<br /><span style="font-family:'Noto Serif Telugu',serif;font-size:0.7rem;color:rgba(255,255,255,0.5);">పురుగుమందు లేదు</span></span>
+          </div></div>
+          <div class="swiper-slide"><div class="badge-item">
+            <div class="badge-icon"><i class="fa-solid fa-hands fa-lg" style="color:#F5A623;"></i></div>
+            <span class="badge-label">Hand Graded<br /><span style="font-family:'Noto Serif Telugu',serif;font-size:0.7rem;color:rgba(255,255,255,0.5);">చేతితో నిర్ణయం</span></span>
+          </div></div>
+          <div class="swiper-slide"><div class="badge-item">
+            <div class="badge-icon"><i class="fa-solid fa-sun fa-lg" style="color:#F5A623;"></i></div>
+            <span class="badge-label">Peak Season<br /><span style="font-family:'Noto Serif Telugu',serif;font-size:0.7rem;color:rgba(255,255,255,0.5);">మంచి సీజన్</span></span>
+          </div></div>
+          <div class="swiper-slide"><div class="badge-item">
+            <div class="badge-icon"><i class="fa-solid fa-leaf fa-lg" style="color:#F5A623;"></i></div>
+            <span class="badge-label">Naturally Ripened<br /><span style="font-family:'Noto Serif Telugu',serif;font-size:0.7rem;color:rgba(255,255,255,0.5);">సహజంగా పండినవి</span></span>
+          </div></div>
+          <div class="swiper-slide"><div class="badge-item">
+            <div class="badge-icon"><i class="fa-solid fa-seedling fa-lg" style="color:#F5A623;"></i></div>
+            <span class="badge-label">Own Farm Bobbili<br /><span style="font-family:'Noto Serif Telugu',serif;font-size:0.7rem;color:rgba(255,255,255,0.5);">మా పొలం బొబ్బిలి</span></span>
+          </div></div>
+          <div class="swiper-slide"><div class="badge-item">
+            <div class="badge-icon"><i class="fa-solid fa-truck-fast fa-lg" style="color:#F5A623;"></i></div>
+            <span class="badge-label">Same-Day Delivery<br /><span style="font-family:'Noto Serif Telugu',serif;font-size:0.7rem;color:rgba(255,255,255,0.5);">అదే రోజు డెలివరీ</span></span>
+          </div></div>
         </div>
         <div class="swiper-pagination badges-pagination"></div>
       </div>
-
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════ PROCESS ══════════════════════════════════ -->
-  <section id="process">
+  <!-- ══════════════════════════════════ PROCESS BANNER ══════════════════════════════════ -->
+  <div class="section-banner" data-aos="fade-in">
+    <h2 class="banner-en">Farm to Your Doorstep</h2>
+    <span class="banner-te">పొలం నుండి మీ ఇంటి వరకు — ఆరు దశలు</span>
+  </div>
+
+  <!-- ══════════════════════════════════ PROCESS ══════════════════════════════════ -->
+  <section id="process" style="background:#FEF8F0;">
     <div class="process-inner">
-      <p class="section-eyebrow">Farm to Your Doorstep</p>
-      <h2 class="section-title">6 stages. Zero shortcuts.</h2>
 
-      <div class="process-steps">
+      <div class="process-timeline">
 
-        <div class="process-step" data-aos="fade-up" data-aos-delay="0">
-          <div class="process-number">1</div>
-          <div class="process-img placeholder" style="background: linear-gradient(135deg,#d4edda,#a8d5b5);"><i class="fa-solid fa-seedling" style="font-size:3rem;color:#2D5016;"></i></div>
-          <h3>Natural Farming</h3>
-          <p>Grown without pesticides on our own land in Bobbili, Andhra Pradesh.</p>
+        <div class="timeline-step" data-aos="fade-right">
+          <div class="timeline-icon" style="background:linear-gradient(135deg,#d4edda,#a8d5b5);">
+            <i class="fa-solid fa-seedling" style="color:#2D5016;"></i>
+            <span class="step-num">1</span>
+          </div>
+          <div class="timeline-body">
+            <h3>Natural Farming</h3>
+            <span class="timeline-te">సహజ వ్యవసాయం</span>
+            <p>Grown without pesticides on our own land in Bobbili, Andhra Pradesh. The soil, the rain, the sun — nothing else.</p>
+          </div>
         </div>
 
-        <div class="process-step" data-aos="fade-up" data-aos-delay="100">
-          <div class="process-number">2</div>
-          <div class="process-img placeholder" style="background: linear-gradient(135deg,#fff3cd,#ffe082);"><i class="fa-solid fa-hand-holding" style="font-size:3rem;color:#E07B39;"></i></div>
-          <h3>Peak Season Plucking</h3>
-          <p>Hand-picked at perfect ripeness — only when the fruit is ready, never before.</p>
+        <div class="timeline-step" data-aos="fade-left">
+          <div class="timeline-icon" style="background:linear-gradient(135deg,#fff3cd,#ffe082);">
+            <i class="fa-solid fa-droplet" style="color:#E07B39;"></i>
+            <span class="step-num">2</span>
+          </div>
+          <div class="timeline-body">
+            <h3>Tree-Ripened</h3>
+            <span class="timeline-te">చెట్టుపై పండినవి</span>
+            <p>We let the fruit ripen on the tree until perfect — never picked early, never artificially ripened with carbide.</p>
+          </div>
         </div>
 
-        <div class="process-step" data-aos="fade-up" data-aos-delay="200">
-          <div class="process-number">3</div>
-          <div class="process-img placeholder" style="background: linear-gradient(135deg,#fce4ec,#f8bbd0);"><i class="fa-solid fa-box-open" style="font-size:3rem;color:#c2185b;"></i></div>
-          <h3>Careful Packaging</h3>
-          <p>Each mango hand-graded by size, wrapped to prevent bruising in transit.</p>
+        <div class="timeline-step" data-aos="fade-right">
+          <div class="timeline-icon" style="background:linear-gradient(135deg,#ffe8cc,#ffcc80);">
+            <i class="fa-solid fa-hand-holding" style="color:#E07B39;"></i>
+            <span class="step-num">3</span>
+          </div>
+          <div class="timeline-body">
+            <h3>Hand-Picked</h3>
+            <span class="timeline-te">చేతితో కోయడం</span>
+            <p>Every single mango is hand-plucked with care. No machines. No bruising. The love shows in every bite.</p>
+          </div>
         </div>
 
-        <div class="process-step" data-aos="fade-up" data-aos-delay="300">
-          <div class="process-number">4</div>
-          <div class="process-img placeholder" style="background: linear-gradient(135deg,#e3f2fd,#90caf9);"><i class="fa-solid fa-truck-fast" style="font-size:3rem;color:#1565c0;"></i></div>
-          <h3>Same-Day Delivery</h3>
-          <p>Dispatched fresh to Hyderabad. From farm to your table with love.</p>
+        <div class="timeline-step" data-aos="fade-left">
+          <div class="timeline-icon" style="background:linear-gradient(135deg,#fce4ec,#f8bbd0);">
+            <i class="fa-solid fa-star" style="color:#c2185b;"></i>
+            <span class="step-num">4</span>
+          </div>
+          <div class="timeline-body">
+            <h3>Hand-Graded</h3>
+            <span class="timeline-te">నాణ్యత తనిఖీ</span>
+            <p>Each fruit graded by size (A+, A, B) and checked for ripeness. Only the best make it into your box.</p>
+          </div>
+        </div>
+
+        <div class="timeline-step" data-aos="fade-right">
+          <div class="timeline-icon" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);">
+            <i class="fa-solid fa-box-open" style="color:#2D5016;"></i>
+            <span class="step-num">5</span>
+          </div>
+          <div class="timeline-body">
+            <h3>Careful Packaging</h3>
+            <span class="timeline-te">జాగ్రత్తగా ప్యాక్ చేయడం</span>
+            <p>Wrapped individually to prevent bruising. Packed in boxes that keep mangoes fresh through transit.</p>
+          </div>
+        </div>
+
+        <div class="timeline-step" data-aos="fade-left">
+          <div class="timeline-icon" style="background:linear-gradient(135deg,#e3f2fd,#90caf9);">
+            <i class="fa-solid fa-truck-fast" style="color:#1565c0;"></i>
+            <span class="step-num">6</span>
+          </div>
+          <div class="timeline-body">
+            <h3>Delivered Fresh</h3>
+            <span class="timeline-te">తాజాగా డెలివరీ</span>
+            <p>Same-day delivery to Hyderabad. From Bobbili farm to your table — as fresh as it gets.</p>
+          </div>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════ VARIETIES ════════════════════════════════ -->
+  <!-- ══════════════════════════════════ VARIETIES BANNER ══════════════════════════════════ -->
+  <div class="section-banner" data-aos="fade-in">
+    <h2 class="banner-en">Our Mango Varieties</h2>
+    <span class="banner-te">మా మామిడి రకాలు — ఎప్పుడూ రుచి చూడని వాటిని రుచి చూడండి</span>
+  </div>
+
+  <!-- ══════════════════════════════════ VARIETIES ══════════════════════════════════ -->
   <section id="varieties">
     <div class="varieties-inner">
       <div class="varieties-header" data-aos="fade-up">
         <p class="section-eyebrow">Coming This Summer</p>
-        <h2 class="section-title">Mangoes you've never tasted</h2>
-        <p>
-          We're bringing you rare and undiscovered varieties from Bobbili —
-          each one a different story of sweetness, aroma, and joy.
-        </p>
+        <h2 class="section-title">Mangoes you've<br />never tasted before</h2>
+        <p>Rare and undiscovered varieties from Bobbili — each one a different story of sweetness, aroma, and pure joy.</p>
       </div>
-
       <div class="varieties-grid">
 
-        <!-- Variety 1: Banginapalli -->
         <div class="variety-card" data-aos="fade-up" data-aos-delay="0">
-          <div class="variety-img placeholder" style="background: linear-gradient(160deg,#FFF9C4 0%,#FFD54F 60%,#FFB300 100%); height:220px; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-apple-whole" style="font-size:5rem;color:#E07B39;"></i></div>
+          <div class="variety-img placeholder" style="background:linear-gradient(160deg,#FFF9C4,#FFD54F,#FFB300);height:220px;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-apple-whole" style="font-size:5rem;color:#E07B39;"></i></div>
           <div class="variety-body">
             <span class="variety-tag">Juicy · Signature</span>
             <h3>Banginapalli</h3>
-            <div class="telugu-name">బంగినపల్లి — The Queen of Andhra</div>
-            <p>Soft, fiberless flesh with a golden hue and a delicate honey-sweet aroma. The pride of Andhra Pradesh — impossible to eat just one.</p>
+            <div class="telugu-name">బంగినపల్లి — ఆంధ్రా రాణి</div>
+            <p>Soft, fiberless flesh with a golden hue and honey-sweet aroma. The pride of Andhra Pradesh — impossible to eat just one.</p>
             <div class="variety-attrs">
               <span class="attr"><i class="fa-solid fa-droplet"></i> Brix 18–22</span>
               <span class="attr"><i class="fa-solid fa-wheat-awn"></i> Fiberless</span>
@@ -317,18 +697,17 @@
           </div>
           <div class="variety-footer">
             <span class="coming-tag">✦ Summer 2026</span>
-            <span style="font-size:0.8rem; color:#aaa;">Pack of 6, 12, 18</span>
+            <span style="font-size:0.8rem;color:#aaa;">Pack of 6, 12, 18</span>
           </div>
         </div>
 
-        <!-- Variety 2: Suvarnarekha -->
         <div class="variety-card" data-aos="fade-up" data-aos-delay="150">
-          <div class="variety-img placeholder" style="background: linear-gradient(160deg,#FFFDE7 0%,#FFF176 60%,#F9A825 100%); height:220px; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-star" style="font-size:5rem;color:#F9A825;"></i></div>
+          <div class="variety-img placeholder" style="background:linear-gradient(160deg,#FFFDE7,#FFF176,#F9A825);height:220px;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-star" style="font-size:5rem;color:#F9A825;"></i></div>
           <div class="variety-body">
             <span class="variety-tag">Exotic · Aamrutham Pick</span>
             <h3>Suvarnarekha</h3>
-            <div class="telugu-name">సువర్ణరేఖ — The Golden Line</div>
-            <p>Named for the golden streak on its skin, this gem is intensely sweet with a rich, dense pulp and intoxicating fragrance unlike any other.</p>
+            <div class="telugu-name">సువర్ణరేఖ — బంగారు రేఖ</div>
+            <p>Named for the golden streak on its skin. Intensely sweet with dense pulp and an intoxicating fragrance unlike any other.</p>
             <div class="variety-attrs">
               <span class="attr"><i class="fa-solid fa-droplet"></i> Brix 20–24</span>
               <span class="attr"><i class="fa-solid fa-wind"></i> Aromatic</span>
@@ -337,18 +716,17 @@
           </div>
           <div class="variety-footer">
             <span class="coming-tag">✦ Summer 2026</span>
-            <span style="font-size:0.8rem; color:#aaa;">Pack of 6, 12, 18</span>
+            <span style="font-size:0.8rem;color:#aaa;">Pack of 6, 12, 18</span>
           </div>
         </div>
 
-        <!-- Variety 3: Rasalu -->
         <div class="variety-card" data-aos="fade-up" data-aos-delay="300">
-          <div class="variety-img placeholder" style="background: linear-gradient(160deg,#FFF8E1 0%,#FFCC02 60%,#FF8F00 100%); height:220px; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-glass-water-droplet" style="font-size:5rem;color:#FF8F00;"></i></div>
+          <div class="variety-img placeholder" style="background:linear-gradient(160deg,#FFF8E1,#FFCC02,#FF8F00);height:220px;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-glass-water-droplet" style="font-size:5rem;color:#FF8F00;"></i></div>
           <div class="variety-body">
             <span class="variety-tag">Juicy · Dessert</span>
             <h3>Rasalu</h3>
-            <div class="telugu-name">రసాలు — The Juice King</div>
-            <p>Bursting with juice and warmth, Rasalu is the mango for dessert lovers. The pulp is soft as ice cream, sweet as nectar. A true summer ritual.</p>
+            <div class="telugu-name">రసాలు — రస రాజు</div>
+            <p>Pulp soft as ice cream, sweet as nectar. The ultimate dessert mango — a true summer ritual in every Andhra household.</p>
             <div class="variety-attrs">
               <span class="attr"><i class="fa-solid fa-droplet"></i> Brix 19–23</span>
               <span class="attr"><i class="fa-solid fa-droplets"></i> Ultra Juicy</span>
@@ -357,7 +735,7 @@
           </div>
           <div class="variety-footer">
             <span class="coming-tag">✦ Summer 2026</span>
-            <span style="font-size:0.8rem; color:#aaa;">Pack of 6, 12, 18</span>
+            <span style="font-size:0.8rem;color:#aaa;">Pack of 6, 12, 18</span>
           </div>
         </div>
 
@@ -365,106 +743,118 @@
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════ CTA BANNER ═══════════════════════════════ -->
+  <!-- ══════════════════════════════════ CTA ══════════════════════════════════ -->
   <section id="cta">
-
-    <!-- Background line art -->
     <svg class="cta-art" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
       <ellipse cx="80" cy="200" rx="50" ry="70" fill="#F5A623" transform="rotate(-20 80 200)"/>
       <ellipse cx="720" cy="200" rx="50" ry="70" fill="#F5A623" transform="rotate(20 720 200)"/>
       <ellipse cx="120" cy="280" rx="30" ry="80" fill="#F5C842" transform="rotate(35 120 280)"/>
       <ellipse cx="680" cy="280" rx="30" ry="80" fill="#F5C842" transform="rotate(-35 680 280)"/>
-      <ellipse cx="400" cy="50" rx="40" ry="60" fill="#F5A623" transform="rotate(0 400 50)"/>
-      <ellipse cx="200" cy="80" rx="25" ry="65" fill="#F5C842" transform="rotate(-10 200 80)"/>
-      <ellipse cx="600" cy="80" rx="25" ry="65" fill="#F5A623" transform="rotate(10 600 80)"/>
+      <ellipse cx="400" cy="50" rx="40" ry="60" fill="#F5A623"/>
     </svg>
-
     <div class="cta-inner" data-aos="zoom-in">
-      <p class="cta-eyebrow">✦ Summer 2026 · Hyderabad ✦</p>
+      <p class="cta-eyebrow">✦ వేసవి 2026 · హైదరాబాద్ ✦</p>
       <h2 class="cta-title">
         Be the first to taste<br />
         <em>pure ఆమృతం</em>
       </h2>
       <p class="cta-sub">
-        Pre-orders open soon. Drop us a message on WhatsApp<br />
-        and we'll notify you the moment we're live.
+        Pre-orders open soon. Drop us a message on WhatsApp —<br />
+        we'll notify you the moment we're live.
       </p>
-
       <a href="https://wa.me/919999999999?text=Hi%20Aamrutham!%20I%20want%20to%20pre-order%20mangoes%20for%20Summer%202026%20🥭" class="btn-whatsapp" target="_blank" rel="noopener">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.556 4.117 1.532 5.845L.054 23.486a.5.5 0 00.611.611l5.641-1.478A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.793 9.793 0 01-4.983-1.358l-.356-.213-3.688.966.983-3.595-.233-.37A9.795 9.795 0 012.182 12C2.182 6.569 6.569 2.182 12 2.182S21.818 6.569 21.818 12 17.431 21.818 12 21.818z"/>
-        </svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.556 4.117 1.532 5.845L.054 23.486a.5.5 0 00.611.611l5.641-1.478A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.793 9.793 0 01-4.983-1.358l-.356-.213-3.688.966.983-3.595-.233-.37A9.795 9.795 0 012.182 12C2.182 6.569 6.569 2.182 12 2.182S21.818 6.569 21.818 12 17.431 21.818 12 21.818z"/></svg>
         Chat on WhatsApp
       </a>
-
-      <p style="color:rgba(255,255,255,0.35); font-size:0.8rem; margin-top:1.5rem;">
-        📍 Delivery to Hyderabad only &nbsp;·&nbsp; 🚚 Free delivery on orders ₹500+
+      <p style="color:rgba(255,255,255,0.35);font-size:0.8rem;margin-top:1.5rem;">
+        📍 హైదరాబాద్ మాత్రమే · Hyderabad only &nbsp;·&nbsp; 🚚 ₹500+ కి ఉచిత డెలివరీ · Free delivery on ₹500+
       </p>
     </div>
-
   </section>
 
-  <!-- ═══════════════════════════════════ FOOTER ═══════════════════════════════════ -->
+  <!-- ══════════════════════════════════ FOOTER ══════════════════════════════════ -->
   <footer>
+    <!-- Certification icons row -->
+    <div class="footer-cert-grid">
+      <div class="footer-cert">
+        <div class="cert-icon"><i class="fa-solid fa-ban fa-lg"></i></div>
+        <span class="cert-label">Pesticide<br />Free</span>
+      </div>
+      <div class="footer-cert">
+        <div class="cert-icon"><i class="fa-solid fa-leaf fa-lg"></i></div>
+        <span class="cert-label">Naturally<br />Ripened</span>
+      </div>
+      <div class="footer-cert">
+        <div class="cert-icon"><i class="fa-solid fa-seedling fa-lg"></i></div>
+        <span class="cert-label">Own Farm<br />Bobbili</span>
+      </div>
+      <div class="footer-cert">
+        <div class="cert-icon"><i class="fa-solid fa-hands fa-lg"></i></div>
+        <span class="cert-label">Hand<br />Graded</span>
+      </div>
+      <div class="footer-cert">
+        <div class="cert-icon"><i class="fa-solid fa-truck-fast fa-lg"></i></div>
+        <span class="cert-label">Same-Day<br />Delivery</span>
+      </div>
+      <div class="footer-cert">
+        <div class="cert-icon"><i class="fa-solid fa-heart fa-lg"></i></div>
+        <span class="cert-label">Made with<br />Love</span>
+      </div>
+    </div>
+
     <img src="aam-final.png" alt="Aamrutham" class="footer-logo" />
-    <p class="footer-tagline">"Aam + Amrutham — Pure Mango Bliss"</p>
+    <p class="footer-tagline">"ఆమ్ + అమృతం — Pure Mango Bliss"</p>
     <ul class="footer-links">
-      <li><a href="#story">Story</a></li>
-      <li><a href="#process">Process</a></li>
+      <li><a href="#story">మా కథ</a></li>
+      <li><a href="#process">Farm to You</a></li>
       <li><a href="#varieties">Varieties</a></li>
+      <li><a href="shop.html">Shop</a></li>
       <li><a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a></li>
       <li><a href="#cta">Contact</a></li>
     </ul>
-    <p class="footer-copy">© 2026 Aamrutham. All rights reserved. · Made with 🥭 love in Hyderabad</p>
+    <p class="footer-copy">© 2026 Aamrutham. All rights reserved. · Made with 🥭 in Hyderabad, India</p>
   </footer>
 
-  <!-- ═══════════════════════════════════ WHATSAPP FLOAT ═══════════════════════════ -->
-  <a href="https://wa.me/919999999999?text=Hi%20Aamrutham!%20I%20want%20to%20pre-order%20mangoes%20🥭"
-     class="whatsapp-float"
-     target="_blank"
-     rel="noopener"
-     title="Chat with us on WhatsApp">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.556 4.117 1.532 5.845L.054 23.486a.5.5 0 00.611.611l5.641-1.478A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.793 9.793 0 01-4.983-1.358l-.356-.213-3.688.966.983-3.595-.233-.37A9.795 9.795 0 012.182 12C2.182 6.569 6.569 2.182 12 2.182S21.818 6.569 21.818 12 17.431 21.818 12 21.818z"/>
-    </svg>
+  <!-- ══════════════════════════════════ WHATSAPP FLOAT ══════════════════════════════════ -->
+  <a href="https://wa.me/919999999999?text=Hi%20Aamrutham!%20I%20want%20to%20pre-order%20mangoes%20🥭" class="whatsapp-float" target="_blank" rel="noopener" title="Chat with us">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.556 4.117 1.532 5.845L.054 23.486a.5.5 0 00.611.611l5.641-1.478A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.793 9.793 0 01-4.983-1.358l-.356-.213-3.688.966.983-3.595-.233-.37A9.795 9.795 0 012.182 12C2.182 6.569 6.569 2.182 12 2.182S21.818 6.569 21.818 12 17.431 21.818 12 21.818z"/></svg>
   </a>
 
-  <!-- Swiper JS -->
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <!-- AOS JS -->
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-
-  <!-- ═══════════════════════════════════ JS ════════════════════════════════════════ -->
   <script>
-    // ── Navbar scroll effect ──
+    // ── Navbar scroll ──
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('scrolled', window.scrollY > 60);
     });
 
-    // ── AOS init ──
-    AOS.init({
-      duration: 700,
-      easing: 'ease-out-cubic',
-      once: true,
-      offset: 80,
-    });
+    // ── AOS ──
+    AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 80 });
 
-    // ── Swiper: Quality Badges ──
+    // ── Swiper badges ──
     new Swiper('.badges-swiper', {
-      slidesPerView: 2,
-      spaceBetween: 20,
-      loop: true,
+      slidesPerView: 2, spaceBetween: 20, loop: true,
       autoplay: { delay: 2500, disableOnInteraction: false },
       pagination: { el: '.badges-pagination', clickable: true },
-      breakpoints: {
-        640:  { slidesPerView: 3 },
-        1024: { slidesPerView: 6, autoplay: false },
-      },
+      breakpoints: { 640: { slidesPerView: 3 }, 1024: { slidesPerView: 6, autoplay: false } },
     });
-  </script>
 
+    // ── Lifecycle art parallax (moves slower than scroll) ──
+    const art = document.getElementById('lifecycle-art');
+    const artSvg = art ? art.querySelector('svg') : null;
+    if (artSvg) {
+      window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+        const docH = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrolled / docH; // 0 to 1
+        // Shift SVG upward as user scrolls so different stages come into view
+        const svgH = 1640; // viewBox height
+        const offset = -(progress * (svgH - window.innerHeight * 0.8));
+        artSvg.style.top = offset + 'px';
+      }, { passive: true });
+    }
+  </script>
 </body>
 </html>
