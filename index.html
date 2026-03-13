@@ -78,344 +78,181 @@
     .hero-title em { color: var(--leaf, #2D5016) !important; font-style: italic; }
     .hero-subtitle { color: #5a3e2b; }
 
-    /* ── Logo blend into background ── */
-    .hero-logo, .nav-logo, .footer-logo, .story-image-wrap img {
-      mix-blend-mode: multiply;
-    }
 
     /* ── Story overrides ── */
     #story { background: #FEF8F0; }
 
-    /* ── Process — Apple-style sticky scroll ── */
-    #process-scroll {
-      position: relative;
-      height: 300vh; /* 6 steps — snappy 50vh each */
-    }
-    .process-sticky {
+    /* ══════════════════════════════════════════════
+       SHARED — Horizontal sticky scroll
+       Used by both #process-scroll and #varieties
+    ══════════════════════════════════════════════ */
+    .hscroll-sticky {
       position: sticky;
       top: 0;
       height: 100vh;
       overflow: hidden;
     }
-
-    /* Full-bleed images, stacked, crossfade */
-    .pstep-imgs {
-      position: absolute;
-      inset: 0;
+    .hscroll-track {
+      display: flex;
+      height: 100%;
+      will-change: transform;
     }
-    .pstep-img {
+    .hslide {
+      flex-shrink: 0;
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Full-bleed background — image or div */
+    .hslide-bg {
       position: absolute;
       inset: 0;
       width: 100%; height: 100%;
       object-fit: cover;
-      opacity: 0;
-      transition: opacity 0.9s ease;
-      will-change: opacity;
+      display: block;
     }
-    .pstep-img.active { opacity: 1; }
-
-    /* Step 6 background (no photo) */
-    .pstep-bg {
-      position: absolute;
-      inset: 0;
-    }
-
-    /* Bottom gradient for text legibility */
-    .pstep-overlay {
+    /* Dark gradient at bottom for text legibility */
+    .hslide-overlay {
       position: absolute;
       inset: 0;
       background: linear-gradient(
         to top,
-        rgba(10,6,2,0.88) 0%,
-        rgba(10,6,2,0.35) 45%,
-        transparent 75%
+        rgba(6,3,1,0.96) 0%,
+        rgba(6,3,1,0.55) 40%,
+        rgba(6,3,1,0.1) 70%,
+        transparent 100%
       );
-      pointer-events: none;
       z-index: 1;
     }
-
-    /* All text blocks stacked, one active at a time */
-    .pstep-texts {
+    /* Content block at bottom-left */
+    .hslide-body {
       position: absolute;
-      bottom: 0; left: 0; right: 0;
+      bottom: 0; left: 0;
+      width: 60%;
+      padding: 2rem 0 4.5rem 8%;
       z-index: 2;
-      padding: 0 5% 8%;
     }
-    .pstep-text {
-      position: absolute;
-      bottom: 0; left: 5%; right: 15%;
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-      pointer-events: none;
-    }
-    .pstep-text.active {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-    }
-    .pstep-label {
-      font-size: 0.72rem;
+    .hslide-label {
+      font-size: 0.67rem;
       letter-spacing: 0.22em;
       color: var(--mango);
       font-weight: 700;
       text-transform: uppercase;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.55rem;
       display: block;
     }
-    .pstep-text h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      color: white;
-      line-height: 1.2;
-      margin-bottom: 1rem;
-    }
-    .pstep-text p {
-      font-size: 1rem;
-      color: rgba(255,255,255,0.78);
-      max-width: 560px;
-      line-height: 1.75;
-    }
-
-    /* Delivery icon (step 6 only) */
-    .pstep-delivery {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 6rem;
-      color: rgba(245,166,35,0.15);
-      z-index: 0;
-      opacity: 0;
-      transition: opacity 0.9s ease;
-    }
-    .pstep-delivery.active { opacity: 1; }
-
-    /* Progress dots — right side */
-    .pstep-dots {
-      position: absolute;
-      right: 2.5rem;
-      top: 50%;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-      z-index: 3;
-    }
-    .pstep-dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.25);
-      transition: background 0.3s, transform 0.3s;
-      cursor: pointer;
-    }
-    .pstep-dot.active {
-      background: var(--mango);
-      transform: scale(1.5);
-    }
-
-    /* Scroll hint at start */
-    .pstep-scroll-hint {
-      position: absolute;
-      bottom: 2rem;
-      right: 6rem;
-      color: rgba(255,255,255,0.3);
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      z-index: 3;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: opacity 0.4s;
-    }
-
-    @media (max-width: 768px) {
-      .pstep-dots { right: 1rem; }
-      .pstep-text { right: 8%; }
-      .pstep-text h2 { font-size: 1.6rem; }
-      .pstep-text p { font-size: 0.9rem; }
-      #process-scroll { height: 400vh; }
-    }
-
-    /* ══════════════════════════════════════════════
-       VARIETIES — Horizontal sticky scroll
-    ══════════════════════════════════════════════ */
-    #varieties {
-      position: relative;
-      height: 400vh; /* 4 varieties × 100vh */
-    }
-    .varieties-sticky {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      overflow: hidden;
-    }
-    .varieties-track {
-      display: flex;
-      height: 100%;
-      width: 400vw;
-      will-change: transform;
-    }
-    .variety-slide {
-      width: 100vw;
-      height: 100vh;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-      padding: 5rem 8% 5rem;
-    }
-    /* Giant background number */
-    .vs-num {
-      position: absolute;
-      font-family: 'Playfair Display', serif;
-      font-size: 38vw;
-      font-weight: 700;
-      right: -1vw;
-      top: 50%;
-      transform: translateY(-50%);
-      line-height: 1;
-      pointer-events: none;
-      user-select: none;
-      transition: color 0.6s;
-    }
-    /* Left content */
-    .vs-content {
-      max-width: 54%;
-      position: relative;
-      z-index: 2;
-    }
-    .vs-eyebrow {
-      font-size: 0.7rem;
-      letter-spacing: 0.22em;
-      font-weight: 700;
-      text-transform: uppercase;
-      margin-bottom: 0.75rem;
-      display: block;
-    }
-    .vs-telugu {
+    .hslide-telugu {
       font-family: 'Noto Serif Telugu', serif;
-      font-size: clamp(1.3rem, 2.5vw, 2rem);
-      margin-bottom: 0.2rem;
+      font-size: clamp(1rem, 1.8vw, 1.4rem);
+      color: var(--mango);
       display: block;
+      margin-bottom: 0.15rem;
     }
-    .vs-name {
+    .hslide-body h2 {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-size: clamp(1.7rem, 3.2vw, 2.6rem);
+      color: white;
       line-height: 1.15;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.25rem;
     }
-    .vs-meaning {
-      font-size: 0.9rem;
+    .hslide-meaning {
+      font-size: 0.8rem;
       font-style: italic;
-      margin-bottom: 1.5rem;
+      color: rgba(255,255,255,0.38);
       display: block;
-      opacity: 0.55;
+      margin-bottom: 0.8rem;
     }
-    .vs-desc {
-      font-size: 0.95rem;
-      line-height: 1.8;
+    .hslide-body p {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.74);
+      line-height: 1.75;
+      margin-bottom: 1rem;
       max-width: 500px;
-      margin-bottom: 1.5rem;
-      opacity: 0.82;
     }
-    .vs-attrs {
+    .hslide-attrs {
       display: flex;
-      gap: 0.75rem;
+      gap: 0.45rem;
       flex-wrap: wrap;
-      margin-bottom: 2rem;
+      margin-bottom: 1.1rem;
     }
-    .vs-attr {
-      font-size: 0.75rem;
+    .hslide-attr {
+      font-size: 0.68rem;
       font-weight: 700;
-      padding: 0.3rem 0.85rem;
+      padding: 0.26rem 0.7rem;
       border-radius: 50px;
-      border: 1.5px solid currentColor;
+      border: 1.5px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.75);
       display: flex;
       align-items: center;
       gap: 0.3rem;
-      opacity: 0.65;
     }
-    .vs-footer {
+    .hslide-footer {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
+      gap: 1.25rem;
       flex-wrap: wrap;
     }
-    /* Right visual card */
-    .vs-visual {
+    /* Big watermark number — bottom right */
+    .hslide-num {
       position: absolute;
-      right: 6%;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 30vw;
-      max-width: 380px;
-      aspect-ratio: 3/4;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 24px 80px rgba(0,0,0,0.14);
-      z-index: 2;
+      right: 5%;
+      bottom: 2rem;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(8rem, 20vw, 26rem);
+      font-weight: 700;
+      color: rgba(255,255,255,0.04);
+      line-height: 1;
+      z-index: 1;
+      pointer-events: none;
+      user-select: none;
     }
-    .vs-visual-inner {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 7rem;
-    }
-    /* Progress dots row at bottom */
-    .vs-progress {
+    /* Dots — bottom right, stationary */
+    .hslide-dots {
       position: absolute;
-      bottom: 2.5rem;
-      left: 8%;
+      bottom: 2rem;
+      right: 8%;
       display: flex;
-      gap: 0.6rem;
+      gap: 0.5rem;
       align-items: center;
       z-index: 3;
     }
-    .vs-dot {
-      height: 6px;
-      width: 6px;
+    .hslide-dot {
+      height: 5px; width: 5px;
       border-radius: 3px;
-      transition: width 0.35s ease, opacity 0.35s;
-      opacity: 0.3;
+      background: rgba(255,255,255,0.28);
+      transition: width 0.35s, background 0.3s;
     }
-    .vs-dot.active {
-      width: 28px;
-      opacity: 1;
+    .hslide-dot.active {
+      width: 22px;
+      background: var(--mango);
     }
-    /* Scroll hint */
-    .vs-hint {
+    /* Scroll hint — bottom left */
+    .hslide-hint {
       position: absolute;
-      bottom: 2.5rem;
-      right: 8%;
-      font-size: 0.7rem;
+      bottom: 2rem;
+      left: 8%;
+      font-size: 0.65rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
       display: flex;
       align-items: center;
       gap: 0.4rem;
-      opacity: 0.35;
       transition: opacity 0.4s;
       z-index: 3;
     }
-    @media (max-width: 900px) {
-      .vs-visual { width: 38vw; }
-      .vs-content { max-width: 56%; }
-    }
-    @media (max-width: 680px) {
-      .vs-visual { display: none; }
-      .vs-content { max-width: 92%; }
-      .vs-num { font-size: 55vw; opacity: 0.5; }
+    /* Section heights */
+    #process-scroll { position: relative; height: 600vh; }
+    #varieties      { position: relative; height: 400vh; }
+
+    @media (max-width: 768px) {
+      .hslide-body { width: 90%; padding-bottom: 5.5rem; }
+      .hslide-body h2 { font-size: 1.65rem; }
+      .hslide-num { font-size: 35vw; }
+      #process-scroll { height: 800vh; }
       #varieties { height: 500vh; }
     }
-
-    /* ── Varieties section ── */
-    #varieties { background: #FEF8F0; }
 
     /* ── Footer redesign ── */
     footer {
@@ -610,7 +447,7 @@
   <!-- ══════════════════════════════════ NAVBAR ══════════════════════════════════ -->
   <nav id="navbar">
     <a href="#hero">
-      <img src="aam-final.png" alt="Aamrutham" class="nav-logo" />
+      <img src="Subject.png" alt="Aamrutham" class="nav-logo" />
     </a>
     <ul class="nav-links">
       <li><a href="#story">Our Story</a></li>
@@ -660,7 +497,7 @@
       <ellipse cx="268" cy="152" rx="6" ry="16" fill="none" stroke="#2D5016" stroke-width="1" transform="rotate(-30 268 152)"/>
     </svg>
 
-    <img src="aam-final.png" alt="Aamrutham" class="hero-logo" />
+    <img src="Subject.png" alt="Aamrutham" class="hero-logo" />
 
     <div class="hero-content">
       <p class="hero-eyebrow">✦ Bobbili Farms · Hyderabad ✦</p>
@@ -724,7 +561,7 @@
       </div>
 
       <div class="story-image-wrap" data-aos="fade-left" data-aos-delay="150">
-        <img src="aam-final.png" alt="Aamrutham — boy and girl under mango tree" />
+        <img src="Subject.png" alt="Aamrutham — boy and girl under mango tree" />
         <div class="story-badge">✦ Natural Farming · No Chemicals</div>
       </div>
 
@@ -777,82 +614,93 @@
     <h2 class="banner-en">Farm to Your Doorstep</h2>
   </div>
 
-  <!-- ══════════════════════════════════ PROCESS — sticky scroll ══════════════════════════════════ -->
+  <!-- ══════════════════════════════════ PROCESS — horizontal slides ══════════════════════════════════ -->
   <div id="process-scroll">
-    <div class="process-sticky">
+    <div class="hscroll-sticky">
+      <div class="hscroll-track" id="proc-track">
 
-      <!-- ── Full-bleed images ── -->
-      <div class="pstep-imgs">
-        <img class="pstep-img active" src="oil%20%5Bpaint/jeevamrutham%20prepare%20and%20spray.png" alt="Jeevamrutham farming" />
-        <img class="pstep-img" src="oil%20%5Bpaint/pollination%20and%20flowering.png" alt="Pollination and flowering" />
-        <img class="pstep-img" src="oil%20%5Bpaint/tiny%20fruite%20set.png" alt="Fruit set" />
-        <img class="pstep-img" src="oil%20%5Bpaint/examining%20ripe%20mangoes.png" alt="Hand-picked mangoes" />
-        <img class="pstep-img" src="oil%20%5Bpaint/ripening%20process.png" alt="Natural ripening on straw" />
-        <div class="pstep-img pstep-bg" style="background:linear-gradient(160deg,#0d2106,#2D5016);"></div>
+        <div class="hslide">
+          <img class="hslide-bg" src="oil%20%5Bpaint/jeevamrutham%20prepare%20and%20spray.png" alt="Jeevamrutham farming" />
+          <div class="hslide-overlay"></div>
+          <div class="hslide-num">01</div>
+          <div class="hslide-body">
+            <span class="hslide-label">Step 1 of 6 · Farm to Your Doorstep</span>
+            <h2>Jeevamrutham<br />Farming</h2>
+            <p>We prepare and spray Jeevamrutham — a traditional fermented organic fertiliser made from cow dung and medicinal herbs. Zero chemicals. Our trees are nourished the way nature intended, and that flavour shows in every bite.</p>
+          </div>
+        </div>
+
+        <div class="hslide">
+          <img class="hslide-bg" src="oil%20%5Bpaint/pollination%20and%20flowering.png" alt="Pollination and flowering" />
+          <div class="hslide-overlay"></div>
+          <div class="hslide-num">02</div>
+          <div class="hslide-body">
+            <span class="hslide-label">Step 2 of 6 · Farm to Your Doorstep</span>
+            <h2>Pollination<br />&amp; Flowering</h2>
+            <p>When the blossoms open, bees and butterflies do their ancient work. We never intervene — the flowers that survive to fruit are the strongest the tree has to offer. Nature selects the best for you.</p>
+          </div>
+        </div>
+
+        <div class="hslide">
+          <img class="hslide-bg" src="oil%20%5Bpaint/tiny%20fruite%20set.png" alt="Tiny fruit set" />
+          <div class="hslide-overlay"></div>
+          <div class="hslide-num">03</div>
+          <div class="hslide-body">
+            <span class="hslide-label">Step 3 of 6 · Farm to Your Doorstep</span>
+            <h2>Fruit Set</h2>
+            <p>Tiny green mangoes begin forming on every branch — this is where patience begins. We monitor each cluster and thin where needed, so every remaining fruit receives the tree's full nourishment to grow into something exceptional.</p>
+          </div>
+        </div>
+
+        <div class="hslide">
+          <img class="hslide-bg" src="oil%20%5Bpaint/examining%20ripe%20mangoes.png" alt="Hand-picked at peak" />
+          <div class="hslide-overlay"></div>
+          <div class="hslide-num">04</div>
+          <div class="hslide-body">
+            <span class="hslide-label">Step 4 of 6 · Farm to Your Doorstep</span>
+            <h2>Hand-Picked<br />at Peak</h2>
+            <p>Our farmers examine every mango by hand — feeling for the right give, checking the colour, smelling at the stem. Only when it is perfect does it leave the tree. No machines. No guessing. No compromise.</p>
+          </div>
+        </div>
+
+        <div class="hslide">
+          <img class="hslide-bg" src="oil%20%5Bpaint/ripening%20process.png" alt="Natural ripening on straw" />
+          <div class="hslide-overlay"></div>
+          <div class="hslide-num">05</div>
+          <div class="hslide-body">
+            <span class="hslide-label">Step 5 of 6 · Farm to Your Doorstep</span>
+            <h2>Natural Ripening<br />on Straw</h2>
+            <p>Mangoes are laid on dry paddy straw — the method used for generations. They ripen at their own pace, uniformly, with no carbide or chemical agents. The straw breathes with the fruit. The result is sweetness that cannot be faked.</p>
+          </div>
+        </div>
+
+        <div class="hslide">
+          <div class="hslide-bg" style="background:linear-gradient(160deg,#0a1e04,#1a3a0a,#2D5016);"></div>
+          <div class="hslide-overlay" style="background:linear-gradient(to top,rgba(6,3,1,0.97) 0%,rgba(6,3,1,0.4) 50%,transparent 100%);"></div>
+          <div class="hslide-num" style="color:rgba(245,166,35,0.06);">06</div>
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:1;">
+            <i class="fa-solid fa-truck-fast" style="font-size:clamp(6rem,15vw,14rem);color:rgba(245,166,35,0.08);"></i>
+          </div>
+          <div class="hslide-body">
+            <span class="hslide-label">Step 6 of 6 · Farm to Your Doorstep</span>
+            <h2>Delivered<br />to Hyderabad</h2>
+            <p>Packed carefully and dispatched same-day. From our Bobbili farm to your door in Hyderabad — the whole journey handled with care, so the first bite feels exactly like it should. Pure ఆమృతం.</p>
+          </div>
+        </div>
+
+      </div><!-- end track -->
+
+      <!-- Dots + hint — fixed to sticky container, always visible -->
+      <div class="hslide-dots" id="proc-dots">
+        <div class="hslide-dot active"></div>
+        <div class="hslide-dot"></div>
+        <div class="hslide-dot"></div>
+        <div class="hslide-dot"></div>
+        <div class="hslide-dot"></div>
+        <div class="hslide-dot"></div>
       </div>
-
-      <!-- ── Step 6 delivery icon (centred, large, subtle) ── -->
-      <div class="pstep-delivery" id="pstep-delivery">
-        <i class="fa-solid fa-truck-fast"></i>
-      </div>
-
-      <!-- ── Bottom gradient ── -->
-      <div class="pstep-overlay"></div>
-
-      <!-- ── Text blocks ── -->
-      <div class="pstep-texts">
-
-        <div class="pstep-text active">
-          <span class="pstep-label">Step 1 of 6 &nbsp;·&nbsp; Farm to Your Doorstep</span>
-          <h2>Jeevamrutham<br />Farming</h2>
-          <p>Traditional fermented organic fertiliser — cow dung, medicinal herbs, zero chemicals. Nourishing our trees the way nature intended. Ever.</p>
-        </div>
-
-        <div class="pstep-text">
-          <span class="pstep-label">Step 2 of 6 &nbsp;·&nbsp; Farm to Your Doorstep</span>
-          <h2>Pollination<br />&amp; Flowering</h2>
-          <p>Bees and butterflies do their ancient work. We never intervene — the blossoms that survive to fruit are the strongest the tree can offer.</p>
-        </div>
-
-        <div class="pstep-text">
-          <span class="pstep-label">Step 3 of 6 &nbsp;·&nbsp; Farm to Your Doorstep</span>
-          <h2>Fruit Set</h2>
-          <p>Tiny green mangoes begin forming on every branch. We monitor each cluster, thinning where needed so every remaining fruit gets the tree's full nourishment.</p>
-        </div>
-
-        <div class="pstep-text">
-          <span class="pstep-label">Step 4 of 6 &nbsp;·&nbsp; Farm to Your Doorstep</span>
-          <h2>Hand-Picked<br />at Peak</h2>
-          <p>Our farmers examine every mango by hand — the right give, the right colour, the right smell at the stem. Only when it's perfect does it leave the tree.</p>
-        </div>
-
-        <div class="pstep-text">
-          <span class="pstep-label">Step 5 of 6 &nbsp;·&nbsp; Farm to Your Doorstep</span>
-          <h2>Natural Ripening<br />on Straw</h2>
-          <p>Laid on dry paddy straw — the traditional method. They ripen at their own pace, uniformly, with no carbide or chemical agents. The straw breathes with the fruit.</p>
-        </div>
-
-        <div class="pstep-text">
-          <span class="pstep-label">Step 6 of 6 &nbsp;·&nbsp; Farm to Your Doorstep</span>
-          <h2>Delivered<br />to Hyderabad</h2>
-          <p>Packed carefully and dispatched same-day. From our Bobbili farm to your door — the whole journey done with care, so the first bite feels exactly like it should.</p>
-        </div>
-
-      </div>
-
-      <!-- ── Progress dots ── -->
-      <div class="pstep-dots" id="pstep-dots">
-        <div class="pstep-dot active" data-step="0"></div>
-        <div class="pstep-dot" data-step="1"></div>
-        <div class="pstep-dot" data-step="2"></div>
-        <div class="pstep-dot" data-step="3"></div>
-        <div class="pstep-dot" data-step="4"></div>
-        <div class="pstep-dot" data-step="5"></div>
-      </div>
-
-      <!-- ── Scroll hint ── -->
-      <div class="pstep-scroll-hint" id="pstep-hint">
-        <i class="fa-solid fa-arrow-down fa-xs"></i> Scroll to explore
+      <div class="hslide-hint" id="proc-hint">
+        <i class="fa-solid fa-arrow-right fa-xs"></i> Scroll to explore
       </div>
 
     </div>
@@ -863,126 +711,125 @@
     <h2 class="banner-en">Our Mango Varieties</h2>
   </div>
 
-  <!-- ══════════════════════════════════ VARIETIES — horizontal scroll ══════════════════════════════════ -->
+  <!-- ══════════════════════════════════ VARIETIES — horizontal slides ══════════════════════════════════ -->
   <div id="varieties">
-    <div class="varieties-sticky">
-      <div class="varieties-track" id="varieties-track">
+    <div class="hscroll-sticky">
+      <div class="hscroll-track" id="var-track">
 
         <!-- ══ SLIDE 1: Mettavalasa Peechu ══ -->
-        <div class="variety-slide" style="background:#FEF8F0; color:#1C1208;">
-          <div class="vs-num" style="color:rgba(245,166,35,0.1);">01</div>
-          <div class="vs-content">
-            <span class="vs-eyebrow" style="color:#E07B39;">Signature Variety · Bobbili Farms</span>
-            <span class="vs-telugu" style="color:#2D5016;">మెట్టవలస పీచు</span>
-            <div class="vs-name">Mettavalasa<br />Peechu</div>
-            <span class="vs-meaning">— The Fibrous King from the Hills</span>
-            <p class="vs-desc">Named after the elevated village of Mettavalasa near Bobbili. Grown at higher altitude where cool nights concentrate sugars to extraordinary levels. The pulp is distinctively fibrous — thick, silky strands carrying an intense floral sweetness. A mango that must be sucked, not sliced. A true childhood ritual.</p>
-            <div class="vs-attrs" style="color:#2D5016;">
-              <span class="vs-attr"><i class="fa-solid fa-droplet"></i> Brix 20–24</span>
-              <span class="vs-attr"><i class="fa-solid fa-wheat-awn"></i> Fibrous Pulp</span>
-              <span class="vs-attr"><i class="fa-solid fa-location-dot"></i> Mettavalasa, Bobbili</span>
-              <span class="vs-attr"><i class="fa-solid fa-sun"></i> May – June</span>
+        <div class="hslide">
+          <!-- TODO: replace div below with <img src="assets/mettavalasa-peechu.jpg" class="hslide-bg" alt="Mettavalasa Peechu"> -->
+          <div class="hslide-bg" style="background:linear-gradient(160deg,#0f2b06 0%,#2D5016 45%,#6b4200 100%);"></div>
+          <div class="hslide-overlay"></div>
+          <div class="hslide-num">01</div>
+          <div class="hslide-body">
+            <span class="hslide-label">Signature Variety · Bobbili Farms</span>
+            <span class="hslide-telugu">మెట్టవలస పీచు</span>
+            <h2>Mettavalasa<br />Peechu</h2>
+            <span class="hslide-meaning">— The Fibrous King from the Hills</span>
+            <p>Named after the elevated village near Bobbili. Cool nights concentrate sugars to extraordinary levels. Thick, silky fibrous strands carry an intense floral sweetness. A mango meant to be sucked, not sliced — a true childhood ritual you never forget.</p>
+            <div class="hslide-attrs">
+              <span class="hslide-attr"><i class="fa-solid fa-droplet"></i> Brix 20–24</span>
+              <span class="hslide-attr"><i class="fa-solid fa-wheat-awn"></i> Fibrous Pulp</span>
+              <span class="hslide-attr"><i class="fa-solid fa-location-dot"></i> Mettavalasa, Bobbili</span>
+              <span class="hslide-attr"><i class="fa-solid fa-sun"></i> May – June</span>
             </div>
-            <div class="vs-footer">
+            <div class="hslide-footer">
               <a href="https://youtu.be/7hCDUypZMlI" target="_blank" rel="noopener" class="watch-link"><i class="fa-brands fa-youtube"></i> Watch the Story</a>
-              <span style="font-size:0.8rem;color:#E07B39;font-weight:700;">✦ Summer 2026</span>
+              <span style="font-size:0.78rem;color:var(--mango);font-weight:700;">✦ Summer 2026</span>
             </div>
           </div>
-          <div class="vs-visual">
-            <div class="vs-visual-inner" style="background:linear-gradient(160deg,#FFF3CD,#FFD166,#F4A835);">
-              <i class="fa-solid fa-apple-whole" style="color:#b85c00;"></i>
-            </div>
-          </div>
-          <div class="vs-progress" id="vs-progress">
-            <div class="vs-dot active" style="background:#E07B39;"></div>
-            <div class="vs-dot" style="background:#E07B39;"></div>
-            <div class="vs-dot" style="background:#E07B39;"></div>
-            <div class="vs-dot" style="background:#E07B39;"></div>
-          </div>
-          <div class="vs-hint"><i class="fa-solid fa-arrow-right fa-xs"></i> Scroll to explore</div>
         </div>
 
         <!-- ══ SLIDE 2: Bobbili Peechu ══ -->
-        <div class="variety-slide" style="background:#FFF4E8; color:#1C1208;">
-          <div class="vs-num" style="color:rgba(224,123,57,0.1);">02</div>
-          <div class="vs-content">
-            <span class="vs-eyebrow" style="color:#c05a00;">Heritage Variety · Same Land, Generations</span>
-            <span class="vs-telugu" style="color:#2D5016;">బొబ్బిలి పీచు</span>
-            <div class="vs-name">Bobbili<br />Peechu</div>
-            <span class="vs-meaning">— The Pride of Bobbili</span>
-            <p class="vs-desc">Born from the red laterite soil of Bobbili, grown on the same land for generations. Rich amber pulp with finer fibres — almost like threads of pure flavour. Local farmers call it "the mango that tastes like memory." Best enjoyed the traditional way: squeezed and sipped straight from the skin.</p>
-            <div class="vs-attrs" style="color:#2D5016;">
-              <span class="vs-attr"><i class="fa-solid fa-droplet"></i> Brix 19–23</span>
-              <span class="vs-attr"><i class="fa-solid fa-wheat-awn"></i> Fine-Fibrous</span>
-              <span class="vs-attr"><i class="fa-solid fa-location-dot"></i> Bobbili</span>
-              <span class="vs-attr"><i class="fa-solid fa-sun"></i> May – June</span>
+        <div class="hslide">
+          <!-- TODO: replace div below with <img src="assets/bobbili-peechu.jpg" class="hslide-bg" alt="Bobbili Peechu"> -->
+          <div class="hslide-bg" style="background:linear-gradient(160deg,#3d1200 0%,#7B3F00 50%,#d4820a 100%);"></div>
+          <div class="hslide-overlay"></div>
+          <div class="hslide-num">02</div>
+          <div class="hslide-body">
+            <span class="hslide-label">Heritage Variety · Same Land, Generations</span>
+            <span class="hslide-telugu">బొబ్బిలి పీచు</span>
+            <h2>Bobbili<br />Peechu</h2>
+            <span class="hslide-meaning">— The Pride of Bobbili</span>
+            <p>Born from the red laterite soil of Bobbili, grown on the same land for generations. Rich amber pulp, finer fibres — almost threads of pure flavour. Farmers call it "the mango that tastes like memory." Best squeezed and sipped straight from the skin.</p>
+            <div class="hslide-attrs">
+              <span class="hslide-attr"><i class="fa-solid fa-droplet"></i> Brix 19–23</span>
+              <span class="hslide-attr"><i class="fa-solid fa-wheat-awn"></i> Fine-Fibrous</span>
+              <span class="hslide-attr"><i class="fa-solid fa-location-dot"></i> Bobbili</span>
+              <span class="hslide-attr"><i class="fa-solid fa-sun"></i> May – June</span>
             </div>
-            <div class="vs-footer">
+            <div class="hslide-footer">
               <a href="https://youtu.be/7hCDUypZMlI" target="_blank" rel="noopener" class="watch-link"><i class="fa-brands fa-youtube"></i> Watch the Story</a>
-              <span style="font-size:0.8rem;color:#c05a00;font-weight:700;">✦ Summer 2026</span>
-            </div>
-          </div>
-          <div class="vs-visual">
-            <div class="vs-visual-inner" style="background:linear-gradient(160deg,#FFF8E1,#FFCC80,#FF8F00);">
-              <i class="fa-solid fa-star" style="color:#7b3a00;"></i>
+              <span style="font-size:0.78rem;color:var(--mango);font-weight:700;">✦ Summer 2026</span>
             </div>
           </div>
         </div>
 
         <!-- ══ SLIDE 3: Kothapalli Kobbari ══ -->
-        <div class="variety-slide" style="background:#FFFDE7; color:#1C1208;">
-          <div class="vs-num" style="color:rgba(255,193,7,0.12);">03</div>
-          <div class="vs-content">
-            <span class="vs-eyebrow" style="color:#c67b00;">Exotic · Nearly Unknown Outside Vizianagaram</span>
-            <span class="vs-telugu" style="color:#2D5016;">కొత్తపల్లి కొబ్బరి</span>
-            <div class="vs-name">Kothapalli<br />Kobbari</div>
-            <span class="vs-meaning">— The Coconut Mango</span>
-            <p class="vs-desc">"Kobbari" means coconut in Telugu — and this variety earns that name completely. Its cream-textured, fiberless flesh carries a faint but unmistakable coconut undertone beneath a rich mango sweetness. Originating from Kothapalli village, nearly unknown outside the district. An experience, not just a fruit.</p>
-            <div class="vs-attrs" style="color:#2D5016;">
-              <span class="vs-attr"><i class="fa-solid fa-droplet"></i> Brix 21–25</span>
-              <span class="vs-attr"><i class="fa-solid fa-wheat-awn"></i> Fiberless</span>
-              <span class="vs-attr"><i class="fa-solid fa-location-dot"></i> Kothapalli, Bobbili</span>
-              <span class="vs-attr"><i class="fa-solid fa-sun"></i> June – July</span>
+        <div class="hslide">
+          <!-- TODO: replace div below with <img src="assets/kothapalli-kobbari.jpg" class="hslide-bg" alt="Kothapalli Kobbari"> -->
+          <div class="hslide-bg" style="background:linear-gradient(160deg,#1a1200 0%,#5a3e00 45%,#c49200 100%);"></div>
+          <div class="hslide-overlay"></div>
+          <div class="hslide-num">03</div>
+          <div class="hslide-body">
+            <span class="hslide-label">Exotic · Nearly Unknown Outside Vizianagaram</span>
+            <span class="hslide-telugu">కొత్తపల్లి కొబ్బరి</span>
+            <h2>Kothapalli<br />Kobbari</h2>
+            <span class="hslide-meaning">— The Coconut Mango</span>
+            <p>"Kobbari" means coconut in Telugu — and this variety earns that name completely. Fiberless, cream-textured pulp carries a faint but unmistakable coconut undertone beneath the rich mango sweetness. Originating from Kothapalli village. Nearly unknown outside the district. An experience, not just a fruit.</p>
+            <div class="hslide-attrs">
+              <span class="hslide-attr"><i class="fa-solid fa-droplet"></i> Brix 21–25</span>
+              <span class="hslide-attr"><i class="fa-solid fa-wheat-awn"></i> Fiberless</span>
+              <span class="hslide-attr"><i class="fa-solid fa-location-dot"></i> Kothapalli, Bobbili</span>
+              <span class="hslide-attr"><i class="fa-solid fa-sun"></i> June – July</span>
             </div>
-            <div class="vs-footer">
-              <span style="font-size:0.8rem;color:#c67b00;font-weight:700;">✦ Summer 2026</span>
-            </div>
-          </div>
-          <div class="vs-visual">
-            <div class="vs-visual-inner" style="background:linear-gradient(160deg,#FFF9E5,#FFE082,#FFC107);">
-              <i class="fa-solid fa-droplets" style="color:#8a5700;"></i>
+            <div class="hslide-footer">
+              <span style="font-size:0.78rem;color:var(--mango);font-weight:700;">✦ Summer 2026</span>
             </div>
           </div>
         </div>
 
         <!-- ══ SLIDE 4: Imam Pasand ══ -->
-        <div class="variety-slide" style="background:#1C1208; color:#FEF8F0;">
-          <div class="vs-num" style="color:rgba(245,166,35,0.07);">04</div>
-          <div class="vs-content">
-            <span class="vs-eyebrow" style="color:#F5A623;">Royal · The Deccan's Finest</span>
-            <span class="vs-telugu" style="color:#F5A623;">ఇమామ్ పసంద్</span>
-            <div class="vs-name" style="color:white;">Imam<br />Pasand</div>
-            <span class="vs-meaning" style="color:rgba(255,255,255,0.45);">— Favourite of the Imam · Also known as Himayat</span>
-            <p class="vs-desc" style="color:rgba(255,255,255,0.75);">The royal mango of the Deccan. Saffron-hued, zero-fibre, creamy pulp in an extraordinarily large fruit — a single mango can weigh up to a kilogram. Its sweetness is profound yet perfectly balanced, never cloying. Grown for centuries across the Deccan region, available only for a few fleeting weeks at peak summer.</p>
-            <div class="vs-attrs" style="color:#F5A623;">
-              <span class="vs-attr" style="border-color:#F5A623; color:#F5A623;"><i class="fa-solid fa-droplet"></i> Brix 18–22</span>
-              <span class="vs-attr" style="border-color:#F5A623; color:#F5A623;"><i class="fa-solid fa-wheat-awn"></i> Fiberless · Creamy</span>
-              <span class="vs-attr" style="border-color:#F5A623; color:#F5A623;"><i class="fa-solid fa-location-dot"></i> Bobbili</span>
-              <span class="vs-attr" style="border-color:#F5A623; color:#F5A623;"><i class="fa-solid fa-sun"></i> June – July</span>
-            </div>
-            <div class="vs-footer">
-              <a href="https://youtu.be/sCrphwzamw8" target="_blank" rel="noopener" style="color:#F5A623;" class="watch-link"><i class="fa-brands fa-youtube"></i> Watch the Story</a>
-              <span style="font-size:0.8rem;color:#F5A623;font-weight:700;">✦ Summer 2026</span>
-            </div>
+        <div class="hslide">
+          <!-- TODO: replace div below with <img src="assets/imam-pasand.jpg" class="hslide-bg" alt="Imam Pasand"> -->
+          <div class="hslide-bg" style="background:linear-gradient(160deg,#0a0602 0%,#1C1208 50%,#4a2400 100%);"></div>
+          <div class="hslide-overlay" style="background:linear-gradient(to top,rgba(6,3,1,0.97) 0%,rgba(6,3,1,0.45) 45%,transparent 100%);"></div>
+          <div class="hslide-num" style="color:rgba(245,166,35,0.05);">04</div>
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:1;">
+            <i class="fa-solid fa-crown" style="font-size:clamp(8rem,18vw,20rem);color:rgba(245,166,35,0.07);"></i>
           </div>
-          <div class="vs-visual">
-            <div class="vs-visual-inner" style="background:linear-gradient(160deg,#3a1a08,#6b2d00);">
-              <i class="fa-solid fa-crown" style="color:#F5A623;"></i>
+          <div class="hslide-body">
+            <span class="hslide-label">Royal · The Deccan's Finest</span>
+            <span class="hslide-telugu">ఇమామ్ పసంద్</span>
+            <h2>Imam<br />Pasand</h2>
+            <span class="hslide-meaning">— Favourite of the Imam · Also known as Himayat</span>
+            <p>The royal mango of the Deccan. Saffron-hued, zero-fibre, creamy pulp — a single fruit can weigh up to a kilogram. Sweetness that is profound yet balanced, never cloying. Grown for centuries across the Deccan, available only for a few fleeting weeks at peak summer. Rare. Worth every bite.</p>
+            <div class="hslide-attrs">
+              <span class="hslide-attr"><i class="fa-solid fa-droplet"></i> Brix 18–22</span>
+              <span class="hslide-attr"><i class="fa-solid fa-wheat-awn"></i> Fiberless · Creamy</span>
+              <span class="hslide-attr"><i class="fa-solid fa-location-dot"></i> Bobbili</span>
+              <span class="hslide-attr"><i class="fa-solid fa-sun"></i> June – July</span>
+            </div>
+            <div class="hslide-footer">
+              <a href="https://youtu.be/sCrphwzamw8" target="_blank" rel="noopener" class="watch-link"><i class="fa-brands fa-youtube"></i> Watch the Story</a>
+              <span style="font-size:0.78rem;color:var(--mango);font-weight:700;">✦ Summer 2026</span>
             </div>
           </div>
         </div>
 
       </div><!-- end track -->
+
+      <div class="hslide-dots" id="var-dots">
+        <div class="hslide-dot active"></div>
+        <div class="hslide-dot"></div>
+        <div class="hslide-dot"></div>
+        <div class="hslide-dot"></div>
+      </div>
+      <div class="hslide-hint" id="var-hint">
+        <i class="fa-solid fa-arrow-right fa-xs"></i> Scroll to explore
+      </div>
+
     </div><!-- end sticky -->
   </div><!-- end #varieties -->
 
@@ -1045,7 +892,7 @@
       </div>
     </div>
 
-    <img src="aam-final.png" alt="Aamrutham" class="footer-logo" />
+    <img src="Subject.png" alt="Aamrutham" class="footer-logo" />
     <p class="footer-tagline">"Aam + Amrutham — Pure Mango Bliss"</p>
     <ul class="footer-links">
       <li><a href="#story">Our Story</a></li>
@@ -1084,82 +931,31 @@
       breakpoints: { 640: { slidesPerView: 3 }, 1024: { slidesPerView: 6, autoplay: false } },
     });
 
-    // ── Apple-style process sticky scroll ──
-    (function() {
-      const scrollWrap = document.getElementById('process-scroll');
-      if (!scrollWrap) return;
-
-      const imgs    = scrollWrap.querySelectorAll('.pstep-img');
-      const texts   = scrollWrap.querySelectorAll('.pstep-text');
-      const dots    = scrollWrap.querySelectorAll('.pstep-dot');
-      const delivery = document.getElementById('pstep-delivery');
-      const hint    = document.getElementById('pstep-hint');
-      const STEPS   = imgs.length; // 6
-      let current   = 0;
-
-      function activate(idx) {
-        if (idx === current) return;
-        current = idx;
-        imgs.forEach((el, i)   => el.classList.toggle('active', i === idx));
-        texts.forEach((el, i)  => el.classList.toggle('active', i === idx));
-        dots.forEach((el, i)   => el.classList.toggle('active', i === idx));
-        if (delivery) delivery.classList.toggle('active', idx === STEPS - 1);
-      }
-
-      window.addEventListener('scroll', function() {
-        const rect = scrollWrap.getBoundingClientRect();
-        const scrolled  = -rect.top;
-        const scrollable = scrollWrap.offsetHeight - window.innerHeight;
-        if (scrolled < 0 || scrolled > scrollable) return;
-
-        const progress = scrolled / scrollable;                 // 0 → 1
-        const idx = Math.min(STEPS - 1, Math.floor(progress * STEPS));
-        activate(idx);
-
-        // Hide scroll hint after first step
-        if (hint) hint.style.opacity = idx > 0 ? '0' : '1';
-      }, { passive: true });
-
-      // Dot click → jump to that step
-      dots.forEach(function(dot) {
-        dot.addEventListener('click', function() {
-          const step = parseInt(dot.dataset.step);
-          const scrollable = scrollWrap.offsetHeight - window.innerHeight;
-          const target = scrollWrap.offsetTop + (step / STEPS) * scrollable + 1;
-          window.scrollTo({ top: target, behavior: 'smooth' });
-        });
-      });
-    })();
-
-    // ── Varieties horizontal scroll ──
-    (function() {
-      const wrap  = document.getElementById('varieties');
-      const track = document.getElementById('varieties-track');
-      const dots  = document.querySelectorAll('.vs-dot');
-      const hint  = wrap ? wrap.querySelector('.vs-hint') : null;
+    // ── Horizontal scroll helper (used by both process + varieties) ──
+    function initHScroll(wrapId, trackId, dotsId, hintId, SLIDES) {
+      var wrap  = document.getElementById(wrapId);
+      var track = document.getElementById(trackId);
+      var dots  = document.getElementById(dotsId) ? document.getElementById(dotsId).querySelectorAll('.hslide-dot') : [];
+      var hint  = document.getElementById(hintId);
       if (!wrap || !track) return;
-
-      const SLIDES = 4;
-      let lastIdx = -1;
-
+      var lastIdx = -1;
       window.addEventListener('scroll', function() {
-        const rect     = wrap.getBoundingClientRect();
-        const scrolled = -rect.top;
-        const scrollable = wrap.offsetHeight - window.innerHeight;
+        var rect = wrap.getBoundingClientRect();
+        var scrolled   = -rect.top;
+        var scrollable = wrap.offsetHeight - window.innerHeight;
         if (scrolled < 0 || scrolled > scrollable) return;
-
-        const progress = scrolled / scrollable;
-        const tx = progress * (SLIDES - 1) * window.innerWidth;
-        track.style.transform = 'translateX(-' + tx + 'px)';
-
-        const idx = Math.min(SLIDES - 1, Math.floor(progress * SLIDES));
+        var progress = scrolled / scrollable;
+        track.style.transform = 'translateX(-' + (progress * (SLIDES - 1) * window.innerWidth) + 'px)';
+        var idx = Math.min(SLIDES - 1, Math.floor(progress * SLIDES));
         if (idx !== lastIdx) {
           lastIdx = idx;
           dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
-          if (hint) hint.style.opacity = idx > 0 ? '0' : '0.35';
+          if (hint) hint.style.opacity = idx > 0 ? '0' : '1';
         }
       }, { passive: true });
-    })();
+    }
+    initHScroll('process-scroll', 'proc-track', 'proc-dots', 'proc-hint', 6);
+    initHScroll('varieties',      'var-track',  'var-dots',  'var-hint',  4);
 
     // ── Lifecycle art parallax (moves slower than scroll) ──
     const art = document.getElementById('lifecycle-art');
