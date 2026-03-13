@@ -5,8 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aamrutham — Pure Mango Bliss</title>
   <meta name="description" content="Aamrutham brings you rare, rich-tasting mango varieties and mango-based desserts — straight from Bobbili farms to Hyderabad. Coming Summer 2026." />
-  <link rel="stylesheet" href="style.css" />
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=Noto+Serif+Telugu:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            mango: '#F5A623',
+            'mango-dark': '#E07B39',
+            leaf: '#2D5016',
+            'leaf-light': '#4a7c2f',
+            cream: '#FFF8EC',
+            'cream-dark': '#F5EDD8',
+            bark: '#7B3F00',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- AOS — Animate on Scroll -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+
+  <!-- Swiper — Touch Carousels -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <!-- Font Awesome — Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Custom CSS (overrides & unique styles) -->
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -117,7 +149,7 @@
   <section id="story">
     <div class="story-grid">
 
-      <div class="story-text fade-up">
+      <div class="story-text" data-aos="fade-right">
         <p class="section-eyebrow">Our Story</p>
         <h2 class="section-title">Born from a boy's love<br />for mangoes</h2>
 
@@ -146,7 +178,7 @@
         </p>
       </div>
 
-      <div class="story-image-wrap fade-up">
+      <div class="story-image-wrap" data-aos="fade-left" data-aos-delay="150">
         <img src="aam-final.png" alt="Aamrutham logo — boy and girl under mango tree" />
         <div class="story-badge">
           ✦ Natural Farming · No Chemicals
@@ -159,30 +191,58 @@
   <!-- ═══════════════════════════════════ QUALITY BADGES ══════════════════════════ -->
   <section id="quality">
     <div class="quality-inner">
-      <p class="quality-title">Our Promise to You</p>
-      <div class="badges-grid">
+      <p class="quality-title" data-aos="fade-up">Our Promise to You</p>
 
-        <div class="badge-item fade-up">
-          <div class="badge-icon">🚫🧪</div>
-          <span class="badge-label">Pesticide<br />Free</span>
+      <!-- Swiper carousel (scrollable on mobile, grid on desktop) -->
+      <div class="swiper badges-swiper" data-aos="fade-up" data-aos-delay="100">
+        <div class="swiper-wrapper">
+
+          <div class="swiper-slide">
+            <div class="badge-item">
+              <div class="badge-icon"><i class="fa-solid fa-ban fa-lg" style="color:#F5A623;"></i></div>
+              <span class="badge-label">Pesticide<br />Free</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="badge-item">
+              <div class="badge-icon"><i class="fa-solid fa-hands fa-lg" style="color:#F5A623;"></i></div>
+              <span class="badge-label">Hand Graded<br />for Quality</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="badge-item">
+              <div class="badge-icon"><i class="fa-solid fa-sun fa-lg" style="color:#F5A623;"></i></div>
+              <span class="badge-label">Peak Season<br />Harvest</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="badge-item">
+              <div class="badge-icon"><i class="fa-solid fa-leaf fa-lg" style="color:#F5A623;"></i></div>
+              <span class="badge-label">Naturally<br />Ripened</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="badge-item">
+              <div class="badge-icon"><i class="fa-solid fa-seedling fa-lg" style="color:#F5A623;"></i></div>
+              <span class="badge-label">Own Farm<br />Bobbili</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="badge-item">
+              <div class="badge-icon"><i class="fa-solid fa-truck-fast fa-lg" style="color:#F5A623;"></i></div>
+              <span class="badge-label">Same-Day<br />Delivery</span>
+            </div>
+          </div>
+
         </div>
-
-        <div class="badge-item fade-up" style="transition-delay: 0.1s">
-          <div class="badge-icon">🤲</div>
-          <span class="badge-label">Hand Graded<br />for Quality</span>
-        </div>
-
-        <div class="badge-item fade-up" style="transition-delay: 0.2s">
-          <div class="badge-icon">🌞</div>
-          <span class="badge-label">Peak Season<br />Harvest</span>
-        </div>
-
-        <div class="badge-item fade-up" style="transition-delay: 0.3s">
-          <div class="badge-icon">🥭</div>
-          <span class="badge-label">Naturally<br />Ripened</span>
-        </div>
-
+        <div class="swiper-pagination badges-pagination"></div>
       </div>
+
     </div>
   </section>
 
@@ -194,30 +254,30 @@
 
       <div class="process-steps">
 
-        <div class="process-step fade-up">
+        <div class="process-step" data-aos="fade-up" data-aos-delay="0">
           <div class="process-number">1</div>
-          <div class="process-img placeholder" style="background: linear-gradient(135deg,#d4edda,#a8d5b5);">🌱</div>
+          <div class="process-img placeholder" style="background: linear-gradient(135deg,#d4edda,#a8d5b5);"><i class="fa-solid fa-seedling" style="font-size:3rem;color:#2D5016;"></i></div>
           <h3>Natural Farming</h3>
           <p>Grown without pesticides on our own land in Bobbili, Andhra Pradesh.</p>
         </div>
 
-        <div class="process-step fade-up" style="transition-delay:0.1s">
+        <div class="process-step" data-aos="fade-up" data-aos-delay="100">
           <div class="process-number">2</div>
-          <div class="process-img placeholder" style="background: linear-gradient(135deg,#fff3cd,#ffe082);">🥭</div>
+          <div class="process-img placeholder" style="background: linear-gradient(135deg,#fff3cd,#ffe082);"><i class="fa-solid fa-hand-holding" style="font-size:3rem;color:#E07B39;"></i></div>
           <h3>Peak Season Plucking</h3>
           <p>Hand-picked at perfect ripeness — only when the fruit is ready, never before.</p>
         </div>
 
-        <div class="process-step fade-up" style="transition-delay:0.2s">
+        <div class="process-step" data-aos="fade-up" data-aos-delay="200">
           <div class="process-number">3</div>
-          <div class="process-img placeholder" style="background: linear-gradient(135deg,#fce4ec,#f8bbd0);">📦</div>
+          <div class="process-img placeholder" style="background: linear-gradient(135deg,#fce4ec,#f8bbd0);"><i class="fa-solid fa-box-open" style="font-size:3rem;color:#c2185b;"></i></div>
           <h3>Careful Packaging</h3>
           <p>Each mango hand-graded by size, wrapped to prevent bruising in transit.</p>
         </div>
 
-        <div class="process-step fade-up" style="transition-delay:0.3s">
+        <div class="process-step" data-aos="fade-up" data-aos-delay="300">
           <div class="process-number">4</div>
-          <div class="process-img placeholder" style="background: linear-gradient(135deg,#e3f2fd,#90caf9);">🚚</div>
+          <div class="process-img placeholder" style="background: linear-gradient(135deg,#e3f2fd,#90caf9);"><i class="fa-solid fa-truck-fast" style="font-size:3rem;color:#1565c0;"></i></div>
           <h3>Same-Day Delivery</h3>
           <p>Dispatched fresh to Hyderabad. From farm to your table with love.</p>
         </div>
@@ -229,7 +289,7 @@
   <!-- ═══════════════════════════════════ VARIETIES ════════════════════════════════ -->
   <section id="varieties">
     <div class="varieties-inner">
-      <div class="varieties-header fade-up">
+      <div class="varieties-header" data-aos="fade-up">
         <p class="section-eyebrow">Coming This Summer</p>
         <h2 class="section-title">Mangoes you've never tasted</h2>
         <p>
@@ -241,17 +301,17 @@
       <div class="varieties-grid">
 
         <!-- Variety 1: Banginapalli -->
-        <div class="variety-card fade-up">
-          <div class="variety-img placeholder" style="background: linear-gradient(160deg,#FFF9C4 0%,#FFD54F 60%,#FFB300 100%); height:220px; display:flex; align-items:center; justify-content:center; font-size:5rem;">🥭</div>
+        <div class="variety-card" data-aos="fade-up" data-aos-delay="0">
+          <div class="variety-img placeholder" style="background: linear-gradient(160deg,#FFF9C4 0%,#FFD54F 60%,#FFB300 100%); height:220px; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-apple-whole" style="font-size:5rem;color:#E07B39;"></i></div>
           <div class="variety-body">
             <span class="variety-tag">Juicy · Signature</span>
             <h3>Banginapalli</h3>
             <div class="telugu-name">బంగినపల్లి — The Queen of Andhra</div>
             <p>Soft, fiberless flesh with a golden hue and a delicate honey-sweet aroma. The pride of Andhra Pradesh — impossible to eat just one.</p>
             <div class="variety-attrs">
-              <span class="attr">🍯 Brix 18–22</span>
-              <span class="attr">🌾 Fiberless</span>
-              <span class="attr">📍 Bobbili</span>
+              <span class="attr"><i class="fa-solid fa-droplet"></i> Brix 18–22</span>
+              <span class="attr"><i class="fa-solid fa-wheat-awn"></i> Fiberless</span>
+              <span class="attr"><i class="fa-solid fa-location-dot"></i> Bobbili</span>
             </div>
           </div>
           <div class="variety-footer">
@@ -261,17 +321,17 @@
         </div>
 
         <!-- Variety 2: Suvarnarekha -->
-        <div class="variety-card fade-up" style="transition-delay:0.15s">
-          <div class="variety-img placeholder" style="background: linear-gradient(160deg,#FFFDE7 0%,#FFF176 60%,#F9A825 100%); height:220px; display:flex; align-items:center; justify-content:center; font-size:5rem;">🥭</div>
+        <div class="variety-card" data-aos="fade-up" data-aos-delay="150">
+          <div class="variety-img placeholder" style="background: linear-gradient(160deg,#FFFDE7 0%,#FFF176 60%,#F9A825 100%); height:220px; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-star" style="font-size:5rem;color:#F9A825;"></i></div>
           <div class="variety-body">
             <span class="variety-tag">Exotic · Aamrutham Pick</span>
             <h3>Suvarnarekha</h3>
             <div class="telugu-name">సువర్ణరేఖ — The Golden Line</div>
             <p>Named for the golden streak on its skin, this gem is intensely sweet with a rich, dense pulp and intoxicating fragrance unlike any other.</p>
             <div class="variety-attrs">
-              <span class="attr">🍯 Brix 20–24</span>
-              <span class="attr">🌸 Aromatic</span>
-              <span class="attr">📍 Bobbili</span>
+              <span class="attr"><i class="fa-solid fa-droplet"></i> Brix 20–24</span>
+              <span class="attr"><i class="fa-solid fa-wind"></i> Aromatic</span>
+              <span class="attr"><i class="fa-solid fa-location-dot"></i> Bobbili</span>
             </div>
           </div>
           <div class="variety-footer">
@@ -281,17 +341,17 @@
         </div>
 
         <!-- Variety 3: Rasalu -->
-        <div class="variety-card fade-up" style="transition-delay:0.3s">
-          <div class="variety-img placeholder" style="background: linear-gradient(160deg,#FFF8E1 0%,#FFCC02 60%,#FF8F00 100%); height:220px; display:flex; align-items:center; justify-content:center; font-size:5rem;">🥭</div>
+        <div class="variety-card" data-aos="fade-up" data-aos-delay="300">
+          <div class="variety-img placeholder" style="background: linear-gradient(160deg,#FFF8E1 0%,#FFCC02 60%,#FF8F00 100%); height:220px; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-glass-water-droplet" style="font-size:5rem;color:#FF8F00;"></i></div>
           <div class="variety-body">
             <span class="variety-tag">Juicy · Dessert</span>
             <h3>Rasalu</h3>
             <div class="telugu-name">రసాలు — The Juice King</div>
             <p>Bursting with juice and warmth, Rasalu is the mango for dessert lovers. The pulp is soft as ice cream, sweet as nectar. A true summer ritual.</p>
             <div class="variety-attrs">
-              <span class="attr">🍯 Brix 19–23</span>
-              <span class="attr">💧 Ultra Juicy</span>
-              <span class="attr">📍 Bobbili</span>
+              <span class="attr"><i class="fa-solid fa-droplet"></i> Brix 19–23</span>
+              <span class="attr"><i class="fa-solid fa-droplets"></i> Ultra Juicy</span>
+              <span class="attr"><i class="fa-solid fa-location-dot"></i> Bobbili</span>
             </div>
           </div>
           <div class="variety-footer">
@@ -318,7 +378,7 @@
       <ellipse cx="600" cy="80" rx="25" ry="65" fill="#F5A623" transform="rotate(10 600 80)"/>
     </svg>
 
-    <div class="cta-inner fade-up">
+    <div class="cta-inner" data-aos="zoom-in">
       <p class="cta-eyebrow">✦ Summer 2026 · Hyderabad ✦</p>
       <h2 class="cta-title">
         Be the first to taste<br />
@@ -370,25 +430,39 @@
     </svg>
   </a>
 
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <!-- AOS JS -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
   <!-- ═══════════════════════════════════ JS ════════════════════════════════════════ -->
   <script>
-    // Navbar scroll effect
+    // ── Navbar scroll effect ──
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('scrolled', window.scrollY > 60);
     });
 
-    // Fade-up on scroll
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.15 });
+    // ── AOS init ──
+    AOS.init({
+      duration: 700,
+      easing: 'ease-out-cubic',
+      once: true,
+      offset: 80,
+    });
 
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    // ── Swiper: Quality Badges ──
+    new Swiper('.badges-swiper', {
+      slidesPerView: 2,
+      spaceBetween: 20,
+      loop: true,
+      autoplay: { delay: 2500, disableOnInteraction: false },
+      pagination: { el: '.badges-pagination', clickable: true },
+      breakpoints: {
+        640:  { slidesPerView: 3 },
+        1024: { slidesPerView: 6, autoplay: false },
+      },
+    });
   </script>
 
 </body>

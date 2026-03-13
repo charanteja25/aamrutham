@@ -696,6 +696,12 @@ footer {
   font-size: 0.75rem;
 }
 
+/* ── Swiper badges override ── */
+.badges-swiper { padding-bottom: 2.5rem !important; }
+.badges-swiper .swiper-slide { display: flex; justify-content: center; }
+.badges-pagination .swiper-pagination-bullet { background: rgba(245,166,35,0.5); }
+.badges-pagination .swiper-pagination-bullet-active { background: var(--mango); }
+
 /* ── WhatsApp Float ── */
 .whatsapp-float {
   position: fixed;
