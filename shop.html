@@ -186,6 +186,21 @@
     }
     .price-note { font-size: 0.75rem; color: #aaa; }
 
+    /* ── Buy button ── */
+    .btn-buy {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--mango); color: #1a0a00;
+      padding: 0.65rem 1.4rem; border-radius: 50px;
+      font-weight: 700; font-size: 0.9rem; text-decoration: none;
+      border: none; cursor: pointer; transition: all 0.25s;
+      white-space: nowrap;
+    }
+    .btn-buy:hover {
+      background: var(--mango-dark); color: white;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(224,123,57,0.3);
+    }
+
     /* ── Delivery info bar ── */
     .delivery-bar {
       background: var(--cream-dark); padding: 1rem 2rem;
@@ -280,7 +295,9 @@
               <div class="price" id="price-mettavalasa">₹699</div>
               <div class="price-note">incl. delivery</div>
             </div>
-            <div zs-buy-button data-embed-id="ay2xWj_DYEVlFhNS2vkJhg"></div>
+            <a class="btn-buy" href="https://aamrutham.zohoshoppe.com/product/mettavalasa-peechu" target="_blank" rel="noopener">
+              <i class="fa-solid fa-cart-shopping"></i> Buy Now
+            </a>
           </div>
         </div>
       </div>
@@ -319,7 +336,9 @@
               <div class="price" id="price-bobbiligeechu">₹699</div>
               <div class="price-note">incl. delivery</div>
             </div>
-            <div zs-buy-button data-embed-id="BhAgBkc7u0j85TcypLHi-w"></div>
+            <a class="btn-buy" href="https://aamrutham.zohoshoppe.com/product/bobbili-peechu" target="_blank" rel="noopener">
+              <i class="fa-solid fa-cart-shopping"></i> Buy Now
+            </a>
           </div>
         </div>
       </div>
@@ -358,7 +377,9 @@
               <div class="price" id="price-kobbari">₹849</div>
               <div class="price-note">incl. delivery</div>
             </div>
-            <div zs-buy-button data-embed-id="KQRxilXk5M_y_FpVB239ow"></div>
+            <a class="btn-buy" href="https://aamrutham.zohoshoppe.com/product/kothapalli-kobbari" target="_blank" rel="noopener">
+              <i class="fa-solid fa-cart-shopping"></i> Buy Now
+            </a>
           </div>
         </div>
       </div>
@@ -397,7 +418,9 @@
               <div class="price" id="price-imampasand">₹999</div>
               <div class="price-note">incl. delivery</div>
             </div>
-            <div zs-buy-button data-embed-id="r-29lQnXecNAcAnvb7wF4A"></div>
+            <a class="btn-buy" href="https://aamrutham.zohoshoppe.com/product/imam-pasand" target="_blank" rel="noopener">
+              <i class="fa-solid fa-cart-shopping"></i> Buy Now
+            </a>
           </div>
         </div>
       </div>
@@ -416,8 +439,6 @@
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-  <!-- Zoho Commerce Buy Button -->
-  <script type="text/javascript" src="https://store.zohoshoppe.com/zs-buy-button.js"></script>
   <script>
     AOS.init({ duration: 700, easing: 'ease-out-cubic', once: true, offset: 60 });
 
