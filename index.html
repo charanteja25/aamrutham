@@ -39,6 +39,7 @@
     /* ══════════════════════════════════════════════
        REDESIGN OVERRIDES — Manam-inspired
     ══════════════════════════════════════════════ */
+    html { scroll-behavior: smooth; }
     body { background: #FEF8F0; }
 
 
@@ -96,6 +97,7 @@
       display: flex;
       height: 100%;
       will-change: transform;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
     .hslide {
       flex-shrink: 0;
@@ -251,14 +253,16 @@
       #process-scroll, #varieties { height: auto !important; }
       .hscroll-sticky { position: relative !important; height: auto !important; overflow: visible !important; }
       .hscroll-track { flex-direction: column !important; transform: none !important; transition: none !important; }
-      .hslide { width: 100% !important; height: 75vw !important; min-height: 340px !important; max-height: 480px !important; }
-      .hslide-body { position: absolute; width: 100% !important; padding: 1.5rem 1.5rem 3rem !important; }
-      .hslide-body h2 { font-size: clamp(1.4rem, 5vw, 1.8rem); }
+      /* Each slide becomes an image-on-top, content-below card */
+      .hslide { width: 100% !important; height: auto !important; min-height: unset !important; max-height: unset !important; display: flex !important; flex-direction: column !important; }
+      .hslide-bg { position: relative !important; height: 58vw !important; min-height: 200px !important; max-height: 300px !important; flex-shrink: 0 !important; width: 100% !important; }
+      .hslide-overlay { display: none !important; }
+      .hslide-body { position: relative !important; width: 100% !important; padding: 1.25rem 1.25rem 2rem !important; background: #1a0e05 !important; }
+      .hslide-body h2 { font-size: clamp(1.4rem, 5vw, 1.9rem); }
       .hslide-body p { font-size: 0.9rem; }
       .hslide-label { font-size: 0.72rem; }
       .hslide-attr { font-size: 0.72rem; }
-      .hslide-num { font-size: 28vw; }
-      .hslide-hint, .hslide-dots { display: none !important; }
+      .hslide-num, .hslide-hint, .hslide-dots { display: none !important; }
     }
 
     /* ── Footer redesign ── */
@@ -621,7 +625,7 @@
 
   <!-- ══════════════════════════════════ PROCESS BANNER ══════════════════════════════════ -->
   <div id="process" class="section-banner" data-aos="fade-in">
-    <h2 class="banner-en">Farm to Your Doorstep</h2>
+    <h2 class="banner-en" style="background-color: #FEF8F0; color: #2D5016; display: inline-block; padding: 0.3rem 1.2rem; border-radius: 4px;">Farm to Your Doorstep</h2>
   </div>
 
   <!-- ══════════════════════════════════ PROCESS — horizontal slides ══════════════════════════════════ -->
@@ -862,7 +866,7 @@
         Pre-orders open soon. Drop us a message on WhatsApp —<br />
         we'll notify you the moment we're live.
       </p>
-      <a href="https://wa.me/919999999999?text=Hi%20Aamrutham!%20I%20want%20to%20pre-order%20mangoes%20for%20Summer%202026%20🥭" class="btn-whatsapp" target="_blank" rel="noopener">
+      <a href="https://wa.me/9177266273?text=Hi%20Aamrutham!%20I%20want%20to%20pre-order%20mangoes%20for%20Summer%202026%20🥭" class="btn-whatsapp" target="_blank" rel="noopener">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.556 4.117 1.532 5.845L.054 23.486a.5.5 0 00.611.611l5.641-1.478A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.793 9.793 0 01-4.983-1.358l-.356-.213-3.688.966.983-3.595-.233-.37A9.795 9.795 0 012.182 12C2.182 6.569 6.569 2.182 12 2.182S21.818 6.569 21.818 12 17.431 21.818 12 21.818z"/></svg>
         Chat on WhatsApp
       </a>
@@ -960,22 +964,101 @@
       var dots  = document.getElementById(dotsId) ? document.getElementById(dotsId).querySelectorAll('.hslide-dot') : [];
       var hint  = document.getElementById(hintId);
       if (!wrap || !track) return;
-      var lastIdx = -1;
-      window.addEventListener('scroll', function() {
-        if (window.innerWidth <= 768) return; // vertical stack on mobile
-        var rect = wrap.getBoundingClientRect();
-        var scrolled   = -rect.top;
-        var scrollable = wrap.offsetHeight - window.innerHeight;
-        if (scrolled < 0 || scrolled > scrollable) return;
-        var progress = scrolled / scrollable;
-        track.style.transform = 'translateX(-' + (progress * (SLIDES - 1) * window.innerWidth) + 'px)';
-        var idx = Math.min(SLIDES - 1, Math.floor(progress * SLIDES));
-        if (idx !== lastIdx) {
-          lastIdx = idx;
-          dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
-          if (hint) hint.style.opacity = idx > 0 ? '0' : '1';
+
+      var currentSlide = 0;
+      var targetSlide = 0;
+      var isAnimating = false;
+      var isMobile = window.innerWidth <= 768;
+      var touchStartX = 0;
+
+      function updateWrapHeight() {
+        isMobile = window.innerWidth <= 768;
+        if (isMobile) {
+          wrap.style.height = 'auto';
+          return;
         }
-      }, { passive: true });
+        wrap.style.height = (SLIDES * window.innerHeight) + 'px';
+      }
+
+      function smoothScroll() {
+        var easeOutCubic = function(t) {
+          return 1 - Math.pow(1 - t, 3);
+        };
+
+        var startSlide = currentSlide;
+        var slideDiff = targetSlide - startSlide;
+        var duration = 600; // ms
+        var startTime = Date.now();
+
+        function animate() {
+          var elapsed = Date.now() - startTime;
+          var t = Math.min(elapsed / duration, 1);
+          var eased = easeOutCubic(t);
+          currentSlide = startSlide + slideDiff * eased;
+
+          var offset = currentSlide * window.innerWidth;
+          track.style.transform = 'translateX(-' + offset + 'px)';
+
+          var displayIdx = Math.round(currentSlide);
+          dots.forEach(function(d, i) { d.classList.toggle('active', i === displayIdx); });
+          if (hint) hint.style.opacity = displayIdx > 0 ? '0' : '1';
+
+          if (t < 1) {
+            requestAnimationFrame(animate);
+          } else {
+            isAnimating = false;
+          }
+        }
+        requestAnimationFrame(animate);
+      }
+
+      function goToSlide(slideNum) {
+        slideNum = Math.max(0, Math.min(slideNum, SLIDES - 1));
+        if (slideNum !== targetSlide) {
+          targetSlide = slideNum;
+          isAnimating = true;
+          smoothScroll();
+        }
+      }
+
+      // Desktop: snap scroll per slide
+      function onScroll() {
+        if (isMobile || isAnimating) return;
+        var rect = wrap.getBoundingClientRect();
+        var scrolled = -rect.top;
+        var scrollablePerSlide = wrap.offsetHeight / SLIDES;
+        var slideProgress = Math.round(scrolled / scrollablePerSlide);
+        goToSlide(slideProgress);
+      }
+
+      // Mobile: swipe to next/prev slide
+      function onTouchStart(e) {
+        if (!isMobile) return;
+        touchStartX = e.touches[0].clientX;
+      }
+
+      function onTouchEnd(e) {
+        if (!isMobile || isAnimating) return;
+        var touchEndX = e.changedTouches[0].clientX;
+        var diff = touchStartX - touchEndX;
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) goToSlide(targetSlide + 1);
+          else goToSlide(targetSlide - 1);
+        }
+      }
+
+      track.addEventListener('touchstart', onTouchStart);
+      track.addEventListener('touchend', onTouchEnd);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', function() {
+        updateWrapHeight();
+        currentSlide = 0;
+        targetSlide = 0;
+        track.style.transform = 'translateX(0)';
+        onScroll();
+      });
+
+      updateWrapHeight();
     }
     initHScroll('process-scroll', 'proc-track', 'proc-dots', 'proc-hint', 6);
     initHScroll('varieties',      'var-track',  'var-dots',  'var-hint',  4);
