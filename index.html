@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aamrutham — Pure Mango Bliss</title>
+  <meta name="description" content="Aamrutham brings you rare, rich-tasting mango varieties and mango-based desserts — straight from Bobbili farms to Hyderabad. Coming Summer 2026." />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=Noto+Serif+Telugu:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════ NAVBAR ═══════════════════════════════════ -->
+  <nav id="navbar">
+    <a href="#hero">
+      <img src="aam-final.png" alt="Aamrutham" class="nav-logo" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="#story">Our Story</a></li>
+      <li><a href="#process">Farm to You</a></li>
+      <li><a href="#varieties">Varieties</a></li>
+      <li><a href="#cta" class="btn-preorder">Pre-order ✦</a></li>
+    </ul>
+  </nav>
+
+  <!-- ═══════════════════════════════════ HERO ════════════════════════════════════ -->
+  <section id="hero">
+
+    <!-- Mango tree line art background -->
+    <svg class="hero-art" viewBox="0 0 500 700" xmlns="http://www.w3.org/2000/svg" fill="none">
+      <!-- Trunk -->
+      <path d="M250 680 C248 640 252 590 246 540 C240 490 255 460 248 420" stroke="#2D5016" stroke-width="8" stroke-linecap="round"/>
+      <!-- Main branches -->
+      <path d="M248 480 C230 455 200 430 165 410 C140 396 110 398 80 386" stroke="#2D5016" stroke-width="5" stroke-linecap="round"/>
+      <path d="M248 480 C266 455 296 430 331 410 C356 396 386 398 416 386" stroke="#2D5016" stroke-width="5" stroke-linecap="round"/>
+      <path d="M248 440 C244 410 240 380 236 345 C232 315 236 295 232 265" stroke="#2D5016" stroke-width="4" stroke-linecap="round"/>
+      <!-- Sub-branches left -->
+      <path d="M165 410 C140 388 115 362 88 342" stroke="#2D5016" stroke-width="3" stroke-linecap="round"/>
+      <path d="M165 410 C158 382 150 354 140 324" stroke="#2D5016" stroke-width="3" stroke-linecap="round"/>
+      <path d="M80 386 C58 368 40 345 22 322" stroke="#2D5016" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Sub-branches right -->
+      <path d="M331 410 C356 388 381 362 408 342" stroke="#2D5016" stroke-width="3" stroke-linecap="round"/>
+      <path d="M331 410 C338 382 346 354 356 324" stroke="#2D5016" stroke-width="3" stroke-linecap="round"/>
+      <path d="M416 386 C438 368 456 345 474 322" stroke="#2D5016" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Top branches -->
+      <path d="M236 300 C218 274 195 250 168 230" stroke="#2D5016" stroke-width="3" stroke-linecap="round"/>
+      <path d="M236 300 C254 274 277 250 304 230" stroke="#2D5016" stroke-width="3" stroke-linecap="round"/>
+      <path d="M236 265 C234 240 232 215 228 188" stroke="#2D5016" stroke-width="3" stroke-linecap="round"/>
+
+      <!-- Mango fruits — teardrop shapes using ellipses -->
+      <ellipse cx="80" cy="370" rx="12" ry="18" fill="#F5A623" stroke="#E07B39" stroke-width="1" transform="rotate(-15 80 370)"/>
+      <ellipse cx="110" cy="385" rx="10" ry="15" fill="#F5C842" stroke="#E07B39" stroke-width="1" transform="rotate(10 110 385)"/>
+      <ellipse cx="331" cy="392" rx="12" ry="18" fill="#F5A623" stroke="#E07B39" stroke-width="1" transform="rotate(15 331 392)"/>
+      <ellipse cx="360" cy="376" rx="10" ry="15" fill="#F5C842" stroke="#E07B39" stroke-width="1" transform="rotate(-10 360 376)"/>
+      <ellipse cx="140" cy="312" rx="11" ry="16" fill="#F5A623" stroke="#E07B39" stroke-width="1" transform="rotate(-20 140 312)"/>
+      <ellipse cx="356" cy="312" rx="11" ry="16" fill="#F5A623" stroke="#E07B39" stroke-width="1" transform="rotate(20 356 312)"/>
+      <ellipse cx="168" cy="215" rx="10" ry="15" fill="#F5C842" stroke="#E07B39" stroke-width="1"/>
+      <ellipse cx="304" cy="215" rx="10" ry="15" fill="#F5A623" stroke="#E07B39" stroke-width="1"/>
+      <ellipse cx="228" cy="172" rx="11" ry="17" fill="#F5A623" stroke="#E07B39" stroke-width="1"/>
+      <ellipse cx="248" cy="455" rx="9" ry="14" fill="#F5C842" stroke="#E07B39" stroke-width="1"/>
+
+      <!-- Mango leaves — elongated teardrops -->
+      <ellipse cx="62" cy="340" rx="8" ry="22" fill="#4a7c2f" stroke="#2D5016" stroke-width="0.5" transform="rotate(30 62 340)"/>
+      <ellipse cx="92" cy="348" rx="7" ry="19" fill="#2D5016" stroke="#2D5016" stroke-width="0.5" transform="rotate(-20 92 348)"/>
+      <ellipse cx="420" cy="365" rx="8" ry="22" fill="#4a7c2f" stroke="#2D5016" stroke-width="0.5" transform="rotate(-30 420 365)"/>
+      <ellipse cx="392" cy="352" rx="7" ry="19" fill="#2D5016" stroke="#2D5016" stroke-width="0.5" transform="rotate(20 392 352)"/>
+      <ellipse cx="122" cy="300" rx="7" ry="18" fill="#4a7c2f" stroke="#2D5016" stroke-width="0.5" transform="rotate(40 122 300)"/>
+      <ellipse cx="374" cy="300" rx="7" ry="18" fill="#2D5016" stroke="#2D5016" stroke-width="0.5" transform="rotate(-40 374 300)"/>
+      <ellipse cx="148" cy="198" rx="6" ry="16" fill="#4a7c2f" stroke="#2D5016" stroke-width="0.5" transform="rotate(25 148 198)"/>
+      <ellipse cx="188" cy="215" rx="6" ry="15" fill="#2D5016" stroke="#2D5016" stroke-width="0.5" transform="rotate(-15 188 215)"/>
+      <ellipse cx="322" cy="198" rx="6" ry="16" fill="#4a7c2f" stroke="#2D5016" stroke-width="0.5" transform="rotate(-25 322 198)"/>
+      <ellipse cx="284" cy="215" rx="6" ry="15" fill="#2D5016" stroke="#2D5016" stroke-width="0.5" transform="rotate(15 284 215)"/>
+      <ellipse cx="210" cy="152" rx="6" ry="16" fill="#4a7c2f" stroke="#2D5016" stroke-width="0.5" transform="rotate(30 210 152)"/>
+      <ellipse cx="248" cy="140" rx="6" ry="16" fill="#2D5016" stroke="#2D5016" stroke-width="0.5" transform="rotate(0 248 140)"/>
+      <ellipse cx="268" cy="152" rx="6" ry="16" fill="#4a7c2f" stroke="#2D5016" stroke-width="0.5" transform="rotate(-30 268 152)"/>
+
+      <!-- Small decorative leaves scattered -->
+      <ellipse cx="30" cy="310" rx="5" ry="14" fill="#4a7c2f" opacity="0.7" transform="rotate(50 30 310)"/>
+      <ellipse cx="468" cy="300" rx="5" ry="14" fill="#4a7c2f" opacity="0.7" transform="rotate(-50 468 300)"/>
+      <ellipse cx="200" cy="100" rx="5" ry="13" fill="#4a7c2f" opacity="0.8" transform="rotate(20 200 100)"/>
+      <ellipse cx="300" cy="95" rx="5" ry="13" fill="#2D5016" opacity="0.8" transform="rotate(-20 300 95)"/>
+    </svg>
+
+    <!-- Logo floats on the right -->
+    <img src="aam-final.png" alt="Aamrutham" class="hero-logo" />
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">✦ Bobbili Farms · Hyderabad ✦</p>
+      <h1 class="hero-title">
+        Taste the<br />
+        <em style="color: var(--mango-dark);">ఆమృతం</em><br />
+        of Mangoes
+      </h1>
+      <p class="hero-subtitle">
+        Aam + Amrutham. The finest mango varieties,<br />
+        handpicked and delivered fresh from our farms.<br />
+        <strong>Coming Summer 2026 · Hyderabad</strong>
+      </p>
+      <div class="hero-cta-group">
+        <a href="#cta" class="btn-primary">
+          <span>Pre-order Now</span>
+          <span>→</span>
+        </a>
+        <a href="#story" class="btn-secondary">Our Story</a>
+      </div>
+    </div>
+
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <svg width="14" height="20" viewBox="0 0 14 20" fill="none">
+        <path d="M7 1v14M1 9l6 8 6-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ STORY ════════════════════════════════════ -->
+  <section id="story">
+    <div class="story-grid">
+
+      <div class="story-text fade-up">
+        <p class="section-eyebrow">Our Story</p>
+        <h2 class="section-title">Born from a boy's love<br />for mangoes</h2>
+
+        <p>
+          Ever since childhood, mangoes have been more than just a fruit to us —
+          they were joy, they were summer, they were family. That love never faded.
+        </p>
+
+        <blockquote class="highlight">
+          "Aam + Amrutham. We believe the perfect mango
+          tastes like pure <span class="telugu">అమృతం</span> — divine nectar."
+        </blockquote>
+
+        <p>
+          With Aamrutham, our goal is to bring you <strong>undiscovered, rich-tasting
+          mango varieties</strong> you've never tasted before — alongside delightful
+          mango-based desserts. Every fruit is sourced from our own farms in
+          <strong>Bobbili</strong>, grown without chemicals, harvested at peak season.
+        </p>
+
+        <p>
+          Our logo tells the whole story: the boy joyfully plucking the mango from
+          the tree — that's the founder, the pure excitement and real love for mangoes.
+          The girl eagerly waiting — that's <em>you</em>, anticipating that first
+          divine bite. This is the <span class="telugu">ఆమృతం</span> experience we promise.
+        </p>
+      </div>
+
+      <div class="story-image-wrap fade-up">
+        <img src="aam-final.png" alt="Aamrutham logo — boy and girl under mango tree" />
+        <div class="story-badge">
+          ✦ Natural Farming · No Chemicals
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ QUALITY BADGES ══════════════════════════ -->
+  <section id="quality">
+    <div class="quality-inner">
+      <p class="quality-title">Our Promise to You</p>
+      <div class="badges-grid">
+
+        <div class="badge-item fade-up">
+          <div class="badge-icon">🚫🧪</div>
+          <span class="badge-label">Pesticide<br />Free</span>
+        </div>
+
+        <div class="badge-item fade-up" style="transition-delay: 0.1s">
+          <div class="badge-icon">🤲</div>
+          <span class="badge-label">Hand Graded<br />for Quality</span>
+        </div>
+
+        <div class="badge-item fade-up" style="transition-delay: 0.2s">
+          <div class="badge-icon">🌞</div>
+          <span class="badge-label">Peak Season<br />Harvest</span>
+        </div>
+
+        <div class="badge-item fade-up" style="transition-delay: 0.3s">
+          <div class="badge-icon">🥭</div>
+          <span class="badge-label">Naturally<br />Ripened</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ PROCESS ══════════════════════════════════ -->
+  <section id="process">
+    <div class="process-inner">
+      <p class="section-eyebrow">Farm to Your Doorstep</p>
+      <h2 class="section-title">6 stages. Zero shortcuts.</h2>
+
+      <div class="process-steps">
+
+        <div class="process-step fade-up">
+          <div class="process-number">1</div>
+          <div class="process-img placeholder" style="background: linear-gradient(135deg,#d4edda,#a8d5b5);">🌱</div>
+          <h3>Natural Farming</h3>
+          <p>Grown without pesticides on our own land in Bobbili, Andhra Pradesh.</p>
+        </div>
+
+        <div class="process-step fade-up" style="transition-delay:0.1s">
+          <div class="process-number">2</div>
+          <div class="process-img placeholder" style="background: linear-gradient(135deg,#fff3cd,#ffe082);">🥭</div>
+          <h3>Peak Season Plucking</h3>
+          <p>Hand-picked at perfect ripeness — only when the fruit is ready, never before.</p>
+        </div>
+
+        <div class="process-step fade-up" style="transition-delay:0.2s">
+          <div class="process-number">3</div>
+          <div class="process-img placeholder" style="background: linear-gradient(135deg,#fce4ec,#f8bbd0);">📦</div>
+          <h3>Careful Packaging</h3>
+          <p>Each mango hand-graded by size, wrapped to prevent bruising in transit.</p>
+        </div>
+
+        <div class="process-step fade-up" style="transition-delay:0.3s">
+          <div class="process-number">4</div>
+          <div class="process-img placeholder" style="background: linear-gradient(135deg,#e3f2fd,#90caf9);">🚚</div>
+          <h3>Same-Day Delivery</h3>
+          <p>Dispatched fresh to Hyderabad. From farm to your table with love.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ VARIETIES ════════════════════════════════ -->
+  <section id="varieties">
+    <div class="varieties-inner">
+      <div class="varieties-header fade-up">
+        <p class="section-eyebrow">Coming This Summer</p>
+        <h2 class="section-title">Mangoes you've never tasted</h2>
+        <p>
+          We're bringing you rare and undiscovered varieties from Bobbili —
+          each one a different story of sweetness, aroma, and joy.
+        </p>
+      </div>
+
+      <div class="varieties-grid">
+
+        <!-- Variety 1: Banginapalli -->
+        <div class="variety-card fade-up">
+          <div class="variety-img placeholder" style="background: linear-gradient(160deg,#FFF9C4 0%,#FFD54F 60%,#FFB300 100%); height:220px; display:flex; align-items:center; justify-content:center; font-size:5rem;">🥭</div>
+          <div class="variety-body">
+            <span class="variety-tag">Juicy · Signature</span>
+            <h3>Banginapalli</h3>
+            <div class="telugu-name">బంగినపల్లి — The Queen of Andhra</div>
+            <p>Soft, fiberless flesh with a golden hue and a delicate honey-sweet aroma. The pride of Andhra Pradesh — impossible to eat just one.</p>
+            <div class="variety-attrs">
+              <span class="attr">🍯 Brix 18–22</span>
+              <span class="attr">🌾 Fiberless</span>
+              <span class="attr">📍 Bobbili</span>
+            </div>
+          </div>
+          <div class="variety-footer">
+            <span class="coming-tag">✦ Summer 2026</span>
+            <span style="font-size:0.8rem; color:#aaa;">Pack of 6, 12, 18</span>
+          </div>
+        </div>
+
+        <!-- Variety 2: Suvarnarekha -->
+        <div class="variety-card fade-up" style="transition-delay:0.15s">
+          <div class="variety-img placeholder" style="background: linear-gradient(160deg,#FFFDE7 0%,#FFF176 60%,#F9A825 100%); height:220px; display:flex; align-items:center; justify-content:center; font-size:5rem;">🥭</div>
+          <div class="variety-body">
+            <span class="variety-tag">Exotic · Aamrutham Pick</span>
+            <h3>Suvarnarekha</h3>
+            <div class="telugu-name">సువర్ణరేఖ — The Golden Line</div>
+            <p>Named for the golden streak on its skin, this gem is intensely sweet with a rich, dense pulp and intoxicating fragrance unlike any other.</p>
+            <div class="variety-attrs">
+              <span class="attr">🍯 Brix 20–24</span>
+              <span class="attr">🌸 Aromatic</span>
+              <span class="attr">📍 Bobbili</span>
+            </div>
+          </div>
+          <div class="variety-footer">
+            <span class="coming-tag">✦ Summer 2026</span>
+            <span style="font-size:0.8rem; color:#aaa;">Pack of 6, 12, 18</span>
+          </div>
+        </div>
+
+        <!-- Variety 3: Rasalu -->
+        <div class="variety-card fade-up" style="transition-delay:0.3s">
+          <div class="variety-img placeholder" style="background: linear-gradient(160deg,#FFF8E1 0%,#FFCC02 60%,#FF8F00 100%); height:220px; display:flex; align-items:center; justify-content:center; font-size:5rem;">🥭</div>
+          <div class="variety-body">
+            <span class="variety-tag">Juicy · Dessert</span>
+            <h3>Rasalu</h3>
+            <div class="telugu-name">రసాలు — The Juice King</div>
+            <p>Bursting with juice and warmth, Rasalu is the mango for dessert lovers. The pulp is soft as ice cream, sweet as nectar. A true summer ritual.</p>
+            <div class="variety-attrs">
+              <span class="attr">🍯 Brix 19–23</span>
+              <span class="attr">💧 Ultra Juicy</span>
+              <span class="attr">📍 Bobbili</span>
+            </div>
+          </div>
+          <div class="variety-footer">
+            <span class="coming-tag">✦ Summer 2026</span>
+            <span style="font-size:0.8rem; color:#aaa;">Pack of 6, 12, 18</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ CTA BANNER ═══════════════════════════════ -->
+  <section id="cta">
+
+    <!-- Background line art -->
+    <svg class="cta-art" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <ellipse cx="80" cy="200" rx="50" ry="70" fill="#F5A623" transform="rotate(-20 80 200)"/>
+      <ellipse cx="720" cy="200" rx="50" ry="70" fill="#F5A623" transform="rotate(20 720 200)"/>
+      <ellipse cx="120" cy="280" rx="30" ry="80" fill="#F5C842" transform="rotate(35 120 280)"/>
+      <ellipse cx="680" cy="280" rx="30" ry="80" fill="#F5C842" transform="rotate(-35 680 280)"/>
+      <ellipse cx="400" cy="50" rx="40" ry="60" fill="#F5A623" transform="rotate(0 400 50)"/>
+      <ellipse cx="200" cy="80" rx="25" ry="65" fill="#F5C842" transform="rotate(-10 200 80)"/>
+      <ellipse cx="600" cy="80" rx="25" ry="65" fill="#F5A623" transform="rotate(10 600 80)"/>
+    </svg>
+
+    <div class="cta-inner fade-up">
+      <p class="cta-eyebrow">✦ Summer 2026 · Hyderabad ✦</p>
+      <h2 class="cta-title">
+        Be the first to taste<br />
+        <em>pure ఆమృతం</em>
+      </h2>
+      <p class="cta-sub">
+        Pre-orders open soon. Drop us a message on WhatsApp<br />
+        and we'll notify you the moment we're live.
+      </p>
+
+      <a href="https://wa.me/919999999999?text=Hi%20Aamrutham!%20I%20want%20to%20pre-order%20mangoes%20for%20Summer%202026%20🥭" class="btn-whatsapp" target="_blank" rel="noopener">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.556 4.117 1.532 5.845L.054 23.486a.5.5 0 00.611.611l5.641-1.478A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.793 9.793 0 01-4.983-1.358l-.356-.213-3.688.966.983-3.595-.233-.37A9.795 9.795 0 012.182 12C2.182 6.569 6.569 2.182 12 2.182S21.818 6.569 21.818 12 17.431 21.818 12 21.818z"/>
+        </svg>
+        Chat on WhatsApp
+      </a>
+
+      <p style="color:rgba(255,255,255,0.35); font-size:0.8rem; margin-top:1.5rem;">
+        📍 Delivery to Hyderabad only &nbsp;·&nbsp; 🚚 Free delivery on orders ₹500+
+      </p>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════════════ FOOTER ═══════════════════════════════════ -->
+  <footer>
+    <img src="aam-final.png" alt="Aamrutham" class="footer-logo" />
+    <p class="footer-tagline">"Aam + Amrutham — Pure Mango Bliss"</p>
+    <ul class="footer-links">
+      <li><a href="#story">Story</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#varieties">Varieties</a></li>
+      <li><a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a></li>
+      <li><a href="#cta">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Aamrutham. All rights reserved. · Made with 🥭 love in Hyderabad</p>
+  </footer>
+
+  <!-- ═══════════════════════════════════ WHATSAPP FLOAT ═══════════════════════════ -->
+  <a href="https://wa.me/919999999999?text=Hi%20Aamrutham!%20I%20want%20to%20pre-order%20mangoes%20🥭"
+     class="whatsapp-float"
+     target="_blank"
+     rel="noopener"
+     title="Chat with us on WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.556 4.117 1.532 5.845L.054 23.486a.5.5 0 00.611.611l5.641-1.478A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.793 9.793 0 01-4.983-1.358l-.356-.213-3.688.966.983-3.595-.233-.37A9.795 9.795 0 012.182 12C2.182 6.569 6.569 2.182 12 2.182S21.818 6.569 21.818 12 17.431 21.818 12 21.818z"/>
+    </svg>
+  </a>
+
+  <!-- ═══════════════════════════════════ JS ════════════════════════════════════════ -->
+  <script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Fade-up on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
