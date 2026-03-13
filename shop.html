@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop — Aamrutham</title>
+  <meta name="description" content="Shop premium mango varieties from Aamrutham — Banginapalli, Suvarnarekha, Rasalu. Fresh from Bobbili farms to Hyderabad." />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=Noto+Serif+Telugu:wght@400;600&display=swap" rel="stylesheet" />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            mango: '#F5A623', 'mango-dark': '#E07B39',
+            leaf: '#2D5016', 'leaf-light': '#4a7c2f',
+            cream: '#FFF8EC', 'cream-dark': '#F5EDD8',
+          }
+        }
+      }
+    }
+  </script>
+  <!-- AOS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Shared CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ── Shop page specific styles ── */
+    .shop-hero {
+      background: var(--leaf);
+      padding: 8rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .shop-hero-bg {
+      position: absolute; inset: 0;
+      opacity: 0.06; pointer-events: none;
+      background-image: radial-gradient(circle, #F5A623 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    .shop-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      color: white; line-height: 1.2;
+      position: relative; z-index: 1;
+    }
+    .shop-hero h1 em { color: var(--mango); font-style: italic; }
+    .shop-hero p {
+      color: rgba(255,255,255,0.7);
+      font-size: 1.05rem; margin-top: 1rem;
+      position: relative; z-index: 1;
+    }
+
+    /* ── Filter bar ── */
+    .filter-bar {
+      display: flex; gap: 0.75rem; flex-wrap: wrap;
+      justify-content: center; padding: 2rem 2rem 0;
+      max-width: 900px; margin: 0 auto;
+    }
+    .filter-btn {
+      padding: 0.5rem 1.25rem; border-radius: 50px;
+      border: 2px solid #e0d4c0; background: white;
+      font-size: 0.85rem; font-weight: 700; cursor: pointer;
+      color: #7a5c3e; transition: all 0.2s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--leaf); border-color: var(--leaf); color: white;
+    }
+
+    /* ── Shop grid ── */
+    .shop-grid-wrap { max-width: 1200px; margin: 0 auto; padding: 3rem 2rem 6rem; }
+    .shop-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    /* ── Product card ── */
+    .product-card {
+      background: white; border-radius: 16px; overflow: hidden;
+      box-shadow: 0 4px 20px rgba(44,24,16,0.06);
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: flex; flex-direction: column;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(44,24,16,0.12);
+    }
+    .product-img-wrap {
+      position: relative; overflow: hidden;
+    }
+    .product-img {
+      width: 100%; height: 240px; object-fit: cover;
+      transition: transform 0.4s;
+    }
+    .product-img.placeholder {
+      display: flex; align-items: center;
+      justify-content: center; height: 240px;
+    }
+    .product-card:hover .product-img { transform: scale(1.04); }
+    .product-badge {
+      position: absolute; top: 1rem; left: 1rem;
+      background: var(--mango); color: var(--text);
+      font-size: 0.7rem; font-weight: 700;
+      padding: 0.3rem 0.75rem; border-radius: 50px;
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .product-badge.exotic { background: var(--leaf); color: white; }
+    .out-of-season {
+      position: absolute; inset: 0;
+      background: rgba(255,248,236,0.7);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .out-of-season span {
+      background: white; color: var(--leaf);
+      font-size: 0.8rem; font-weight: 700;
+      padding: 0.5rem 1.25rem; border-radius: 50px;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+
+    .product-body { padding: 1.5rem; flex: 1; }
+    .product-tag {
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--mango-dark); margin-bottom: 0.4rem;
+      display: block;
+    }
+    .product-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; color: var(--leaf);
+      margin-bottom: 0.25rem;
+    }
+    .product-telugu {
+      font-size: 0.9rem; color: var(--mango-dark);
+      margin-bottom: 0.75rem; font-style: italic;
+    }
+    .product-desc {
+      font-size: 0.875rem; color: #7a5c3e;
+      line-height: 1.7; margin-bottom: 1rem;
+    }
+    .product-meta {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    .meta-chip {
+      font-size: 0.75rem; color: var(--leaf);
+      background: rgba(45,80,22,0.08);
+      padding: 0.25rem 0.7rem; border-radius: 50px;
+      display: flex; align-items: center; gap: 0.3rem;
+      font-weight: 700;
+    }
+
+    /* ── Pack selector + price ── */
+    .product-footer { padding: 1.25rem 1.5rem; border-top: 1px solid #f0e8d8; }
+    .pack-selector { margin-bottom: 1rem; }
+    .pack-label {
+      font-size: 0.75rem; font-weight: 700; color: #7a5c3e;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      display: block; margin-bottom: 0.5rem;
+    }
+    .pack-options { display: flex; gap: 0.5rem; }
+    .pack-btn {
+      flex: 1; padding: 0.4rem; border: 2px solid #e0d4c0;
+      border-radius: 8px; background: white;
+      font-size: 0.8rem; font-weight: 700; cursor: pointer;
+      color: #7a5c3e; transition: all 0.15s; text-align: center;
+    }
+    .pack-btn.selected, .pack-btn:hover {
+      border-color: var(--leaf); background: var(--leaf); color: white;
+    }
+    .price-row {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 0.75rem;
+    }
+    .price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; color: var(--leaf); font-weight: 700;
+    }
+    .price-note { font-size: 0.75rem; color: #aaa; }
+
+    /* ── Buy button ── */
+    .btn-buy {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--mango); color: var(--text);
+      padding: 0.65rem 1.4rem; border-radius: 50px;
+      font-weight: 700; font-size: 0.9rem; text-decoration: none;
+      border: none; cursor: pointer; transition: all 0.25s;
+      white-space: nowrap;
+    }
+    .btn-buy:hover {
+      background: var(--mango-dark); color: white;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(224,123,57,0.3);
+    }
+    .btn-buy:disabled, .btn-buy.coming-soon {
+      background: #e0d4c0; color: #aaa; cursor: not-allowed;
+      transform: none; box-shadow: none;
+    }
+
+    /* ── Delivery info bar ── */
+    .delivery-bar {
+      background: var(--cream-dark); padding: 1rem 2rem;
+      display: flex; justify-content: center; gap: 3rem;
+      flex-wrap: wrap; border-bottom: 1px solid #e8d9c0;
+    }
+    .delivery-item {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.85rem; color: var(--leaf); font-weight: 700;
+    }
+
+    /* ── Zoho notice banner ── */
+    .zoho-notice {
+      background: #fff3cd; border: 1px solid #ffc107;
+      border-radius: 8px; padding: 1rem 1.5rem;
+      margin-bottom: 2rem;
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      font-size: 0.875rem; color: #856404;
+    }
+
+    @media (max-width: 900px) { .shop-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 580px) { .shop-grid { grid-template-columns: 1fr; } .delivery-bar { gap: 1.5rem; } }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav id="navbar" class="scrolled">
+    <a href="index.html">
+      <img src="aam-final.png" alt="Aamrutham" class="nav-logo" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#story">Our Story</a></li>
+      <li><a href="index.html#process">Farm to You</a></li>
+      <li><a href="shop.html" style="color:var(--mango-dark); font-weight:700;">Shop</a></li>
+      <li><a href="index.html#cta" class="btn-preorder">Pre-order ✦</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Shop Hero ── -->
+  <div class="shop-hero">
+    <div class="shop-hero-bg"></div>
+    <p style="color:var(--mango); font-size:0.8rem; letter-spacing:0.2em; text-transform:uppercase; font-weight:700; margin-bottom:0.75rem; position:relative; z-index:1;">✦ Bobbili Farms · Hyderabad ✦</p>
+    <h1>Fresh Mangoes,<br /><em>Straight from the Farm</em></h1>
+    <p>Naturally ripened · Pesticide-free · Delivered to your door</p>
+  </div>
+
+  <!-- ── Delivery info bar ── -->
+  <div class="delivery-bar">
+    <div class="delivery-item"><i class="fa-solid fa-truck-fast" style="color:var(--mango-dark);"></i> Free delivery on orders ₹500+</div>
+    <div class="delivery-item"><i class="fa-solid fa-location-dot" style="color:var(--mango-dark);"></i> Hyderabad delivery only</div>
+    <div class="delivery-item"><i class="fa-solid fa-ban" style="color:var(--mango-dark);"></i> Zero pesticides</div>
+    <div class="delivery-item"><i class="fa-solid fa-calendar" style="color:var(--mango-dark);"></i> Summer 2026 season</div>
+  </div>
+
+  <!-- ── Filter bar ── -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterProducts('all', this)">All Mangoes</button>
+    <button class="filter-btn" onclick="filterProducts('juicy', this)">Juicy</button>
+    <button class="filter-btn" onclick="filterProducts('exotic', this)">Exotic</button>
+    <button class="filter-btn" onclick="filterProducts('signature', this)">Aamrutham Signature</button>
+    <button class="filter-btn" onclick="filterProducts('dessert', this)">Dessert</button>
+  </div>
+
+  <!-- ── Product Grid ── -->
+  <div class="shop-grid-wrap">
+
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         ZOHO INTEGRATION NOTICE
+         Remove this block once you have your Zoho store URL
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+    <div class="zoho-notice" id="zoho-setup-notice">
+      <i class="fa-solid fa-circle-info fa-lg" style="margin-top:2px; flex-shrink:0;"></i>
+      <div>
+        <strong>Shop integration pending.</strong> Once you have your Zoho Commerce store URL,
+        update the <code>ZOHO_STORE_URL</code> variable in <code>shop.html</code> and
+        all "Buy Now" buttons will go live automatically.
+      </div>
+    </div>
+
+    <div class="shop-grid" id="shop-grid">
+
+      <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+           PRODUCT 1: Banginapalli
+           TODO: Replace zoho_product_id with actual Zoho product ID
+      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+      <div class="product-card" data-aos="fade-up" data-category="juicy signature" data-zoho-id="TODO_BANGINAPALLI_PRODUCT_ID">
+        <div class="product-img-wrap">
+          <div class="product-img placeholder" style="background:linear-gradient(160deg,#FFF9C4,#FFD54F,#FFB300);">
+            <!-- TODO: Replace with real product image: <img src="assets/banginapalli.jpg" class="product-img" alt="Banginapalli Mangoes"> -->
+            <i class="fa-solid fa-apple-whole" style="font-size:5rem;color:#E07B39;"></i>
+          </div>
+          <span class="product-badge">Signature</span>
+        </div>
+        <div class="product-body">
+          <span class="product-tag">Juicy · Fiberless</span>
+          <div class="product-name">Banginapalli</div>
+          <div class="product-telugu">బంగినపల్లి — Queen of Andhra</div>
+          <p class="product-desc">Soft, fiberless golden flesh with honey-sweet aroma. The pride of Andhra Pradesh — farm-fresh from Bobbili.</p>
+          <div class="product-meta">
+            <span class="meta-chip"><i class="fa-solid fa-droplet"></i> Brix 18–22</span>
+            <span class="meta-chip"><i class="fa-solid fa-wheat-awn"></i> Fiberless</span>
+            <span class="meta-chip"><i class="fa-solid fa-sun"></i> May–Jun</span>
+          </div>
+        </div>
+        <div class="product-footer">
+          <div class="pack-selector">
+            <span class="pack-label">Pack Size</span>
+            <div class="pack-options">
+              <button class="pack-btn selected" onclick="selectPack(this, 'banginapalli', 6, 699)">6 pcs</button>
+              <button class="pack-btn" onclick="selectPack(this, 'banginapalli', 12, 1299)">12 pcs</button>
+              <button class="pack-btn" onclick="selectPack(this, 'banginapalli', 18, 1799)">18 pcs</button>
+            </div>
+          </div>
+          <div class="price-row">
+            <div>
+              <div class="price" id="price-banginapalli">₹699</div>
+              <div class="price-note">incl. delivery</div>
+            </div>
+            <button class="btn-buy" onclick="buyNow('TODO_BANGINAPALLI_PRODUCT_ID', 'banginapalli')">
+              <i class="fa-solid fa-cart-shopping"></i> Buy Now
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+           PRODUCT 2: Suvarnarekha
+           TODO: Replace zoho_product_id with actual Zoho product ID
+      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+      <div class="product-card" data-aos="fade-up" data-aos-delay="150" data-category="exotic signature" data-zoho-id="TODO_SUVARNAREKHA_PRODUCT_ID">
+        <div class="product-img-wrap">
+          <div class="product-img placeholder" style="background:linear-gradient(160deg,#FFFDE7,#FFF176,#F9A825);">
+            <i class="fa-solid fa-star" style="font-size:5rem;color:#F9A825;"></i>
+          </div>
+          <span class="product-badge exotic">Exotic</span>
+        </div>
+        <div class="product-body">
+          <span class="product-tag">Exotic · Aromatic</span>
+          <div class="product-name">Suvarnarekha</div>
+          <div class="product-telugu">సువర్ణరేఖ — The Golden Line</div>
+          <p class="product-desc">Named for the golden streak on its skin. Intensely sweet, dense pulp with an intoxicating fragrance unlike any other variety.</p>
+          <div class="product-meta">
+            <span class="meta-chip"><i class="fa-solid fa-droplet"></i> Brix 20–24</span>
+            <span class="meta-chip"><i class="fa-solid fa-wind"></i> Aromatic</span>
+            <span class="meta-chip"><i class="fa-solid fa-sun"></i> Jun–Jul</span>
+          </div>
+        </div>
+        <div class="product-footer">
+          <div class="pack-selector">
+            <span class="pack-label">Pack Size</span>
+            <div class="pack-options">
+              <button class="pack-btn selected" onclick="selectPack(this, 'suvarnarekha', 6, 799)">6 pcs</button>
+              <button class="pack-btn" onclick="selectPack(this, 'suvarnarekha', 12, 1499)">12 pcs</button>
+              <button class="pack-btn" onclick="selectPack(this, 'suvarnarekha', 18, 1999)">18 pcs</button>
+            </div>
+          </div>
+          <div class="price-row">
+            <div>
+              <div class="price" id="price-suvarnarekha">₹799</div>
+              <div class="price-note">incl. delivery</div>
+            </div>
+            <button class="btn-buy" onclick="buyNow('TODO_SUVARNAREKHA_PRODUCT_ID', 'suvarnarekha')">
+              <i class="fa-solid fa-cart-shopping"></i> Buy Now
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+           PRODUCT 3: Rasalu
+           TODO: Replace zoho_product_id with actual Zoho product ID
+      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+      <div class="product-card" data-aos="fade-up" data-aos-delay="300" data-category="juicy dessert" data-zoho-id="TODO_RASALU_PRODUCT_ID">
+        <div class="product-img-wrap">
+          <div class="product-img placeholder" style="background:linear-gradient(160deg,#FFF8E1,#FFCC02,#FF8F00);">
+            <i class="fa-solid fa-glass-water-droplet" style="font-size:5rem;color:#FF8F00;"></i>
+          </div>
+          <span class="product-badge">Dessert</span>
+        </div>
+        <div class="product-body">
+          <span class="product-tag">Juicy · Dessert</span>
+          <div class="product-name">Rasalu</div>
+          <div class="product-telugu">రసాలు — The Juice King</div>
+          <p class="product-desc">Pulp soft as ice cream, sweet as nectar. The ultimate dessert mango — a true summer ritual in every Andhra household.</p>
+          <div class="product-meta">
+            <span class="meta-chip"><i class="fa-solid fa-droplet"></i> Brix 19–23</span>
+            <span class="meta-chip"><i class="fa-solid fa-droplets"></i> Ultra Juicy</span>
+            <span class="meta-chip"><i class="fa-solid fa-sun"></i> May–Jul</span>
+          </div>
+        </div>
+        <div class="product-footer">
+          <div class="pack-selector">
+            <span class="pack-label">Pack Size</span>
+            <div class="pack-options">
+              <button class="pack-btn selected" onclick="selectPack(this, 'rasalu', 6, 749)">6 pcs</button>
+              <button class="pack-btn" onclick="selectPack(this, 'rasalu', 12, 1399)">12 pcs</button>
+              <button class="pack-btn" onclick="selectPack(this, 'rasalu', 18, 1899)">18 pcs</button>
+            </div>
+          </div>
+          <div class="price-row">
+            <div>
+              <div class="price" id="price-rasalu">₹749</div>
+              <div class="price-note">incl. delivery</div>
+            </div>
+            <button class="btn-buy" onclick="buyNow('TODO_RASALU_PRODUCT_ID', 'rasalu')">
+              <i class="fa-solid fa-cart-shopping"></i> Buy Now
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end shop-grid -->
+  </div><!-- end shop-grid-wrap -->
+
+  <!-- ── WhatsApp Float ── -->
+  <a href="https://wa.me/919999999999?text=Hi%20Aamrutham!%20I%20want%20to%20order%20mangoes%20🥭"
+     class="whatsapp-float" target="_blank" rel="noopener" title="Chat with us">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.556 4.117 1.532 5.845L.054 23.486a.5.5 0 00.611.611l5.641-1.478A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.793 9.793 0 01-4.983-1.358l-.356-.213-3.688.966.983-3.595-.233-.37A9.795 9.795 0 012.182 12C2.182 6.569 6.569 2.182 12 2.182S21.818 6.569 21.818 12 17.431 21.818 12 21.818z"/>
+    </svg>
+  </a>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 700, easing: 'ease-out-cubic', once: true, offset: 60 });
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // ZOHO COMMERCE INTEGRATION
+    // When you have your Zoho store, update this one variable:
+    //
+    //   const ZOHO_STORE_URL = "https://yourstore.zohoshoppe.com";
+    //
+    // That's it — all Buy Now buttons will work automatically.
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    const ZOHO_STORE_URL = null; // TODO: Replace null with your Zoho store URL
+
+    function buyNow(productId, productName) {
+      if (!ZOHO_STORE_URL || productId.startsWith('TODO_')) {
+        // Fallback to WhatsApp when Zoho isn't connected yet
+        const msg = encodeURIComponent(`Hi Aamrutham! I want to order ${productName} mangoes 🥭`);
+        window.open(`https://wa.me/919999999999?text=${msg}`, '_blank');
+        return;
+      }
+      // Once ZOHO_STORE_URL is set, this redirects to the Zoho product page
+      window.open(`${ZOHO_STORE_URL}/product/${productId}`, '_blank');
+    }
+
+    // Pack size selector — updates displayed price
+    function selectPack(btn, product, qty, price) {
+      // Deselect siblings
+      btn.closest('.pack-options').querySelectorAll('.pack-btn')
+        .forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      // Update price display
+      document.getElementById(`price-${product}`).textContent = `₹${price.toLocaleString('en-IN')}`;
+    }
+
+    // Filter products by category
+    function filterProducts(category, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.product-card').forEach(card => {
+        const cats = card.dataset.category || '';
+        card.style.display = (category === 'all' || cats.includes(category)) ? '' : 'none';
+      });
+    }
+
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Hide Zoho notice if store is connected
+    if (ZOHO_STORE_URL) {
+      document.getElementById('zoho-setup-notice').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
