@@ -486,7 +486,7 @@ section { padding: 6rem 2rem; }
 
 .varieties-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
 }
 
@@ -582,6 +582,18 @@ section { padding: 6rem 2rem; }
   color: var(--mango-dark);
   font-weight: 700;
 }
+
+.watch-link {
+  font-size: 0.8rem;
+  color: #c00;
+  font-weight: 600;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: color 0.2s;
+}
+.watch-link:hover { color: #900; }
 
 /* ── CTA Banner ── */
 #cta {
