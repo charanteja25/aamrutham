@@ -41,48 +41,6 @@
     ══════════════════════════════════════════════ */
     body { background: #FEF8F0; }
 
-    /* ── Positioning strip (Manam-style top statement) ── */
-    #statement-strip {
-      background: var(--charcoal, #1C1208);
-      padding: 0.9rem 2rem;
-      overflow: hidden;
-      position: relative;
-    }
-    .statement-track {
-      display: flex;
-      gap: 0;
-      white-space: nowrap;
-      animation: marquee 18s linear infinite;
-    }
-    .statement-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 2rem;
-      padding-right: 4rem;
-    }
-    .statement-en {
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: white;
-    }
-    .statement-te {
-      font-family: 'Noto Serif Telugu', serif;
-      font-size: 0.85rem;
-      color: var(--mango, #F5A623);
-      font-weight: 600;
-    }
-    .statement-dot {
-      width: 4px; height: 4px;
-      background: var(--mango, #F5A623);
-      border-radius: 50%;
-      display: inline-block;
-    }
-    @keyframes marquee {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
 
     /* ── Section banner (olive strip) ── */
     .section-banner {
@@ -394,40 +352,6 @@
     </ul>
   </nav>
 
-  <!-- ══════════════════════════════════ STATEMENT STRIP ══════════════════════════════════ -->
-  <div id="statement-strip">
-    <div class="statement-track">
-      <!-- duplicated for infinite loop -->
-      <div class="statement-item">
-        <span class="statement-en">Not imported</span>
-        <span class="statement-te">దిగుమతి కాదు</span>
-        <span class="statement-dot"></span>
-        <span class="statement-en">Not synthetic</span>
-        <span class="statement-te">రసాయనాలు లేవు</span>
-        <span class="statement-dot"></span>
-        <span class="statement-en">Not hurried</span>
-        <span class="statement-te">తొందర లేదు</span>
-        <span class="statement-dot"></span>
-        <span class="statement-en">Pure Bobbili</span>
-        <span class="statement-te">స్వచ్ఛమైన బొబ్బిలి</span>
-        <span class="statement-dot"></span>
-      </div>
-      <div class="statement-item" aria-hidden="true">
-        <span class="statement-en">Not imported</span>
-        <span class="statement-te">దిగుమతి కాదు</span>
-        <span class="statement-dot"></span>
-        <span class="statement-en">Not synthetic</span>
-        <span class="statement-te">రసాయనాలు లేవు</span>
-        <span class="statement-dot"></span>
-        <span class="statement-en">Not hurried</span>
-        <span class="statement-te">తొందర లేదు</span>
-        <span class="statement-dot"></span>
-        <span class="statement-en">Pure Bobbili</span>
-        <span class="statement-te">స్వచ్ఛమైన బొబ్బిలి</span>
-        <span class="statement-dot"></span>
-      </div>
-    </div>
-  </div>
 
   <!-- ══════════════════════════════════ HERO ══════════════════════════════════ -->
   <section id="hero">
@@ -470,20 +394,23 @@
     <img src="aam-final.png" alt="Aamrutham" class="hero-logo" />
 
     <div class="hero-content">
-      <p class="hero-eyebrow">✦ బొబ్బిలి పొలాలు · హైదరాబాద్ ✦</p>
+      <p class="hero-eyebrow">✦ Bobbili Farms · Hyderabad ✦</p>
       <h1 class="hero-title">
         Taste the<br />
         <em>ఆమృతం</em><br />
         of Mangoes
       </h1>
+      <p style="font-size:0.8rem; color:var(--mango-dark); letter-spacing:0.05em; margin-bottom:1rem; font-style:italic;">
+        ఆమృతం (aa·mru·tham) — divine nectar
+      </p>
       <p class="hero-subtitle">
-        ఆమ్ + అమృతం. The finest mango varieties,<br />
-        handpicked and delivered fresh.<br />
+        Aam + Amrutham. The finest mango varieties,<br />
+        handpicked fresh from our Bobbili farms.<br />
         <strong>Coming Summer 2026 · Hyderabad</strong>
       </p>
       <div class="hero-cta-group">
         <a href="#cta" class="btn-primary">Pre-order Now →</a>
-        <a href="#story" class="btn-secondary">మా కథ &nbsp;·&nbsp; Our Story</a>
+        <a href="#story" class="btn-secondary">Our Story</a>
       </div>
     </div>
 
@@ -498,7 +425,6 @@
   <!-- ══════════════════════════════════ STORY BANNER ══════════════════════════════════ -->
   <div class="section-banner" data-aos="fade-in">
     <h2 class="banner-en">Our Story</h2>
-    <span class="banner-te">మా కథ — ఒక పిల్లవాడి ప్రేమ కథ</span>
   </div>
 
   <!-- ══════════════════════════════════ STORY ══════════════════════════════════ -->
@@ -513,24 +439,24 @@
         they were joy, they were summer, they were family. That love never faded.</p>
 
         <blockquote class="highlight">
-          "ఆమ్ + అమృతం. We believe the perfect mango
+          "Aam + Amrutham. We believe the perfect mango
           tastes like pure <span class="telugu">అమృతం</span> — divine nectar."
         </blockquote>
 
         <p>With Aamrutham, our goal is to bring you <strong>undiscovered, rich-tasting
         mango varieties</strong> you've never tasted before. Every fruit is sourced from
-        our own farms in <strong>బొబ్బిలి · Bobbili</strong>, grown without chemicals,
+        our own farms in <strong>Bobbili</strong>, grown without chemicals,
         harvested only at peak season.</p>
 
         <p>Our logo tells the whole story: the boy joyfully plucking the mango —
         that's the founder. The girl eagerly waiting — that's <em>you</em>,
-        anticipating that first divine bite. This is the
-        <span class="telugu">ఆమృతం</span> experience we promise.</p>
+        anticipating that first divine bite. This is the Aamrutham
+        experience we promise.</p>
       </div>
 
       <div class="story-image-wrap" data-aos="fade-left" data-aos-delay="150">
         <img src="aam-final.png" alt="Aamrutham — boy and girl under mango tree" />
-        <div class="story-badge">✦ సహజ వ్యవసాయం · Natural Farming</div>
+        <div class="story-badge">✦ Natural Farming · No Chemicals</div>
       </div>
 
     </div>
@@ -539,7 +465,6 @@
   <!-- ══════════════════════════════════ QUALITY BANNER ══════════════════════════════════ -->
   <div class="section-banner" data-aos="fade-in">
     <h2 class="banner-en">Our Promise</h2>
-    <span class="banner-te">మా వాగ్దానం — స్వచ్ఛత మాత్రమే</span>
   </div>
 
   <!-- ══════════════════════════════════ QUALITY BADGES ══════════════════════════════════ -->
@@ -550,27 +475,27 @@
         <div class="swiper-wrapper">
           <div class="swiper-slide"><div class="badge-item">
             <div class="badge-icon"><i class="fa-solid fa-ban fa-lg" style="color:#F5A623;"></i></div>
-            <span class="badge-label">Pesticide Free<br /><span style="font-family:'Noto Serif Telugu',serif;font-size:0.7rem;color:rgba(255,255,255,0.5);">పురుగుమందు లేదు</span></span>
+            <span class="badge-label">Pesticide<br />Free</span>
           </div></div>
           <div class="swiper-slide"><div class="badge-item">
             <div class="badge-icon"><i class="fa-solid fa-hands fa-lg" style="color:#F5A623;"></i></div>
-            <span class="badge-label">Hand Graded<br /><span style="font-family:'Noto Serif Telugu',serif;font-size:0.7rem;color:rgba(255,255,255,0.5);">చేతితో నిర్ణయం</span></span>
+            <span class="badge-label">Hand Graded<br />for Quality</span>
           </div></div>
           <div class="swiper-slide"><div class="badge-item">
             <div class="badge-icon"><i class="fa-solid fa-sun fa-lg" style="color:#F5A623;"></i></div>
-            <span class="badge-label">Peak Season<br /><span style="font-family:'Noto Serif Telugu',serif;font-size:0.7rem;color:rgba(255,255,255,0.5);">మంచి సీజన్</span></span>
+            <span class="badge-label">Peak Season<br />Harvest</span>
           </div></div>
           <div class="swiper-slide"><div class="badge-item">
             <div class="badge-icon"><i class="fa-solid fa-leaf fa-lg" style="color:#F5A623;"></i></div>
-            <span class="badge-label">Naturally Ripened<br /><span style="font-family:'Noto Serif Telugu',serif;font-size:0.7rem;color:rgba(255,255,255,0.5);">సహజంగా పండినవి</span></span>
+            <span class="badge-label">Naturally<br />Ripened</span>
           </div></div>
           <div class="swiper-slide"><div class="badge-item">
             <div class="badge-icon"><i class="fa-solid fa-seedling fa-lg" style="color:#F5A623;"></i></div>
-            <span class="badge-label">Own Farm Bobbili<br /><span style="font-family:'Noto Serif Telugu',serif;font-size:0.7rem;color:rgba(255,255,255,0.5);">మా పొలం బొబ్బిలి</span></span>
+            <span class="badge-label">Own Farm<br />Bobbili</span>
           </div></div>
           <div class="swiper-slide"><div class="badge-item">
             <div class="badge-icon"><i class="fa-solid fa-truck-fast fa-lg" style="color:#F5A623;"></i></div>
-            <span class="badge-label">Same-Day Delivery<br /><span style="font-family:'Noto Serif Telugu',serif;font-size:0.7rem;color:rgba(255,255,255,0.5);">అదే రోజు డెలివరీ</span></span>
+            <span class="badge-label">Same-Day<br />Delivery</span>
           </div></div>
         </div>
         <div class="swiper-pagination badges-pagination"></div>
@@ -581,7 +506,6 @@
   <!-- ══════════════════════════════════ PROCESS BANNER ══════════════════════════════════ -->
   <div class="section-banner" data-aos="fade-in">
     <h2 class="banner-en">Farm to Your Doorstep</h2>
-    <span class="banner-te">పొలం నుండి మీ ఇంటి వరకు — ఆరు దశలు</span>
   </div>
 
   <!-- ══════════════════════════════════ PROCESS ══════════════════════════════════ -->
@@ -597,7 +521,6 @@
           </div>
           <div class="timeline-body">
             <h3>Natural Farming</h3>
-            <span class="timeline-te">సహజ వ్యవసాయం</span>
             <p>Grown without pesticides on our own land in Bobbili, Andhra Pradesh. The soil, the rain, the sun — nothing else.</p>
           </div>
         </div>
@@ -609,7 +532,6 @@
           </div>
           <div class="timeline-body">
             <h3>Tree-Ripened</h3>
-            <span class="timeline-te">చెట్టుపై పండినవి</span>
             <p>We let the fruit ripen on the tree until perfect — never picked early, never artificially ripened with carbide.</p>
           </div>
         </div>
@@ -621,7 +543,6 @@
           </div>
           <div class="timeline-body">
             <h3>Hand-Picked</h3>
-            <span class="timeline-te">చేతితో కోయడం</span>
             <p>Every single mango is hand-plucked with care. No machines. No bruising. The love shows in every bite.</p>
           </div>
         </div>
@@ -633,7 +554,6 @@
           </div>
           <div class="timeline-body">
             <h3>Hand-Graded</h3>
-            <span class="timeline-te">నాణ్యత తనిఖీ</span>
             <p>Each fruit graded by size (A+, A, B) and checked for ripeness. Only the best make it into your box.</p>
           </div>
         </div>
@@ -645,7 +565,6 @@
           </div>
           <div class="timeline-body">
             <h3>Careful Packaging</h3>
-            <span class="timeline-te">జాగ్రత్తగా ప్యాక్ చేయడం</span>
             <p>Wrapped individually to prevent bruising. Packed in boxes that keep mangoes fresh through transit.</p>
           </div>
         </div>
@@ -657,7 +576,6 @@
           </div>
           <div class="timeline-body">
             <h3>Delivered Fresh</h3>
-            <span class="timeline-te">తాజాగా డెలివరీ</span>
             <p>Same-day delivery to Hyderabad. From Bobbili farm to your table — as fresh as it gets.</p>
           </div>
         </div>
@@ -669,7 +587,6 @@
   <!-- ══════════════════════════════════ VARIETIES BANNER ══════════════════════════════════ -->
   <div class="section-banner" data-aos="fade-in">
     <h2 class="banner-en">Our Mango Varieties</h2>
-    <span class="banner-te">మా మామిడి రకాలు — ఎప్పుడూ రుచి చూడని వాటిని రుచి చూడండి</span>
   </div>
 
   <!-- ══════════════════════════════════ VARIETIES ══════════════════════════════════ -->
@@ -687,7 +604,7 @@
           <div class="variety-body">
             <span class="variety-tag">Juicy · Signature</span>
             <h3>Banginapalli</h3>
-            <div class="telugu-name">బంగినపల్లి — ఆంధ్రా రాణి</div>
+            <div class="telugu-name">బంగినపల్లి <span style="color:#aaa;font-style:normal;">— The Queen of Andhra</span></div>
             <p>Soft, fiberless flesh with a golden hue and honey-sweet aroma. The pride of Andhra Pradesh — impossible to eat just one.</p>
             <div class="variety-attrs">
               <span class="attr"><i class="fa-solid fa-droplet"></i> Brix 18–22</span>
@@ -706,7 +623,7 @@
           <div class="variety-body">
             <span class="variety-tag">Exotic · Aamrutham Pick</span>
             <h3>Suvarnarekha</h3>
-            <div class="telugu-name">సువర్ణరేఖ — బంగారు రేఖ</div>
+            <div class="telugu-name">సువర్ణరేఖ <span style="color:#aaa;font-style:normal;">— The Golden Line</span></div>
             <p>Named for the golden streak on its skin. Intensely sweet with dense pulp and an intoxicating fragrance unlike any other.</p>
             <div class="variety-attrs">
               <span class="attr"><i class="fa-solid fa-droplet"></i> Brix 20–24</span>
@@ -725,7 +642,7 @@
           <div class="variety-body">
             <span class="variety-tag">Juicy · Dessert</span>
             <h3>Rasalu</h3>
-            <div class="telugu-name">రసాలు — రస రాజు</div>
+            <div class="telugu-name">రసాలు <span style="color:#aaa;font-style:normal;">— The Juice King</span></div>
             <p>Pulp soft as ice cream, sweet as nectar. The ultimate dessert mango — a true summer ritual in every Andhra household.</p>
             <div class="variety-attrs">
               <span class="attr"><i class="fa-solid fa-droplet"></i> Brix 19–23</span>
@@ -753,7 +670,7 @@
       <ellipse cx="400" cy="50" rx="40" ry="60" fill="#F5A623"/>
     </svg>
     <div class="cta-inner" data-aos="zoom-in">
-      <p class="cta-eyebrow">✦ వేసవి 2026 · హైదరాబాద్ ✦</p>
+      <p class="cta-eyebrow">✦ Summer 2026 · Hyderabad ✦</p>
       <h2 class="cta-title">
         Be the first to taste<br />
         <em>pure ఆమృతం</em>
@@ -767,7 +684,7 @@
         Chat on WhatsApp
       </a>
       <p style="color:rgba(255,255,255,0.35);font-size:0.8rem;margin-top:1.5rem;">
-        📍 హైదరాబాద్ మాత్రమే · Hyderabad only &nbsp;·&nbsp; 🚚 ₹500+ కి ఉచిత డెలివరీ · Free delivery on ₹500+
+        📍 Delivery to Hyderabad only &nbsp;·&nbsp; 🚚 Free delivery on orders ₹500+
       </p>
     </div>
   </section>
@@ -803,9 +720,9 @@
     </div>
 
     <img src="aam-final.png" alt="Aamrutham" class="footer-logo" />
-    <p class="footer-tagline">"ఆమ్ + అమృతం — Pure Mango Bliss"</p>
+    <p class="footer-tagline">"Aam + Amrutham — Pure Mango Bliss"</p>
     <ul class="footer-links">
-      <li><a href="#story">మా కథ</a></li>
+      <li><a href="#story">Our Story</a></li>
       <li><a href="#process">Farm to You</a></li>
       <li><a href="#varieties">Varieties</a></li>
       <li><a href="shop.html">Shop</a></li>
