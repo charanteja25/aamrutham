@@ -186,25 +186,6 @@
     }
     .price-note { font-size: 0.75rem; color: #aaa; }
 
-    /* ── Buy button ── */
-    .btn-buy {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      background: var(--mango); color: var(--text);
-      padding: 0.65rem 1.4rem; border-radius: 50px;
-      font-weight: 700; font-size: 0.9rem; text-decoration: none;
-      border: none; cursor: pointer; transition: all 0.25s;
-      white-space: nowrap;
-    }
-    .btn-buy:hover {
-      background: var(--mango-dark); color: white;
-      transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(224,123,57,0.3);
-    }
-    .btn-buy:disabled, .btn-buy.coming-soon {
-      background: #e0d4c0; color: #aaa; cursor: not-allowed;
-      transform: none; box-shadow: none;
-    }
-
     /* ── Delivery info bar ── */
     .delivery-bar {
       background: var(--cream-dark); padding: 1rem 2rem;
@@ -214,15 +195,6 @@
     .delivery-item {
       display: flex; align-items: center; gap: 0.5rem;
       font-size: 0.85rem; color: var(--leaf); font-weight: 700;
-    }
-
-    /* ── Zoho notice banner ── */
-    .zoho-notice {
-      background: #fff3cd; border: 1px solid #ffc107;
-      border-radius: 8px; padding: 1rem 1.5rem;
-      margin-bottom: 2rem;
-      display: flex; align-items: flex-start; gap: 0.75rem;
-      font-size: 0.875rem; color: #856404;
     }
 
     @media (max-width: 900px) { .shop-grid { grid-template-columns: repeat(2,1fr); } }
@@ -272,19 +244,6 @@
   <!-- ── Product Grid ── -->
   <div class="shop-grid-wrap">
 
-    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-         ZOHO INTEGRATION NOTICE
-         Remove this block once you have your Zoho store URL
-    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-    <div class="zoho-notice" id="zoho-setup-notice">
-      <i class="fa-solid fa-circle-info fa-lg" style="margin-top:2px; flex-shrink:0;"></i>
-      <div>
-        <strong>Shop integration pending.</strong> Once you have your Zoho Commerce store URL,
-        update the <code>ZOHO_STORE_URL</code> variable in <code>shop.html</code> and
-        all "Buy Now" buttons will go live automatically.
-      </div>
-    </div>
-
     <div class="shop-grid" id="shop-grid">
 
       <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -321,9 +280,7 @@
               <div class="price" id="price-mettavalasa">₹699</div>
               <div class="price-note">incl. delivery</div>
             </div>
-            <button class="btn-buy" onclick="buyNow('TODO_METTAVALASA_PRODUCT_ID', 'Mettavalasa Peechu')">
-              <i class="fa-solid fa-cart-shopping"></i> Buy Now
-            </button>
+            <div zs-buy-button data-embed-id="ay2xWj_DYEVlFhNS2vkJhg"></div>
           </div>
         </div>
       </div>
@@ -362,9 +319,7 @@
               <div class="price" id="price-bobbiligeechu">₹699</div>
               <div class="price-note">incl. delivery</div>
             </div>
-            <button class="btn-buy" onclick="buyNow('TODO_BOBBILIGEECHU_PRODUCT_ID', 'Bobbili Peechu')">
-              <i class="fa-solid fa-cart-shopping"></i> Buy Now
-            </button>
+            <div zs-buy-button data-embed-id="BhAgBkc7u0j85TcypLHi-w"></div>
           </div>
         </div>
       </div>
@@ -403,9 +358,7 @@
               <div class="price" id="price-kobbari">₹849</div>
               <div class="price-note">incl. delivery</div>
             </div>
-            <button class="btn-buy" onclick="buyNow('TODO_KOBBARI_PRODUCT_ID', 'Kothapalli Kobbari')">
-              <i class="fa-solid fa-cart-shopping"></i> Buy Now
-            </button>
+            <div zs-buy-button data-embed-id="KQRxilXk5M_y_FpVB239ow"></div>
           </div>
         </div>
       </div>
@@ -444,9 +397,7 @@
               <div class="price" id="price-imampasand">₹999</div>
               <div class="price-note">incl. delivery</div>
             </div>
-            <button class="btn-buy" onclick="buyNow('TODO_IMAMPASAND_PRODUCT_ID', 'Imam Pasand')">
-              <i class="fa-solid fa-cart-shopping"></i> Buy Now
-            </button>
+            <div zs-buy-button data-embed-id="r-29lQnXecNAcAnvb7wF4A"></div>
           </div>
         </div>
       </div>
@@ -465,37 +416,16 @@
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <!-- Zoho Commerce Buy Button -->
+  <script type="text/javascript" src="https://store.zohoshoppe.com/zs-buy-button.js"></script>
   <script>
     AOS.init({ duration: 700, easing: 'ease-out-cubic', once: true, offset: 60 });
 
-    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    // ZOHO COMMERCE INTEGRATION
-    // When you have your Zoho store, update this one variable:
-    //
-    //   const ZOHO_STORE_URL = "https://yourstore.zohoshoppe.com";
-    //
-    // That's it — all Buy Now buttons will work automatically.
-    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    const ZOHO_STORE_URL = null; // TODO: Replace null with your Zoho store URL
-
-    function buyNow(productId, productName) {
-      if (!ZOHO_STORE_URL || productId.startsWith('TODO_')) {
-        // Fallback to WhatsApp when Zoho isn't connected yet
-        const msg = encodeURIComponent(`Hi Aamrutham! I want to order ${productName} mangoes 🥭`);
-        window.open(`https://wa.me/919999999999?text=${msg}`, '_blank');
-        return;
-      }
-      // Once ZOHO_STORE_URL is set, this redirects to the Zoho product page
-      window.open(`${ZOHO_STORE_URL}/product/${productId}`, '_blank');
-    }
-
     // Pack size selector — updates displayed price
     function selectPack(btn, product, qty, price) {
-      // Deselect siblings
       btn.closest('.pack-options').querySelectorAll('.pack-btn')
         .forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
-      // Update price display
       document.getElementById(`price-${product}`).textContent = `₹${price.toLocaleString('en-IN')}`;
     }
 
@@ -514,11 +444,6 @@
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('scrolled', window.scrollY > 60);
     });
-
-    // Hide Zoho notice if store is connected
-    if (ZOHO_STORE_URL) {
-      document.getElementById('zoho-setup-notice').style.display = 'none';
-    }
   </script>
 </body>
 </html>
