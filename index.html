@@ -78,72 +78,78 @@
     .hero-title em { color: var(--leaf, #2D5016) !important; font-style: italic; }
     .hero-subtitle { color: #5a3e2b; }
 
+    /* ── Logo blend into background ── */
+    .hero-logo, .nav-logo, .footer-logo, .story-image-wrap img {
+      mix-blend-mode: multiply;
+    }
+
     /* ── Story overrides ── */
     #story { background: #FEF8F0; }
 
-    /* ── Process — timeline style ── */
-    .process-timeline {
-      max-width: 900px;
-      margin: 3.5rem auto 0;
+    /* ── Process — image card grid ── */
+    .process-grid {
+      max-width: 1200px;
+      margin: 3rem auto 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .process-card {
       position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      box-shadow: 0 8px 32px rgba(44,24,16,0.14);
     }
-    .process-timeline::before {
-      content: '';
-      position: absolute;
-      left: 52px;
-      top: 0; bottom: 0;
-      width: 2px;
-      background: linear-gradient(to bottom, var(--mango), var(--leaf));
-      opacity: 0.3;
+    .process-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
     }
-    .timeline-step {
-      display: flex;
-      gap: 2rem;
-      align-items: flex-start;
-      margin-bottom: 3rem;
-      position: relative;
-    }
-    .timeline-step:last-child { margin-bottom: 0; }
-    .timeline-icon {
-      width: 104px;
-      height: 104px;
-      border-radius: 50%;
-      flex-shrink: 0;
+    .process-card:hover img { transform: scale(1.04); }
+    .process-card-icon {
+      width: 100%;
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2.2rem;
-      border: 3px solid white;
-      box-shadow: 0 4px 20px rgba(44,24,16,0.1);
-      position: relative;
-      z-index: 1;
+      font-size: 4rem;
     }
-    .timeline-icon .step-num {
+    /* Dark rectangle overlay at bottom */
+    .process-card-body {
       position: absolute;
-      top: -6px; right: -6px;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(28,18,8,0.92) 0%, rgba(28,18,8,0.7) 60%, transparent 100%);
+      padding: 2rem 1.25rem 1.25rem;
+    }
+    .process-card-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       width: 26px; height: 26px;
       background: var(--mango);
       border-radius: 50%;
       font-size: 0.7rem;
       font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
       color: #1C1208;
-    }
-    .timeline-body { padding-top: 0.5rem; }
-    .timeline-body h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.25rem;
-      color: var(--leaf);
-      margin-bottom: 0.2rem;
-    }
-    .timeline-body .timeline-te {
-      font-family: 'Noto Serif Telugu', serif;
-      font-size: 0.9rem;
-      color: var(--mango-dark);
       margin-bottom: 0.5rem;
-      display: block;
     }
-    .timeline-body p { font-size: 0.9rem; color: #7a5c3e; line-height: 1.7; }
+    .process-card-body h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: white;
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+    }
+    .process-card-body p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.6;
+    }
+    @media (max-width: 900px) { .process-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 560px) { .process-grid { grid-template-columns: 1fr; } }
 
     /* ── Varieties section ── */
     #varieties { background: #FEF8F0; }
@@ -509,74 +515,64 @@
   </div>
 
   <!-- ══════════════════════════════════ PROCESS ══════════════════════════════════ -->
-  <section id="process" style="background:#FEF8F0;">
+  <section id="process" style="background:#FEF8F0; padding: 4rem 2rem;">
     <div class="process-inner">
 
-      <div class="process-timeline">
+      <div class="process-grid">
 
-        <div class="timeline-step" data-aos="fade-right">
-          <div class="timeline-icon" style="overflow:hidden; padding:0;">
-            <img src="oil%20%5Bpaint/jeevamrutham%20prepare%20and%20spray.png" alt="Jeevamrutham farming" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
-            <span class="step-num">1</span>
-          </div>
-          <div class="timeline-body">
+        <div class="process-card" data-aos="fade-up" data-aos-delay="0">
+          <img src="oil%20%5Bpaint/jeevamrutham%20prepare%20and%20spray.png" alt="Jeevamrutham farming" />
+          <div class="process-card-body">
+            <div class="process-card-num">1</div>
             <h3>Jeevamrutham Farming</h3>
-            <p>We prepare and spray <em>Jeevamrutham</em> — a traditional fermented organic fertiliser made with cow dung and medicinal herbs — nourishing our trees the way nature intended. Zero chemicals. Ever.</p>
+            <p>Traditional fermented organic fertiliser — cow dung, herbs, zero chemicals. Nourishing our trees the way nature intended.</p>
           </div>
         </div>
 
-        <div class="timeline-step" data-aos="fade-left">
-          <div class="timeline-icon" style="overflow:hidden; padding:0;">
-            <img src="oil%20%5Bpaint/pollination%20and%20flowering.png" alt="Pollination and flowering" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
-            <span class="step-num">2</span>
-          </div>
-          <div class="timeline-body">
+        <div class="process-card" data-aos="fade-up" data-aos-delay="80">
+          <img src="oil%20%5Bpaint/pollination%20and%20flowering.png" alt="Pollination and flowering" />
+          <div class="process-card-body">
+            <div class="process-card-num">2</div>
             <h3>Pollination & Flowering</h3>
-            <p>When the mango blossoms open, bees and butterflies do their ancient work. We let nature pollinate — no artificial intervention. The flowers that survive to fruit are the strongest.</p>
+            <p>Bees and butterflies do their ancient work. We let nature pollinate — the flowers that survive to fruit are the strongest.</p>
           </div>
         </div>
 
-        <div class="timeline-step" data-aos="fade-right">
-          <div class="timeline-icon" style="overflow:hidden; padding:0;">
-            <img src="oil%20%5Bpaint/tiny%20fruite%20set.png" alt="Tiny fruit set" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
-            <span class="step-num">3</span>
-          </div>
-          <div class="timeline-body">
+        <div class="process-card" data-aos="fade-up" data-aos-delay="160">
+          <img src="oil%20%5Bpaint/tiny%20fruite%20set.png" alt="Tiny fruit set" />
+          <div class="process-card-body">
+            <div class="process-card-num">3</div>
             <h3>Fruit Set</h3>
-            <p>Tiny green mangoes begin to form on the branches — this is where patience begins. We monitor each cluster, thinning where needed so every remaining fruit gets the tree's full nourishment.</p>
+            <p>Tiny green mangoes form on the branches. We monitor each cluster, thinning where needed so every fruit gets the tree's full nourishment.</p>
           </div>
         </div>
 
-        <div class="timeline-step" data-aos="fade-left">
-          <div class="timeline-icon" style="overflow:hidden; padding:0;">
-            <img src="oil%20%5Bpaint/examining%20ripe%20mangoes.png" alt="Examining ripe mangoes" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
-            <span class="step-num">4</span>
-          </div>
-          <div class="timeline-body">
+        <div class="process-card" data-aos="fade-up" data-aos-delay="0">
+          <img src="oil%20%5Bpaint/examining%20ripe%20mangoes.png" alt="Examining ripe mangoes" />
+          <div class="process-card-body">
+            <div class="process-card-num">4</div>
             <h3>Hand-Picked at Peak</h3>
-            <p>Our farmers examine every mango by hand — feeling for the right give, checking the colour, smelling the stem. Only when it's perfect does it leave the tree. No machines. No guessing.</p>
+            <p>Farmers examine every mango by hand — the right give, the right colour, the right smell at the stem. No machines. No guessing.</p>
           </div>
         </div>
 
-        <div class="timeline-step" data-aos="fade-right">
-          <div class="timeline-icon" style="overflow:hidden; padding:0;">
-            <img src="oil%20%5Bpaint/ripening%20process.png" alt="Natural ripening on straw" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
-            <span class="step-num">5</span>
-          </div>
-          <div class="timeline-body">
+        <div class="process-card" data-aos="fade-up" data-aos-delay="80">
+          <img src="oil%20%5Bpaint/ripening%20process.png" alt="Natural ripening on straw" />
+          <div class="process-card-body">
+            <div class="process-card-num">5</div>
             <h3>Natural Ripening on Straw</h3>
-            <p>Mangoes are laid on dry paddy straw — the traditional method. They ripen at their own pace, uniformly, with no carbide or chemical agents. The straw breathes with the fruit.</p>
+            <p>Laid on dry paddy straw — the traditional method. Ripen at their own pace, uniformly, with no carbide or chemical agents.</p>
           </div>
         </div>
 
-        <div class="timeline-step" data-aos="fade-left">
-          <div class="timeline-icon" style="background:linear-gradient(135deg,#e3f2fd,#90caf9);">
-            <i class="fa-solid fa-truck-fast" style="color:#1565c0;"></i>
-            <span class="step-num">6</span>
+        <div class="process-card" data-aos="fade-up" data-aos-delay="160" style="background:linear-gradient(160deg,#1a3a0a,#2D5016);">
+          <div class="process-card-icon">
+            <i class="fa-solid fa-truck-fast" style="color:#F5A623;"></i>
           </div>
-          <div class="timeline-body">
+          <div class="process-card-body" style="background:linear-gradient(to top, rgba(28,18,8,0.96) 0%, rgba(28,18,8,0.75) 60%, transparent 100%);">
+            <div class="process-card-num">6</div>
             <h3>Delivered to Hyderabad</h3>
-            <p>Packed carefully and dispatched same-day. From our Bobbili farm to your door — the whole journey done with care, so the first bite feels exactly like it should.</p>
+            <p>Packed with care, dispatched same-day. From our Bobbili farm to your door — so the first bite feels exactly like it should.</p>
           </div>
         </div>
 
