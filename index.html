@@ -247,11 +247,18 @@
     #varieties      { position: relative; height: 400vh; }
 
     @media (max-width: 768px) {
-      .hslide-body { width: 90%; padding-bottom: 5.5rem; }
-      .hslide-body h2 { font-size: 1.65rem; }
-      .hslide-num { font-size: 35vw; }
-      #process-scroll { height: 800vh; }
-      #varieties { height: 500vh; }
+      /* Convert horizontal scroll to vertical stack on mobile */
+      #process-scroll, #varieties { height: auto !important; }
+      .hscroll-sticky { position: relative !important; height: auto !important; overflow: visible !important; }
+      .hscroll-track { flex-direction: column !important; transform: none !important; transition: none !important; }
+      .hslide { width: 100% !important; height: 75vw !important; min-height: 340px !important; max-height: 480px !important; }
+      .hslide-body { position: absolute; width: 100% !important; padding: 1.5rem 1.5rem 3rem !important; }
+      .hslide-body h2 { font-size: clamp(1.4rem, 5vw, 1.8rem); }
+      .hslide-body p { font-size: 0.9rem; }
+      .hslide-label { font-size: 0.72rem; }
+      .hslide-attr { font-size: 0.72rem; }
+      .hslide-num { font-size: 28vw; }
+      .hslide-hint, .hslide-dots { display: none !important; }
     }
 
     /* ── Footer redesign ── */
@@ -449,12 +456,15 @@
     <a href="#hero">
       <img src="Subject.png" alt="Aamrutham" class="nav-logo" />
     </a>
-    <ul class="nav-links">
-      <li><a href="#story">Our Story</a></li>
-      <li><a href="#process">Farm to You</a></li>
-      <li><a href="#varieties">Varieties</a></li>
-      <li><a href="shop.html">Shop</a></li>
-      <li><a href="#cta" class="btn-preorder">Pre-order ✦</a></li>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#story" onclick="closeNav()">Our Story</a></li>
+      <li><a href="#process" onclick="closeNav()">Farm to You</a></li>
+      <li><a href="#varieties" onclick="closeNav()">Varieties</a></li>
+      <li><a href="shop.html" onclick="closeNav()">Shop</a></li>
+      <li><a href="#cta" class="btn-preorder" onclick="closeNav()">Pre-order ✦</a></li>
     </ul>
   </nav>
 
@@ -920,6 +930,18 @@
       navbar.classList.toggle('scrolled', window.scrollY > 60);
     });
 
+    // ── Hamburger menu ──
+    const navToggle = document.getElementById('nav-toggle');
+    const navLinks  = document.getElementById('nav-links');
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+    function closeNav() {
+      navToggle.classList.remove('open');
+      navLinks.classList.remove('open');
+    }
+
     // ── AOS ──
     AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 80 });
 
@@ -940,6 +962,7 @@
       if (!wrap || !track) return;
       var lastIdx = -1;
       window.addEventListener('scroll', function() {
+        if (window.innerWidth <= 768) return; // vertical stack on mobile
         var rect = wrap.getBoundingClientRect();
         var scrolled   = -rect.top;
         var scrollable = wrap.offsetHeight - window.innerHeight;

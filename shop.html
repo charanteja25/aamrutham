@@ -223,11 +223,14 @@
     <a href="index.html">
       <img src="Subject.png" alt="Aamrutham" class="nav-logo" />
     </a>
-    <ul class="nav-links">
-      <li><a href="index.html#story">Our Story</a></li>
-      <li><a href="index.html#process">Farm to You</a></li>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html#story" onclick="closeNav()">Our Story</a></li>
+      <li><a href="index.html#process" onclick="closeNav()">Farm to You</a></li>
       <li><a href="shop.html" style="color:var(--mango-dark); font-weight:700;">Shop</a></li>
-      <li><a href="index.html#cta" class="btn-preorder">Pre-order ✦</a></li>
+      <li><a href="index.html#cta" class="btn-preorder" onclick="closeNav()">Pre-order ✦</a></li>
     </ul>
   </nav>
 
@@ -441,6 +444,18 @@
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>
     AOS.init({ duration: 700, easing: 'ease-out-cubic', once: true, offset: 60 });
+
+    // ── Hamburger menu ──
+    const navToggle = document.getElementById('nav-toggle');
+    const navLinks  = document.getElementById('nav-links');
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+    function closeNav() {
+      navToggle.classList.remove('open');
+      navLinks.classList.remove('open');
+    }
 
     // Pack size selector — updates displayed price
     function selectPack(btn, product, qty, price) {
