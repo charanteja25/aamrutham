@@ -89,7 +89,7 @@
     /* ── Process — Apple-style sticky scroll ── */
     #process-scroll {
       position: relative;
-      height: 600vh; /* 6 steps × 100vh */
+      height: 300vh; /* 6 steps — snappy 50vh each */
     }
     .process-sticky {
       position: sticky;
@@ -236,7 +236,182 @@
       .pstep-text { right: 8%; }
       .pstep-text h2 { font-size: 1.6rem; }
       .pstep-text p { font-size: 0.9rem; }
-      #process-scroll { height: 700vh; }
+      #process-scroll { height: 400vh; }
+    }
+
+    /* ══════════════════════════════════════════════
+       VARIETIES — Horizontal sticky scroll
+    ══════════════════════════════════════════════ */
+    #varieties {
+      position: relative;
+      height: 400vh; /* 4 varieties × 100vh */
+    }
+    .varieties-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .varieties-track {
+      display: flex;
+      height: 100%;
+      width: 400vw;
+      will-change: transform;
+    }
+    .variety-slide {
+      width: 100vw;
+      height: 100vh;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 5rem 8% 5rem;
+    }
+    /* Giant background number */
+    .vs-num {
+      position: absolute;
+      font-family: 'Playfair Display', serif;
+      font-size: 38vw;
+      font-weight: 700;
+      right: -1vw;
+      top: 50%;
+      transform: translateY(-50%);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+      transition: color 0.6s;
+    }
+    /* Left content */
+    .vs-content {
+      max-width: 54%;
+      position: relative;
+      z-index: 2;
+    }
+    .vs-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+    .vs-telugu {
+      font-family: 'Noto Serif Telugu', serif;
+      font-size: clamp(1.3rem, 2.5vw, 2rem);
+      margin-bottom: 0.2rem;
+      display: block;
+    }
+    .vs-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.15;
+      margin-bottom: 0.3rem;
+    }
+    .vs-meaning {
+      font-size: 0.9rem;
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      display: block;
+      opacity: 0.55;
+    }
+    .vs-desc {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      max-width: 500px;
+      margin-bottom: 1.5rem;
+      opacity: 0.82;
+    }
+    .vs-attrs {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .vs-attr {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.3rem 0.85rem;
+      border-radius: 50px;
+      border: 1.5px solid currentColor;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      opacity: 0.65;
+    }
+    .vs-footer {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    /* Right visual card */
+    .vs-visual {
+      position: absolute;
+      right: 6%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 30vw;
+      max-width: 380px;
+      aspect-ratio: 3/4;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.14);
+      z-index: 2;
+    }
+    .vs-visual-inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 7rem;
+    }
+    /* Progress dots row at bottom */
+    .vs-progress {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 8%;
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+      z-index: 3;
+    }
+    .vs-dot {
+      height: 6px;
+      width: 6px;
+      border-radius: 3px;
+      transition: width 0.35s ease, opacity 0.35s;
+      opacity: 0.3;
+    }
+    .vs-dot.active {
+      width: 28px;
+      opacity: 1;
+    }
+    /* Scroll hint */
+    .vs-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      right: 8%;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      opacity: 0.35;
+      transition: opacity 0.4s;
+      z-index: 3;
+    }
+    @media (max-width: 900px) {
+      .vs-visual { width: 38vw; }
+      .vs-content { max-width: 56%; }
+    }
+    @media (max-width: 680px) {
+      .vs-visual { display: none; }
+      .vs-content { max-width: 92%; }
+      .vs-num { font-size: 55vw; opacity: 0.5; }
+      #varieties { height: 500vh; }
     }
 
     /* ── Varieties section ── */
@@ -688,107 +863,128 @@
     <h2 class="banner-en">Our Mango Varieties</h2>
   </div>
 
-  <!-- ══════════════════════════════════ VARIETIES ══════════════════════════════════ -->
-  <section id="varieties">
-    <div class="varieties-inner">
-      <div class="varieties-header" data-aos="fade-up">
-        <p class="section-eyebrow">Coming This Summer</p>
-        <h2 class="section-title">Mangoes you've<br />never tasted before</h2>
-        <p>Rare and undiscovered varieties from Bobbili — each one a different story of sweetness, aroma, and pure joy.</p>
-      </div>
-      <div class="varieties-grid">
+  <!-- ══════════════════════════════════ VARIETIES — horizontal scroll ══════════════════════════════════ -->
+  <div id="varieties">
+    <div class="varieties-sticky">
+      <div class="varieties-track" id="varieties-track">
 
-        <!-- ── Mettavalasa Peechu ── -->
-        <div class="variety-card" data-aos="fade-up" data-aos-delay="0">
-          <div class="variety-img placeholder" style="background:linear-gradient(160deg,#FFF3CD,#FFD166,#F4A835);height:220px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0.4rem;">
-            <i class="fa-solid fa-apple-whole" style="font-size:4.5rem;color:#b85c00;"></i>
-          </div>
-          <div class="variety-body">
-            <span class="variety-tag">Signature · Bobbili Exclusive</span>
-            <h3>Mettavalasa Peechu</h3>
-            <div class="telugu-name">మెట్టవలస పీచు <span style="color:#aaa;font-style:normal;">— The Fibrous King from the Hills</span></div>
-            <p>Named after the elevated village of Mettavalasa near Bobbili, this heritage variety is celebrated for its distinctively fibrous texture — thick, silky strands of pulp that carry an intense, almost floral sweetness. Grown at higher elevations, the cool nights concentrate the sugars to extraordinary levels. A mango that must be sucked, not sliced — a true childhood ritual.</p>
-            <div class="variety-attrs">
-              <span class="attr"><i class="fa-solid fa-droplet"></i> Brix 20–24</span>
-              <span class="attr"><i class="fa-solid fa-wheat-awn"></i> Fibrous Pulp</span>
-              <span class="attr"><i class="fa-solid fa-location-dot"></i> Mettavalasa, Bobbili</span>
+        <!-- ══ SLIDE 1: Mettavalasa Peechu ══ -->
+        <div class="variety-slide" style="background:#FEF8F0; color:#1C1208;">
+          <div class="vs-num" style="color:rgba(245,166,35,0.1);">01</div>
+          <div class="vs-content">
+            <span class="vs-eyebrow" style="color:#E07B39;">Signature Variety · Bobbili Farms</span>
+            <span class="vs-telugu" style="color:#2D5016;">మెట్టవలస పీచు</span>
+            <div class="vs-name">Mettavalasa<br />Peechu</div>
+            <span class="vs-meaning">— The Fibrous King from the Hills</span>
+            <p class="vs-desc">Named after the elevated village of Mettavalasa near Bobbili. Grown at higher altitude where cool nights concentrate sugars to extraordinary levels. The pulp is distinctively fibrous — thick, silky strands carrying an intense floral sweetness. A mango that must be sucked, not sliced. A true childhood ritual.</p>
+            <div class="vs-attrs" style="color:#2D5016;">
+              <span class="vs-attr"><i class="fa-solid fa-droplet"></i> Brix 20–24</span>
+              <span class="vs-attr"><i class="fa-solid fa-wheat-awn"></i> Fibrous Pulp</span>
+              <span class="vs-attr"><i class="fa-solid fa-location-dot"></i> Mettavalasa, Bobbili</span>
+              <span class="vs-attr"><i class="fa-solid fa-sun"></i> May – June</span>
+            </div>
+            <div class="vs-footer">
+              <a href="https://youtu.be/7hCDUypZMlI" target="_blank" rel="noopener" class="watch-link"><i class="fa-brands fa-youtube"></i> Watch the Story</a>
+              <span style="font-size:0.8rem;color:#E07B39;font-weight:700;">✦ Summer 2026</span>
             </div>
           </div>
-          <div class="variety-footer">
-            <a href="https://youtu.be/7hCDUypZMlI" target="_blank" rel="noopener" class="watch-link"><i class="fa-brands fa-youtube"></i> Watch the Story</a>
-            <span class="coming-tag">✦ Summer 2026</span>
+          <div class="vs-visual">
+            <div class="vs-visual-inner" style="background:linear-gradient(160deg,#FFF3CD,#FFD166,#F4A835);">
+              <i class="fa-solid fa-apple-whole" style="color:#b85c00;"></i>
+            </div>
+          </div>
+          <div class="vs-progress" id="vs-progress">
+            <div class="vs-dot active" style="background:#E07B39;"></div>
+            <div class="vs-dot" style="background:#E07B39;"></div>
+            <div class="vs-dot" style="background:#E07B39;"></div>
+            <div class="vs-dot" style="background:#E07B39;"></div>
+          </div>
+          <div class="vs-hint"><i class="fa-solid fa-arrow-right fa-xs"></i> Scroll to explore</div>
+        </div>
+
+        <!-- ══ SLIDE 2: Bobbili Peechu ══ -->
+        <div class="variety-slide" style="background:#FFF4E8; color:#1C1208;">
+          <div class="vs-num" style="color:rgba(224,123,57,0.1);">02</div>
+          <div class="vs-content">
+            <span class="vs-eyebrow" style="color:#c05a00;">Heritage Variety · Same Land, Generations</span>
+            <span class="vs-telugu" style="color:#2D5016;">బొబ్బిలి పీచు</span>
+            <div class="vs-name">Bobbili<br />Peechu</div>
+            <span class="vs-meaning">— The Pride of Bobbili</span>
+            <p class="vs-desc">Born from the red laterite soil of Bobbili, grown on the same land for generations. Rich amber pulp with finer fibres — almost like threads of pure flavour. Local farmers call it "the mango that tastes like memory." Best enjoyed the traditional way: squeezed and sipped straight from the skin.</p>
+            <div class="vs-attrs" style="color:#2D5016;">
+              <span class="vs-attr"><i class="fa-solid fa-droplet"></i> Brix 19–23</span>
+              <span class="vs-attr"><i class="fa-solid fa-wheat-awn"></i> Fine-Fibrous</span>
+              <span class="vs-attr"><i class="fa-solid fa-location-dot"></i> Bobbili</span>
+              <span class="vs-attr"><i class="fa-solid fa-sun"></i> May – June</span>
+            </div>
+            <div class="vs-footer">
+              <a href="https://youtu.be/7hCDUypZMlI" target="_blank" rel="noopener" class="watch-link"><i class="fa-brands fa-youtube"></i> Watch the Story</a>
+              <span style="font-size:0.8rem;color:#c05a00;font-weight:700;">✦ Summer 2026</span>
+            </div>
+          </div>
+          <div class="vs-visual">
+            <div class="vs-visual-inner" style="background:linear-gradient(160deg,#FFF8E1,#FFCC80,#FF8F00);">
+              <i class="fa-solid fa-star" style="color:#7b3a00;"></i>
+            </div>
           </div>
         </div>
 
-        <!-- ── Bobbili Peechu ── -->
-        <div class="variety-card" data-aos="fade-up" data-aos-delay="100">
-          <div class="variety-img placeholder" style="background:linear-gradient(160deg,#FFF8E1,#FFCC80,#FF8F00);height:220px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0.4rem;">
-            <i class="fa-solid fa-star" style="font-size:4.5rem;color:#b85c00;"></i>
-          </div>
-          <div class="variety-body">
-            <span class="variety-tag">Signature · Heritage Variety</span>
-            <h3>Bobbili Peechu</h3>
-            <div class="telugu-name">బొబ్బిలి పీచు <span style="color:#aaa;font-style:normal;">— The Pride of Bobbili</span></div>
-            <p>Born from the red laterite soil of Bobbili, this fibrous variety has been grown on the same land for generations. Rich amber pulp with a bold, complex sweetness that lingers long after the last bite. The fibres are finer than other peechu varieties — almost like threads of pure flavour. Local farmers call it the mango that "tastes like memory." Best enjoyed the traditional way: squeezed and sipped straight from the skin.</p>
-            <div class="variety-attrs">
-              <span class="attr"><i class="fa-solid fa-droplet"></i> Brix 19–23</span>
-              <span class="attr"><i class="fa-solid fa-wheat-awn"></i> Fine-Fibrous</span>
-              <span class="attr"><i class="fa-solid fa-location-dot"></i> Bobbili</span>
+        <!-- ══ SLIDE 3: Kothapalli Kobbari ══ -->
+        <div class="variety-slide" style="background:#FFFDE7; color:#1C1208;">
+          <div class="vs-num" style="color:rgba(255,193,7,0.12);">03</div>
+          <div class="vs-content">
+            <span class="vs-eyebrow" style="color:#c67b00;">Exotic · Nearly Unknown Outside Vizianagaram</span>
+            <span class="vs-telugu" style="color:#2D5016;">కొత్తపల్లి కొబ్బరి</span>
+            <div class="vs-name">Kothapalli<br />Kobbari</div>
+            <span class="vs-meaning">— The Coconut Mango</span>
+            <p class="vs-desc">"Kobbari" means coconut in Telugu — and this variety earns that name completely. Its cream-textured, fiberless flesh carries a faint but unmistakable coconut undertone beneath a rich mango sweetness. Originating from Kothapalli village, nearly unknown outside the district. An experience, not just a fruit.</p>
+            <div class="vs-attrs" style="color:#2D5016;">
+              <span class="vs-attr"><i class="fa-solid fa-droplet"></i> Brix 21–25</span>
+              <span class="vs-attr"><i class="fa-solid fa-wheat-awn"></i> Fiberless</span>
+              <span class="vs-attr"><i class="fa-solid fa-location-dot"></i> Kothapalli, Bobbili</span>
+              <span class="vs-attr"><i class="fa-solid fa-sun"></i> June – July</span>
+            </div>
+            <div class="vs-footer">
+              <span style="font-size:0.8rem;color:#c67b00;font-weight:700;">✦ Summer 2026</span>
             </div>
           </div>
-          <div class="variety-footer">
-            <a href="https://youtu.be/7hCDUypZMlI" target="_blank" rel="noopener" class="watch-link"><i class="fa-brands fa-youtube"></i> Watch the Story</a>
-            <span class="coming-tag">✦ Summer 2026</span>
+          <div class="vs-visual">
+            <div class="vs-visual-inner" style="background:linear-gradient(160deg,#FFF9E5,#FFE082,#FFC107);">
+              <i class="fa-solid fa-droplets" style="color:#8a5700;"></i>
+            </div>
           </div>
         </div>
 
-        <!-- ── Kothapalli Kobbari ── -->
-        <div class="variety-card" data-aos="fade-up" data-aos-delay="0">
-          <div class="variety-img placeholder" style="background:linear-gradient(160deg,#FFF9E5,#FFE082,#FFC107);height:220px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0.4rem;">
-            <i class="fa-solid fa-droplets" style="font-size:4.5rem;color:#c67b00;"></i>
-          </div>
-          <div class="variety-body">
-            <span class="variety-tag">Exotic · Aamrutham Pick</span>
-            <h3>Kothapalli Kobbari</h3>
-            <div class="telugu-name">కొత్తపల్లి కొబ్బరి <span style="color:#aaa;font-style:normal;">— The Coconut Mango</span></div>
-            <p>One of the most unusual mangoes you'll ever taste. "Kobbari" means coconut in Telugu — and this variety earns that name completely. Its flesh carries a faint but unmistakable coconut undertone layered beneath a rich mango sweetness. Originating from Kothapalli village, it is nearly unknown outside the Vizianagaram district. Fiberless, cream-textured pulp that melts on the tongue. An experience, not just a fruit.</p>
-            <div class="variety-attrs">
-              <span class="attr"><i class="fa-solid fa-droplet"></i> Brix 21–25</span>
-              <span class="attr"><i class="fa-solid fa-wheat-awn"></i> Fiberless</span>
-              <span class="attr"><i class="fa-solid fa-location-dot"></i> Kothapalli, Bobbili</span>
+        <!-- ══ SLIDE 4: Imam Pasand ══ -->
+        <div class="variety-slide" style="background:#1C1208; color:#FEF8F0;">
+          <div class="vs-num" style="color:rgba(245,166,35,0.07);">04</div>
+          <div class="vs-content">
+            <span class="vs-eyebrow" style="color:#F5A623;">Royal · The Deccan's Finest</span>
+            <span class="vs-telugu" style="color:#F5A623;">ఇమామ్ పసంద్</span>
+            <div class="vs-name" style="color:white;">Imam<br />Pasand</div>
+            <span class="vs-meaning" style="color:rgba(255,255,255,0.45);">— Favourite of the Imam · Also known as Himayat</span>
+            <p class="vs-desc" style="color:rgba(255,255,255,0.75);">The royal mango of the Deccan. Saffron-hued, zero-fibre, creamy pulp in an extraordinarily large fruit — a single mango can weigh up to a kilogram. Its sweetness is profound yet perfectly balanced, never cloying. Grown for centuries across the Deccan region, available only for a few fleeting weeks at peak summer.</p>
+            <div class="vs-attrs" style="color:#F5A623;">
+              <span class="vs-attr" style="border-color:#F5A623; color:#F5A623;"><i class="fa-solid fa-droplet"></i> Brix 18–22</span>
+              <span class="vs-attr" style="border-color:#F5A623; color:#F5A623;"><i class="fa-solid fa-wheat-awn"></i> Fiberless · Creamy</span>
+              <span class="vs-attr" style="border-color:#F5A623; color:#F5A623;"><i class="fa-solid fa-location-dot"></i> Bobbili</span>
+              <span class="vs-attr" style="border-color:#F5A623; color:#F5A623;"><i class="fa-solid fa-sun"></i> June – July</span>
+            </div>
+            <div class="vs-footer">
+              <a href="https://youtu.be/sCrphwzamw8" target="_blank" rel="noopener" style="color:#F5A623;" class="watch-link"><i class="fa-brands fa-youtube"></i> Watch the Story</a>
+              <span style="font-size:0.8rem;color:#F5A623;font-weight:700;">✦ Summer 2026</span>
             </div>
           </div>
-          <div class="variety-footer">
-            <span class="coming-tag">✦ Summer 2026</span>
-            <span style="font-size:0.8rem;color:#aaa;">Pack of 6, 12, 18</span>
+          <div class="vs-visual">
+            <div class="vs-visual-inner" style="background:linear-gradient(160deg,#3a1a08,#6b2d00);">
+              <i class="fa-solid fa-crown" style="color:#F5A623;"></i>
+            </div>
           </div>
         </div>
 
-        <!-- ── Imam Pasand ── -->
-        <div class="variety-card" data-aos="fade-up" data-aos-delay="100">
-          <div class="variety-img placeholder" style="background:linear-gradient(160deg,#FFF0E0,#FFAB76,#E07B39);height:220px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0.4rem;">
-            <i class="fa-solid fa-crown" style="font-size:4.5rem;color:#7b2d00;"></i>
-          </div>
-          <div class="variety-body">
-            <span class="variety-tag">Royal · Dessert Mango</span>
-            <h3>Imam Pasand</h3>
-            <div class="telugu-name">ఇమామ్ పసంద్ <span style="color:#aaa;font-style:normal;">— Favourite of the Imam · Also: Himayat</span></div>
-            <p>Known as <em>Himayat</em> in Andhra, this is the royal mango — said to have been the Imam's favourite, hence the name. Extraordinarily large, with a deep saffron-hued pulp that is smooth, thick, and almost creamy. Zero fibre. The sweetness is profound yet balanced — never cloying. A single fruit can weigh up to a kilogram. Grown for centuries in the Deccan region, it is now rare and seasonal, available only for a few weeks at peak summer.</p>
-            <div class="variety-attrs">
-              <span class="attr"><i class="fa-solid fa-droplet"></i> Brix 18–22</span>
-              <span class="attr"><i class="fa-solid fa-wheat-awn"></i> Fiberless · Creamy</span>
-              <span class="attr"><i class="fa-solid fa-location-dot"></i> Bobbili</span>
-            </div>
-          </div>
-          <div class="variety-footer">
-            <a href="https://youtu.be/sCrphwzamw8" target="_blank" rel="noopener" class="watch-link"><i class="fa-brands fa-youtube"></i> Watch the Story</a>
-            <span class="coming-tag">✦ Summer 2026</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
+      </div><!-- end track -->
+    </div><!-- end sticky -->
+  </div><!-- end #varieties -->
 
   <!-- ══════════════════════════════════ CTA ══════════════════════════════════ -->
   <section id="cta">
@@ -933,6 +1129,36 @@
           window.scrollTo({ top: target, behavior: 'smooth' });
         });
       });
+    })();
+
+    // ── Varieties horizontal scroll ──
+    (function() {
+      const wrap  = document.getElementById('varieties');
+      const track = document.getElementById('varieties-track');
+      const dots  = document.querySelectorAll('.vs-dot');
+      const hint  = wrap ? wrap.querySelector('.vs-hint') : null;
+      if (!wrap || !track) return;
+
+      const SLIDES = 4;
+      let lastIdx = -1;
+
+      window.addEventListener('scroll', function() {
+        const rect     = wrap.getBoundingClientRect();
+        const scrolled = -rect.top;
+        const scrollable = wrap.offsetHeight - window.innerHeight;
+        if (scrolled < 0 || scrolled > scrollable) return;
+
+        const progress = scrolled / scrollable;
+        const tx = progress * (SLIDES - 1) * window.innerWidth;
+        track.style.transform = 'translateX(-' + tx + 'px)';
+
+        const idx = Math.min(SLIDES - 1, Math.floor(progress * SLIDES));
+        if (idx !== lastIdx) {
+          lastIdx = idx;
+          dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+          if (hint) hint.style.opacity = idx > 0 ? '0' : '0.35';
+        }
+      }, { passive: true });
     })();
 
     // ── Lifecycle art parallax (moves slower than scroll) ──
