@@ -86,70 +86,158 @@
     /* ── Story overrides ── */
     #story { background: #FEF8F0; }
 
-    /* ── Process — image card grid ── */
-    .process-grid {
-      max-width: 1200px;
-      margin: 3rem auto 0;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
-    .process-card {
+    /* ── Process — Apple-style sticky scroll ── */
+    #process-scroll {
       position: relative;
-      border-radius: 16px;
+      height: 600vh; /* 6 steps × 100vh */
+    }
+    .process-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
       overflow: hidden;
-      aspect-ratio: 3/4;
-      box-shadow: 0 8px 32px rgba(44,24,16,0.14);
     }
-    .process-card img {
-      width: 100%;
-      height: 100%;
+
+    /* Full-bleed images, stacked, crossfade */
+    .pstep-imgs {
+      position: absolute;
+      inset: 0;
+    }
+    .pstep-img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
       object-fit: cover;
-      display: block;
-      transition: transform 0.5s ease;
+      opacity: 0;
+      transition: opacity 0.9s ease;
+      will-change: opacity;
     }
-    .process-card:hover img { transform: scale(1.04); }
-    .process-card-icon {
-      width: 100%;
-      height: 100%;
+    .pstep-img.active { opacity: 1; }
+
+    /* Step 6 background (no photo) */
+    .pstep-bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    /* Bottom gradient for text legibility */
+    .pstep-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(10,6,2,0.88) 0%,
+        rgba(10,6,2,0.35) 45%,
+        transparent 75%
+      );
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* All text blocks stacked, one active at a time */
+    .pstep-texts {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      z-index: 2;
+      padding: 0 5% 8%;
+    }
+    .pstep-text {
+      position: absolute;
+      bottom: 0; left: 5%; right: 15%;
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+      pointer-events: none;
+    }
+    .pstep-text.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .pstep-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      color: var(--mango);
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+    .pstep-text h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      color: white;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .pstep-text p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.78);
+      max-width: 560px;
+      line-height: 1.75;
+    }
+
+    /* Delivery icon (step 6 only) */
+    .pstep-delivery {
+      position: absolute;
+      inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 4rem;
+      font-size: 6rem;
+      color: rgba(245,166,35,0.15);
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 0.9s ease;
     }
-    /* Dark rectangle overlay at bottom */
-    .process-card-body {
+    .pstep-delivery.active { opacity: 1; }
+
+    /* Progress dots — right side */
+    .pstep-dots {
       position: absolute;
-      bottom: 0; left: 0; right: 0;
-      background: linear-gradient(to top, rgba(28,18,8,0.92) 0%, rgba(28,18,8,0.7) 60%, transparent 100%);
-      padding: 2rem 1.25rem 1.25rem;
+      right: 2.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      z-index: 3;
     }
-    .process-card-num {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 26px; height: 26px;
-      background: var(--mango);
+    .pstep-dot {
+      width: 7px; height: 7px;
       border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      transition: background 0.3s, transform 0.3s;
+      cursor: pointer;
+    }
+    .pstep-dot.active {
+      background: var(--mango);
+      transform: scale(1.5);
+    }
+
+    /* Scroll hint at start */
+    .pstep-scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      right: 6rem;
+      color: rgba(255,255,255,0.3);
       font-size: 0.7rem;
-      font-weight: 700;
-      color: #1C1208;
-      margin-bottom: 0.5rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: opacity 0.4s;
     }
-    .process-card-body h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      color: white;
-      margin-bottom: 0.4rem;
-      line-height: 1.3;
+
+    @media (max-width: 768px) {
+      .pstep-dots { right: 1rem; }
+      .pstep-text { right: 8%; }
+      .pstep-text h2 { font-size: 1.6rem; }
+      .pstep-text p { font-size: 0.9rem; }
+      #process-scroll { height: 700vh; }
     }
-    .process-card-body p {
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.75);
-      line-height: 1.6;
-    }
-    @media (max-width: 900px) { .process-grid { grid-template-columns: repeat(2,1fr); } }
-    @media (max-width: 560px) { .process-grid { grid-template-columns: 1fr; } }
 
     /* ── Varieties section ── */
     #varieties { background: #FEF8F0; }
@@ -514,71 +602,86 @@
     <h2 class="banner-en">Farm to Your Doorstep</h2>
   </div>
 
-  <!-- ══════════════════════════════════ PROCESS ══════════════════════════════════ -->
-  <section id="process" style="background:#FEF8F0; padding: 4rem 2rem;">
-    <div class="process-inner">
+  <!-- ══════════════════════════════════ PROCESS — sticky scroll ══════════════════════════════════ -->
+  <div id="process-scroll">
+    <div class="process-sticky">
 
-      <div class="process-grid">
+      <!-- ── Full-bleed images ── -->
+      <div class="pstep-imgs">
+        <img class="pstep-img active" src="oil%20%5Bpaint/jeevamrutham%20prepare%20and%20spray.png" alt="Jeevamrutham farming" />
+        <img class="pstep-img" src="oil%20%5Bpaint/pollination%20and%20flowering.png" alt="Pollination and flowering" />
+        <img class="pstep-img" src="oil%20%5Bpaint/tiny%20fruite%20set.png" alt="Fruit set" />
+        <img class="pstep-img" src="oil%20%5Bpaint/examining%20ripe%20mangoes.png" alt="Hand-picked mangoes" />
+        <img class="pstep-img" src="oil%20%5Bpaint/ripening%20process.png" alt="Natural ripening on straw" />
+        <div class="pstep-img pstep-bg" style="background:linear-gradient(160deg,#0d2106,#2D5016);"></div>
+      </div>
 
-        <div class="process-card" data-aos="fade-up" data-aos-delay="0">
-          <img src="oil%20%5Bpaint/jeevamrutham%20prepare%20and%20spray.png" alt="Jeevamrutham farming" />
-          <div class="process-card-body">
-            <div class="process-card-num">1</div>
-            <h3>Jeevamrutham Farming</h3>
-            <p>Traditional fermented organic fertiliser — cow dung, herbs, zero chemicals. Nourishing our trees the way nature intended.</p>
-          </div>
+      <!-- ── Step 6 delivery icon (centred, large, subtle) ── -->
+      <div class="pstep-delivery" id="pstep-delivery">
+        <i class="fa-solid fa-truck-fast"></i>
+      </div>
+
+      <!-- ── Bottom gradient ── -->
+      <div class="pstep-overlay"></div>
+
+      <!-- ── Text blocks ── -->
+      <div class="pstep-texts">
+
+        <div class="pstep-text active">
+          <span class="pstep-label">Step 1 of 6 &nbsp;·&nbsp; Farm to Your Doorstep</span>
+          <h2>Jeevamrutham<br />Farming</h2>
+          <p>Traditional fermented organic fertiliser — cow dung, medicinal herbs, zero chemicals. Nourishing our trees the way nature intended. Ever.</p>
         </div>
 
-        <div class="process-card" data-aos="fade-up" data-aos-delay="80">
-          <img src="oil%20%5Bpaint/pollination%20and%20flowering.png" alt="Pollination and flowering" />
-          <div class="process-card-body">
-            <div class="process-card-num">2</div>
-            <h3>Pollination & Flowering</h3>
-            <p>Bees and butterflies do their ancient work. We let nature pollinate — the flowers that survive to fruit are the strongest.</p>
-          </div>
+        <div class="pstep-text">
+          <span class="pstep-label">Step 2 of 6 &nbsp;·&nbsp; Farm to Your Doorstep</span>
+          <h2>Pollination<br />&amp; Flowering</h2>
+          <p>Bees and butterflies do their ancient work. We never intervene — the blossoms that survive to fruit are the strongest the tree can offer.</p>
         </div>
 
-        <div class="process-card" data-aos="fade-up" data-aos-delay="160">
-          <img src="oil%20%5Bpaint/tiny%20fruite%20set.png" alt="Tiny fruit set" />
-          <div class="process-card-body">
-            <div class="process-card-num">3</div>
-            <h3>Fruit Set</h3>
-            <p>Tiny green mangoes form on the branches. We monitor each cluster, thinning where needed so every fruit gets the tree's full nourishment.</p>
-          </div>
+        <div class="pstep-text">
+          <span class="pstep-label">Step 3 of 6 &nbsp;·&nbsp; Farm to Your Doorstep</span>
+          <h2>Fruit Set</h2>
+          <p>Tiny green mangoes begin forming on every branch. We monitor each cluster, thinning where needed so every remaining fruit gets the tree's full nourishment.</p>
         </div>
 
-        <div class="process-card" data-aos="fade-up" data-aos-delay="0">
-          <img src="oil%20%5Bpaint/examining%20ripe%20mangoes.png" alt="Examining ripe mangoes" />
-          <div class="process-card-body">
-            <div class="process-card-num">4</div>
-            <h3>Hand-Picked at Peak</h3>
-            <p>Farmers examine every mango by hand — the right give, the right colour, the right smell at the stem. No machines. No guessing.</p>
-          </div>
+        <div class="pstep-text">
+          <span class="pstep-label">Step 4 of 6 &nbsp;·&nbsp; Farm to Your Doorstep</span>
+          <h2>Hand-Picked<br />at Peak</h2>
+          <p>Our farmers examine every mango by hand — the right give, the right colour, the right smell at the stem. Only when it's perfect does it leave the tree.</p>
         </div>
 
-        <div class="process-card" data-aos="fade-up" data-aos-delay="80">
-          <img src="oil%20%5Bpaint/ripening%20process.png" alt="Natural ripening on straw" />
-          <div class="process-card-body">
-            <div class="process-card-num">5</div>
-            <h3>Natural Ripening on Straw</h3>
-            <p>Laid on dry paddy straw — the traditional method. Ripen at their own pace, uniformly, with no carbide or chemical agents.</p>
-          </div>
+        <div class="pstep-text">
+          <span class="pstep-label">Step 5 of 6 &nbsp;·&nbsp; Farm to Your Doorstep</span>
+          <h2>Natural Ripening<br />on Straw</h2>
+          <p>Laid on dry paddy straw — the traditional method. They ripen at their own pace, uniformly, with no carbide or chemical agents. The straw breathes with the fruit.</p>
         </div>
 
-        <div class="process-card" data-aos="fade-up" data-aos-delay="160" style="background:linear-gradient(160deg,#1a3a0a,#2D5016);">
-          <div class="process-card-icon">
-            <i class="fa-solid fa-truck-fast" style="color:#F5A623;"></i>
-          </div>
-          <div class="process-card-body" style="background:linear-gradient(to top, rgba(28,18,8,0.96) 0%, rgba(28,18,8,0.75) 60%, transparent 100%);">
-            <div class="process-card-num">6</div>
-            <h3>Delivered to Hyderabad</h3>
-            <p>Packed with care, dispatched same-day. From our Bobbili farm to your door — so the first bite feels exactly like it should.</p>
-          </div>
+        <div class="pstep-text">
+          <span class="pstep-label">Step 6 of 6 &nbsp;·&nbsp; Farm to Your Doorstep</span>
+          <h2>Delivered<br />to Hyderabad</h2>
+          <p>Packed carefully and dispatched same-day. From our Bobbili farm to your door — the whole journey done with care, so the first bite feels exactly like it should.</p>
         </div>
 
       </div>
+
+      <!-- ── Progress dots ── -->
+      <div class="pstep-dots" id="pstep-dots">
+        <div class="pstep-dot active" data-step="0"></div>
+        <div class="pstep-dot" data-step="1"></div>
+        <div class="pstep-dot" data-step="2"></div>
+        <div class="pstep-dot" data-step="3"></div>
+        <div class="pstep-dot" data-step="4"></div>
+        <div class="pstep-dot" data-step="5"></div>
+      </div>
+
+      <!-- ── Scroll hint ── -->
+      <div class="pstep-scroll-hint" id="pstep-hint">
+        <i class="fa-solid fa-arrow-down fa-xs"></i> Scroll to explore
+      </div>
+
     </div>
-  </section>
+  </div>
 
   <!-- ══════════════════════════════════ VARIETIES BANNER ══════════════════════════════════ -->
   <div class="section-banner" data-aos="fade-in">
@@ -784,6 +887,53 @@
       pagination: { el: '.badges-pagination', clickable: true },
       breakpoints: { 640: { slidesPerView: 3 }, 1024: { slidesPerView: 6, autoplay: false } },
     });
+
+    // ── Apple-style process sticky scroll ──
+    (function() {
+      const scrollWrap = document.getElementById('process-scroll');
+      if (!scrollWrap) return;
+
+      const imgs    = scrollWrap.querySelectorAll('.pstep-img');
+      const texts   = scrollWrap.querySelectorAll('.pstep-text');
+      const dots    = scrollWrap.querySelectorAll('.pstep-dot');
+      const delivery = document.getElementById('pstep-delivery');
+      const hint    = document.getElementById('pstep-hint');
+      const STEPS   = imgs.length; // 6
+      let current   = 0;
+
+      function activate(idx) {
+        if (idx === current) return;
+        current = idx;
+        imgs.forEach((el, i)   => el.classList.toggle('active', i === idx));
+        texts.forEach((el, i)  => el.classList.toggle('active', i === idx));
+        dots.forEach((el, i)   => el.classList.toggle('active', i === idx));
+        if (delivery) delivery.classList.toggle('active', idx === STEPS - 1);
+      }
+
+      window.addEventListener('scroll', function() {
+        const rect = scrollWrap.getBoundingClientRect();
+        const scrolled  = -rect.top;
+        const scrollable = scrollWrap.offsetHeight - window.innerHeight;
+        if (scrolled < 0 || scrolled > scrollable) return;
+
+        const progress = scrolled / scrollable;                 // 0 → 1
+        const idx = Math.min(STEPS - 1, Math.floor(progress * STEPS));
+        activate(idx);
+
+        // Hide scroll hint after first step
+        if (hint) hint.style.opacity = idx > 0 ? '0' : '1';
+      }, { passive: true });
+
+      // Dot click → jump to that step
+      dots.forEach(function(dot) {
+        dot.addEventListener('click', function() {
+          const step = parseInt(dot.dataset.step);
+          const scrollable = scrollWrap.offsetHeight - window.innerHeight;
+          const target = scrollWrap.offsetTop + (step / STEPS) * scrollable + 1;
+          window.scrollTo({ top: target, behavior: 'smooth' });
+        });
+      });
+    })();
 
     // ── Lifecycle art parallax (moves slower than scroll) ──
     const art = document.getElementById('lifecycle-art');
