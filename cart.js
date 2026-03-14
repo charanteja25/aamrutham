@@ -124,7 +124,7 @@ function renderCartItems() {
 }
 
 function cartCheckout() {
-  window.open('https://shop.aamrutham.com/products/bobbili-peechu/3610986000000044089', '_blank', 'noopener');
+  window.open('https://shopaamrutham.com/products/bobbili-peechu/3610986000000044089', '_blank', 'noopener');
 }
 
 // ── Shop page: reads selected pack from the card DOM ──
