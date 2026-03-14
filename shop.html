@@ -192,14 +192,127 @@
       background: var(--mango); color: #1a0a00;
       padding: 0.65rem 1.4rem; border-radius: 50px;
       font-weight: 700; font-size: 0.9rem; text-decoration: none;
-      border: none; cursor: pointer; transition: all 0.25s;
+      border: 2px solid var(--mango); cursor: pointer; transition: all 0.25s;
       white-space: nowrap;
     }
     .btn-buy:hover {
-      background: var(--mango-dark); color: white;
+      background: var(--mango-dark); border-color: var(--mango-dark); color: white;
       transform: translateY(-1px);
       box-shadow: 0 6px 20px rgba(224,123,57,0.3);
     }
+    .btn-cart {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: transparent; color: var(--leaf);
+      padding: 0.65rem 1.4rem; border-radius: 50px;
+      font-weight: 700; font-size: 0.9rem; text-decoration: none;
+      border: 2px solid var(--leaf); cursor: pointer; transition: all 0.25s;
+      white-space: nowrap;
+    }
+    .btn-cart:hover {
+      background: var(--leaf); color: white;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(45,80,22,0.2);
+    }
+    .btn-group {
+      display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end;
+    }
+
+    /* ── Cart drawer ── */
+    #cart-overlay {
+      display: none !important; position: fixed !important;
+      inset: 0 !important; background: rgba(0,0,0,0.5) !important;
+      z-index: 9998 !important;
+    }
+    #cart-overlay.open { display: block !important; }
+
+    #cart-drawer {
+      position: fixed !important;
+      top: 0 !important; right: 0 !important; bottom: 0 !important;
+      width: 360px !important; max-width: 100vw !important;
+      background: #fff !important;
+      z-index: 9999 !important;
+      display: flex !important; flex-direction: column !important;
+      transform: translateX(100%) !important;
+      transition: transform 0.32s cubic-bezier(0.4,0,0.2,1) !important;
+      box-shadow: -4px 0 40px rgba(44,24,16,0.18) !important;
+    }
+    #cart-drawer.open { transform: translateX(0) !important; }
+
+    .cart-drawer-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 1.25rem; border-bottom: 1px solid #f0e8d8; flex-shrink: 0;
+      background: #fff;
+    }
+    .cart-drawer-header h3 {
+      font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #2D5016; margin: 0;
+    }
+    .cart-close-btn {
+      background: none; border: none; cursor: pointer; font-size: 1.1rem;
+      color: #9a7a5a; padding: 4px 8px; border-radius: 6px; line-height: 1;
+    }
+    .cart-close-btn:hover { background: #f5ede0; color: #2D5016; }
+
+    #cart-items { flex: 1; overflow-y: auto; }
+
+    .cart-empty {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; height: 100%; padding: 3rem 1.5rem; text-align: center; color: #9a7a5a;
+    }
+    .cart-empty i { font-size: 2.5rem; color: #e0d4c0; margin-bottom: 0.75rem; display: block; }
+    .cart-empty p { margin-bottom: 0.5rem; font-size: 0.9rem; }
+    .cart-empty a { color: #2D5016; font-weight: 700; text-decoration: none; font-size: 0.85rem; }
+
+    .cart-item {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 0.75rem; padding: 0.9rem 1.25rem; border-bottom: 1px solid #f5ede0;
+    }
+    .cart-item-info { flex: 1; min-width: 0; }
+    .cart-item-name { font-weight: 700; font-size: 0.88rem; color: #2D5016; margin-bottom: 0.15rem; }
+    .cart-item-pack { font-size: 0.75rem; color: #9a7a5a; margin-bottom: 0.5rem; }
+    .cart-qty-row { display: flex; align-items: center; gap: 0.4rem; }
+    .cart-qty-btn {
+      width: 24px; height: 24px; border: 1.5px solid #d8caba; border-radius: 5px;
+      background: #fff; cursor: pointer; font-size: 0.95rem; color: #2D5016;
+      display: flex; align-items: center; justify-content: center; line-height: 1; padding: 0;
+    }
+    .cart-qty-btn:hover { border-color: #2D5016; background: #2D5016; color: #fff; }
+    .cart-qty-val { font-weight: 700; font-size: 0.85rem; min-width: 18px; text-align: center; }
+    .cart-item-right {
+      display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; flex-shrink: 0;
+    }
+    .cart-item-price { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: #2D5016; }
+    .cart-remove-btn { background: none; border: none; cursor: pointer; color: #c0a080; font-size: 0.8rem; padding: 2px; }
+    .cart-remove-btn:hover { color: #c0392b; }
+
+    #cart-footer { padding: 1rem 1.25rem; border-top: 2px solid #f0e8d8; flex-shrink: 0; background: #fff; }
+    .cart-total-row {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;
+    }
+    .cart-total-row span:first-child { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: #9a7a5a; font-weight: 700; }
+    #cart-total-amt { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #2D5016; font-weight: 700; }
+    .cart-checkout-btn {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      width: 100%; padding: 0.8rem; background: #2D5016; color: #fff; border: none;
+      border-radius: 50px; font-weight: 700; font-size: 0.9rem; cursor: pointer;
+      transition: background 0.2s; margin-bottom: 0.5rem;
+    }
+    .cart-checkout-btn:hover { background: #E07B39; }
+    .cart-note { text-align: center; font-size: 0.7rem; color: #b09070; }
+
+    .cart-icon-wrap {
+      position: relative; cursor: pointer; padding: 6px 8px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; color: #2D5016; flex-shrink: 0;
+    }
+    .cart-icon-wrap:hover { background: rgba(45,80,22,0.08); }
+    .cart-bubble {
+      position: absolute; top: 0; right: 0; min-width: 17px; height: 17px;
+      background: #E07B39; color: #fff; font-size: 0.6rem; font-weight: 700;
+      border-radius: 50px; display: flex; align-items: center; justify-content: center;
+      padding: 0 3px; pointer-events: none;
+    }
+    @keyframes cartPop { 0%{transform:scale(1)} 40%{transform:scale(1.35)} 70%{transform:scale(0.92)} 100%{transform:scale(1)} }
+    .cart-pop { animation: cartPop 0.4s ease; }
 
     /* ── Delivery info bar ── */
     .delivery-bar {
@@ -232,7 +345,31 @@
       <li><a href="shop.html" style="color:var(--mango-dark); font-weight:700;">Shop</a></li>
       <li><a href="index.html#cta" class="btn-preorder" onclick="closeNav()">Pre-order ✦</a></li>
     </ul>
+    <div class="cart-icon-wrap" title="View cart" style="cursor:pointer;">
+      <i class="fa-solid fa-bag-shopping"></i>
+      <span class="cart-bubble" style="display:none;">0</span>
+    </div>
   </nav>
+
+  <!-- ── Cart Overlay + Drawer ── -->
+  <div id="cart-overlay"></div>
+  <div id="cart-drawer">
+    <div class="cart-drawer-header">
+      <h3><i class="fa-solid fa-bag-shopping" style="color:var(--mango-dark);margin-right:0.5rem;font-size:1rem;"></i>Your Cart</h3>
+      <button class="cart-close-btn" onclick="closeCartDrawer()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="cart-items"></div>
+    <div id="cart-footer" style="display:none;">
+      <div class="cart-total-row">
+        <span>Total</span>
+        <span id="cart-total-amt">₹0</span>
+      </div>
+      <button class="cart-checkout-btn" onclick="cartCheckout()">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> Buy Now on Aamrutham Store
+      </button>
+      <p class="cart-note">You'll complete your order on our secure Zoho store</p>
+    </div>
+  </div>
 
   <!-- ── Shop Hero ── -->
   <div class="shop-hero">
@@ -267,15 +404,18 @@
       <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
            PRODUCT 1: Mettavalasa Peechu
       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-      <div class="product-card" data-aos="fade-up" data-category="juicy signature" data-zoho-id="TODO_METTAVALASA_PRODUCT_ID">
-        <div class="product-img-wrap">
+      <div class="product-card" data-aos="fade-up" data-category="juicy signature"
+           data-product-id="mettavalasa-peechu"
+           data-product-name="Mettavalasa Peechu"
+           data-zoho-url="https://aamruthamshop.zohoecommerce.in/products/mettavalasa-peechu/3610986000000038003">
+        <a href="product.html?id=mettavalasa-peechu" class="product-img-wrap" style="display:block;text-decoration:none;">
           <img src="assets/mettavalasa-peechu.jpg" class="product-img" alt="Mettavalasa Peechu"
                onerror="this.outerHTML='<div class=\'product-img placeholder\' style=\'background:linear-gradient(160deg,#FFF3CD,#FFD166,#F4A835);\'><i class=\'fa-solid fa-apple-whole\' style=\'font-size:5rem;color:#b85c00;\'></i></div>'" />
           <span class="product-badge">Signature</span>
-        </div>
+        </a>
         <div class="product-body">
           <span class="product-tag">Fibrous · Heritage Variety</span>
-          <div class="product-name">Mettavalasa Peechu</div>
+          <a href="product.html?id=mettavalasa-peechu" class="product-name" style="text-decoration:none;">Mettavalasa Peechu</a>
           <div class="product-telugu">మెట్టవలస పీచు — Fibrous King from the Hills</div>
           <p class="product-desc">Named after the elevated village near Bobbili. Silky fibrous strands of pulp with intense floral sweetness — best sucked straight from the skin, the traditional way.</p>
           <div class="product-meta">
@@ -298,9 +438,14 @@
               <div class="price" id="price-mettavalasa">₹699</div>
               <div class="price-note">incl. delivery</div>
             </div>
-            <a class="btn-buy" href="http://www.aamrutham.com/products/mettavalasa-peechu/3610986000000038003" target="_blank" rel="noopener">
-              <i class="fa-solid fa-cart-shopping"></i> Buy Now
-            </a>
+            <div class="btn-group">
+              <button class="btn-cart" onclick="shopAddToCart(this)">
+                <i class="fa-solid fa-cart-plus"></i> Add to Cart
+              </button>
+              <a class="btn-buy" href="https://aamruthamshop.zohoecommerce.in/products/mettavalasa-peechu/3610986000000038003" target="_blank" rel="noopener">
+                <i class="fa-solid fa-bolt"></i> Buy Now
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -308,15 +453,18 @@
       <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
            PRODUCT 2: Bobbili Peechu
       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-      <div class="product-card" data-aos="fade-up" data-aos-delay="100" data-category="juicy signature" data-zoho-id="TODO_BOBBILIGEECHU_PRODUCT_ID">
-        <div class="product-img-wrap">
+      <div class="product-card" data-aos="fade-up" data-aos-delay="100" data-category="juicy signature"
+           data-product-id="bobbili-peechu"
+           data-product-name="Bobbili Peechu"
+           data-zoho-url="http://www.aamrutham.com/products/bobbili-peechu/3610986000000044089">
+        <a href="product.html?id=bobbili-peechu" class="product-img-wrap" style="display:block;text-decoration:none;">
           <img src="assets/bobbili-peechu.jpg" class="product-img" alt="Bobbili Peechu"
                onerror="this.outerHTML='<div class=\'product-img placeholder\' style=\'background:linear-gradient(160deg,#FFF8E1,#FFCC80,#FF8F00);\'><i class=\'fa-solid fa-star\' style=\'font-size:5rem;color:#b85c00;\'></i></div>'" />
           <span class="product-badge">Heritage</span>
-        </div>
+        </a>
         <div class="product-body">
           <span class="product-tag">Fine-Fibrous · Bold Sweetness</span>
-          <div class="product-name">Bobbili Peechu</div>
+          <a href="product.html?id=bobbili-peechu" class="product-name" style="text-decoration:none;">Bobbili Peechu</a>
           <div class="product-telugu">బొబ్బిలి పీచు — Pride of Bobbili</div>
           <p class="product-desc">Grown on the same red laterite soil for generations. Amber pulp with finer fibres and a deep, complex sweetness locals call "the mango that tastes like memory."</p>
           <div class="product-meta">
@@ -339,9 +487,14 @@
               <div class="price" id="price-bobbiligeechu">₹699</div>
               <div class="price-note">incl. delivery</div>
             </div>
-            <a class="btn-buy" href="http://www.aamrutham.com/products/bobbili-peechu/3610986000000038021" target="_blank" rel="noopener">
-              <i class="fa-solid fa-cart-shopping"></i> Buy Now
-            </a>
+            <div class="btn-group">
+              <button class="btn-cart" onclick="shopAddToCart(this)">
+                <i class="fa-solid fa-cart-plus"></i> Add to Cart
+              </button>
+              <a class="btn-buy" href="http://www.aamrutham.com/products/bobbili-peechu/3610986000000044089" target="_blank" rel="noopener">
+                <i class="fa-solid fa-bolt"></i> Buy Now
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -349,15 +502,18 @@
       <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
            PRODUCT 3: Kothapalli Kobbari
       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-      <div class="product-card" data-aos="fade-up" data-category="exotic signature" data-zoho-id="TODO_KOBBARI_PRODUCT_ID">
-        <div class="product-img-wrap">
+      <div class="product-card" data-aos="fade-up" data-category="exotic signature"
+           data-product-id="kothapalli-kobbari"
+           data-product-name="Kothapalli Kobbari"
+           data-zoho-url="https://aamruthamshop.zohoecommerce.in/products/kothapalli-kobbari/3610986000000039029">
+        <a href="product.html?id=kothapalli-kobbari" class="product-img-wrap" style="display:block;text-decoration:none;">
           <img src="assets/kothapalli-kobbari.jpg" class="product-img" alt="Kothapalli Kobbari"
                onerror="this.outerHTML='<div class=\'product-img placeholder\' style=\'background:linear-gradient(160deg,#FFF9E5,#FFE082,#FFC107);\'><i class=\'fa-solid fa-droplets\' style=\'font-size:5rem;color:#c67b00;\'></i></div>'" />
           <span class="product-badge exotic">Exotic</span>
-        </div>
+        </a>
         <div class="product-body">
           <span class="product-tag">Exotic · Fiberless · Coconut Notes</span>
-          <div class="product-name">Kothapalli Kobbari</div>
+          <a href="product.html?id=kothapalli-kobbari" class="product-name" style="text-decoration:none;">Kothapalli Kobbari</a>
           <div class="product-telugu">కొత్తపల్లి కొబ్బరి — The Coconut Mango</div>
           <p class="product-desc">Nearly unknown outside Vizianagaram. This fiberless, cream-textured variety carries a faint but unmistakable coconut undertone beneath its rich mango sweetness. An experience, not just a fruit.</p>
           <div class="product-meta">
@@ -380,9 +536,14 @@
               <div class="price" id="price-kobbari">₹849</div>
               <div class="price-note">incl. delivery</div>
             </div>
-            <a class="btn-buy" href="http://www.aamrutham.com/products/kothapalli-kobbari/3610986000000039029" target="_blank" rel="noopener">
-              <i class="fa-solid fa-cart-shopping"></i> Buy Now
-            </a>
+            <div class="btn-group">
+              <button class="btn-cart" onclick="shopAddToCart(this)">
+                <i class="fa-solid fa-cart-plus"></i> Add to Cart
+              </button>
+              <a class="btn-buy" href="https://aamruthamshop.zohoecommerce.in/products/kothapalli-kobbari/3610986000000039029" target="_blank" rel="noopener">
+                <i class="fa-solid fa-bolt"></i> Buy Now
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -390,15 +551,18 @@
       <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
            PRODUCT 4: Imam Pasand (Himayat)
       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-      <div class="product-card" data-aos="fade-up" data-aos-delay="100" data-category="exotic dessert signature" data-zoho-id="TODO_IMAMPASAND_PRODUCT_ID">
-        <div class="product-img-wrap">
+      <div class="product-card" data-aos="fade-up" data-aos-delay="100" data-category="exotic dessert signature"
+           data-product-id="imam-pasand"
+           data-product-name="Imam Pasand"
+           data-zoho-url="https://aamruthamshop.zohoecommerce.in/products/imam-pasand/3610986000000039047">
+        <a href="product.html?id=imam-pasand" class="product-img-wrap" style="display:block;text-decoration:none;">
           <img src="assets/imam-pasand.jpg" class="product-img" alt="Imam Pasand"
                onerror="this.outerHTML='<div class=\'product-img placeholder\' style=\'background:linear-gradient(160deg,#FFF0E0,#FFAB76,#E07B39);\'><i class=\'fa-solid fa-crown\' style=\'font-size:5rem;color:#7b2d00;\'></i></div>'" />
           <span class="product-badge exotic">Royal</span>
-        </div>
+        </a>
         <div class="product-body">
           <span class="product-tag">Royal · Dessert · Fiberless</span>
-          <div class="product-name">Imam Pasand</div>
+          <a href="product.html?id=imam-pasand" class="product-name" style="text-decoration:none;">Imam Pasand</a>
           <div class="product-telugu">ఇమామ్ పసంద్ — Also known as Himayat</div>
           <p class="product-desc">The royal mango of the Deccan. Saffron-hued, zero-fibre, creamy pulp in an extraordinarily large fruit. Profound sweetness, never cloying. Available only for a few weeks at peak summer — rare and worth every bite.</p>
           <div class="product-meta">
@@ -421,9 +585,14 @@
               <div class="price" id="price-imampasand">₹999</div>
               <div class="price-note">incl. delivery</div>
             </div>
-            <a class="btn-buy" href="http://www.aamrutham.com/products/imam-pasand/3610986000000039047" target="_blank" rel="noopener">
-              <i class="fa-solid fa-cart-shopping"></i> Buy Now
-            </a>
+            <div class="btn-group">
+              <button class="btn-cart" onclick="shopAddToCart(this)">
+                <i class="fa-solid fa-cart-plus"></i> Add to Cart
+              </button>
+              <a class="btn-buy" href="https://aamruthamshop.zohoecommerce.in/products/imam-pasand/3610986000000039047" target="_blank" rel="noopener">
+                <i class="fa-solid fa-bolt"></i> Buy Now
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -441,6 +610,7 @@
   </a>
 
   <!-- Scripts -->
+  <script src="cart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>
     AOS.init({ duration: 700, easing: 'ease-out-cubic', once: true, offset: 60 });
