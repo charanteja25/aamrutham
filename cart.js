@@ -124,7 +124,7 @@ function renderCartItems() {
 }
 
 function cartCheckout() {
-  window.open('https://shopaamrutham.zohoecommerce.in/products/bobbili-peechu/3610986000000044089', '_blank', 'noopener');
+  window.open('http://shopaamrutham.zohoecommerce.in', '_blank', 'noopener');
 }
 
 // ── Shop page: reads selected pack from the card DOM ──
