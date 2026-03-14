@@ -442,9 +442,7 @@
               <button class="btn-cart" onclick="shopAddToCart(this)">
                 <i class="fa-solid fa-cart-plus"></i> Add to Cart
               </button>
-              <a class="btn-buy" href="http://shopaamrutham.zohoecommerce.in/product/mettavalasa/3543829000000032782" target="_blank" rel="noopener">
-                <i class="fa-solid fa-bolt"></i> Buy Now
-              </a>
+              <div data-embed-id="zoho-mettavalasa"></div>
             </div>
           </div>
         </div>
@@ -491,9 +489,7 @@
               <button class="btn-cart" onclick="shopAddToCart(this)">
                 <i class="fa-solid fa-cart-plus"></i> Add to Cart
               </button>
-              <a class="btn-buy" href="http://shopaamrutham.zohoecommerce.in/product/bobbili-peechu/3543829000000032691" target="_blank" rel="noopener">
-                <i class="fa-solid fa-bolt"></i> Buy Now
-              </a>
+              <div data-embed-id="zoho-bobbili"></div>
             </div>
           </div>
         </div>
@@ -540,9 +536,7 @@
               <button class="btn-cart" onclick="shopAddToCart(this)">
                 <i class="fa-solid fa-cart-plus"></i> Add to Cart
               </button>
-              <a class="btn-buy" href="http://shopaamrutham.zohoecommerce.in/product/kobbarimamidi/3543829000000032836" target="_blank" rel="noopener">
-                <i class="fa-solid fa-bolt"></i> Buy Now
-              </a>
+              <div data-embed-id="zoho-kobbari"></div>
             </div>
           </div>
         </div>
@@ -589,9 +583,7 @@
               <button class="btn-cart" onclick="shopAddToCart(this)">
                 <i class="fa-solid fa-cart-plus"></i> Add to Cart
               </button>
-              <a class="btn-buy" href="http://shopaamrutham.zohoecommerce.in/product/imam/3543829000000032890" target="_blank" rel="noopener">
-                <i class="fa-solid fa-bolt"></i> Buy Now
-              </a>
+              <div data-embed-id="zoho-imam"></div>
             </div>
           </div>
         </div>
@@ -608,6 +600,53 @@
       <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.556 4.117 1.532 5.845L.054 23.486a.5.5 0 00.611.611l5.641-1.478A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.793 9.793 0 01-4.983-1.358l-.356-.213-3.688.966.983-3.595-.233-.37A9.795 9.795 0 012.182 12C2.182 6.569 6.569 2.182 12 2.182S21.818 6.569 21.818 12 17.431 21.818 12 21.818z"/>
     </svg>
   </a>
+
+  <!-- Zoho Buy Buttons -->
+  <script>
+    (function() {
+      var STORE = 'https://shopaamrutham.zohoecommerce.in';
+      var PRODUCTS = [
+        { embedId: 'zoho-mettavalasa', id: '3543829000000032782', handle: 'mettavalasa' },
+        { embedId: 'zoho-bobbili',     id: '3543829000000032691', handle: 'bobbili-peechu' },
+        { embedId: 'zoho-kobbari',     id: '3543829000000032836', handle: 'kobbarimamidi' },
+        { embedId: 'zoho-imam',        id: '3543829000000032890', handle: 'imam' },
+      ];
+      var MODEL = {
+        button_border_radius_enable: true,
+        button_size: 'md',
+        product_box_enable: false,
+        show_product_images: false,
+        show_quantity: false,
+        styles: {
+          color_buynow_button: '#1a0a00',
+          color_buynow_button_bg: '#F5A623',
+          font_family_buynow_button: 'Lato,sans-serif',
+          font_weight_buynow_button: '700',
+          font_transform_buynow_button: 'none',
+        },
+        size_styles: {
+          border_radius_buynow_button: '50',
+          font_size_buynow_button: '14',
+        }
+      };
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://ecommerce-stratus.zohostratus.in/IDC/js/zs-buy-button.js';
+      s.onload = function() {
+        PRODUCTS.forEach(function(p) {
+          var el = document.querySelector('[data-embed-id="' + p.embedId + '"]');
+          if (!el) return;
+          var cfg = Object.assign({}, MODEL, { id: p.id, type: 'product', url: p.handle,
+            embedId: p.id, api_domain: STORE, store: STORE });
+          cfg.styles = Object.assign({}, MODEL.styles);
+          cfg.size_styles = Object.assign({}, MODEL.size_styles);
+          window.zsBuyButton.init(el, { api_domain: STORE, store: STORE, type: 'product',
+            embedId: p.id, handle: p.handle, model: cfg });
+        });
+      };
+      document.body.appendChild(s);
+    })();
+  </script>
 
   <!-- Scripts -->
   <script src="cart.js"></script>
