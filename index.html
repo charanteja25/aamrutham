@@ -104,25 +104,32 @@
       position: relative;
       overflow: hidden;
     }
-    /* Prev / Next arrows */
+    /* Prev / Next arrows — pill with label */
     .hslide-arrow {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
       z-index: 4;
-      background: rgba(0,0,0,0.35);
+      background: rgba(0,0,0,0.45);
       border: 1.5px solid rgba(255,255,255,0.18);
       color: white;
-      width: 2.8rem; height: 2.8rem;
-      border-radius: 50%;
-      font-size: 1.5rem;
-      display: flex; align-items: center; justify-content: center;
+      height: 2.6rem;
+      padding: 0 1.1rem;
+      border-radius: 50px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      display: flex; align-items: center; gap: 0.5rem;
       cursor: pointer;
       transition: background 0.2s, border-color 0.2s, color 0.2s;
       backdrop-filter: blur(4px);
+      white-space: nowrap;
+      max-width: 200px;
     }
+    .hslide-arrow .arrow-chevron { font-size: 1.2rem; line-height: 1; flex-shrink: 0; }
+    .hslide-arrow .arrow-label { overflow: hidden; text-overflow: ellipsis; }
     .hslide-arrow:hover { background: rgba(245,166,35,0.2); border-color: var(--mango); color: var(--mango); }
-    .hslide-arrow:disabled { opacity: 0.15; cursor: default; pointer-events: none; }
+    .hslide-arrow:disabled { opacity: 0.12; cursor: default; pointer-events: none; }
     .hslide-arrow-prev { left: 1.5rem; }
     .hslide-arrow-next { right: 1.5rem; }
     @media (max-width: 768px) {
@@ -726,8 +733,8 @@
         </div>
 
       </div><!-- end track -->
-      <button class="hslide-arrow hslide-arrow-prev" id="proc-prev" aria-label="Previous">&#8249;</button>
-      <button class="hslide-arrow hslide-arrow-next" id="proc-next" aria-label="Next">&#8250;</button>
+      <button class="hslide-arrow hslide-arrow-prev" id="proc-prev"><span class="arrow-chevron">&#8249;</span><span class="arrow-label"></span></button>
+      <button class="hslide-arrow hslide-arrow-next" id="proc-next"><span class="arrow-label"></span><span class="arrow-chevron">&#8250;</span></button>
     </div>
   </div>
 
@@ -847,8 +854,8 @@
         </div>
 
       </div><!-- end track -->
-      <button class="hslide-arrow hslide-arrow-prev" id="var-prev" aria-label="Previous">&#8249;</button>
-      <button class="hslide-arrow hslide-arrow-next" id="var-next" aria-label="Next">&#8250;</button>
+      <button class="hslide-arrow hslide-arrow-prev" id="var-prev"><span class="arrow-chevron">&#8249;</span><span class="arrow-label"></span></button>
+      <button class="hslide-arrow hslide-arrow-next" id="var-next"><span class="arrow-label"></span><span class="arrow-chevron">&#8250;</span></button>
     </div><!-- end sticky -->
   </div><!-- end #varieties -->
 
@@ -964,7 +971,8 @@
 
 
     // ── Horizontal slide sections (arrow-only, free vertical scroll) ──
-    function initHScroll(trackId, SLIDES, prevBtnId, nextBtnId) {
+    function initHScroll(trackId, slideNames, prevBtnId, nextBtnId) {
+      var SLIDES  = slideNames.length;
       var track   = document.getElementById(trackId);
       var prevBtn = document.getElementById(prevBtnId);
       var nextBtn = document.getElementById(nextBtnId);
@@ -973,8 +981,17 @@
       var current = 0, target = 0, animating = false;
 
       function updateArrows() {
-        if (prevBtn) prevBtn.disabled = current <= 0;
-        if (nextBtn) nextBtn.disabled = current >= SLIDES - 1;
+        var idx = Math.round(current);
+        if (prevBtn) {
+          prevBtn.disabled = idx <= 0;
+          var lbl = prevBtn.querySelector('.arrow-label');
+          if (lbl) lbl.textContent = idx > 0 ? slideNames[idx - 1] : '';
+        }
+        if (nextBtn) {
+          nextBtn.disabled = idx >= SLIDES - 1;
+          var lbl = nextBtn.querySelector('.arrow-label');
+          if (lbl) lbl.textContent = idx < SLIDES - 1 ? slideNames[idx + 1] : '';
+        }
       }
 
       function goToSlide(n) {
@@ -1010,10 +1027,7 @@
         clearInterval(autoTimer);
         autoTimer = setInterval(function() {
           var wrap = track.parentElement && track.parentElement.parentElement;
-          if (wrap) {
-            var r = wrap.getBoundingClientRect();
-            if (r.bottom < 0 || r.top > window.innerHeight) return;
-          }
+          if (wrap) { var r = wrap.getBoundingClientRect(); if (r.bottom < 0 || r.top > window.innerHeight) return; }
           goToSlide(target + 1 < SLIDES ? target + 1 : 0);
         }, 6000);
       }
@@ -1023,8 +1037,14 @@
       startAuto();
     }
 
-    initHScroll('proc-track', 6, 'proc-prev', 'proc-next');
-    initHScroll('var-track',  4, 'var-prev',  'var-next');
+    initHScroll('proc-track', [
+      'Jeevamrutham Farming', 'Pollination & Flowering', 'Fruit Set',
+      'Hand-Picked at Peak', 'Natural Ripening on Straw', 'Delivered to Hyderabad'
+    ], 'proc-prev', 'proc-next');
+
+    initHScroll('var-track', [
+      'Mettavalasa Peechu', 'Bobbili Peechu', 'Kothapalli Kobbari', 'Imam Pasand'
+    ], 'var-prev', 'var-next');
 
     // ── Lifecycle art parallax (moves slower than scroll) ──
     const art = document.getElementById('lifecycle-art');
