@@ -75,6 +75,73 @@
     }
 
     /* ── Shop grid ── */
+    /* ── Pre-order banner ── */
+    .preorder-banner {
+      background: linear-gradient(135deg, #1a3a0a 0%, #2D5016 60%, #3d6b1e 100%);
+      color: white;
+      text-align: center;
+      padding: 2.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .preorder-banner::before {
+      content: '🥭';
+      position: absolute;
+      font-size: 8rem;
+      opacity: 0.06;
+      top: -1rem;
+      left: 2rem;
+      pointer-events: none;
+    }
+    .preorder-banner::after {
+      content: '🥭';
+      position: absolute;
+      font-size: 8rem;
+      opacity: 0.06;
+      bottom: -1rem;
+      right: 2rem;
+      pointer-events: none;
+    }
+    .preorder-banner-eyebrow {
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mango);
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+    .preorder-banner h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.6rem;
+      line-height: 1.2;
+    }
+    .preorder-banner h2 em { color: var(--mango); font-style: italic; }
+    .preorder-banner p {
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.72);
+      max-width: 520px;
+      margin: 0 auto 1.4rem;
+      line-height: 1.7;
+    }
+    .preorder-banner-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #25D366;
+      color: white;
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.35);
+    }
+    .preorder-banner-cta:hover { background: #1fba58; transform: translateY(-2px); }
+
     .shop-grid-wrap { max-width: 1200px; margin: 0 auto; padding: 3rem 2rem 6rem; }
     .shop-grid {
       display: grid;
@@ -385,6 +452,16 @@
     <div class="delivery-item"><i class="fa-solid fa-location-dot" style="color:var(--mango-dark);"></i> Hyderabad delivery only</div>
     <div class="delivery-item"><i class="fa-solid fa-ban" style="color:var(--mango-dark);"></i> Zero pesticides</div>
     <div class="delivery-item"><i class="fa-solid fa-calendar" style="color:var(--mango-dark);"></i> Summer 2026 season</div>
+  </div>
+
+  <!-- ── Pre-order Banner ── -->
+  <div class="preorder-banner">
+    <div class="preorder-banner-eyebrow">✦ Bobbili Farms · Summer 2026 ✦</div>
+    <h2>Shop Opens <em>This Season</em></h2>
+    <p>Pre-order now and save more — be the first to get your crate of fresh Bobbili mangoes delivered to your door in Hyderabad.</p>
+    <a class="preorder-banner-cta" href="https://wa.me/9177266273?text=Hi%20Aamrutham!%20I%20want%20to%20pre-order%20mangoes%20for%20Summer%202026%20%F0%9F%A5%AD" target="_blank" rel="noopener">
+      <i class="fa-brands fa-whatsapp"></i> Pre-order on WhatsApp
+    </a>
   </div>
 
   <!-- ── Filter bar ── -->
