@@ -88,8 +88,7 @@
        Used by both #process-scroll and #varieties
     ══════════════════════════════════════════════ */
     .hscroll-sticky {
-      position: sticky;
-      top: 0;
+      position: relative;
       height: 100vh;
       overflow: hidden;
     }
@@ -105,9 +104,6 @@
       position: relative;
       overflow: hidden;
     }
-    /* Section heights — each slide gets 1 viewport of scroll room */
-    #process-scroll { position: relative; height: 600vh; }
-    #varieties      { position: relative; height: 400vh; }
     /* Prev / Next arrows */
     .hslide-arrow {
       position: absolute;
@@ -129,35 +125,11 @@
     .hslide-arrow:disabled { opacity: 0.15; cursor: default; pointer-events: none; }
     .hslide-arrow-prev { left: 1.5rem; }
     .hslide-arrow-next { right: 1.5rem; }
-    /* Skip button — bottom centre */
-    .hslide-skip {
-      position: absolute;
-      bottom: 1.6rem;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 4;
-      background: rgba(0,0,0,0.4);
-      border: 1.5px solid rgba(255,255,255,0.2);
-      color: rgba(255,255,255,0.55);
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.4rem 1.1rem;
-      border-radius: 50px;
-      cursor: pointer;
-      backdrop-filter: blur(4px);
-      transition: color 0.2s, border-color 0.2s;
-      white-space: nowrap;
-    }
-    .hslide-skip:hover { color: var(--mango); border-color: rgba(245,166,35,0.5); }
     @media (max-width: 768px) {
-      /* Vertical stack on mobile */
-      #process-scroll, #varieties { height: auto !important; }
-      .hscroll-sticky { position: relative !important; height: auto !important; overflow: visible !important; }
-      .hscroll-track { flex-direction: column !important; transform: none !important; }
-      .hslide { width: 100% !important; height: auto !important; min-height: 520px; }
-      .hslide-arrow, .hslide-skip { display: none !important; }
+      .hscroll-sticky { height: auto; }
+      .hscroll-track { flex-direction: column; transform: none !important; }
+      .hslide { width: 100%; height: auto; min-height: 520px; }
+      .hslide-arrow { display: none; }
     }
     /* Full-bleed background — image or div */
     .hslide-bg {
@@ -756,7 +728,6 @@
       </div><!-- end track -->
       <button class="hslide-arrow hslide-arrow-prev" id="proc-prev" aria-label="Previous">&#8249;</button>
       <button class="hslide-arrow hslide-arrow-next" id="proc-next" aria-label="Next">&#8250;</button>
-      <button class="hslide-skip" id="proc-skip">Skip section ↓</button>
     </div>
   </div>
 
@@ -878,7 +849,6 @@
       </div><!-- end track -->
       <button class="hslide-arrow hslide-arrow-prev" id="var-prev" aria-label="Previous">&#8249;</button>
       <button class="hslide-arrow hslide-arrow-next" id="var-next" aria-label="Next">&#8250;</button>
-      <button class="hslide-skip" id="var-skip">Skip section ↓</button>
     </div><!-- end sticky -->
   </div><!-- end #varieties -->
 
@@ -993,107 +963,68 @@
     });
 
 
-    // ── Horizontal scroll sections ──
-    function initHScroll(wrapId, trackId, SLIDES, prevBtnId, nextBtnId, skipBtnId, skipTargetId) {
-      var wrap    = document.getElementById(wrapId);
+    // ── Horizontal slide sections (arrow-only, free vertical scroll) ──
+    function initHScroll(trackId, SLIDES, prevBtnId, nextBtnId) {
       var track   = document.getElementById(trackId);
       var prevBtn = document.getElementById(prevBtnId);
       var nextBtn = document.getElementById(nextBtnId);
-      var skipBtn = document.getElementById(skipBtnId);
-      if (!wrap || !track) return;
+      if (!track) return;
 
-      var currentSlide = 0;
-      var targetSlide  = 0;
-      var isAnimating  = false;
-      var isMobile     = window.innerWidth <= 768;
-
-      function updateWrapHeight() {
-        isMobile = window.innerWidth <= 768;
-        wrap.style.height = isMobile ? 'auto' : (SLIDES * window.innerHeight) + 'px';
-      }
+      var current = 0, target = 0, animating = false;
 
       function updateArrows() {
-        var idx = Math.round(currentSlide);
-        if (prevBtn) prevBtn.disabled = idx === 0;
-        if (nextBtn) nextBtn.disabled = idx === SLIDES - 1;
-      }
-
-      function animateTo(target) {
-        var start = currentSlide, diff = target - start;
-        var startTime = Date.now();
-        isAnimating = true;
-        function tick() {
-          var t = Math.min((Date.now() - startTime) / 600, 1);
-          var e = 1 - Math.pow(1 - t, 3);
-          currentSlide = start + diff * e;
-          track.style.transform = 'translateX(-' + (currentSlide * window.innerWidth) + 'px)';
-          updateArrows();
-          if (t < 1) { requestAnimationFrame(tick); } else { isAnimating = false; }
-        }
-        requestAnimationFrame(tick);
+        if (prevBtn) prevBtn.disabled = current <= 0;
+        if (nextBtn) nextBtn.disabled = current >= SLIDES - 1;
       }
 
       function goToSlide(n) {
         n = Math.max(0, Math.min(n, SLIDES - 1));
-        if (n !== targetSlide) { targetSlide = n; animateTo(n); }
+        if (n === target && !animating) return;
+        target = n;
+        var start = current, diff = n - start, t0 = Date.now();
+        animating = true;
+        function tick() {
+          var t = Math.min((Date.now() - t0) / 550, 1);
+          current = start + diff * (1 - Math.pow(1 - t, 3));
+          track.style.transform = 'translateX(-' + (current * 100) + '%)';
+          updateArrows();
+          if (t < 1) { requestAnimationFrame(tick); } else { current = n; animating = false; }
+        }
+        requestAnimationFrame(tick);
       }
 
-      function scrollToSlide(n) {
-        if (isMobile) return;
-        n = Math.max(0, Math.min(n, SLIDES - 1));
-        window.scrollTo({ top: wrap.offsetTop + (wrap.offsetHeight / SLIDES) * (n + 0.05), behavior: 'smooth' });
-      }
+      if (prevBtn) prevBtn.addEventListener('click', function() { goToSlide(Math.round(current) - 1); resetAuto(); });
+      if (nextBtn) nextBtn.addEventListener('click', function() { goToSlide(Math.round(current) + 1); resetAuto(); });
 
-      // Scroll drives the slides
-      window.addEventListener('scroll', function() {
-        if (isMobile || isAnimating) return;
-        var rect = wrap.getBoundingClientRect();
-        goToSlide(Math.round(-rect.top / (wrap.offsetHeight / SLIDES)));
-      }, { passive: true });
-
-      // Arrow clicks
-      if (prevBtn) prevBtn.addEventListener('click', function() { resetAuto(); scrollToSlide(Math.round(currentSlide) - 1); });
-      if (nextBtn) nextBtn.addEventListener('click', function() { resetAuto(); scrollToSlide(Math.round(currentSlide) + 1); });
-
-      // Skip scrolls past the section
-      if (skipBtn) skipBtn.addEventListener('click', function() {
-        var target = skipTargetId ? document.getElementById(skipTargetId) : null;
-        if (target) { target.scrollIntoView({ behavior: 'smooth' }); }
-        else { window.scrollTo({ top: wrap.offsetTop + wrap.offsetHeight, behavior: 'smooth' }); }
+      // Mobile swipe
+      var tx = 0;
+      track.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; }, { passive: true });
+      track.addEventListener('touchend', function(e) {
+        var d = tx - e.changedTouches[0].clientX;
+        if (Math.abs(d) > 50) { goToSlide(target + (d > 0 ? 1 : -1)); resetAuto(); }
       });
 
-      // Auto-advance every 6 s — only when section is in view, stops at last slide
+      // Auto-advance every 6s when section visible, loops back to start
       var autoTimer = null;
       function startAuto() {
         clearInterval(autoTimer);
         autoTimer = setInterval(function() {
-          if (isMobile) return;
-          var rect = wrap.getBoundingClientRect();
-          if (rect.top > 0 || rect.bottom < window.innerHeight) return;
-          var next = Math.round(currentSlide) + 1;
-          if (next >= SLIDES) { clearInterval(autoTimer); return; }
-          scrollToSlide(next);
+          var wrap = track.parentElement && track.parentElement.parentElement;
+          if (wrap) {
+            var r = wrap.getBoundingClientRect();
+            if (r.bottom < 0 || r.top > window.innerHeight) return;
+          }
+          goToSlide(target + 1 < SLIDES ? target + 1 : 0);
         }, 6000);
       }
       function resetAuto() { startAuto(); }
 
-      // Mobile touch swipe
-      var tx = 0;
-      track.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; });
-      track.addEventListener('touchend', function(e) {
-        var diff = tx - e.changedTouches[0].clientX;
-        if (Math.abs(diff) > 50) goToSlide(targetSlide + (diff > 0 ? 1 : -1));
-      });
-
-      window.addEventListener('resize', function() { updateWrapHeight(); currentSlide = 0; targetSlide = 0; track.style.transform = 'translateX(0)'; });
-
-      updateWrapHeight();
       updateArrows();
       startAuto();
     }
 
-    initHScroll('process-scroll', 'proc-track', 6, 'proc-prev', 'proc-next', 'proc-skip', 'varieties');
-    initHScroll('varieties',      'var-track',  4, 'var-prev',  'var-next',  'var-skip',  'cta');
+    initHScroll('proc-track', 6, 'proc-prev', 'proc-next');
+    initHScroll('var-track',  4, 'var-prev',  'var-next');
 
     // ── Lifecycle art parallax (moves slower than scroll) ──
     const art = document.getElementById('lifecycle-art');
