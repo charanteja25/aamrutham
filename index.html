@@ -244,6 +244,58 @@
       transition: opacity 0.4s;
       z-index: 3;
     }
+    /* Prev / Next arrows */
+    .hslide-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 4;
+      background: rgba(0,0,0,0.35);
+      border: 1.5px solid rgba(255,255,255,0.18);
+      color: white;
+      width: 2.8rem;
+      height: 2.8rem;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+      backdrop-filter: blur(4px);
+    }
+    .hslide-arrow:hover { background: rgba(245,166,35,0.2); border-color: var(--mango); color: var(--mango); }
+    .hslide-arrow:disabled { opacity: 0.15; cursor: default; pointer-events: none; }
+    .hslide-arrow-prev { left: 1.5rem; }
+    .hslide-arrow-next { right: 1.5rem; }
+    /* Skip / WhatsApp CTA — top right of process section */
+    .hslide-skip {
+      position: absolute;
+      top: 1.4rem;
+      right: 1.5rem;
+      z-index: 4;
+      background: rgba(0,0,0,0.45);
+      border: 1.5px solid rgba(245,166,35,0.45);
+      color: var(--mango);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 0.45rem 1rem;
+      border-radius: 50px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: background 0.2s, border-color 0.2s;
+      backdrop-filter: blur(4px);
+      white-space: nowrap;
+    }
+    .hslide-skip:hover { background: rgba(245,166,35,0.15); border-color: var(--mango); }
+    @media (max-width: 768px) {
+      .hslide-arrow { display: none; }
+      .hslide-skip  { display: none; }
+    }
     /* Section heights */
     #process-scroll { position: relative; height: 600vh; }
     #varieties      { position: relative; height: 400vh; }
@@ -717,6 +769,15 @@
         <i class="fa-solid fa-arrow-right fa-xs"></i> Scroll to explore
       </div>
 
+      <!-- Prev / Next arrows -->
+      <button class="hslide-arrow hslide-arrow-prev" id="proc-prev" aria-label="Previous step">&#8249;</button>
+      <button class="hslide-arrow hslide-arrow-next" id="proc-next" aria-label="Next step">&#8250;</button>
+
+      <!-- Skip to WhatsApp pre-order -->
+      <a class="hslide-skip" href="https://wa.me/9177266273?text=Hi%20Aamrutham!%20I%20want%20to%20pre-order%20mangoes%20%F0%9F%A5%AD" target="_blank" rel="noopener">
+        <i class="fa-brands fa-whatsapp"></i> Skip — Pre-order on WhatsApp
+      </a>
+
     </div>
   </div>
 
@@ -958,56 +1019,50 @@
     });
 
     // ── Horizontal scroll helper (used by both process + varieties) ──
-    function initHScroll(wrapId, trackId, dotsId, hintId, SLIDES) {
-      var wrap  = document.getElementById(wrapId);
-      var track = document.getElementById(trackId);
-      var dots  = document.getElementById(dotsId) ? document.getElementById(dotsId).querySelectorAll('.hslide-dot') : [];
-      var hint  = document.getElementById(hintId);
+    function initHScroll(wrapId, trackId, dotsId, hintId, SLIDES, prevBtnId, nextBtnId) {
+      var wrap    = document.getElementById(wrapId);
+      var track   = document.getElementById(trackId);
+      var dots    = document.getElementById(dotsId) ? document.getElementById(dotsId).querySelectorAll('.hslide-dot') : [];
+      var hint    = document.getElementById(hintId);
+      var prevBtn = prevBtnId ? document.getElementById(prevBtnId) : null;
+      var nextBtn = nextBtnId ? document.getElementById(nextBtnId) : null;
       if (!wrap || !track) return;
 
       var currentSlide = 0;
-      var targetSlide = 0;
-      var isAnimating = false;
-      var isMobile = window.innerWidth <= 768;
-      var touchStartX = 0;
+      var targetSlide  = 0;
+      var isAnimating  = false;
+      var isMobile     = window.innerWidth <= 768;
+      var touchStartX  = 0;
 
       function updateWrapHeight() {
         isMobile = window.innerWidth <= 768;
-        if (isMobile) {
-          wrap.style.height = 'auto';
-          return;
-        }
+        if (isMobile) { wrap.style.height = 'auto'; return; }
         wrap.style.height = (SLIDES * window.innerHeight) + 'px';
       }
 
+      function updateArrows() {
+        var idx = Math.round(currentSlide);
+        if (prevBtn) prevBtn.disabled = idx === 0;
+        if (nextBtn) nextBtn.disabled = idx === SLIDES - 1;
+      }
+
       function smoothScroll() {
-        var easeOutCubic = function(t) {
-          return 1 - Math.pow(1 - t, 3);
-        };
-
+        var easeOutCubic = function(t) { return 1 - Math.pow(1 - t, 3); };
         var startSlide = currentSlide;
-        var slideDiff = targetSlide - startSlide;
-        var duration = 600; // ms
-        var startTime = Date.now();
-
+        var slideDiff  = targetSlide - startSlide;
+        var duration   = 600;
+        var startTime  = Date.now();
         function animate() {
           var elapsed = Date.now() - startTime;
-          var t = Math.min(elapsed / duration, 1);
-          var eased = easeOutCubic(t);
-          currentSlide = startSlide + slideDiff * eased;
-
-          var offset = currentSlide * window.innerWidth;
+          var t       = Math.min(elapsed / duration, 1);
+          currentSlide = startSlide + slideDiff * easeOutCubic(t);
+          var offset   = currentSlide * window.innerWidth;
           track.style.transform = 'translateX(-' + offset + 'px)';
-
           var displayIdx = Math.round(currentSlide);
           dots.forEach(function(d, i) { d.classList.toggle('active', i === displayIdx); });
           if (hint) hint.style.opacity = displayIdx > 0 ? '0' : '1';
-
-          if (t < 1) {
-            requestAnimationFrame(animate);
-          } else {
-            isAnimating = false;
-          }
+          updateArrows();
+          if (t < 1) { requestAnimationFrame(animate); } else { isAnimating = false; }
         }
         requestAnimationFrame(animate);
       }
@@ -1021,6 +1076,15 @@
         }
       }
 
+      // Scroll window so onScroll() will drive the slide change (desktop only)
+      function scrollToSlide(slideNum) {
+        if (isMobile) return;
+        slideNum = Math.max(0, Math.min(slideNum, SLIDES - 1));
+        var scrollablePerSlide = wrap.offsetHeight / SLIDES;
+        var targetY = wrap.offsetTop + scrollablePerSlide * (slideNum + 0.05);
+        window.scrollTo({ top: targetY, behavior: 'smooth' });
+      }
+
       // Desktop: snap scroll per slide
       function onScroll() {
         if (isMobile || isAnimating) return;
@@ -1031,12 +1095,37 @@
         goToSlide(slideProgress);
       }
 
+      // ── Auto-advance every 4 s (desktop, stops at last slide, resets on interaction) ──
+      var autoTimer = null;
+      function startAutoplay() {
+        clearInterval(autoTimer);
+        autoTimer = setInterval(function() {
+          if (isMobile) return;
+          var rect = wrap.getBoundingClientRect();
+          var inView = rect.top <= 0 && rect.bottom >= window.innerHeight;
+          if (!inView) return;
+          var next = Math.round(currentSlide) + 1;
+          if (next >= SLIDES) { clearInterval(autoTimer); return; }
+          scrollToSlide(next);
+        }, 4000);
+      }
+      function resetAutoplay() { startAutoplay(); }
+
+      // Arrow button clicks
+      if (prevBtn) prevBtn.addEventListener('click', function() {
+        resetAutoplay();
+        scrollToSlide(Math.round(currentSlide) - 1);
+      });
+      if (nextBtn) nextBtn.addEventListener('click', function() {
+        resetAutoplay();
+        scrollToSlide(Math.round(currentSlide) + 1);
+      });
+
       // Mobile: swipe to next/prev slide
       function onTouchStart(e) {
         if (!isMobile) return;
         touchStartX = e.touches[0].clientX;
       }
-
       function onTouchEnd(e) {
         if (!isMobile || isAnimating) return;
         var touchEndX = e.changedTouches[0].clientX;
@@ -1052,15 +1141,16 @@
       window.addEventListener('scroll', onScroll, { passive: true });
       window.addEventListener('resize', function() {
         updateWrapHeight();
-        currentSlide = 0;
-        targetSlide = 0;
+        currentSlide = 0; targetSlide = 0;
         track.style.transform = 'translateX(0)';
         onScroll();
       });
 
       updateWrapHeight();
+      updateArrows();
+      startAutoplay();
     }
-    initHScroll('process-scroll', 'proc-track', 'proc-dots', 'proc-hint', 6);
+    initHScroll('process-scroll', 'proc-track', 'proc-dots', 'proc-hint', 6, 'proc-prev', 'proc-next');
     initHScroll('varieties',      'var-track',  'var-dots',  'var-hint',  4);
 
     // ── Lifecycle art parallax (moves slower than scroll) ──
