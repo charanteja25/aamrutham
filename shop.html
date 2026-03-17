@@ -412,31 +412,7 @@
       <li><a href="shop.html" style="color:var(--mango-dark); font-weight:700;">Shop</a></li>
       <li><a href="index.html#cta" class="btn-preorder" onclick="closeNav()">Pre-order ✦</a></li>
     </ul>
-    <div class="cart-icon-wrap" title="View cart" style="cursor:pointer;">
-      <i class="fa-solid fa-bag-shopping"></i>
-      <span class="cart-bubble" style="display:none;">0</span>
-    </div>
   </nav>
-
-  <!-- ── Cart Overlay + Drawer ── -->
-  <div id="cart-overlay"></div>
-  <div id="cart-drawer">
-    <div class="cart-drawer-header">
-      <h3><i class="fa-solid fa-bag-shopping" style="color:var(--mango-dark);margin-right:0.5rem;font-size:1rem;"></i>Your Cart</h3>
-      <button class="cart-close-btn" onclick="closeCartDrawer()"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <div id="cart-items"></div>
-    <div id="cart-footer" style="display:none;">
-      <div class="cart-total-row">
-        <span>Total</span>
-        <span id="cart-total-amt">₹0</span>
-      </div>
-      <button class="cart-checkout-btn" onclick="cartCheckout()">
-        <i class="fa-solid fa-arrow-up-right-from-square"></i> Buy Now on Aamrutham Store
-      </button>
-      <p class="cart-note">You'll complete your order on our secure Zoho store</p>
-    </div>
-  </div>
 
   <!-- ── Shop Hero ── -->
   <div class="shop-hero">
@@ -464,10 +440,10 @@
     </a>
   </div>
 
-  <!-- ══ PRODUCTS HIDDEN UNTIL SEASON OPENS — uncomment to restore ══
-
-  Filter bar + product grid commented out for pre-order phase.
-  When season opens: remove the comment tags around this block.
+  <!-- ══ PRODUCTS HIDDEN UNTIL SEASON OPENS ══
+       To restore: move content out of the <template> tag below -->
+  <template id="products-season-open">
+  <!-- Filter bar + product grid — restore when season opens -->
 
   <div class="filter-bar">
     <button class="filter-btn active" onclick="filterProducts('all', this)">All Mangoes</button>
@@ -671,7 +647,7 @@
     </div>
   </div>
 
-  END OF COMMENTED-OUT PRODUCTS ══ -->
+  </template><!-- end products-season-open -->
 
   <!-- ── WhatsApp Float ── -->
   <a href="https://wa.me/9177266273?text=Hi%20Aamrutham!%20I%20want%20to%20order%20mangoes%20🥭"
@@ -682,55 +658,13 @@
     </svg>
   </a>
 
-  <!-- Zoho Buy Buttons -->
-  <script>
-    (function() {
-      var STORE = 'https://shopaamrutham.zohoecommerce.in';
-      var PRODUCTS = [
-        { embedId: 'zoho-mettavalasa', id: '3543829000000032782', handle: 'mettavalasa' },
-        { embedId: 'zoho-bobbili',     id: '3543829000000032691', handle: 'bobbili-peechu' },
-        { embedId: 'zoho-kobbari',     id: '3543829000000032836', handle: 'kobbarimamidi' },
-        { embedId: 'zoho-imam',        id: '3543829000000032890', handle: 'imam' },
-      ];
-      var MODEL = {
-        button_border_radius_enable: true,
-        button_size: 'md',
-        product_box_enable: false,
-        show_product_images: false,
-        show_quantity: false,
-        styles: {
-          color_buynow_button: '#1a0a00',
-          color_buynow_button_bg: '#F5A623',
-          font_family_buynow_button: 'Lato,sans-serif',
-          font_weight_buynow_button: '700',
-          font_transform_buynow_button: 'none',
-        },
-        size_styles: {
-          border_radius_buynow_button: '50',
-          font_size_buynow_button: '14',
-        }
-      };
-      var s = document.createElement('script');
-      s.async = true;
-      s.src = 'https://ecommerce-stratus.zohostratus.in/IDC/js/zs-buy-button.js';
-      s.onload = function() {
-        PRODUCTS.forEach(function(p) {
-          var el = document.querySelector('[data-embed-id="' + p.embedId + '"]');
-          if (!el) return;
-          var cfg = Object.assign({}, MODEL, { id: p.id, type: 'product', url: p.handle,
-            embedId: p.id, api_domain: STORE, store: STORE });
-          cfg.styles = Object.assign({}, MODEL.styles);
-          cfg.size_styles = Object.assign({}, MODEL.size_styles);
-          window.zsBuyButton.init(el, { api_domain: STORE, store: STORE, type: 'product',
-            embedId: p.id, handle: p.handle, model: cfg });
-        });
-      };
-      document.body.appendChild(s);
-    })();
-  </script>
+  <!-- Zoho Buy Buttons — disabled for pre-order phase
+  <script src="zoho-buy-buttons.js"></script>
+  -->
 
-  <!-- Scripts -->
+  <!-- cart.js — disabled for pre-order phase
   <script src="cart.js"></script>
+  -->
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>
     AOS.init({ duration: 700, easing: 'ease-out-cubic', once: true, offset: 60 });
