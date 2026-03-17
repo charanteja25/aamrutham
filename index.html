@@ -278,17 +278,26 @@
     }
     /* Dots and hint — removed */
     .hslide-dots, .hslide-hint { display: none; }
-    /* Next step indicator — sits below the step label */
+    /* Next slide indicator — bottom-right corner of each slide */
     .hslide-next {
-      font-size: 0.62rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
-      display: block;
-      margin-top: 0.3rem;
-      margin-bottom: 0.55rem;
+      position: absolute;
+      bottom: 2.8rem;
+      right: 8%;
+      z-index: 3;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'Playfair Display', serif;
+      color: rgba(255,255,255,0.55);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      letter-spacing: 0.02em;
+      pointer-events: none;
     }
-    .hslide-next i { margin-right: 0.3rem; color: var(--mango); opacity: 0.7; }
+    .hslide-next i { color: var(--mango); font-size: 0.75rem; }
+    .hslide-next-label { font-size: 0.62rem; font-family: 'Lato', sans-serif; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mango); display: block; margin-bottom: 0.1rem; }
+    .hslide-next-wrap { display: flex; flex-direction: column; align-items: flex-end; }
+    @media (max-width: 768px) { .hslide-next { display: none; } }
 
     /* ── Footer redesign ── */
     footer {
@@ -662,9 +671,9 @@
           <img class="hslide-bg" src="process/jeevamrutham-prepare-and-spray.png" alt="Jeevamrutham farming" />
           <div class="hslide-overlay"></div>
           <div class="hslide-num">01</div>
+          <div class="hslide-next"><div class="hslide-next-wrap"><span class="hslide-next-label">Up next</span><span>Pollination &amp; Flowering <i class="fa-solid fa-arrow-right fa-xs"></i></span></div></div>
           <div class="hslide-body">
             <span class="hslide-label">Step 1 of 6 · Farm to Your Doorstep</span>
-            <span class="hslide-next"><i class="fa-solid fa-arrow-right fa-xs"></i>Next: Pollination &amp; Flowering</span>
             <h2>Jeevamrutham<br />Farming</h2>
             <p>We prepare and spray Jeevamrutham — a traditional fermented organic fertiliser made from cow dung and medicinal herbs. Zero chemicals. Our trees are nourished the way nature intended, and that flavour shows in every bite.</p>
           </div>
@@ -674,9 +683,9 @@
           <img class="hslide-bg" src="process/pollination-and-flowering.png" alt="Pollination and flowering" />
           <div class="hslide-overlay"></div>
           <div class="hslide-num">02</div>
+          <div class="hslide-next"><div class="hslide-next-wrap"><span class="hslide-next-label">Up next</span><span>Fruit Set <i class="fa-solid fa-arrow-right fa-xs"></i></span></div></div>
           <div class="hslide-body">
             <span class="hslide-label">Step 2 of 6 · Farm to Your Doorstep</span>
-            <span class="hslide-next"><i class="fa-solid fa-arrow-right fa-xs"></i>Next: Fruit Set</span>
             <h2>Pollination<br />&amp; Flowering</h2>
             <p>When the blossoms open, bees and butterflies do their ancient work. We never intervene — the flowers that survive to fruit are the strongest the tree has to offer. Nature selects the best for you.</p>
           </div>
@@ -686,9 +695,9 @@
           <img class="hslide-bg" src="process/tiny-fruit-set.png" alt="Tiny fruit set" />
           <div class="hslide-overlay"></div>
           <div class="hslide-num">03</div>
+          <div class="hslide-next"><div class="hslide-next-wrap"><span class="hslide-next-label">Up next</span><span>Hand-Picked at Peak <i class="fa-solid fa-arrow-right fa-xs"></i></span></div></div>
           <div class="hslide-body">
             <span class="hslide-label">Step 3 of 6 · Farm to Your Doorstep</span>
-            <span class="hslide-next"><i class="fa-solid fa-arrow-right fa-xs"></i>Next: Hand-Picked at Peak</span>
             <h2>Fruit Set</h2>
             <p>Tiny green mangoes begin forming on every branch — this is where patience begins. We monitor each cluster and thin where needed, so every remaining fruit receives the tree's full nourishment to grow into something exceptional.</p>
           </div>
@@ -698,9 +707,9 @@
           <img class="hslide-bg" src="process/examining-ripe-mangoes.png" alt="Hand-picked at peak" />
           <div class="hslide-overlay"></div>
           <div class="hslide-num">04</div>
+          <div class="hslide-next"><div class="hslide-next-wrap"><span class="hslide-next-label">Up next</span><span>Natural Ripening on Straw <i class="fa-solid fa-arrow-right fa-xs"></i></span></div></div>
           <div class="hslide-body">
             <span class="hslide-label">Step 4 of 6 · Farm to Your Doorstep</span>
-            <span class="hslide-next"><i class="fa-solid fa-arrow-right fa-xs"></i>Next: Natural Ripening on Straw</span>
             <h2>Hand-Picked<br />at Peak</h2>
             <p>Our farmers examine every mango by hand — feeling for the right give, checking the colour, smelling at the stem. Only when it is perfect does it leave the tree. No machines. No guessing. No compromise.</p>
           </div>
@@ -710,9 +719,9 @@
           <img class="hslide-bg" src="process/ripening-process.png" alt="Natural ripening on straw" />
           <div class="hslide-overlay"></div>
           <div class="hslide-num">05</div>
+          <div class="hslide-next"><div class="hslide-next-wrap"><span class="hslide-next-label">Up next</span><span>Delivered to Hyderabad <i class="fa-solid fa-arrow-right fa-xs"></i></span></div></div>
           <div class="hslide-body">
             <span class="hslide-label">Step 5 of 6 · Farm to Your Doorstep</span>
-            <span class="hslide-next"><i class="fa-solid fa-arrow-right fa-xs"></i>Next: Delivered to Hyderabad</span>
             <h2>Natural Ripening<br />on Straw</h2>
             <p>Mangoes are laid on dry paddy straw — the method used for generations. They ripen at their own pace, uniformly, with no carbide or chemical agents. The straw breathes with the fruit. The result is sweetness that cannot be faked.</p>
           </div>
@@ -754,9 +763,9 @@
           <div class="hslide-bg" style="background:linear-gradient(160deg,#0f2b06 0%,#2D5016 45%,#6b4200 100%); display:none;"></div>
           <div class="hslide-overlay"></div>
           <div class="hslide-num">01</div>
+          <div class="hslide-next"><div class="hslide-next-wrap"><span class="hslide-next-label">Up next</span><span>Bobbili Peechu <i class="fa-solid fa-arrow-right fa-xs"></i></span></div></div>
           <div class="hslide-body">
             <span class="hslide-label">Signature Variety · Bobbili Farms</span>
-            <span class="hslide-next"><i class="fa-solid fa-arrow-right fa-xs"></i>Next: Bobbili Peechu</span>
             <span class="hslide-telugu">మెట్టవలస పీచు</span>
             <h2>Mettavalasa<br />Peechu</h2>
             <span class="hslide-meaning">— The Fibrous King from the Hills</span>
@@ -780,9 +789,9 @@
           <div class="hslide-bg" style="background:linear-gradient(160deg,#3d1200 0%,#7B3F00 50%,#d4820a 100%); display:none;"></div>
           <div class="hslide-overlay"></div>
           <div class="hslide-num">02</div>
+          <div class="hslide-next"><div class="hslide-next-wrap"><span class="hslide-next-label">Up next</span><span>Kothapalli Kobbari <i class="fa-solid fa-arrow-right fa-xs"></i></span></div></div>
           <div class="hslide-body">
             <span class="hslide-label">Heritage Variety · Same Land, Generations</span>
-            <span class="hslide-next"><i class="fa-solid fa-arrow-right fa-xs"></i>Next: Kothapalli Kobbari</span>
             <span class="hslide-telugu">బొబ్బిలి పీచు</span>
             <h2>Bobbili<br />Peechu</h2>
             <span class="hslide-meaning">— The Pride of Bobbili</span>
@@ -806,9 +815,9 @@
           <div class="hslide-bg" style="background:linear-gradient(160deg,#1a1200 0%,#5a3e00 45%,#c49200 100%); display:none;"></div>
           <div class="hslide-overlay"></div>
           <div class="hslide-num">03</div>
+          <div class="hslide-next"><div class="hslide-next-wrap"><span class="hslide-next-label">Up next</span><span>Imam Pasand <i class="fa-solid fa-arrow-right fa-xs"></i></span></div></div>
           <div class="hslide-body">
             <span class="hslide-label">Exotic · Nearly Unknown Outside Vizianagaram</span>
-            <span class="hslide-next"><i class="fa-solid fa-arrow-right fa-xs"></i>Next: Imam Pasand</span>
             <span class="hslide-telugu">కొత్తపల్లి కొబ్బరి</span>
             <h2>Kothapalli<br />Kobbari</h2>
             <span class="hslide-meaning">— The Coconut Mango</span>
@@ -1010,31 +1019,18 @@
         requestAnimationFrame(tick);
       }
 
-      if (prevBtn) prevBtn.addEventListener('click', function() { goToSlide(Math.round(current) - 1); resetAuto(); });
-      if (nextBtn) nextBtn.addEventListener('click', function() { goToSlide(Math.round(current) + 1); resetAuto(); });
+      if (prevBtn) prevBtn.addEventListener('click', function() { goToSlide(Math.round(current) - 1); });
+      if (nextBtn) nextBtn.addEventListener('click', function() { goToSlide(Math.round(current) + 1); });
 
       // Mobile swipe
       var tx = 0;
       track.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; }, { passive: true });
       track.addEventListener('touchend', function(e) {
         var d = tx - e.changedTouches[0].clientX;
-        if (Math.abs(d) > 50) { goToSlide(target + (d > 0 ? 1 : -1)); resetAuto(); }
+        if (Math.abs(d) > 50) goToSlide(target + (d > 0 ? 1 : -1));
       });
 
-      // Auto-advance every 6s when section visible, loops back to start
-      var autoTimer = null;
-      function startAuto() {
-        clearInterval(autoTimer);
-        autoTimer = setInterval(function() {
-          var wrap = track.parentElement && track.parentElement.parentElement;
-          if (wrap) { var r = wrap.getBoundingClientRect(); if (r.bottom < 0 || r.top > window.innerHeight) return; }
-          goToSlide(target + 1 < SLIDES ? target + 1 : 0);
-        }, 6000);
-      }
-      function resetAuto() { startAuto(); }
-
       updateArrows();
-      startAuto();
     }
 
     initHScroll('proc-track', [
