@@ -133,10 +133,58 @@
     .hslide-arrow-prev { left: 1.5rem; }
     .hslide-arrow-next { right: 1.5rem; }
     @media (max-width: 768px) {
+      /* Stack slides vertically */
       .hscroll-sticky { height: auto; }
       .hscroll-track { flex-direction: column; transform: none !important; }
-      .hslide { width: 100%; height: auto; min-height: 520px; }
+
+      /* Each slide: flex column so image sits on top, body flows below */
+      .hslide {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      /* Background image becomes a normal block at top of the slide */
+      .hslide-bg {
+        position: relative !important;
+        inset: auto !important;
+        width: 100% !important;
+        height: 220px !important;
+        object-fit: cover;
+        flex-shrink: 0;
+        order: 0;
+      }
+
+      /* Overlay and decorative elements — hide on mobile */
+      .hslide-overlay,
+      .hslide-num,
+      .hslide-next { display: none !important; }
+
+      /* Hide nav arrows */
       .hslide-arrow { display: none; }
+
+      /* Body: normal flow below the image */
+      .hslide-body {
+        position: relative !important;
+        bottom: auto !important;
+        left: auto !important;
+        width: 100% !important;
+        padding: 1.5rem 1.25rem 2rem !important;
+        background: #0f1a06;
+        order: 1;
+        z-index: auto;
+      }
+
+      /* Typography adjustments for small screens */
+      .hslide-body h2 { font-size: clamp(1.5rem, 6vw, 2rem); }
+      .hslide-body p  { max-width: 100%; font-size: 0.85rem; }
+      .hslide-telugu  { font-size: clamp(0.9rem, 3.5vw, 1.1rem); }
+      .hslide-attrs   { gap: 0.35rem; }
+      .hslide-attr    { font-size: 0.65rem; padding: 0.22rem 0.55rem; }
+      .hslide-footer  { gap: 0.75rem; }
     }
     /* Full-bleed background — image or div */
     .hslide-bg {
