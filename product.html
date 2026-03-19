@@ -468,7 +468,7 @@
     <ul class="nav-links" id="nav-links">
       <li><a href="index.html#story" onclick="closeNav()">Our Story</a></li>
       <li><a href="index.html#process" onclick="closeNav()">Farm to You</a></li>
-      <li><a href="shop.html" onclick="closeNav()">Shop</a></li>
+      <li><a href="products.html" onclick="closeNav()">Our Mangoes</a></li>
       <li><a href="index.html#cta" class="btn-preorder" onclick="closeNav()">Pre-order ✦</a></li>
     </ul>
     <div class="cart-icon-wrap" title="View cart" style="cursor:pointer;">
@@ -491,9 +491,9 @@
         <span id="cart-total-amt">₹0</span>
       </div>
       <button class="cart-checkout-btn" onclick="cartCheckout()">
-        <i class="fa-solid fa-arrow-up-right-from-square"></i> Buy Now on Aamrutham Store
+        <i class="fa-brands fa-whatsapp"></i> Pre-order on WhatsApp
       </button>
-      <p class="cart-note">You'll complete your order on our secure Zoho store</p>
+      <p class="cart-note">We'll confirm your order and pricing via WhatsApp</p>
     </div>
   </div>
 
@@ -501,7 +501,7 @@
   <div class="breadcrumb">
     <a href="index.html">Home</a>
     <i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i>
-    <a href="shop.html">Shop</a>
+    <a href="products.html">Our Mangoes</a>
     <i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i>
     <span id="breadcrumb-name" style="color:#2D5016; font-weight:700;">—</span>
   </div>
@@ -537,20 +537,14 @@
 
         <!-- Pincode check -->
         <div class="pincode-wrap">
-          <input class="pincode-input" type="number" id="pincode-input" placeholder="Enter Hyderabad pincode" maxlength="6" />
+          <input class="pincode-input" type="tel" id="pincode-input" placeholder="Enter Hyderabad pincode" maxlength="6" pattern="[0-9]{6}" inputmode="numeric" />
           <button class="pincode-btn" onclick="checkPincode()">Check</button>
         </div>
         <div class="pincode-msg" id="pincode-msg"></div>
 
-        <button id="btn-addtocart" class="btn-buynow" style="background:white;color:var(--leaf);border:2px solid var(--leaf);margin-bottom:0.75rem;" onclick="productAddToCartFromPage()">
-          <i class="fa-solid fa-cart-plus"></i> Add to Cart
-        </button>
-        <a id="btn-buynow" href="#" target="_blank" rel="noopener" class="btn-buynow">
-          <i class="fa-solid fa-bolt"></i> Buy Now
-        </a>
-        <a id="btn-whatsapp" href="#" target="_blank" rel="noopener" class="btn-whatsapp-sm">
+        <a id="btn-whatsapp" href="#" target="_blank" rel="noopener" class="btn-buynow" style="display:inline-flex;align-items:center;gap:0.5rem;background:#25D366;border:none;color:white;">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.556 4.117 1.532 5.845L.054 23.486a.5.5 0 00.611.611l5.641-1.478A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.793 9.793 0 01-4.983-1.358l-.356-.213-3.688.966.983-3.595-.233-.37A9.795 9.795 0 012.182 12C2.182 6.569 6.569 2.182 12 2.182S21.818 6.569 21.818 12 17.431 21.818 12 21.818z"/></svg>
-          Ask on WhatsApp
+          Pre-order on WhatsApp
         </a>
 
         <div class="delivery-note">
@@ -611,7 +605,7 @@
   </div>
 
   <!-- ── WhatsApp Float ── -->
-  <a href="https://wa.me/9177266273?text=Hi%20Aamrutham!%20I%20want%20to%20order%20mangoes%20🥭" class="whatsapp-float" target="_blank" rel="noopener" title="Chat with us">
+  <a href="https://wa.me/919177266273?text=Hi%20Aamrutham!%20I%20want%20to%20order%20mangoes%20🥭" class="whatsapp-float" target="_blank" rel="noopener" title="Chat with us">
     <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.556 4.117 1.532 5.845L.054 23.486a.5.5 0 00.611.611l5.641-1.478A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.793 9.793 0 01-4.983-1.358l-.356-.213-3.688.966.983-3.595-.233-.37A9.795 9.795 0 012.182 12C2.182 6.569 6.569 2.182 12 2.182S21.818 6.569 21.818 12 17.431 21.818 12 21.818z"/></svg>
   </a>
 
@@ -646,7 +640,7 @@
       500071,500072,500073,500074,500075,500076,500077,500078,500079,500080,
       500081,500082,500083,500084,500085,500086,500087,500088,500089,500090,
       500091,500092,500093,500094,500095,500096,500097,500098,500099,500100,
-      501301,501401,501501,501505,501506,502032,502032
+      501301,501401,501501,501505,501506,502032
     ];
 
     function checkPincode() {
@@ -690,7 +684,6 @@
           { label: '12 pcs', price: 1299 },
           { label: '18 pcs', price: 1799 },
         ],
-        zohoUrl: 'http://shopaamrutham.zohoecommerce.in/product/bobbili-peechu/3543829000000032691',
         story: {
           heading: 'The Story of Bobbili Peechu',
           p1: 'Grown on the same red laterite soil of Bobbili for generations, the Bobbili Peechu carries the weight of history in every bite. The name "Peechu" refers to its fine, thread-like fibres — almost silk — that weave through the amber pulp.',
@@ -744,7 +737,6 @@
           { label: '12 pcs', price: 1299 },
           { label: '18 pcs', price: 1799 },
         ],
-        zohoUrl: 'http://shopaamrutham.zohoecommerce.in/product/mettavalasa/3543829000000032782',
         story: {
           heading: 'The Story of Mettavalasa Peechu',
           p1: 'Named after the elevated village of Mettavalasa near Bobbili, this variety thrives on the higher ground where the air is cooler and the soil holds centuries of mineral richness. The elevation gives it an intensity of flavour rarely found in commercially grown mangoes.',
@@ -798,7 +790,6 @@
           { label: '12 pcs', price: 1599 },
           { label: '18 pcs', price: 2099 },
         ],
-        zohoUrl: 'http://shopaamrutham.zohoecommerce.in/product/kobbarimamidi/3543829000000032836',
         story: {
           heading: 'The Story of Kothapalli Kobbari',
           p1: 'Nearly unknown outside Vizianagaram district, the Kothapalli Kobbari is one of the rarest mango varieties in Andhra Pradesh. "Kobbari" means coconut in Telugu — and once you taste it, you understand why.',
@@ -852,7 +843,6 @@
           { label: '12 pcs', price: 1899 },
           { label: '18 pcs', price: 2699 },
         ],
-        zohoUrl: 'http://shopaamrutham.zohoecommerce.in/product/imam/3543829000000032890',
         story: {
           heading: 'The Story of Imam Pasand',
           p1: 'Known as Himayat in parts of Andhra, the Imam Pasand is the royal mango of the Deccan. Its name — "Imam\'s favourite" — hints at the reverence with which it has been held for centuries. An extraordinarily large, saffron-hued fruit with zero fibre and creamy, almost custard-like pulp.',
@@ -929,9 +919,8 @@
       document.getElementById('price-display').textContent = '₹' + p.packs[0].price.toLocaleString('en-IN');
 
       // CTA
-      document.getElementById('btn-buynow').href = p.zohoUrl;
-      var waMsg = encodeURIComponent('Hi Aamrutham! I want to order ' + p.name + ' mangoes 🥭');
-      document.getElementById('btn-whatsapp').href = 'https://wa.me/9177266273?text=' + waMsg;
+      var waMsg = encodeURIComponent('Hi Aamrutham! I\u2019d like to pre-order *' + p.name + '* \uD83E\uDD6D Could you share availability and pricing? (Pack of 12 or 24)');
+      document.getElementById('btn-whatsapp').href = 'https://wa.me/919177266273?text=' + waMsg;
 
       // Story
       document.getElementById('story-p1').textContent = p.story.p1;
@@ -1005,6 +994,9 @@
     // ── Init ──
     var params = new URLSearchParams(window.location.search);
     var id = params.get('id') || 'bobbili-peechu';
+    if (params.get('id') && !PRODUCTS[params.get('id')]) {
+      window.location.replace('products.html');
+    }
     var product = PRODUCTS[id] || PRODUCTS['bobbili-peechu'];
     window._currentProduct = product; // expose for cart.js
     renderProduct(product);

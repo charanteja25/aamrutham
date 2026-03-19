@@ -10,14 +10,14 @@ function saveCart(cart) {
   localStorage.setItem(CART_KEY, JSON.stringify(cart));
 }
 
-function addToCart(id, name, packLabel, price, zohoUrl) {
+function addToCart(id, name, packLabel, price) {
   var cart = getCart();
   var key  = id + '||' + packLabel;
   var existing = cart.find(function(i) { return i.key === key; });
   if (existing) {
     existing.qty += 1;
   } else {
-    cart.push({ key: key, id: id, name: name, packLabel: packLabel, price: price, zohoUrl: zohoUrl, qty: 1 });
+    cart.push({ key: key, id: id, name: name, packLabel: packLabel, price: price, qty: 1 });
   }
   saveCart(cart);
   updateCartBubble();
@@ -85,7 +85,7 @@ function renderCartItems() {
       '<div class="cart-empty">' +
         '<i class="fa-solid fa-basket-shopping"></i>' +
         '<p>Your cart is empty</p>' +
-        '<a href="shop.html">Browse mangoes →</a>' +
+        '<a href="products.html">Browse mangoes →</a>' +
       '</div>';
     footer.style.display = 'none';
     return;
@@ -95,8 +95,7 @@ function renderCartItems() {
   var html  = cart.map(function(item) {
     var lineTotal = item.price * item.qty;
     total += lineTotal;
-    // Escape key for use in onclick attribute
-    var safeKey = item.key.replace(/'/g, "\\'");
+    var safeKey = item.key.replace(/'/g, "\\'").replace(/"/g, '&quot;');
     return (
       '<div class="cart-item">' +
         '<div class="cart-item-info">' +
@@ -124,7 +123,10 @@ function renderCartItems() {
 }
 
 function cartCheckout() {
-  window.open('http://shopaamrutham.zohoecommerce.in', '_blank', 'noopener');
+  var cart = getCart();
+  var items = cart.map(function(i) { return i.name + ' x' + i.qty + ' (' + i.packLabel + ')'; }).join(', ');
+  var msg = encodeURIComponent('Hi Aamrutham! I\u2019d like to pre-order: ' + items + ' \uD83E\uDD6D Could you share availability and pricing?');
+  window.open('https://wa.me/919177266273?text=' + msg, '_blank', 'noopener');
 }
 
 // ── Shop page: reads selected pack from the card DOM ──
@@ -132,12 +134,11 @@ function shopAddToCart(btn) {
   var card        = btn.closest('.product-card');
   var productId   = card.dataset.productId;
   var productName = card.dataset.productName;
-  var zohoUrl     = card.dataset.zohoUrl;
   var selectedPack = card.querySelector('.pack-btn.selected');
   var packLabel   = selectedPack ? selectedPack.textContent.trim() : '';
   var priceEl     = card.querySelector('.price');
   var price       = priceEl ? parseInt(priceEl.textContent.replace(/[^\d]/g, '')) || 0 : 0;
-  addToCart(productId, productName, packLabel, price, zohoUrl);
+  addToCart(productId, productName, packLabel, price);
 }
 
 // ── Product page: reads current pack + price from the detail page ──
@@ -146,7 +147,7 @@ function productAddToCartFromPage() {
   var packLabel    = selectedPack ? selectedPack.textContent.trim() : '';
   var priceText    = document.getElementById('price-display').textContent;
   var price        = parseInt(priceText.replace(/[^\d]/g, '')) || 0;
-  addToCart(window._currentProduct.id, window._currentProduct.name, packLabel, price, window._currentProduct.zohoUrl);
+  addToCart(window._currentProduct.id, window._currentProduct.name, packLabel, price);
 }
 
 // ── Init ──
