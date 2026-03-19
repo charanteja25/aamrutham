@@ -74,6 +74,10 @@ function closeCartDrawer() {
   overlay.classList.remove('open');
 }
 
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
 function renderCartItems() {
   var cart   = getCart();
   var body   = document.getElementById('cart-items');
@@ -99,8 +103,8 @@ function renderCartItems() {
     return (
       '<div class="cart-item">' +
         '<div class="cart-item-info">' +
-          '<div class="cart-item-name">' + item.name + '</div>' +
-          '<div class="cart-item-pack">' + item.packLabel + ' &middot; &#8377;' + item.price.toLocaleString('en-IN') + ' each</div>' +
+          '<div class="cart-item-name">' + escHtml(item.name) + '</div>' +
+          '<div class="cart-item-pack">' + escHtml(item.packLabel) + ' &middot; &#8377;' + item.price.toLocaleString('en-IN') + ' each</div>' +
           '<div class="cart-qty-row">' +
             '<button class="cart-qty-btn" onclick="changeQty(\'' + safeKey + '\', -1)">&#8722;</button>' +
             '<span class="cart-qty-val">' + item.qty + '</span>' +
