@@ -2,3 +2,9 @@
 *.docx
 website references/
 .claude/
+node_modules
+dist
+.env
+.env.local
+frontend/.env
+backend/.env
