@@ -123,6 +123,8 @@ export function CartProvider({ children }) {
     );
   }, [items]);
 
+  const clearCart = () => setItems([]);
+
   const value = {
     items,
     count,
@@ -135,6 +137,7 @@ export function CartProvider({ children }) {
     addToCart,
     changeQty,
     removeItem,
+    clearCart,
     checkoutUrl,
   };
 

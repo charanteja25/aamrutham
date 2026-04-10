@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { buildWhatsAppUrl, featuredVarieties, homeProcessSteps, homeQualityBadges } from '../data/products';
+import { featuredVarieties, homeProcessSteps, homeQualityBadges } from '../data/products';
 import ProcessShowcase from '../components/ProcessShowcase';
 
 export default function HomePage() {
@@ -18,7 +18,7 @@ export default function HomePage() {
               Aam + Amrutham. The finest mango varieties, handpicked fresh from our farm in Bobbili and brought to Hyderabad with care.
             </p>
             <div className="hero-actions">
-              <a className="btn btn-gold" href="#cta">Pre-order Now →</a>
+              <Link className="btn btn-gold" to="/products">Order Now →</Link>
               <a className="btn btn-outline" href="#story">Our Story</a>
             </div>
           </div>
@@ -121,11 +121,9 @@ export default function HomePage() {
           <p className="section-eyebrow gold">✦ Summer 2026 · Hyderabad ✦</p>
           <h2>Be the first to taste pure ఆమృతం</h2>
           <p>
-            Pre-orders are open. Drop us a message on WhatsApp and we will share pricing, availability, and delivery updates.
+            Our mangoes are live and ready to order. Pick your variety, choose a pack, and pay securely — straight from Bobbili to your doorstep.
           </p>
-          <a className="btn btn-whatsapp-large" href={buildWhatsAppUrl('Hi Aamrutham! I want to pre-order mangoes for Summer 2026 🥭')} target="_blank" rel="noreferrer">
-            Chat on WhatsApp
-          </a>
+          <Link className="btn btn-gold" to="/products">Shop Mangoes →</Link>
         </div>
       </section>
     </main>

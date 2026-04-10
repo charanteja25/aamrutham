@@ -5,7 +5,7 @@ export default function WhatsAppFloat() {
   return (
     <a
       className="whatsapp-float"
-      href={buildWhatsAppUrl('Hi Aamrutham! I want to pre-order mangoes 🥭')}
+      href={buildWhatsAppUrl('Hi Aamrutham! I have a question about my order 🥭')}
       target="_blank"
       rel="noreferrer"
       aria-label="Chat on WhatsApp"

@@ -1,8 +1,20 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 
+function loadRazorpayScript() {
+  return new Promise((resolve) => {
+    if (window.Razorpay) { resolve(true); return; }
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+}
+
 export default function CartDrawer() {
+  const navigate = useNavigate();
   const {
     items,
     total,
@@ -13,6 +25,53 @@ export default function CartDrawer() {
     checkoutUrl,
     count,
   } = useCart();
+
+  async function handleRazorpayCheckout() {
+    const loaded = await loadRazorpayScript();
+    if (!loaded) {
+      alert("Could not load payment. Please check your connection and try again.");
+      return;
+    }
+
+    const options = {
+      key: import.meta.env.VITE_RAZORPAY_KEY_ID, // set in .env
+      amount: total * 100,          // Razorpay expects paise (₹1 = 100 paise)
+      currency: "INR",
+      name: "Aamrutham",
+      description: items.map((i) => `${i.name} x${i.qty}`).join(", "),
+      image: "/assets/aam-final.png",
+      handler: function (response) {
+        // Payment succeeded — navigate with payment details
+        navigate(
+          `/payment/success?payment_id=${response.razorpay_payment_id}`
+        );
+        setIsOpen(false);
+      },
+      modal: {
+        ondismiss: function () {
+          // User closed the modal without paying — no navigation, stay on page
+        },
+      },
+      prefill: {
+        name: "",
+        contact: "",
+      },
+      theme: {
+        color: "#2d5016",
+      },
+    };
+
+    const rzp = new window.Razorpay(options);
+
+    rzp.on("payment.failed", function (response) {
+      navigate(
+        `/payment/failure?error_code=${response.error.code}&error_description=${encodeURIComponent(response.error.description)}`
+      );
+      setIsOpen(false);
+    });
+
+    rzp.open();
+  }
 
   if (!isOpen) {
     return (
@@ -107,8 +166,15 @@ export default function CartDrawer() {
               <strong>₹{total.toLocaleString("en-IN")}</strong>
             </div>
 
+            <button
+              className="btn btn-gold basket-checkout-btn"
+              onClick={handleRazorpayCheckout}
+            >
+              Pay Now  ·  ₹{total.toLocaleString("en-IN")}
+            </button>
+
             <a
-              className="btn btn-leaf basket-checkout-btn"
+              className="btn btn-outline basket-checkout-btn"
               href={checkoutUrl}
               target="_blank"
               rel="noreferrer"
@@ -117,7 +183,7 @@ export default function CartDrawer() {
             </a>
 
             <p className="basket-note">
-              We will confirm your order and pricing on WhatsApp.
+              Secure payment powered by Razorpay.
             </p>
           </div>
         )}

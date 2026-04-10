@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import ProductCard from '../components/ProductCard';
-import { buildWhatsAppUrl, products } from '../data/products';
+import { products } from '../data/products';
 
 export default function ProductsPage() {
   const [heritagePack, setHeritagePack] = useState(12);
@@ -21,7 +21,7 @@ export default function ProductsPage() {
         <div>Hyderabad delivery</div>
         <div>Zero pesticides</div>
         <div>Summer 2026</div>
-        <div>Pre-order via WhatsApp</div>
+        <div>Secure Razorpay Checkout</div>
       </section>
 
       <section className="section heritage-section">
@@ -52,14 +52,6 @@ export default function ProductsPage() {
                 </button>
               ))}
             </div>
-            <a
-              className="btn btn-whatsapp-large"
-              href={buildWhatsAppUrl(`Hi Aamrutham! I’d like to pre-order the *Aamrutham Heritage Box* (Pack of ${heritagePack}) 🥭 Could you share availability and pricing?`)}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Pre-order on WhatsApp
-            </a>
           </div>
         </div>
       </section>

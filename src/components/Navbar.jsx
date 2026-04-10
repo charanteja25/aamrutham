@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const { setIsOpen: openCart } = useCart();
 
   const closeMenu = () => setOpen(false);
   const isProducts = location.pathname.startsWith('/products');
@@ -27,7 +29,7 @@ export default function Navbar() {
           <a href="/#process" onClick={closeMenu}>Farm to You</a>
           <a href="/#varieties" onClick={closeMenu}>Varieties</a>
           <Link to="/products" onClick={closeMenu} className={isProducts ? 'active' : ''}>Our Mangoes</Link>
-          <a href="/#cta" onClick={closeMenu} className="nav-pill">Pre-order ✦</a>
+          <button className="nav-pill" onClick={() => { openCart(true); closeMenu(); }}>Order Now ✦</button>
         </div>
       </nav>
     </header>

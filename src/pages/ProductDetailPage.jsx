@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
-import { HYD_PINCODES, buildWhatsAppUrl, getProductById, products } from '../data/products';
+import { HYD_PINCODES, getProductById, products } from '../data/products';
 import { useCart } from '../context/CartContext';
 
 export default function ProductDetailPage() {
@@ -29,8 +29,6 @@ export default function ProductDetailPage() {
       setIsValid(false);
     }
   };
-
-  const whatsappUrl = buildWhatsAppUrl(`Hi Aamrutham! I’d like to pre-order *${product.name}* (${selectedPack.label}) 🥭 Could you share availability and pricing?`);
 
   return (
     <main>
@@ -85,7 +83,6 @@ export default function ProductDetailPage() {
 
               <div className="detail-actions">
                 <button className="btn btn-soft" onClick={() => addToCart(product, selectedPack.label, selectedPack.price, null, true)}>Add to cart</button>
-                <a className="btn btn-whatsapp-large" href={whatsappUrl} target="_blank" rel="noreferrer">Pre-order on WhatsApp</a>
               </div>
             </div>
           </div>
