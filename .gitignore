@@ -1,4 +1,4 @@
-.DS_Store
-*.docx
-website references/
-.claude/
+*node_modules*
+*dist*
+.claude*
+*.env
