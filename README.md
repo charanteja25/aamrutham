@@ -1,18 +1,19 @@
-# Aamrutham React App
+# Aamrutham
 
-A cleaner multi-page React version of the Aamrutham site.
-
-## Included pages
-
-- Home page
-- Products listing page
-- Product detail page
-- Shared cart drawer with localStorage
-- WhatsApp pre-order flow
+A Natural, Organic Fruit selling application.
 
 ## Run locally
 
+* setup Razorpay keys in .env file by copying from .env.example
+
 ```bash
+npm install
+npm run dev
+```
+
+backend
+```bash
+cd backend
 npm install
 npm run dev
 ```
