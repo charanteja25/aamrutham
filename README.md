@@ -326,6 +326,9 @@ sudo systemctl reload nginx
 ```bash
 cd /home/ubuntu/aamrutham/backend
 
+# setup DB
+npm run db:setup
+
 # Start under PM2
 pm2 start index.js --name aamrutham-api
 
