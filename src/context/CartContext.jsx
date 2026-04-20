@@ -12,11 +12,28 @@ function readCart() {
   }
 }
 
+function shouldSuggestSeasonPass(product) {
+  if (!product) return false;
+
+  const id = (product.id || "").toLowerCase();
+  const name = (product.name || "").toLowerCase();
+  const category = (product.category || "").toLowerCase();
+
+  if (id.includes("season-pass")) return false;
+  if (id === "heritage-box") return true;
+  if (name.includes("season pass")) return false;
+
+  return category === "premium" || category === "more";
+}
+
 export function CartProvider({ children }) {
   const [items, setItems] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [showAnimation, setShowAnimation] = useState(false);
   const [animationSource, setAnimationSource] = useState({ x: 0, y: 0 });
+
+  const [showSeasonPassPrompt, setShowSeasonPassPrompt] = useState(false);
+  const [pendingCartItem, setPendingCartItem] = useState(null);
 
   useEffect(() => {
     setItems(readCart());
@@ -26,7 +43,37 @@ export function CartProvider({ children }) {
     window.localStorage.setItem(CART_KEY, JSON.stringify(items));
   }, [items]);
 
-  const addToCart = (product, pack, price, sourceElement, useLogoSource = false) => {
+  const setAnimationFromSource = (sourceElement, useLogoSource = false) => {
+    if (useLogoSource) {
+      const logoEl = document.querySelector(".mango-source-logo");
+
+      if (logoEl) {
+        const rect = logoEl.getBoundingClientRect();
+        setAnimationSource({
+          x: rect.left + rect.width / 2 - 24,
+          y: rect.top + rect.height / 2 - 30,
+        });
+      } else {
+        setAnimationSource({
+          x: window.innerWidth / 2 - 24,
+          y: 20,
+        });
+      }
+    } else if (sourceElement) {
+      const rect = sourceElement.getBoundingClientRect();
+      setAnimationSource({
+        x: rect.left + rect.width / 2 - 24,
+        y: rect.top,
+      });
+    } else {
+      setAnimationSource({
+        x: window.innerWidth / 2 - 24,
+        y: -70,
+      });
+    }
+  };
+
+  const commitAddToCart = (product, pack, price, sourceElement, useLogoSource = false) => {
     const key = `${product.id}||${pack}`;
 
     setItems((current) => {
@@ -51,38 +98,54 @@ export function CartProvider({ children }) {
       ];
     });
 
-    // Store the source element position for animation
-    if (useLogoSource) {
-      // Get the logo position from the navbar
-      const logoEl = document.querySelector('.mango-source-logo');
-      if (logoEl) {
-        const rect = logoEl.getBoundingClientRect();
-        setAnimationSource({
-          x: rect.left + rect.width / 2 - 24,
-          y: rect.top + rect.height / 2 - 30,
-        });
-      } else {
-        // Fallback to center top of screen
-        setAnimationSource({
-          x: window.innerWidth / 2 - 24,
-          y: 20,
-        });
-      }
-    } else if (sourceElement) {
-      const rect = sourceElement.getBoundingClientRect();
-      setAnimationSource({
-        x: rect.left + rect.width / 2 - 24, // Center of button, offset for mango width
-        y: rect.top,
+    setAnimationFromSource(sourceElement, useLogoSource);
+    setShowAnimation(true);
+  };
+
+  const addToCart = (product, pack, price, sourceElement, useLogoSource = false) => {
+    if (shouldSuggestSeasonPass(product)) {
+      setPendingCartItem({
+        product,
+        pack,
+        price,
+        sourceElement,
+        useLogoSource,
       });
-    } else {
-      // Default to center of screen if no source element
-      setAnimationSource({
-        x: window.innerWidth / 2 - 24,
-        y: -70,
-      });
+      setShowSeasonPassPrompt(true);
+      return;
     }
 
-    setShowAnimation(true);
+    commitAddToCart(product, pack, price, sourceElement, useLogoSource);
+  };
+
+  const ignoreSeasonPassSuggestion = () => {
+    if (pendingCartItem) {
+      commitAddToCart(
+        pendingCartItem.product,
+        pendingCartItem.pack,
+        pendingCartItem.price,
+        pendingCartItem.sourceElement,
+        pendingCartItem.useLogoSource
+      );
+    }
+
+    setPendingCartItem(null);
+    setShowSeasonPassPrompt(false);
+  };
+
+  const viewSeasonPassDetails = () => {
+    setShowSeasonPassPrompt(false);
+    setPendingCartItem(null);
+
+    const seasonPassSection = document.getElementById("season-pass-section");
+    if (seasonPassSection) {
+      seasonPassSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const closeSeasonPassPrompt = () => {
+    setShowSeasonPassPrompt(false);
+    setPendingCartItem(null);
   };
 
   const hideAnimation = () => {
@@ -119,7 +182,7 @@ export function CartProvider({ children }) {
       .join(", ");
 
     return buildWhatsAppUrl(
-      `Hi Aamrutham! I'd like to pre-order: ${summary} 🥭 Could you share availability and pricing?`
+      `Hi Aamrutham! I'd like to order: ${summary} 🥭`
     );
   }, [items]);
 
@@ -139,6 +202,11 @@ export function CartProvider({ children }) {
     removeItem,
     clearCart,
     checkoutUrl,
+
+    showSeasonPassPrompt,
+    closeSeasonPassPrompt,
+    ignoreSeasonPassSuggestion,
+    viewSeasonPassDetails,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

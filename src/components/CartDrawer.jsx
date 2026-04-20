@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { useInventory } from "../context/InventoryContext";
+import LockTimer from "./LockTimer";
 
 function loadRazorpayScript() {
   return new Promise((resolve) => {
@@ -15,55 +17,147 @@ function loadRazorpayScript() {
 
 export default function CartDrawer() {
   const navigate = useNavigate();
-  const {
-    items,
-    total,
-    isOpen,
-    setIsOpen,
-    changeQty,
-    removeItem,
-    checkoutUrl,
-    count,
-  } = useCart();
+  const { items, total, isOpen, setIsOpen, changeQty, removeItem, count } = useCart();
+  const { refreshInventory } = useInventory();
 
+  // State for the active Razorpay order (set once we lock inventory)
+  const [activeOrderId, setActiveOrderId]       = useState(null);
+  const [lockExpiresAt, setLockExpiresAt]       = useState(null);
+  const [checkoutLoading, setCheckoutLoading]   = useState(false);
+  const [stockError, setStockError]             = useState(null);
+
+  // ── Release helper ────────────────────────────────────────────────────────
+  async function releaseOrder(orderId) {
+    if (!orderId) return;
+    try {
+      await fetch("/api/payments/release", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ razorpay_order_id: orderId }),
+      });
+    } catch { /* best-effort */ }
+    setActiveOrderId(null);
+    setLockExpiresAt(null);
+    refreshInventory();
+  }
+
+  // Called when the 5-min timer expires while the drawer is open
+  function handleLockExpired() {
+    setActiveOrderId(null);
+    setLockExpiresAt(null);
+    refreshInventory();
+    setStockError("Your reservation expired. Please try again.");
+  }
+
+  // ── Main checkout flow ────────────────────────────────────────────────────
   async function handleRazorpayCheckout() {
+    setStockError(null);
+    setCheckoutLoading(true);
+
+    // 1. Load Razorpay SDK
     const loaded = await loadRazorpayScript();
     if (!loaded) {
-      alert("Could not load payment. Please check your connection and try again.");
+      setCheckoutLoading(false);
+      alert("Could not load payment gateway. Please check your connection and try again.");
       return;
     }
 
-    const options = {
-      key: import.meta.env.VITE_RAZORPAY_KEY_ID, // set in .env
-      amount: total * 100,          // Razorpay expects paise (₹1 = 100 paise)
-      currency: "INR",
-      name: "Aamrutham",
-      description: items.map((i) => `${i.name} x${i.qty}`).join(", "),
-      image: "/assets/aam-final.png",
-      handler: function (response) {
-        // Payment succeeded — navigate with payment details
-        navigate(
-          `/payment/success?payment_id=${response.razorpay_payment_id}`
+    // 2. Call backend — creates Razorpay order + locks inventory for 5 min
+    let orderData;
+    try {
+      const res = await fetch("/api/orders/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: total,
+          cartItems: items.map((i) => ({
+            productId: i.id,
+            packLabel: i.packLabel,
+            qty: i.qty,
+            name: i.name,
+            price: i.price,
+          })),
+        }),
+      });
+
+      if (res.status === 409) {
+        // Insufficient stock
+        const err = await res.json();
+        setCheckoutLoading(false);
+        setStockError(
+          `Sorry, only ${err.available} pack(s) of "${err.packLabel}" are available right now.`
         );
-        setIsOpen(false);
+        refreshInventory();
+        return;
+      }
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        setCheckoutLoading(false);
+        setStockError(err.error || "Order creation failed. Please try again.");
+        return;
+      }
+
+      orderData = await res.json();
+    } catch {
+      setCheckoutLoading(false);
+      setStockError("Network error. Please check your connection and try again.");
+      return;
+    }
+
+    setActiveOrderId(orderData.orderId);
+    setLockExpiresAt(orderData.lockExpiresAt);
+    setCheckoutLoading(false);
+
+    // 3. Open Razorpay modal
+    const options = {
+      key: orderData.keyId,
+      order_id: orderData.orderId,
+      amount: orderData.amount,
+      currency: orderData.currency,
+      name: "Aamrutham",
+      description: items.map((i) => `${i.name} ×${i.qty}`).join(", "),
+      image: "/assets/aam-final.png",
+      handler: async function (response) {
+        // Payment succeeded — verify on backend
+        try {
+          const verifyRes = await fetch("/api/payments/verify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              razorpay_order_id:   response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature:  response.razorpay_signature,
+            }),
+          });
+
+          if (verifyRes.ok) {
+            setActiveOrderId(null);
+            setLockExpiresAt(null);
+            setIsOpen(false);
+            refreshInventory();
+            navigate(`/payment/success?payment_id=${response.razorpay_payment_id}`);
+          } else {
+            setStockError("Payment verification failed. Please contact support.");
+          }
+        } catch {
+          setStockError("Payment verification error. Please contact support.");
+        }
       },
       modal: {
-        ondismiss: function () {
-          // User closed the modal without paying — no navigation, stay on page
+        ondismiss: async function () {
+          // User closed modal without paying — release the lock immediately
+          await releaseOrder(orderData.orderId);
         },
       },
-      prefill: {
-        name: "",
-        contact: "",
-      },
-      theme: {
-        color: "#2d5016",
-      },
+      prefill: { name: "", contact: "" },
+      theme: { color: "#2d5016" },
     };
 
     const rzp = new window.Razorpay(options);
 
-    rzp.on("payment.failed", function (response) {
+    rzp.on("payment.failed", async function (response) {
+      await releaseOrder(orderData.orderId);
       navigate(
         `/payment/failure?error_code=${response.error.code}&error_description=${encodeURIComponent(response.error.description)}`
       );
@@ -73,6 +167,7 @@ export default function CartDrawer() {
     rzp.open();
   }
 
+  // ── Floating basket button (closed state) ─────────────────────────────────
   if (!isOpen) {
     return (
       <button
@@ -86,6 +181,7 @@ export default function CartDrawer() {
     );
   }
 
+  // ── Open drawer ───────────────────────────────────────────────────────────
   return (
     <>
       <div className="basket-overlay" onClick={() => setIsOpen(false)} />
@@ -128,9 +224,7 @@ export default function CartDrawer() {
                     >
                       −
                     </button>
-
                     <span className="basket-qty-val">{item.qty}</span>
-
                     <button
                       className="basket-qty-btn"
                       onClick={() => changeQty(item.key, 1)}
@@ -145,7 +239,6 @@ export default function CartDrawer() {
                   <div className="basket-item-price">
                     ₹{(item.qty * item.price).toLocaleString("en-IN")}
                   </div>
-
                   <button
                     className="basket-remove-btn"
                     onClick={() => removeItem(item.key)}
@@ -161,6 +254,28 @@ export default function CartDrawer() {
 
         {items.length > 0 && (
           <div className="basket-footer">
+            {/* Lock countdown — only visible while Razorpay is open */}
+            {lockExpiresAt && (
+              <LockTimer expiresAt={lockExpiresAt} onExpired={handleLockExpired} />
+            )}
+
+            {/* Stock / network error banner */}
+            {stockError && (
+              <div
+                style={{
+                  padding: "0.55rem 0.8rem",
+                  borderRadius: "8px",
+                  background: "rgba(220,38,38,0.08)",
+                  border: "1px solid rgba(220,38,38,0.25)",
+                  color: "#b91c1c",
+                  fontSize: "0.82rem",
+                  lineHeight: 1.4,
+                }}
+              >
+                ⚠️ {stockError}
+              </div>
+            )}
+
             <div className="basket-total-row">
               <span>Total</span>
               <strong>₹{total.toLocaleString("en-IN")}</strong>
@@ -169,21 +284,15 @@ export default function CartDrawer() {
             <button
               className="btn btn-gold basket-checkout-btn"
               onClick={handleRazorpayCheckout}
+              disabled={checkoutLoading}
             >
-              Pay Now  ·  ₹{total.toLocaleString("en-IN")}
+              {checkoutLoading
+                ? "Reserving…"
+                : `Pay Now · ₹${total.toLocaleString("en-IN")}`}
             </button>
 
-            <a
-              className="btn btn-outline basket-checkout-btn"
-              href={checkoutUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Pre-order on WhatsApp
-            </a>
-
             <p className="basket-note">
-              Secure payment powered by Razorpay.
+              Secure payment powered by Razorpay. Your cart is reserved for 5 minutes once you click Pay Now.
             </p>
           </div>
         )}

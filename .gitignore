@@ -2,3 +2,4 @@
 *dist*
 .claude*
 *.env
+.DS_store

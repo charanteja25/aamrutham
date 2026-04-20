@@ -284,6 +284,46 @@ export const products = [
     category: 'more',
     accent: 'gold',
     gradient: 'linear-gradient(160deg, #fff8e0 0%, #ffd979 55%, #eeaa2a 100%)'
+  },
+  {
+    id: 'children-mango-pack',
+    name: 'Kids Mango Pack',
+    telugu: 'పిల్లల మావిడి ప్యాక్',
+    meaning: 'Little Mangoes for Little Ones',
+    shortTag: 'For Ages 2–10 · Fun & Healthy',
+    heroTag: 'Kids Special · Pack of 6',
+    description:
+      'Specially curated for children! Smaller, sweeter mangoes that are perfect for little hands. No fiber, easy to eat, and absolutely delicious. A healthy summer treat your kids will love!',
+    fullDescription:
+      'We have handpicked the sweetest, most kid-friendly mangoes for your little ones. These are smaller in size, completely fiberless, and have just the right amount of sweetness for children ages 2-10. Perfect for lunchboxes, summer snacks, and happy little faces!',
+    badges: ['Pack of 6', 'Ages 2–10', 'Fiberless', 'Kid-Friendly'],
+    packPrices: [
+      { label: '6 pcs', price: 499 }
+    ],
+    category: 'premium',
+    accent: 'gold',
+    gradient: 'linear-gradient(160deg, #fff5e6 0%, #ffccbc 45%, #ffab91 100%)',
+    isChildrenPack: true,
+    story: {
+      heading: 'The Story of Our Kids Mango Pack',
+      p1: 'We know how much children love mangoes — and how difficult it can be to find the right one for them. Too big, too fibrous, too messy! That is why we created the Kids Mango Pack.',
+      quote: '"The sweetest mangoes for the sweetest smiles."',
+      p2: 'Each mango is carefully selected to be small, fiberless, and perfectly sweet — exactly what little ones need to enjoy mango season to the fullest.'
+    },
+    profile: [
+      ['Size', 'Small · Kid-Friendly'],
+      ['Texture', 'Smooth · Fiberless'],
+      ['Aroma', 'Mild & Sweet'],
+      ['Taste', 'Gentle Sweetness'],
+      ['Best Eaten', 'Sliced or spooned'],
+      ['Perfect For', 'Ages 2–10']
+    ],
+    storage: [
+      ['Refrigerate after ripening', 'Store at 8–12°C once ripe and consume within 3–4 days.'],
+      ['Room temperature ripening', 'Keep at room temperature for 1–2 days until fragrant.'],
+      ['Serve chilled', 'Serving slightly chilled makes it extra refreshing for kids!'],
+      ['Handle with care', 'Keep in the box until ready to eat to prevent bruising.']
+    ]
   }
 ];
 
@@ -334,3 +374,51 @@ export const homeQualityBadges = [
 export function getProductById(id) {
   return products.find((product) => product.id === id);
 }
+
+// Season Pass Products
+export const seasonPassProducts = [
+  {
+    id: 'season-pass-12',
+    name: 'Season Pass - 12 PCs/Week',
+    telugu: 'సీజన్ పాస్ - 12pcs/week',
+    meaning: 'Weekly Fresh Mango Delivery',
+    shortTag: '12 Premium Mangoes Every Week',
+    heroTag: 'Season Pass · 12 PCs/Week',
+    description:
+      'Get 12 premium mangoes delivered to your doorstep every week throughout the season. Fresh harvest, hand-picked and naturally ripened — delivered weekly to your home.',
+    fullDescription:
+      'Never miss a mango season again. Your Season Pass ensures you get the finest mangoes delivered every week, curated from our heritage farms.',
+    badges: ['12 PCs Weekly', 'Fresh Harvest', 'Doorstep Delivery', 'Cancel Anytime'],
+    packPrices: [
+      { label: '12 PCs/Week', price: 2499 }
+    ],
+    category: 'season-pass',
+    accent: 'gold',
+    gradient: 'linear-gradient(160deg, #e8f5e9 0%, #81c784 45%, #2e7d32 100%)',
+    isSeasonPass: true,
+    deliveriesPerWeek: 12,
+    totalWeeks: 'Season duration'
+  },
+  {
+    id: 'season-pass-24',
+    name: 'Season Pass - 24 PCs/Week',
+    telugu: 'సీజన్ పాస్ - 24pcs/week',
+    meaning: 'Weekly Family Size Mango Delivery',
+    shortTag: '24 Premium Mangoes Every Week',
+    heroTag: 'Season Pass · 24 PCs/Week',
+    description:
+      'Perfect for families and mango lovers. Get 24 premium mangoes delivered every week — enough to share with family and friends throughout the season.',
+    fullDescription:
+      'The ultimate mango experience for families. 24 hand-picked, naturally ripened mangoes delivered weekly to your doorstep.',
+    badges: ['24 PCs Weekly', 'Family Size', 'Doorstep Delivery', 'Cancel Anytime'],
+    packPrices: [
+      { label: '24 PCs/Week', price: 4499 }
+    ],
+    category: 'season-pass',
+    accent: 'leaf',
+    gradient: 'linear-gradient(160deg, #e8f5e9 0%, #66bb6a 45%, #1b5e20 100%)',
+    isSeasonPass: true,
+    deliveriesPerWeek: 24,
+    totalWeeks: 'Season duration'
+  }
+];

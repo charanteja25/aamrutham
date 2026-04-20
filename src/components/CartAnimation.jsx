@@ -4,7 +4,7 @@ import MangoThattaAnimation from "./MangoThattaAnimation";
 import { useCart } from "../context/CartContext";
 
 export default function CartAnimation() {
-  const { showAnimation, hideAnimation, animationSource } = useCart();
+  const { showAnimation, hideAnimation } = useCart();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -14,11 +14,7 @@ export default function CartAnimation() {
   if (!mounted || !showAnimation) return null;
 
   return createPortal(
-    <MangoThattaAnimation 
-      active={showAnimation} 
-      onDone={hideAnimation} 
-      sourcePosition={animationSource}
-    />,
+    <MangoThattaAnimation active={showAnimation} onDone={hideAnimation} />,
     document.body
   );
 }

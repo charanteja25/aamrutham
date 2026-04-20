@@ -70,7 +70,7 @@ export default function ProcessShowcase({ steps = [] }) {
           </article>
         ))}
 
-        <div className="process-slide-nav">
+        {/* <div className="process-slide-nav">
           {steps.map((step, index) => (
             <button
               key={step.title}
@@ -82,7 +82,7 @@ export default function ProcessShowcase({ steps = [] }) {
               <span className="process-slide-nav-title">{step.title}</span>
             </button>
           ))}
-        </div>
+        </div> */}
 
         <div className="process-slide-dots">
           {steps.map((step, index) => (

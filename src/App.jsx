@@ -10,6 +10,11 @@ import ProductsPage from './pages/ProductsPage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import PaymentSuccessPage from './pages/PaymentSuccessPage';
 import PaymentFailurePage from './pages/PaymentFailurePage';
+import { InventoryProvider } from './context/InventoryContext';
+import AdminLoginPage from './pages/AdminLoginPage';
+import AdminDashboardPage from './pages/AdminDashboardPage';
+import TeamPage from './pages/TeamPage';
+import SeasonPassPrompt from "./components/SeasonPassPrompt";
 
 function ScrollManager() {
   const location = useLocation();
@@ -33,21 +38,36 @@ function ScrollManager() {
 }
 
 export default function App() {
-  return (
-    <div className="app-shell">
-      <ScrollManager />
-      <Navbar />
-      <CartDrawer />
-      <CartAnimation />
+  const location = useLocation();
+  const isAdmin = location.pathname.startsWith('/admin');
+
+  if (isAdmin) {
+    return (
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/products" element={<ProductsPage />} />
-        <Route path="/products/:id" element={<ProductDetailPage />} />
-        <Route path="/payment/success" element={<PaymentSuccessPage />} />
-        <Route path="/payment/failure" element={<PaymentFailurePage />} />
+        <Route path="/admin" element={<AdminLoginPage />} />
+        <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
       </Routes>
-      <Footer />
-      <WhatsAppFloat />
-    </div>
+    );
+  }
+  return (
+    <InventoryProvider>
+      <div className="app-shell">
+        <ScrollManager />
+        <Navbar />
+        <CartDrawer />
+        <CartAnimation />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/products/:id" element={<ProductDetailPage />} />
+          <Route path="/payment/success" element={<PaymentSuccessPage />} />
+          <Route path="/payment/failure" element={<PaymentFailurePage />} />
+          <Route path="/team" element={<TeamPage />} />        
+        </Routes>
+        <Footer />
+        <WhatsAppFloat />
+        <SeasonPassPrompt />
+      </div>
+    </InventoryProvider>
   );
 }

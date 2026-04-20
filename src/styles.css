@@ -528,6 +528,36 @@ input {
   border-color: var(--mango);
 }
 
+.pack-pill--out {
+  opacity: 0.4;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.heritage-price-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 1.2rem 0 0.8rem;
+}
+
+.heritage-price {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--mango);
+  letter-spacing: -0.02em;
+}
+
+.heritage-price-note {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.6);
+}
+
+.heritage-actions {
+  margin-top: 1rem;
+}
+
 .products-grid {
   grid-template-columns: repeat(2, 1fr);
 }
@@ -1159,11 +1189,11 @@ input {
   z-index: 40;
 }
 
-/* Bottom-right floating basket */
+/* Bottom-right floating basket — sits above the WhatsApp button */
 .basket-float {
   position: fixed;
   right: 1.4rem;
-  bottom: 1.4rem;
+  bottom: 5.6rem;   /* 56px WA button + 1.4rem gap + 1.4rem base = ~5.6rem */
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -1383,7 +1413,7 @@ input {
 @media (max-width: 480px) {
   .basket-float {
     right: 1rem;
-    bottom: 1rem;
+    bottom: 5.2rem;  /* keep it above WhatsApp on mobile too */
     width: 56px;
     height: 56px;
   }
@@ -2153,4 +2183,210 @@ input {
   .journey-title {
     font-size: 1.2rem;
   }
+}
+
+/* ══════════════════════════════════════════
+   OUR TEAM SECTION
+   ══════════════════════════════════════════ */
+
+.team-section {
+  background: var(--cream);
+}
+
+/* responsive auto-fill grid — add members freely */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(162px, 1fr));
+  gap: 2.4rem 1.6rem;
+  margin-top: 3rem;
+}
+
+/* ── Card ── */
+.team-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: var(--white);
+  border-radius: 18px;
+  padding: 1.75rem 1.1rem 1.5rem;
+  box-shadow: 0 4px 18px rgba(44, 24, 16, 0.07);
+  transition: transform 220ms ease, box-shadow 220ms ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.team-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  border-radius: 18px 18px 0 0;
+}
+
+/* human cards — mango-orange top stripe */
+.team-card--human::before {
+  background: linear-gradient(90deg, var(--mango), var(--mango-dark));
+}
+
+/* animal cards — leaf-green top stripe */
+.team-card--animal::before {
+  background: linear-gradient(90deg, var(--leaf-light), var(--leaf));
+}
+
+.team-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(44, 24, 16, 0.12);
+}
+
+/* ── Avatar circle ── */
+.team-avatar {
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 1.1rem;
+  border: 3px solid var(--ring, var(--mango));
+  box-shadow: 0 4px 14px rgba(44, 24, 16, 0.12);
+  flex-shrink: 0;
+}
+
+.team-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* emoji fallback */
+.team-avatar-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.8rem;
+  line-height: 1;
+  border-radius: 50%;
+}
+
+/* ── Card body ── */
+.team-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  width: 100%;
+}
+
+.team-animal-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--leaf);
+  background: rgba(74, 124, 47, 0.10);
+  border: 1px solid rgba(74, 124, 47, 0.25);
+  border-radius: 20px;
+  padding: 0.18em 0.65em;
+  margin-bottom: 0.1rem;
+}
+
+.team-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.25;
+}
+
+.team-role {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--mango-dark);
+  margin: 0;
+}
+
+.team-card--animal .team-role {
+  color: var(--leaf-light);
+}
+
+.team-bio {
+  font-size: 0.8rem;
+  color: rgba(44, 24, 16, 0.62);
+  line-height: 1.55;
+  margin: 0.35rem 0 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .team-grid {
+    grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+    gap: 1.6rem 1rem;
+  }
+  .team-avatar { width: 88px; height: 88px; }
+  .team-avatar-fallback { font-size: 2.2rem; }
+}
+
+@media (max-width: 480px) {
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem 0.8rem;
+  }
+  .team-card { padding: 1.4rem 0.8rem 1.2rem; border-radius: 14px; }
+  .team-avatar { width: 78px; height: 78px; }
+  .team-avatar-fallback { font-size: 2rem; }
+  .team-name { font-size: 0.88rem; }
+  .team-bio { display: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   INVENTORY / STOCK BADGES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Badge positioned in the top-right of the product card visual area */
+.stock-badge {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.stock-badge--low {
+  background: rgba(234, 88, 12, 0.12);
+  color: #c2410c;
+  border: 1px solid rgba(234, 88, 12, 0.28);
+}
+
+.stock-badge--out {
+  background: rgba(100, 116, 139, 0.12);
+  color: #475569;
+  border: 1px solid rgba(100, 116, 139, 0.25);
+}
+
+/* Ensure the visual wrapper is relative so the badge anchors correctly */
+.product-card-visual {
+  position: relative;
+}
+
+/* Sold-out pack button styling */
+.pack-btn--out {
+  opacity: 0.45;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+/* Lock timer — spacing inside the cart drawer footer */
+.lock-timer {
+  margin-bottom: 0.6rem;
 }
