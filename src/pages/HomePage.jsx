@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { featuredVarieties, homeProcessSteps, homeQualityBadges } from '../data/products';
 import ProcessShowcase from '../components/ProcessShowcase';
+import LogoRevealSection from '../components/LogoRevealSection';
 
 export default function HomePage() {
   return (
@@ -28,6 +29,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* <LogoRevealSection /> */}
 
       <section id="story" className="section section-cream-dark">
         <div className="container story-grid">
