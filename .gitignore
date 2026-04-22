@@ -1,5 +1,8 @@
-*node_modules*
-*dist*
-.claude*
+.DS_Store
+*.docx
+website references/
+.claude/
+node_modules/
+.vite/
+dist/
 *.env
-.DS_store

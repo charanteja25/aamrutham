@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Values — Aamrutham</title>
+  <meta name="description" content="The values behind Aamrutham — natural farming, transparency, heritage varieties, and responsibility beyond harvest." />
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=Noto+Serif+Telugu:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    :root {
+      --color-text-primary: #1C1208;
+      --color-text-secondary: #5a3e2b;
+      --color-text-tertiary: #9a7a5a;
+      --color-background-primary: #ffffff;
+      --color-background-secondary: #fdf8f2;
+      --color-border-tertiary: #e8d9c4;
+    }
+
+    body { background: #FEF8F0; color: #1C1208; }
+
+    .values-hero {
+      background: linear-gradient(160deg, #0f2b06 0%, #2D5016 60%, #1a3a0a 100%);
+      padding: 7rem 1.25rem 3.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .values-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.08;
+      background-image: radial-gradient(circle, #F5A623 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    .values-hero-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+
+    .values-eyebrow {
+      color: var(--mango);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .values-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      color: #fff;
+      margin: 0;
+      line-height: 1.15;
+    }
+
+    .values-title em { color: var(--mango); font-style: italic; }
+
+    .values-sub {
+      margin-top: 1rem;
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .values-wrap { max-width: 1100px; margin: 0 auto; padding: 0 1.25rem 3.5rem; }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .values-footer {
+      background: #0f2b06;
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.82rem;
+    }
+
+    .values-footer .title {
+      color: white;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .values-footer-links {
+      margin-top: 0.55rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .values-footer-links a { color: var(--mango); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <nav id="navbar" class="scrolled">
+    <a href="index.html" style="display:flex; align-items:center; gap:0.5rem; text-decoration:none;">
+      <img src="Subject.png" alt="Aamrutham" class="nav-logo" />
+      <span style="font-size:0.75rem; font-weight:700; color:var(--leaf); letter-spacing:0.08em; text-transform:uppercase;">Home</span>
+    </a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html#story" onclick="closeNav()">Our Story</a></li>
+      <li><a href="index.html#process" onclick="closeNav()">Farm to You</a></li>
+      <li><a href="products.html" onclick="closeNav()">Our Mangoes</a></li>
+      <li><a href="team.html" onclick="closeNav()">Our Team</a></li>
+      <li><a href="values.html" onclick="closeNav()" style="color:var(--mango-dark); font-weight:700;">Our Values</a></li>
+    </ul>
+  </nav>
+
+  <header class="values-hero">
+    <div class="values-hero-inner">
+      <span class="values-eyebrow">What We Stand For</span>
+      <h1 class="values-title">Our <em>Values</em></h1>
+      <p class="values-sub">The principles that guide every season at Aamrutham — from soil care to the mangoes that reach your table.</p>
+    </div>
+  </header>
+
+  <main class="values-wrap">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Lora:ital,wght@0,400;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+  .av2 {
+    font-family: 'DM Sans', sans-serif;
+    padding: 4.5rem 0 3rem;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+
+  .av2-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-text-tertiary);
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+  }
+
+  .av2-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    line-height: 1.15;
+    margin: 0 0 0.55rem;
+  }
+
+  .av2-heading em {
+    font-style: italic;
+    color: #7a5c2e;
+  }
+
+  .av2-intro {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    max-width: 600px;
+    margin: 0 0 3.5rem;
+  }
+
+  .av2-featured {
+    border: 1.5px solid #d4a96a;
+    border-radius: 16px;
+    padding: 2.5rem 2.75rem;
+    margin-bottom: 1.5px;
+    background: var(--color-background-primary);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2.5rem;
+    align-items: start;
+    transition: background 0.2s;
+  }
+
+  .av2-featured:hover { background: #fdf8f2; }
+
+  .av2-feat-left {
+    border-right: 1px solid var(--color-border-tertiary);
+    padding-right: 2.5rem;
+  }
+
+  .av2-feat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 400;
+    color: #e8d5b5;
+    line-height: 1;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .av2-feat-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.45rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin: 0 0 0.5rem;
+    line-height: 1.25;
+  }
+
+  .av2-feat-tag {
+    font-size: 0.73rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #9a7040;
+    font-weight: 400;
+  }
+
+  .av2-feat-body {
+    font-size: 0.93rem;
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+    margin: 0 0 1.2rem;
+    font-weight: 300;
+  }
+
+  .av2-pillars {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 0.5rem;
+  }
+
+  .av2-pill {
+    font-size: 0.78rem;
+    padding: 5px 13px;
+    border-radius: 100px;
+    border: 1px solid #d4a96a;
+    color: #7a5c2e;
+    background: #fdf5ea;
+    font-weight: 400;
+  }
+
+  .av2-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5px;
+    background: var(--color-border-tertiary);
+    border: 1.5px solid var(--color-border-tertiary);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 1.5px;
+  }
+
+  .av2-card {
+    background: var(--color-background-primary);
+    padding: 1.9rem 2rem;
+    transition: background 0.2s;
+  }
+
+  .av2-card:hover { background: var(--color-background-secondary); }
+
+  /* Responsibility card spans full width */
+  .av2-card-wide {
+    grid-column: 1 / -1;
+    background: var(--color-background-primary);
+    padding: 2rem 2rem 2rem;
+    transition: background 0.2s;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0 2.5rem;
+    align-items: start;
+  }
+
+  .av2-card-wide:hover { background: var(--color-background-secondary); }
+
+  .av2-card-wide-left {
+    min-width: 200px;
+    border-right: 1px solid var(--color-border-tertiary);
+    padding-right: 2.5rem;
+  }
+
+  .av2-card-wide-right {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+  }
+
+  .av2-resp-pillar {
+    padding: 1.1rem 1.2rem;
+    border-radius: 10px;
+    border: 1px solid var(--color-border-tertiary);
+    background: var(--color-background-secondary);
+  }
+
+  .av2-resp-pillar-icon {
+    font-size: 14px;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .av2-resp-pillar-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin: 0 0 0.35rem;
+    line-height: 1.3;
+  }
+
+  .av2-resp-pillar-desc {
+    font-size: 0.78rem;
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+    margin: 0;
+    font-weight: 300;
+  }
+
+  .av2-card-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.78rem;
+    color: #b08d57;
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 0.9rem;
+  }
+
+  .av2-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin: 0 0 0.65rem;
+    line-height: 1.3;
+  }
+
+  .av2-card-body {
+    font-size: 0.86rem;
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+    margin: 0 0 1rem;
+    font-weight: 300;
+  }
+
+  .av2-card-body strong {
+    color: var(--color-text-primary);
+    font-weight: 400;
+  }
+
+  .av2-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .av2-bullets li {
+    font-size: 0.82rem;
+    color: var(--color-text-secondary);
+    padding: 3px 0 3px 1.1rem;
+    position: relative;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .av2-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #c9a96e;
+  }
+
+  .av2-green-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: #eaf3de;
+    color: #3b6d11;
+    padding: 4px 11px;
+    border-radius: 100px;
+    margin-top: 0.8rem;
+    font-weight: 400;
+  }
+
+  .av2-closing {
+    border: 1.5px solid var(--color-border-tertiary);
+    border-radius: 16px;
+    padding: 2rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    background: var(--color-background-primary);
+  }
+
+  .av2-closing-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--color-text-primary);
+    margin: 0;
+    flex: 1;
+    min-width: 200px;
+    line-height: 1.5;
+  }
+
+  .av2-closing-text em { color: #7a5c2e; font-style: italic; }
+
+  .av2-stamp { text-align: center; flex-shrink: 0; }
+
+  .av2-stamp-circle {
+    width: 86px;
+    height: 86px;
+    border-radius: 50%;
+    border: 1.5px solid #d4a96a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+  }
+
+  .av2-stamp-year {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #7a5c2e;
+    line-height: 1;
+  }
+
+  .av2-stamp-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #b08d57;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  @media (max-width: 640px) {
+    .av2-featured { grid-template-columns: 1fr; }
+    .av2-feat-left { border-right: none; border-bottom: 1px solid var(--color-border-tertiary); padding-right: 0; padding-bottom: 1.5rem; }
+    .av2-grid { grid-template-columns: 1fr; }
+    .av2-card-wide { grid-template-columns: 1fr; }
+    .av2-card-wide-left { border-right: none; border-bottom: 1px solid var(--color-border-tertiary); padding-right: 0; padding-bottom: 1.5rem; min-width: unset; }
+    .av2-card-wide-right { grid-template-columns: 1fr; }
+    .av2-heading { font-size: 2rem; }
+  }
+</style>
+
+<section class="av2">
+  <h2 class="sr-only">Our Values — what Aamrutham stands for</h2>
+
+  <p class="av2-eyebrow">What we stand for</p>
+  <h2 class="av2-heading">Our <em>Values</em></h2>
+  <p class="av2-intro">Not a list of promises. A way of farming we've lived since 2014 — and everything we grow reflects it.</p>
+
+  <!-- Featured value -->
+  <div class="av2-featured">
+    <div class="av2-feat-left">
+      <span class="av2-feat-num">01</span>
+      <p class="av2-feat-title">Truth over trends</p>
+      <span class="av2-feat-tag">Our founding belief</span>
+    </div>
+    <div>
+      <p class="av2-feat-body">We don't engineer our mangoes for appearance, size, or shelf life. They grow at their own pace — shaped by soil, season, and sunlight. What you receive is not a "product." It is food in its most honest form.</p>
+      <div class="av2-pillars">
+        <span class="av2-pill">No artificial ripening</span>
+        <span class="av2-pill">No chemical shortcuts</span>
+        <span class="av2-pill">No visual manipulation</span>
+        <span class="av2-pill">One harvest a year</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="av2-grid">
+
+    <div class="av2-card">
+      <span class="av2-card-num">02</span>
+      <p class="av2-card-title">Transparency you can see</p>
+      <p class="av2-card-body">Trust is built when nothing is hidden. We openly share our process — from what goes into the soil, to when and why we harvest.</p>
+      <ul class="av2-bullets">
+        <li>Jeevamrutham &amp; Panchagavyam — our only inputs</li>
+        <li>Desi cow-based living soil care</li>
+        <li>No claims we can't show you</li>
+      </ul>
+    </div>
+
+    <div class="av2-card">
+      <span class="av2-card-num">03</span>
+      <p class="av2-card-title">Nature is our partner</p>
+      <p class="av2-card-body">Desi cows, healthy soil, biodiversity — not add-ons. The foundation of everything we grow. <strong>Subhash Palekar Natural Farming</strong> is not a certification we chase. It's how we've worked since 2014.</p>
+      <ul class="av2-bullets">
+        <li>Soil alive, not chemical-dependent</li>
+        <li>Trees nourished, not forced</li>
+        <li>Farms as ecosystems, not factories</li>
+      </ul>
+    </div>
+
+    <div class="av2-card">
+      <span class="av2-card-num">04</span>
+      <p class="av2-card-title">Heritage over hype</p>
+      <p class="av2-card-body">We grow varieties the world has nearly forgotten — not because they're exotic, but because they're <strong>extraordinary</strong>. GI-tagged, flavour-first, irreplaceable.</p>
+      <ul class="av2-bullets">
+        <li>Panduri Mamidi &amp; Imam Pasand</li>
+        <li>Kothapalli Kobbari &amp; Bobbili Peechu</li>
+        <li>Mettavalasa Peechu</li>
+      </ul>
+    </div>
+
+    <!-- Responsibility — full width expanded card -->
+    <div class="av2-card-wide">
+      <div class="av2-card-wide-left">
+        <span class="av2-card-num">05</span>
+        <p class="av2-card-title">Responsibility beyond the harvest</p>
+        <p class="av2-card-body">Every choice we make impacts more than today's yield. We farm with the future in mind — regenerating the earth, preserving wisdom, and contributing to a greener world through practices that give back more than they take.</p>
+        <span class="av2-green-tag">Eco-conscious farming</span>
+      </div>
+      <div class="av2-card-wide-right">
+        <div class="av2-resp-pillar">
+          <span class="av2-resp-pillar-icon">🌱</span>
+          <p class="av2-resp-pillar-title">Regenerating the earth</p>
+          <p class="av2-resp-pillar-desc">We return organic matter back to the soil through compost, mulch, and natural inputs — building fertility season after season, not depleting it.</p>
+        </div>
+        <div class="av2-resp-pillar">
+          <span class="av2-resp-pillar-icon">🌍</span>
+          <p class="av2-resp-pillar-title">Greener practices</p>
+          <p class="av2-resp-pillar-desc">Zero synthetic chemicals, zero plastic in our process, and a farming footprint that actively reduces carbon rather than adding to it.</p>
+        </div>
+        <div class="av2-resp-pillar">
+          <span class="av2-resp-pillar-icon">🤲</span>
+          <p class="av2-resp-pillar-title">Giving back to the community</p>
+          <p class="av2-resp-pillar-desc">Rooted in Bobbili, Andhra Pradesh — we preserve local farming wisdom and support a system that future generations can rely on and be proud of.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Closing banner -->
+  <div class="av2-closing">
+    <p class="av2-closing-text">Aamrutham is not just about mangoes.<br>It's about bringing back <em>food you can trust.</em></p>
+    <div class="av2-stamp">
+      <div class="av2-stamp-circle">
+        <span class="av2-stamp-year">2014</span>
+        <span class="av2-stamp-label">Natural<br>Farming</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+  </main>
+
+  <footer class="values-footer">
+    <p class="title">Aamrutham</p>
+    <p>Bobbili Farms · Hyderabad · Summer 2026</p>
+    <div class="values-footer-links">
+      <a href="index.html">Home</a>
+      <a href="products.html">Our Mangoes</a>
+      <a href="team.html">Our Team</a>
+      <a href="https://instagram.com/aamrutham_" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </footer>
+
+  <script>
+    var navToggle = document.getElementById('nav-toggle');
+    var navLinks = document.getElementById('nav-links');
+    navToggle.addEventListener('click', function() {
+      navToggle.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+
+    function closeNav() {
+      navToggle.classList.remove('open');
+      navLinks.classList.remove('open');
+    }
+  </script>
+</body>
+</html>
