@@ -191,8 +191,8 @@ const CENTER_LOGO = '/assets/aam-final.png';
 const RING_SPEEDS = [0.28, -0.22, 0.16, -0.12];
 const DESKTOP_RADII = [108, 200, 292, 378];
 const MOBILE_RADII = [92, 150, 208, 262];
-const DESKTOP_FOCUS_RADII = [170, 210, 250, 290];
-const MOBILE_FOCUS_RADII = [132, 162, 192, 222];
+const DESKTOP_FOCUS_RADII = [108, 200, 292, 378];
+const MOBILE_FOCUS_RADII = [92, 150, 208, 262];
 
 const CX_DESKTOP = 540;
 const CX_MOBILE = 500;
@@ -916,8 +916,8 @@ export default function TeamPage() {
   }, [targetProgress]);
 
   const phase = useMemo(() => {
-    if (progress >= 0.96) return 4;
-    return Math.min(3, Math.floor(progress * 4));
+    if (progress >= 0.80) return 4;
+    return Math.min(3, Math.floor(progress * 5));
   }, [progress]);
 
   const showAll = phase === 4;
@@ -1001,7 +1001,7 @@ export default function TeamPage() {
       <div
         ref={sectionRef}
         style={{
-          height: '260vh',
+          height: '200vh',
           position: 'relative',
           background: 'radial-gradient(circle at top, #fbf2df 0%, #F4EBD4 55%, #efe2c5 100%)',
           fontFamily: 'sans-serif',
@@ -1032,7 +1032,7 @@ export default function TeamPage() {
     <div
       ref={sectionRef}
       style={{
-        height: '320vh',
+        height: '450vh',
         position: 'relative',
         background: 'radial-gradient(circle at top, #fbf2df 0%, #F4EBD4 55%, #efe2c5 100%)',
       }}
