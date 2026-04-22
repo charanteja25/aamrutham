@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import ProductCard from '../components/ProductCard';
 import { products, seasonPassProducts } from '../data/products';
 import { useCart } from '../context/CartContext';
@@ -16,6 +16,7 @@ const HERITAGE_PACKS = [
 
 export default function ProductsPage() {
   const [selectedHeritage, setSelectedHeritage] = useState(HERITAGE_PACKS[0]);
+  const [slideIndex, setSlideIndex] = useState(0);
   const { addToCart } = useCart();
   const { getAvailable } = useInventory();
 
@@ -24,6 +25,35 @@ export default function ProductsPage() {
 
   const heritageAvailable = getAvailable(HERITAGE_BOX.id, selectedHeritage.label);
   const heritageSoldOut = heritageAvailable === 0;
+
+  const teaserSlides = [
+    {
+      key: 'pass',
+      eyebrow: 'Summer 2026 · 4 Weeks',
+      title: 'Mango Season Pass',
+      copy: 'Four weekly drops of rare, tree-ripened varieties delivered across Hyderabad.',
+      cta: 'See the Pass →',
+      href: '#season-pass-section',
+      bg: 'linear-gradient(135deg, #050f02, #0f2b06, #1a3a0a)',
+    },
+    {
+      key: 'box',
+      eyebrow: 'Gift Edition · Summer 2026',
+      title: 'Aamrutham Signature Box',
+      copy: 'A curated box of our most prized heritage mangoes — perfect for gifting and tasting.',
+      cta: 'Explore the Box →',
+      href: '#heritage-section',
+      bg: 'linear-gradient(135deg, #1a0a00, #3d1a00, #6b3500)',
+    },
+  ];
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setSlideIndex((prev) => (prev + 1) % teaserSlides.length);
+    }, 5000);
+
+    return () => window.clearInterval(timer);
+  }, [teaserSlides.length]);
 
   function handleAddHeritage() {
     if (heritageSoldOut) return;
@@ -76,7 +106,48 @@ export default function ProductsPage() {
         <div>Secure Razorpay Checkout</div>
       </section>
 
-      <section className="section heritage-section">
+      <section className="products-top-carousel">
+        <div className="container">
+          <div className="products-carousel-shell" style={{ background: teaserSlides[slideIndex].bg }}>
+            <div className="products-carousel-content">
+              <p className="products-carousel-eyebrow">✦ {teaserSlides[slideIndex].eyebrow}</p>
+              <h2>{teaserSlides[slideIndex].title}</h2>
+              <p>{teaserSlides[slideIndex].copy}</p>
+              <a className="btn btn-gold" href={teaserSlides[slideIndex].href}>
+                {teaserSlides[slideIndex].cta}
+              </a>
+            </div>
+
+            <button
+              className="products-carousel-arrow left"
+              onClick={() => setSlideIndex((slideIndex - 1 + teaserSlides.length) % teaserSlides.length)}
+              aria-label="Previous slide"
+            >
+              ‹
+            </button>
+            <button
+              className="products-carousel-arrow right"
+              onClick={() => setSlideIndex((slideIndex + 1) % teaserSlides.length)}
+              aria-label="Next slide"
+            >
+              ›
+            </button>
+
+            <div className="products-carousel-dots">
+              {teaserSlides.map((slide, idx) => (
+                <button
+                  key={slide.key}
+                  className={idx === slideIndex ? 'active' : ''}
+                  onClick={() => setSlideIndex(idx)}
+                  aria-label={`Slide ${idx + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section heritage-section" id="heritage-section">
         <div className="container heritage-grid">
           <div className="heritage-visual">
             <img src="/assets/Subject.png" alt="Aamrutham artwork" />
