@@ -50,7 +50,7 @@ export default function ProductDetailPage() {
           </div>
 
           <div className="detail-copy">
-            <p className="section-eyebrow">{product.heroTag}</p>
+            {product.heroTag && <p className="section-eyebrow">{product.heroTag}</p>}
             <h1 className="section-title">{product.name}</h1>
             <p className="detail-telugu">{product.telugu} — {product.meaning}</p>
 
@@ -91,72 +91,80 @@ export default function ProductDetailPage() {
         </div>
       </section>
 
-      <section className="section section-white">
-        <div className="container detail-story-grid">
-          <div>
-            <p className="section-eyebrow">The Story</p>
-            <h2 className="section-title">{product.story.heading}</h2>
-            <p>{product.story.p1}</p>
-            <blockquote>{product.story.quote}</blockquote>
-            <p>{product.story.p2}</p>
+      {product.story && (
+        <section className="section section-white">
+          <div className="container detail-story-grid">
+            <div>
+              <p className="section-eyebrow">The Story</p>
+              <h2 className="section-title">{product.story.heading}</h2>
+              <p>{product.story.p1}</p>
+              <blockquote>{product.story.quote}</blockquote>
+              <p>{product.story.p2}</p>
+            </div>
+            <div className="detail-story-art">
+              <img src="/assets/aam-final.png" alt="Aamrutham story art" />
+            </div>
           </div>
-          <div className="detail-story-art">
-            <img src="/assets/aam-final.png" alt="Aamrutham story art" />
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      <section className="section section-cream-dark">
-        <div className="container">
-          <div className="section-head">
-            <p className="section-eyebrow">About This Mango</p>
-            <h2 className="section-title">Fruit profile</h2>
+      {product.profile && (
+        <section className="section section-cream-dark">
+          <div className="container">
+            <div className="section-head">
+              <p className="section-eyebrow">About This Mango</p>
+              <h2 className="section-title">Fruit profile</h2>
+            </div>
+            <div className="profile-grid">
+              {product.profile.map(([label, value]) => (
+                <div className="profile-card" key={label}>
+                  <div className="profile-label">{label}</div>
+                  <div className="profile-value">{value}</div>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="profile-grid">
-            {product.profile.map(([label, value]) => (
-              <div className="profile-card" key={label}>
-                <div className="profile-label">{label}</div>
-                <div className="profile-value">{value}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      <section className="section nutrition-section">
-        <div className="container nutrition-box">
-          <div className="nutrition-head">
-            <p className="section-eyebrow gold">Nutritional Value</p>
-            <h2>{product.name}</h2>
-            <p>Per 100g · Naturally grown</p>
+      {product.nutrition && (
+        <section className="section nutrition-section">
+          <div className="container nutrition-box">
+            <div className="nutrition-head">
+              <p className="section-eyebrow gold">Nutritional Value</p>
+              <h2>{product.name}</h2>
+              <p>Per 100g · Naturally grown</p>
+            </div>
+            <div className="nutrition-grid">
+              {product.nutrition.map(([label, value]) => (
+                <div className="nutrition-item" key={label}>
+                  <strong>{value}</strong>
+                  <span>{label}</span>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="nutrition-grid">
-            {product.nutrition.map(([label, value]) => (
-              <div className="nutrition-item" key={label}>
-                <strong>{value}</strong>
-                <span>{label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      <section className="section section-white">
-        <div className="container">
-          <div className="section-head">
-            <p className="section-eyebrow">Storage & Care</p>
-            <h2 className="section-title">Handle it the right way</h2>
+      {product.storage && (
+        <section className="section section-white">
+          <div className="container">
+            <div className="section-head">
+              <p className="section-eyebrow">Storage & Care</p>
+              <h2 className="section-title">Handle it the right way</h2>
+            </div>
+            <div className="storage-grid">
+              {product.storage.map(([title, text]) => (
+                <div className="storage-card" key={title}>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="storage-grid">
-            {product.storage.map(([title, text]) => (
-              <div className="storage-card" key={title}>
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <section className="section section-cream">
         <div className="container">
