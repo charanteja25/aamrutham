@@ -220,79 +220,219 @@ export const products = [
     ]
   },
   {
-    id: 'suvarnarekha',
-    name: 'Suvarnarekha',
-    telugu: 'సువర్ణరేఖ',
-    meaning: 'The Golden Streak',
-    shortTag: 'Visakhapatnam',
-    description:
-      'Fiberless, aromatic pulp with bright citrusy sweetness and a golden streak across the skin.',
-    badges: ['Brix 18–21', 'Fiberless', 'May – June'],
-    packPrices: [{ label: '12 pcs', price: 1499 }],
-    category: 'more',
-    image: '/assets/varieties/suvarnarekha.jpg',
-    accent: 'gold',
-    gradient: 'linear-gradient(160deg, #fff4c7 0%, #ffd760 55%, #f0a82b 100%)'
+    id: ‘suvarnarekha’,
+    name: ‘Suvarnarekha’,
+    telugu: ‘సువర్ణరేఖ’,
+    meaning: ‘The Golden Streak’,
+    shortTag: ‘Visakhapatnam’,
+    heroTag: ‘Heritage · Andhra Pradesh’,
+    description: ‘Fiberless, aromatic pulp with bright citrusy sweetness and a golden streak across the skin.’,
+    badges: [‘Brix 19–23’, ‘Fiberless’, ‘May – June’],
+    packPrices: [{ label: ‘12 pcs’, price: 1499 }],
+    category: ‘more’,
+    image: ‘/assets/varieties/suvarnarekha.jpg’,
+    accent: ‘gold’,
+    gradient: ‘linear-gradient(160deg, #fff4c7 0%, #ffd760 55%, #f0a82b 100%)’,
+    story: {
+      heading: ‘The Story of Suvarnarekha’,
+      p1: ‘Suvarnarekha means "golden streak" in Telugu — a name given by the farmers who noticed the distinctive bright line that appears along the skin as the fruit approaches peak ripeness. It is nature\’s own indicator, a colour signal evolved over centuries of cultivation to tell you exactly when to eat. The variety is fiberless, with a firm but juicy flesh and an aroma that fills a room the moment you cut the skin. Its sweetness is deep and complex, with a slight citrus brightness that sets it apart from the heavier, richer fibrous mangoes.’,
+      quote: ‘"When the gold streak appears, it is ready. When it disappears, you waited too long." — Andhra farming wisdom.’,
+      p2: ‘The Suvarnarekha is one of the longer-season varieties in our collection, available from May through June. We grow it across multiple plots on our Bobbili farms using zero-chemical natural farming, allowing each tree to produce at its own pace. The flesh colour is a bright, clear yellow — almost luminous — and the juice yield is exceptional, making it a favourite for fresh mango juice and milkshakes as well as direct consumption.’
+    },
+    profile: [
+      [‘Texture’, ‘Juicy · Fiberless’],
+      [‘Aroma’, ‘Bright, Citrus-Floral’],
+      [‘Taste’, ‘Balanced Sweet’],
+      [‘Best Eaten’, ‘Sliced · juice · milkshake’],
+      [‘Season’, ‘May – June’],
+      [‘Size’, ‘Medium · 200–300g’]
+    ],
+    nutrition: [
+      [‘Calories’, ‘62 kcal’],
+      [‘Carbohydrates’, ‘15g’],
+      [‘Natural Sugar’, ‘13g’],
+      [‘Protein’, ‘0.8g’],
+      [‘Dietary Fibre’, ‘1.4g’],
+      [‘Rich in’, ‘Vitamins C + A’]
+    ],
+    storage: [
+      [‘Refrigerate after ripening’, ‘Once ripe, store at 8–12°C. Consume within 3–5 days for best flavour.’],
+      [‘Room temperature ripening’, ‘If unripe on arrival, keep at room temperature for 1–2 days until fragrant.’],
+      [‘Avoid direct sunlight’, ‘Do not leave in direct sun or extreme heat — it accelerates over-ripening.’],
+      [‘Handle with care’, ‘Mangoes bruise easily. Keep in the box provided until ready to eat.’]
+    ]
   },
   {
-    id: 'banganapalli',
-    name: 'Banganapalli',
-    telugu: 'బంగినపల్లి',
-    meaning: 'The People’s Mango',
-    shortTag: 'Kurnool, Andhra Pradesh',
-    description:
-      'Large, smooth golden skin and fiberless flesh with mild honey sweetness and universal appeal.',
-    badges: ['Brix 16–20', 'Fiberless', 'April – June'],
-    packPrices: [{ label: '12 pcs', price: 1399 }],
-    category: 'more',
-    image: '/assets/varieties/banganapalli.jpg',
-    accent: 'leaf',
-    gradient: 'linear-gradient(160deg, #fff1cf 0%, #ffdd87 55%, #f5a623 100%)'
+    id: ‘banganapalli’,
+    name: ‘Banganapalli’,
+    telugu: ‘బంగినపల్లి’,
+    meaning: "The People’s Mango",
+    shortTag: ‘Kurnool, Andhra Pradesh’,
+    heroTag: ‘Classic · GI Tagged’,
+    description: ‘Large, smooth golden skin and fiberless flesh with mild honey sweetness and universal appeal.’,
+    badges: [‘Brix 17–21’, ‘Fiberless’, ‘April – June’],
+    packPrices: [{ label: ‘12 pcs’, price: 1399 }],
+    category: ‘more’,
+    image: ‘/assets/varieties/banganapalli.jpg’,
+    accent: ‘leaf’,
+    gradient: ‘linear-gradient(160deg, #fff1cf 0%, #ffdd87 55%, #f5a623 100%)’,
+    story: {
+      heading: ‘The Story of Banganapalli’,
+      p1: ‘The Banganapalli holds a GI tag — a Geographical Indication certification that recognises it as a product of Banganapalle town in Kurnool district, Andhra Pradesh. It is the mango that most Telugu families grew up with: large, golden-skinned, fiberless, with a mild honey sweetness and delicate fragrance. But commercial Banganapalli is harvested early, sprayed with ethylene, waxed, and stored for weeks. What you get from markets is a pale imitation — correct in shape, wrong in flavour.’,
+      quote: ‘"If Alphonso is the king of Maharashtra, Banganapalli is the king of Andhra. And ours has never been dethroned by a chemical." — our farm manager.’,
+      p2: ‘Our Banganapalli is grown on Bobbili farms and harvested only at natural maturity — when the skin has turned fully golden, the aroma is detectable before you open the box, and the flesh is the colour of fresh butter. No wax, no ethylene, no cold storage before ripening. The fragrance is three times more intense, the flesh noticeably juicier, and the sweetness has a complexity that commercially grown fruit completely lacks.’
+    },
+    profile: [
+      [‘Texture’, ‘Smooth · Fiberless’],
+      [‘Aroma’, ‘Butter · Honey Fragrance’],
+      [‘Taste’, ‘Mild, Balanced Sweet’],
+      [‘Best Eaten’, ‘Sliced · milkshake · aam ras’],
+      [‘Season’, ‘April – June’],
+      [‘Size’, ‘Large · 300–450g’]
+    ],
+    nutrition: [
+      [‘Calories’, ‘60 kcal’],
+      [‘Carbohydrates’, ‘15g’],
+      [‘Natural Sugar’, ‘13g’],
+      [‘Protein’, ‘0.8g’],
+      [‘Dietary Fibre’, ‘1.2g’],
+      [‘Rich in’, ‘Vitamins C + B6’]
+    ],
+    storage: [
+      [‘Refrigerate after ripening’, ‘Once ripe, store at 8–12°C. Consume within 4–6 days.’],
+      [‘Room temperature ripening’, ‘If unripe on arrival, keep at room temperature for 1–2 days until fragrant.’],
+      [‘Avoid direct sunlight’, ‘Do not leave in direct sun or extreme heat — it accelerates over-ripening.’],
+      [‘Handle with care’, ‘Mangoes bruise easily. Keep in the box provided until ready to eat.’]
+    ]
   },
   {
-    id: 'chinna-rasalu',
-    name: 'Chinna Rasalu',
-    telugu: 'చిన్న రసాలు',
-    meaning: 'The Little Nectar',
-    shortTag: 'Nuzvid',
-    description:
-      'Small but intensely sweet with syrup-like pulp. A childhood favourite in many Telugu homes.',
-    badges: ['Brix 22–26', 'Juicy', 'May – July'],
-    packPrices: [{ label: '12 pcs', price: 1299 }],
-    category: 'more',
-    image: '/assets/varieties/chinna-rasalu.jpg',
-    accent: 'gold',
-    gradient: 'linear-gradient(160deg, #fff3db 0%, #ffc86d 55%, #eb8d23 100%)'
+    id: ‘chinna-rasalu’,
+    name: ‘Chinna Rasalu’,
+    telugu: ‘చిన్న రసాలు’,
+    meaning: ‘The Little Nectar’,
+    shortTag: ‘Nuzvid’,
+    heroTag: ‘Heritage · AP & Telangana’,
+    description: ‘Small but intensely sweet with syrup-like pulp. A childhood favourite in many Telugu homes.’,
+    badges: [‘Brix 21–26’, ‘Juicy’, ‘May – June’],
+    packPrices: [{ label: ‘12 pcs’, price: 1299 }],
+    category: ‘more’,
+    image: ‘/assets/varieties/chinna-rasalu.jpg’,
+    accent: ‘gold’,
+    gradient: ‘linear-gradient(160deg, #fff3db 0%, #ffc86d 55%, #eb8d23 100%)’,
+    story: {
+      heading: ‘The Story of Chinna Rasalu’,
+      p1: ‘"Chinna" means small in Telugu. "Rasalu" means juice — or more precisely, nectar. The Chinna Rasalu is a small mango, rarely larger than a large lemon, but it carries a sweetness per gram that exceeds almost every other variety we grow. Brix readings of 21 to 26 are consistent across the season — placing it among the sweetest mangoes in India by any objective measure. Every Telugu household that grew up in AP or Telangana has a story about Chinna Rasalu summers: eating them by the dozen, juice running down your arms.’,
+      quote: ‘"You cannot eat just one. You cannot eat just five. The Chinna Rasalu does not know the concept of enough." — a customer from Secunderabad.’,
+      p2: "The Chinna Rasalu’s small size comes with a remarkable pulp-to-seed ratio — the seed is proportionally tiny, meaning almost every gram of the fruit is pure, intensely sweet flesh. The skin is paper-thin, which is why the traditional eating method is to roll it gently, pierce the tip with your teeth, and drink the contents. The aroma is distinctly honey-and-floral, the texture almost liquid. We grow it without chemical inputs on our Bobbili farms, harvesting only when fully ripe."
+    },
+    profile: [
+      [‘Texture’, ‘Very Juicy · Almost Liquid’],
+      [‘Aroma’, ‘Honey & Floral’],
+      [‘Taste’, ‘Intensely Sweet · Nectar-like’],
+      [‘Best Eaten’, ‘Pierced & drunk whole’],
+      [‘Season’, ‘May – June’],
+      [‘Size’, ‘Small · 100–160g’]
+    ],
+    nutrition: [
+      [‘Calories’, ‘68 kcal’],
+      [‘Carbohydrates’, ‘17g’],
+      [‘Natural Sugar’, ‘15g’],
+      [‘Protein’, ‘0.8g’],
+      [‘Dietary Fibre’, ‘1.3g’],
+      [‘Rich in’, ‘Vitamins C + A’]
+    ],
+    storage: [
+      [‘Refrigerate after ripening’, ‘Once ripe, store at 8–12°C. Consume within 2–4 days — small mangoes ripen fast.’],
+      [‘Room temperature ripening’, ‘If unripe on arrival, keep at room temperature for 1 day until fragrant.’],
+      [‘Avoid direct sunlight’, ‘Do not leave in direct sun or extreme heat — it accelerates over-ripening.’],
+      [‘Handle with care’, ‘Small and delicate — handle gently and keep in the box until ready to eat.’]
+    ]
   },
   {
-    id: 'pedda-rasalu',
-    name: 'Pedda Rasalu',
-    telugu: 'పెద్ద రసాలు',
-    meaning: 'The Grand Nectar',
-    shortTag: 'Nuzvid',
-    description:
-      'A larger, richer sibling to Chinna Rasalu with deeper amber pulp and lingering sweetness.',
-    badges: ['Brix 20–24', 'Full-bodied', 'May – July'],
-    packPrices: [{ label: '12 pcs', price: 1499 }],
-    category: 'more',
-    image: '/assets/varieties/pedda-rasalu.jpg',
-    accent: 'leaf',
-    gradient: 'linear-gradient(160deg, #fff0d2 0%, #ffbe62 55%, #de7e16 100%)'
+    id: ‘pedda-rasalu’,
+    name: ‘Pedda Rasalu’,
+    telugu: ‘పెద్ద రసాలు’,
+    meaning: ‘The Grand Nectar’,
+    shortTag: ‘Nuzvid’,
+    heroTag: ‘Heritage · Full-Bodied’,
+    description: ‘A larger, richer sibling to Chinna Rasalu with deeper amber pulp and lingering sweetness.’,
+    badges: [‘Brix 20–24’, ‘Full-bodied’, ‘May – July’],
+    packPrices: [{ label: ‘12 pcs’, price: 1499 }],
+    category: ‘more’,
+    image: ‘/assets/varieties/pedda-rasalu.jpg’,
+    accent: ‘leaf’,
+    gradient: ‘linear-gradient(160deg, #fff0d2 0%, #ffbe62 55%, #de7e16 100%)’,
+    story: {
+      heading: ‘The Story of Pedda Rasalu’,
+      p1: ‘"Pedda" means big in Telugu — and the Pedda Rasalu earns that name. Where the Chinna Rasalu is small, intensely sweet, and nearly liquid, the Pedda Rasalu is its larger, more complex sibling. The pulp is amber-deep, the aroma earthier and more full-bodied, and the sweetness has weight to it — the kind that stays on your palate for a long time after you finish. It is a mango for slow eating, not quick snacking.’,
+      quote: ‘"Same family, different character. The Chinna is a sprint. The Pedda is a long walk home." — our head farmer.’,
+      p2: ‘Grown on the same Nuzvid heritage land as Chinna Rasalu, the Pedda Rasalu benefits from deep alluvial soil and a season that stretches into July — longer than most varieties. Natural farming without chemical inputs allows the fruit to develop fully on the tree, resulting in richer colour, deeper aroma, and that unmistakable lingering sweetness that distinguishes tree-ripened fruit from anything harvested early.’
+    },
+    profile: [
+      [‘Texture’, ‘Juicy · Full-bodied’],
+      [‘Aroma’, ‘Earthy · Amber-Sweet’],
+      [‘Taste’, ‘Deep, Lingering Sweetness’],
+      [‘Best Eaten’, ‘Sliced or squeezed’],
+      [‘Season’, ‘May – July’],
+      [‘Size’, ‘Large · 200–320g’]
+    ],
+    nutrition: [
+      [‘Calories’, ‘66 kcal’],
+      [‘Carbohydrates’, ‘16g’],
+      [‘Natural Sugar’, ‘14g’],
+      [‘Protein’, ‘0.9g’],
+      [‘Dietary Fibre’, ‘1.6g’],
+      [‘Rich in’, ‘Vitamins C + A’]
+    ],
+    storage: [
+      [‘Refrigerate after ripening’, ‘Once ripe, store at 8–12°C. Consume within 3–5 days for best flavour.’],
+      [‘Room temperature ripening’, ‘If unripe on arrival, keep at room temperature for 1–2 days until fragrant.’],
+      [‘Avoid direct sunlight’, ‘Do not leave in direct sun or extreme heat — it accelerates over-ripening.’],
+      [‘Handle with care’, ‘Mangoes bruise easily. Keep in the box provided until ready to eat.’]
+    ]
   },
   {
-    id: 'panduri-mavidi',
-    name: 'Panduri Mavidi',
-    telugu: 'పాండురి మావిడి',
-    meaning: 'The Village Heirloom',
-    shortTag: 'Pithapuram',
-    description:
-      'Buttery, aromatic flesh with floral sweetness and a deep heirloom character.',
-    badges: ['Brix 23–28', 'Aromatic', 'May – June'],
-    packPrices: [{ label: '12 pcs', price: 1699 }],
-    category: 'more',
-    image: '/assets/varieties/panduri-mavidi.jpg',
-    accent: 'gold',
-    gradient: 'linear-gradient(160deg, #fff8e0 0%, #ffd979 55%, #eeaa2a 100%)'
+    id: ‘panduri-mavidi’,
+    name: ‘Panduri Mavidi’,
+    telugu: ‘పాండురి మావిడి’,
+    meaning: ‘The Village Heirloom’,
+    shortTag: ‘Pithapuram’,
+    heroTag: ‘Heritage · Juicy · Rare’,
+    description: ‘Buttery, aromatic flesh with floral sweetness and a deep heirloom character.’,
+    badges: [‘Brix 20–24’, ‘Aromatic’, ‘May – June’],
+    packPrices: [{ label: ‘12 pcs’, price: 1699 }],
+    category: ‘more’,
+    image: ‘/assets/varieties/panduri-mavidi.jpg’,
+    accent: ‘gold’,
+    gradient: ‘linear-gradient(160deg, #fff8e0 0%, #ffd979 55%, #eeaa2a 100%)’,
+    story: {
+      heading: ‘The Story of Panduri Mavidi’,
+      p1: ‘Ask a mango expert to name the rarest varieties of Andhra Pradesh and Panduri Mavidi will almost certainly not come up — because almost nobody outside Panduri village in Vizianagaram district has ever tasted it. It is a buttery, aromatic, completely fiberless fruit with a complex sweetness that reveals itself in layers — first a bright, tropical top note, then a deep honeyed middle, then a long, floral finish that lingers for minutes. The trees in Panduri are old, farmed by families who have no interest in selling to markets.’,
+      quote: ‘"Why would we sell these trees? Our grandfather planted them. Our children will eat from them. Money cannot buy what time builds." — the family from whose grove we source every Panduri Mavidi.’,
+      p2: ‘We spent two seasons building the trust of one family in Panduri before they agreed to let us bring their mangoes to Hyderabad. The arrangement is simple: they farm exactly as they always have — no changes, no chemicals, no compromises — and we take what they can spare. Availability is extremely limited each season. The fiberless pulp is smooth as cream, the colour a deep saffron-orange, and the aroma when you cut one open is enough to stop a room mid-conversation.’
+    },
+    profile: [
+      [‘Texture’, ‘Buttery · Fiberless’],
+      [‘Aroma’, ‘Tropical & Deeply Floral’],
+      [‘Taste’, ‘Layered · Honeyed Finish’],
+      [‘Best Eaten’, ‘Sliced slowly’],
+      [‘Season’, ‘May – June’],
+      [‘Size’, ‘Medium · 200–280g’]
+    ],
+    nutrition: [
+      [‘Calories’, ‘65 kcal’],
+      [‘Carbohydrates’, ‘16g’],
+      [‘Natural Sugar’, ‘14g’],
+      [‘Protein’, ‘0.9g’],
+      [‘Dietary Fibre’, ‘1.5g’],
+      [‘Rich in’, ‘Vitamins C + A’]
+    ],
+    storage: [
+      [‘Refrigerate after ripening’, ‘Once ripe, store at 8–12°C. Consume within 3–5 days for best flavour.’],
+      [‘Room temperature ripening’, ‘If unripe on arrival, keep at room temperature for 1–2 days until fragrant.’],
+      [‘Avoid direct sunlight’, ‘Do not leave in direct sun or extreme heat — it accelerates over-ripening.’],
+      [‘Handle with care’, ‘Mangoes bruise easily. Keep in the box provided until ready to eat.’]
+    ]
   },
   {
     id: 'children-mango-pack',
