@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aamrutham Signature Box — Aamrutham</title>
+  <meta name="description" content="The Aamrutham Signature Box — four prized heritage mango varieties curated into one gift-worthy box. The perfect introduction to Bobbili's finest." />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            mango: '#F5A623', 'mango-dark': '#E07B39',
+            leaf: '#2D5016', 'leaf-light': '#4a7c2f',
+            cream: '#FFF8EC',
+          }
+        }
+      }
+    }
+  </script>
+  <!-- AOS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Shared CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    body { background: #0f0500; color: white; }
+
+    /* ── Cart Drawer ── */
+    #cart-overlay {
+      display: none !important; position: fixed !important;
+      inset: 0 !important; background: rgba(0,0,0,0.5) !important;
+      z-index: 9998 !important;
+    }
+    #cart-overlay.open { display: block !important; }
+    #cart-drawer {
+      position: fixed !important;
+      top: 0 !important; right: 0 !important; bottom: 0 !important;
+      width: 360px !important; max-width: 100vw !important;
+      background: #fff !important; z-index: 9999 !important;
+      display: flex !important; flex-direction: column !important;
+      transform: translateX(100%) !important;
+      transition: transform 0.32s cubic-bezier(0.4,0,0.2,1) !important;
+      box-shadow: -4px 0 40px rgba(44,24,16,0.18) !important;
+    }
+    #cart-drawer.open { transform: translateX(0) !important; }
+    .cart-drawer-header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; border-bottom: 1px solid #f0e8d8; flex-shrink: 0; }
+    .cart-drawer-header h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #2D5016; margin: 0; }
+    .cart-close-btn { background: none; border: none; cursor: pointer; font-size: 1.1rem; color: #9a7a5a; padding: 4px 8px; border-radius: 6px; }
+    .cart-close-btn:hover { background: #f5ede0; color: #2D5016; }
+    #cart-items { flex: 1; overflow-y: auto; }
+    .cart-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 3rem 1.5rem; text-align: center; color: #9a7a5a; }
+    .cart-empty i { font-size: 2.5rem; color: #e0d4c0; margin-bottom: 0.75rem; display: block; }
+    .cart-empty p { margin-bottom: 0.5rem; font-size: 0.9rem; }
+    .cart-empty a { color: #2D5016; font-weight: 700; text-decoration: none; font-size: 0.85rem; }
+    .cart-item { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; padding: 0.9rem 1.25rem; border-bottom: 1px solid #f5ede0; }
+    .cart-item-info { flex: 1; min-width: 0; }
+    .cart-item-name { font-weight: 700; font-size: 0.88rem; color: #2D5016; margin-bottom: 0.15rem; }
+    .cart-item-pack { font-size: 0.75rem; color: #9a7a5a; margin-bottom: 0.5rem; }
+    .cart-qty-row { display: flex; align-items: center; gap: 0.4rem; }
+    .cart-qty-btn { width: 24px; height: 24px; border: 1.5px solid #d8caba; border-radius: 5px; background: #fff; cursor: pointer; font-size: 0.95rem; color: #2D5016; display: flex; align-items: center; justify-content: center; }
+    .cart-qty-btn:hover { border-color: #2D5016; background: #2D5016; color: #fff; }
+    .cart-qty-val { font-weight: 700; font-size: 0.85rem; min-width: 18px; text-align: center; }
+    .cart-item-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; flex-shrink: 0; }
+    .cart-item-price { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: #2D5016; }
+    .cart-remove-btn { background: none; border: none; cursor: pointer; color: #c0a080; font-size: 0.8rem; padding: 2px; }
+    .cart-remove-btn:hover { color: #c0392b; }
+    #cart-footer { padding: 1rem 1.25rem; border-top: 2px solid #f0e8d8; flex-shrink: 0; background: #fff; }
+    .cart-total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; }
+    .cart-total-row span:first-child { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: #9a7a5a; font-weight: 700; }
+    #cart-total-amt { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #2D5016; font-weight: 700; }
+    .cart-checkout-btn { display: flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; padding: 0.8rem; background: #2D5016; color: #fff; border: none; border-radius: 50px; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: background 0.2s; margin-bottom: 0.5rem; }
+    .cart-checkout-btn:hover { background: #E07B39; }
+    .cart-note { text-align: center; font-size: 0.7rem; color: #b09070; }
+    .cart-icon-wrap {
+      position: relative; cursor: pointer;
+      padding: 0.4rem 0.9rem 0.4rem 0.7rem; border-radius: 50px;
+      display: flex; align-items: center; gap: 0.4rem;
+      font-size: 1rem; color: white; flex-shrink: 0;
+      background: rgba(255,255,255,0.12);
+      border: 1.5px solid rgba(255,255,255,0.3);
+      transition: background 0.2s;
+    }
+    .cart-icon-wrap:hover { background: rgba(255,255,255,0.22); }
+    .cart-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; color: white; }
+    #navbar.scrolled .cart-icon-wrap {
+      color: var(--leaf);
+      background: rgba(45,80,22,0.08);
+      border-color: rgba(45,80,22,0.25);
+    }
+    #navbar.scrolled .cart-icon-wrap:hover { background: rgba(45,80,22,0.15); }
+    #navbar.scrolled .cart-label { color: var(--leaf); }
+    .cart-bubble {
+      position: absolute; top: -6px; right: -6px; min-width: 18px; height: 18px;
+      background: #E07B39; color: #fff; font-size: 0.62rem; font-weight: 700;
+      border-radius: 50px; display: flex; align-items: center; justify-content: center;
+      padding: 0 4px; pointer-events: none; border: 2px solid #2D5016;
+    }
+    @keyframes cartPop { 0%{transform:scale(1)} 40%{transform:scale(1.35)} 70%{transform:scale(0.92)} 100%{transform:scale(1)} }
+    .cart-pop { animation: cartPop 0.4s ease; }
+
+    /* ── Page ── */
+    .hb-hero {
+      background: linear-gradient(160deg, #0d0300 0%, #1a0600 40%, #3d1200 100%);
+      padding: 9rem 2rem 5rem;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .hb-hero-dots {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image: radial-gradient(circle, rgba(245,166,35,0.06) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    .hb-hero-content { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+    .hb-eyebrow {
+      display: inline-block; font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--mango);
+      margin-bottom: 1rem;
+    }
+    .hb-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 700;
+      color: white; line-height: 1.15; margin-bottom: 1rem;
+    }
+    .hb-title em { color: var(--mango); font-style: italic; }
+    .hb-sub { font-size: 1.05rem; color: rgba(255,255,255,0.65); line-height: 1.8; margin-bottom: 2rem; }
+    .hb-back {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: rgba(255,255,255,0.5); font-size: 0.85rem;
+      text-decoration: none; margin-bottom: 2.5rem; transition: color 0.2s;
+      position: relative; z-index: 1;
+    }
+    .hb-back:hover { color: var(--mango); }
+
+    /* ── Contents strip ── */
+    .hb-contents {
+      background: rgba(255,255,255,0.04);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 2.5rem 2rem;
+    }
+    .hb-contents-inner { max-width: 860px; margin: 0 auto; text-align: center; }
+    .hb-contents-label {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--mango);
+      margin-bottom: 1.25rem; display: block;
+    }
+    .hb-variety-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+    }
+    .hb-variety {
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px; padding: 1.25rem 1rem; text-align: center;
+      transition: border-color 0.2s;
+    }
+    .hb-variety:hover { border-color: rgba(245,166,35,0.35); }
+    .hb-variety-icon { font-size: 2rem; margin-bottom: 0.5rem; display: block; }
+    .hb-variety-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem; font-weight: 600; color: white; margin-bottom: 0.2rem;
+    }
+    .hb-variety-note { font-size: 0.72rem; color: rgba(255,255,255,0.45); line-height: 1.5; }
+
+    /* ── Order panel ── */
+    .hb-order-section { padding: 4rem 2rem; }
+    .hb-order-inner { max-width: 640px; margin: 0 auto; }
+    .hb-order-head { margin-bottom: 2rem; }
+    .hb-order-head h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.4rem); color: white; margin-bottom: 0.4rem;
+    }
+    .hb-order-head h2 em { color: var(--mango); font-style: italic; }
+    .hb-order-head p { font-size: 0.9rem; color: rgba(255,255,255,0.5); }
+
+    .hb-pack-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(255,255,255,0.5);
+      margin-bottom: 0.6rem; display: block;
+    }
+    .hb-pack-pills { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .hb-pack-pill {
+      padding: 0.55rem 1.5rem; border: 2px solid rgba(255,255,255,0.2);
+      border-radius: 50px; background: transparent; color: rgba(255,255,255,0.6);
+      font-size: 0.88rem; font-weight: 700; cursor: pointer;
+      transition: all 0.2s; font-family: 'Lato', sans-serif;
+    }
+    .hb-pack-pill.active, .hb-pack-pill:hover {
+      border-color: var(--mango); background: var(--mango); color: #1a0a00;
+    }
+
+    /* Gift toggle */
+    .gift-toggle-row {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 1rem 0; border-top: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 0;
+    }
+    .gift-toggle-label { font-size: 0.88rem; color: rgba(255,255,255,0.8); font-weight: 500; }
+    .toggle-sw { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
+    .toggle-sw input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .toggle-track {
+      position: absolute; inset: 0; background: rgba(255,255,255,0.15);
+      border-radius: 22px; cursor: pointer; transition: background 0.2s;
+    }
+    .toggle-track::before {
+      content: ''; position: absolute; width: 16px; height: 16px;
+      border-radius: 50%; background: white; left: 3px; top: 3px;
+      transition: transform 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+    .toggle-sw input:checked + .toggle-track { background: var(--mango); }
+    .toggle-sw input:checked + .toggle-track::before { transform: translateX(18px); }
+    .gift-form-panel {
+      display: none; margin-top: 1.25rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px; padding: 1.25rem;
+    }
+    .gift-form-panel.open { display: block; }
+    .gift-field { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.9rem; }
+    .gift-field:last-child { margin-bottom: 0; }
+    .gift-field-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+    .gift-input, .gift-textarea {
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px; padding: 0.6rem 0.85rem;
+      font-family: 'Lato', sans-serif; font-size: 0.88rem; color: white; outline: none;
+      transition: border-color 0.2s;
+    }
+    .gift-input:focus, .gift-textarea:focus { border-color: var(--mango); }
+    .gift-input::placeholder, .gift-textarea::placeholder { color: rgba(255,255,255,0.3); }
+    .gift-textarea { resize: vertical; min-height: 72px; }
+    .gift-phone-wrap { display: flex; }
+    .gift-prefix {
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+      border-right: none; border-radius: 8px 0 0 8px;
+      padding: 0.6rem 0.75rem; font-size: 0.82rem; color: rgba(255,255,255,0.6);
+      display: flex; align-items: center; white-space: nowrap;
+    }
+    .gift-phone-wrap .gift-input { border-radius: 0 8px 8px 0; }
+    .gift-char-count { font-size: 0.7rem; color: rgba(255,255,255,0.35); text-align: right; margin-top: 0.2rem; }
+    .gift-wrap-check-row {
+      display: flex; align-items: center; gap: 0.6rem; margin-top: 0.75rem;
+      padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .gift-wrap-check-row input { width: 15px; height: 15px; accent-color: var(--mango); cursor: pointer; }
+    .gift-wrap-check-row label { font-size: 0.85rem; color: rgba(255,255,255,0.75); cursor: pointer; }
+    .gift-wrap-check-row label span { color: var(--mango); font-weight: 700; }
+
+    .btn-hb-add {
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+      width: 100%; padding: 0.95rem; background: var(--mango); color: #1a0800;
+      border: none; border-radius: 50px; font-weight: 800; font-size: 0.95rem;
+      cursor: pointer; transition: background 0.2s, transform 0.15s;
+      margin-top: 1.5rem; letter-spacing: 0.02em; font-family: 'Lato', sans-serif;
+    }
+    .btn-hb-add:hover { background: #f0b84a; transform: translateY(-1px); }
+
+    /* ── Responsive ── */
+    @media (max-width: 700px) {
+      .hb-variety-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .hb-hero { padding: 7rem 1.25rem 3.5rem; }
+      .hb-order-section { padding: 2.5rem 1.25rem; }
+      .hb-contents { padding: 2rem 1.25rem; }
+      .hb-pack-pills { flex-direction: column; }
+      .hb-pack-pill { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav id="navbar" class="scrolled">
+    <a href="index.html" style="display:flex; align-items:center; gap:0.5rem; text-decoration:none;">
+      <img src="Subject.png" alt="Aamrutham" class="nav-logo" />
+      <span style="font-size:0.75rem; font-weight:700; color:var(--leaf); letter-spacing:0.08em; text-transform:uppercase;">Home</span>
+    </a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html#story" onclick="closeNav()">Our Story</a></li>
+      <li><a href="index.html#process" onclick="closeNav()">Farm to You</a></li>
+      <li><a href="products.html" onclick="closeNav()">Our Mangoes</a></li>
+    </ul>
+    <div class="cart-icon-wrap" title="View cart">
+      <i class="fa-solid fa-bag-shopping"></i>
+      <span class="cart-label">BAG</span>
+      <span class="cart-bubble" style="display:none;">0</span>
+    </div>
+  </nav>
+
+  <!-- Cart -->
+  <div id="cart-overlay"></div>
+  <div id="cart-drawer">
+    <div class="cart-drawer-header">
+      <h3><i class="fa-solid fa-bag-shopping" style="color:#E07B39;margin-right:0.5rem;font-size:1rem;"></i>Your Cart</h3>
+      <button class="cart-close-btn" onclick="closeCartDrawer()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="cart-items"></div>
+    <div id="cart-footer" style="display:none;">
+      <div class="cart-total-row">
+        <span>Total</span>
+        <span id="cart-total-amt">₹0</span>
+      </div>
+      <button class="cart-checkout-btn" onclick="cartCheckout()">
+        <i class="fa-solid fa-lock fa-xs"></i> Proceed to Checkout
+      </button>
+      <p class="cart-note">Secure checkout · Razorpay</p>
+    </div>
+  </div>
+
+  <!-- ── Hero ── -->
+  <div class="hb-hero">
+    <div class="hb-hero-dots"></div>
+    <div class="hb-hero-content">
+      <a href="products.html" class="hb-back"><i class="fa-solid fa-arrow-left fa-xs"></i> Back to Mangoes</a>
+      <span class="hb-eyebrow">✦ Gift Edition · Summer 2026 · Limited Availability</span>
+      <h1 class="hb-title">Aamrutham<br /><em>Signature Box</em></h1>
+      <p class="hb-sub">Four of our most prized heritage varieties, curated into one gift-worthy box. Each mango tells a story centuries in the making. The perfect introduction to Bobbili's finest.</p>
+    </div>
+  </div>
+
+  <!-- ── What's Inside ── -->
+  <div class="hb-contents">
+    <div class="hb-contents-inner" data-aos="fade-up">
+      <span class="hb-contents-label">✦ What's Inside the Box</span>
+      <div class="hb-variety-grid">
+        <div class="hb-variety">
+          <span class="hb-variety-icon">🥭</span>
+          <div class="hb-variety-name">Kothapalli Kobbari</div>
+          <div class="hb-variety-note">The Coconut Mango — fiberless, with a faint coconut undertone</div>
+        </div>
+        <div class="hb-variety">
+          <span class="hb-variety-icon">🥭</span>
+          <div class="hb-variety-name">Panduri Teepi Mamidi</div>
+          <div class="hb-variety-note">The Village Heirloom — buttery, aromatic, nearly unknown outside Panduri</div>
+        </div>
+        <div class="hb-variety">
+          <span class="hb-variety-icon">🥭</span>
+          <div class="hb-variety-name">Bobbili Peechu</div>
+          <div class="hb-variety-note">The Pride of Bobbili — fibrous, intensely sweet, best squeezed whole</div>
+        </div>
+        <div class="hb-variety">
+          <span class="hb-variety-icon">🥭</span>
+          <div class="hb-variety-name">Imam Pasand</div>
+          <div class="hb-variety-note">The Royal Mango — saffron-hued, zero-fibre, creamy, Deccan royalty</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Order ── -->
+  <div class="hb-order-section">
+    <div class="hb-order-inner" data-aos="fade-up">
+      <div class="hb-order-head">
+        <h2>Order Your <em>Signature Box</em></h2>
+        <p>Choose your pack size. Add a gift message. We'll take care of the rest.</p>
+      </div>
+
+      <span class="hb-pack-label">Choose Pack Size</span>
+      <div class="hb-pack-pills">
+        <button class="hb-pack-pill active" id="pill-12" onclick="selectHBPack(0)">12 pcs — ₹1,999</button>
+        <button class="hb-pack-pill" id="pill-24" onclick="selectHBPack(1)">24 pcs — ₹3,499</button>
+      </div>
+
+      <!-- Gift Toggle -->
+      <div class="gift-toggle-row">
+        <label class="toggle-sw">
+          <input type="checkbox" id="heritage-gift-toggle" onchange="toggleHeritageGift(this.checked)" />
+          <span class="toggle-track"></span>
+        </label>
+        <span class="gift-toggle-label">🎁 Add a gift message &amp; recipient details</span>
+      </div>
+
+      <!-- Gift Form -->
+      <div class="gift-form-panel" id="heritage-gift-panel">
+        <div class="gift-field">
+          <span class="gift-field-label">Recipient Name</span>
+          <input id="gift-recipient-name" class="gift-input" type="text" placeholder="Who is this for?" />
+        </div>
+        <div class="gift-field">
+          <span class="gift-field-label">Recipient WhatsApp</span>
+          <div class="gift-phone-wrap">
+            <span class="gift-prefix">🇮🇳 +91</span>
+            <input id="gift-recipient-phone" class="gift-input" type="tel" placeholder="9876543210" maxlength="10" />
+          </div>
+        </div>
+        <div class="gift-field">
+          <span class="gift-field-label">Gift Message <span style="font-weight:400;text-transform:none;letter-spacing:0;">(optional)</span></span>
+          <textarea id="gift-message" class="gift-textarea" maxlength="200" placeholder="Write a personal note to go with the mangoes…" oninput="updateGiftCharCount()"></textarea>
+          <div class="gift-char-count" id="gift-char-count">0 / 200</div>
+        </div>
+        <div class="gift-wrap-check-row">
+          <!-- <input type="checkbox" id="heritage-gift-wrap" /> -->
+          <!-- <label for="heritage-gift-wrap">Include premium gift wrapping <span>+₹149</span></label> -->
+        </div>
+      </div>
+
+      <button class="btn-hb-add" id="hb-add-btn" onclick="addHeritageBoxToCart()">
+        <i class="fa-solid fa-bag-shopping" style="font-size:0.95rem;"></i>
+        <span id="hb-btn-text">Add to Cart — ₹1,999</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Footer ── -->
+  <footer style="background: rgba(255,255,255,0.03); border-top: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.45); text-align:center; padding: 2rem; font-size: 0.82rem;">
+    <p style="color: white; font-family: 'Playfair Display', serif; font-size: 1rem; margin-bottom: 0.4rem;">Aamrutham</p>
+    <p>Bobbili Farms · Hyderabad · Summer 2026</p>
+    <p style="margin-top: 0.5rem;"><a href="products.html" style="color: var(--mango); text-decoration: none;">← Back to Our Mangoes</a></p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 700, easing: 'ease-out-cubic', once: true, offset: 60 });
+
+    var navToggle = document.getElementById('nav-toggle');
+    var navLinks  = document.getElementById('nav-links');
+    navToggle.addEventListener('click', function() {
+      navToggle.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+    function closeNav() {
+      navToggle.classList.remove('open');
+      navLinks.classList.remove('open');
+    }
+    var navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', function() {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    var HERITAGE_BOX_PACKS = [
+      { label: '12 pcs — Signature Box', price: 1999 },
+      { label: '24 pcs — Signature Box (Large)', price: 3499 },
+    ];
+    var selectedHBPack = 0;
+
+    function selectHBPack(idx) {
+      selectedHBPack = idx;
+      document.querySelectorAll('.hb-pack-pill').forEach(function(p) { p.classList.remove('active'); });
+      document.getElementById(idx === 0 ? 'pill-12' : 'pill-24').classList.add('active');
+      var p = HERITAGE_BOX_PACKS[idx];
+      var btn = document.getElementById('hb-btn-text');
+      if (btn) btn.textContent = 'Add to Cart — ₹' + p.price.toLocaleString('en-IN');
+    }
+
+    function addHeritageBoxToCart() {
+      var pack = HERITAGE_BOX_PACKS[selectedHBPack];
+      addToCart('heritage-box', 'Aamrutham Signature Box', pack.label, pack.price);
+
+      var wrapChecked = document.getElementById('heritage-gift-wrap').checked;
+      if (wrapChecked) {
+        addToCart('gift-wrapping', 'Premium Gift Wrapping', 'Add-on', 149);
+      }
+
+      var isGift = document.getElementById('heritage-gift-toggle').checked;
+      if (isGift) {
+        var giftData = {
+          recipientName:  document.getElementById('gift-recipient-name').value.trim(),
+          recipientPhone: document.getElementById('gift-recipient-phone').value.trim(),
+          message:        document.getElementById('gift-message').value.trim(),
+          wrapping:       wrapChecked,
+        };
+        localStorage.setItem('aamrutham_gift', JSON.stringify(giftData));
+      } else {
+        localStorage.removeItem('aamrutham_gift');
+      }
+    }
+
+    function toggleHeritageGift(on) {
+      var panel = document.getElementById('heritage-gift-panel');
+      panel.classList.toggle('open', on);
+      if (!on) localStorage.removeItem('aamrutham_gift');
+    }
+
+    function updateGiftCharCount() {
+      var len = document.getElementById('gift-message').value.length;
+      document.getElementById('gift-char-count').textContent = len + ' / 200';
+    }
+
+    document.getElementById('gift-recipient-phone').addEventListener('input', function() {
+      this.value = this.value.replace(/\D/g, '').slice(0, 10);
+    });
+  </script>
+  <script src="cart.js"></script>
+</body>
+</html>

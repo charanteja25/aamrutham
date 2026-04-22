@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mango as a Service — Aamrutham</title>
+  <meta name="description" content="Mango as a Service by Aamrutham — four weekly drops of rare heritage mango varieties, delivered fresh to your door. Summer 2026." />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=Noto+Serif+Telugu:wght@400;600&display=swap" rel="stylesheet" />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            mango: '#F5A623', 'mango-dark': '#E07B39',
+            leaf: '#2D5016', 'leaf-light': '#4a7c2f',
+            cream: '#FFF8EC',
+          }
+        }
+      }
+    }
+  </script>
+  <!-- AOS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Shared CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    body { background: #050f02; color: white; }
+
+    /* ── Cart Drawer ── */
+    #cart-overlay {
+      display: none !important; position: fixed !important;
+      inset: 0 !important; background: rgba(0,0,0,0.5) !important;
+      z-index: 9998 !important;
+    }
+    #cart-overlay.open { display: block !important; }
+    #cart-drawer {
+      position: fixed !important;
+      top: 0 !important; right: 0 !important; bottom: 0 !important;
+      width: 360px !important; max-width: 100vw !important;
+      background: #fff !important; z-index: 9999 !important;
+      display: flex !important; flex-direction: column !important;
+      transform: translateX(100%) !important;
+      transition: transform 0.32s cubic-bezier(0.4,0,0.2,1) !important;
+      box-shadow: -4px 0 40px rgba(44,24,16,0.18) !important;
+    }
+    #cart-drawer.open { transform: translateX(0) !important; }
+    .cart-drawer-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 1.25rem; border-bottom: 1px solid #f0e8d8; flex-shrink: 0;
+    }
+    .cart-drawer-header h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #2D5016; margin: 0; }
+    .cart-close-btn { background: none; border: none; cursor: pointer; font-size: 1.1rem; color: #9a7a5a; padding: 4px 8px; border-radius: 6px; }
+    .cart-close-btn:hover { background: #f5ede0; color: #2D5016; }
+    #cart-items { flex: 1; overflow-y: auto; }
+    .cart-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 3rem 1.5rem; text-align: center; color: #9a7a5a; }
+    .cart-empty i { font-size: 2.5rem; color: #e0d4c0; margin-bottom: 0.75rem; display: block; }
+    .cart-empty p { margin-bottom: 0.5rem; font-size: 0.9rem; }
+    .cart-empty a { color: #2D5016; font-weight: 700; text-decoration: none; font-size: 0.85rem; }
+    .cart-item { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; padding: 0.9rem 1.25rem; border-bottom: 1px solid #f5ede0; }
+    .cart-item-info { flex: 1; min-width: 0; }
+    .cart-item-name { font-weight: 700; font-size: 0.88rem; color: #2D5016; margin-bottom: 0.15rem; }
+    .cart-item-pack { font-size: 0.75rem; color: #9a7a5a; margin-bottom: 0.5rem; }
+    .cart-qty-row { display: flex; align-items: center; gap: 0.4rem; }
+    .cart-qty-btn { width: 24px; height: 24px; border: 1.5px solid #d8caba; border-radius: 5px; background: #fff; cursor: pointer; font-size: 0.95rem; color: #2D5016; display: flex; align-items: center; justify-content: center; }
+    .cart-qty-btn:hover { border-color: #2D5016; background: #2D5016; color: #fff; }
+    .cart-qty-val { font-weight: 700; font-size: 0.85rem; min-width: 18px; text-align: center; }
+    .cart-item-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; flex-shrink: 0; }
+    .cart-item-price { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: #2D5016; }
+    .cart-remove-btn { background: none; border: none; cursor: pointer; color: #c0a080; font-size: 0.8rem; padding: 2px; }
+    .cart-remove-btn:hover { color: #c0392b; }
+    #cart-footer { padding: 1rem 1.25rem; border-top: 2px solid #f0e8d8; flex-shrink: 0; background: #fff; }
+    .cart-total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; }
+    .cart-total-row span:first-child { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: #9a7a5a; font-weight: 700; }
+    #cart-total-amt { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #2D5016; font-weight: 700; }
+    .cart-checkout-btn { display: flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; padding: 0.8rem; background: #2D5016; color: #fff; border: none; border-radius: 50px; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: background 0.2s; margin-bottom: 0.5rem; }
+    .cart-checkout-btn:hover { background: #E07B39; }
+    .cart-note { text-align: center; font-size: 0.7rem; color: #b09070; }
+    .cart-icon-wrap {
+      position: relative; cursor: pointer;
+      padding: 0.4rem 0.9rem 0.4rem 0.7rem; border-radius: 50px;
+      display: flex; align-items: center; gap: 0.4rem;
+      font-size: 1rem; color: white; flex-shrink: 0;
+      background: rgba(255,255,255,0.12);
+      border: 1.5px solid rgba(255,255,255,0.3);
+      transition: background 0.2s;
+    }
+    .cart-icon-wrap:hover { background: rgba(255,255,255,0.22); }
+    .cart-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; color: white; }
+    #navbar.scrolled .cart-icon-wrap {
+      color: var(--leaf);
+      background: rgba(45,80,22,0.08);
+      border-color: rgba(45,80,22,0.25);
+    }
+    #navbar.scrolled .cart-icon-wrap:hover { background: rgba(45,80,22,0.15); }
+    #navbar.scrolled .cart-label { color: var(--leaf); }
+    .cart-bubble {
+      position: absolute; top: -6px; right: -6px; min-width: 18px; height: 18px;
+      background: #E07B39; color: #fff; font-size: 0.62rem; font-weight: 700;
+      border-radius: 50px; display: flex; align-items: center; justify-content: center;
+      padding: 0 4px; pointer-events: none; border: 2px solid #2D5016;
+    }
+    @keyframes cartPop { 0%{transform:scale(1)} 40%{transform:scale(1.35)} 70%{transform:scale(0.92)} 100%{transform:scale(1)} }
+    .cart-pop { animation: cartPop 0.4s ease; }
+
+    /* ── Page ── */
+    .sp-hero {
+      background: linear-gradient(160deg, rgba(2,10,1,0.75) 0%, rgba(5,15,2,0.68) 40%, rgba(15,43,6,0.65) 100%), url('Seasonpass.png') center/cover no-repeat;
+      padding: 9rem 2rem 5rem;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .sp-hero-dots {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image: radial-gradient(circle, rgba(245,166,35,0.07) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    .sp-hero-content { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+    .sp-eyebrow {
+      display: inline-block; font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--mango);
+      margin-bottom: 1rem;
+    }
+    .sp-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 700;
+      color: white; line-height: 1.15; margin-bottom: 1rem;
+    }
+    .sp-title em { color: var(--mango); font-style: italic; }
+    .sp-sub {
+      font-size: 1.05rem; color: rgba(255,255,255,0.68); line-height: 1.8; margin-bottom: 2rem;
+    }
+
+    /* ── How it works ── */
+    .sp-timeline {
+      background: rgba(255,255,255,0.03);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 3rem 2rem;
+    }
+    .sp-timeline-inner { max-width: 1000px; margin: 0 auto; }
+    .sp-timeline-head { text-align: center; margin-bottom: 2.5rem; }
+    .sp-timeline-head h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem); color: white;
+    }
+    .sp-timeline-head h2 em { color: var(--mango); font-style: italic; }
+    .sp-weeks {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;
+    }
+    .sp-week {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px; padding: 1.5rem 1.25rem;
+      text-align: center; transition: border-color 0.2s;
+    }
+    .sp-week:hover { border-color: rgba(245,166,35,0.4); }
+    .sp-week-num {
+      display: inline-block; width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(245,166,35,0.15); border: 1.5px solid rgba(245,166,35,0.35);
+      font-size: 0.8rem; font-weight: 800; color: var(--mango);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 0.75rem;
+    }
+    .sp-week-label {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--mango); margin-bottom: 0.5rem; display: block;
+    }
+    .sp-week-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem; font-weight: 600; color: white; margin-bottom: 0.4rem;
+    }
+    .sp-week-varieties { font-size: 0.78rem; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+    /* ── Pack Cards ── */
+    .sp-packs-section { padding: 4rem 2rem; }
+    .sp-packs-inner { max-width: 1100px; margin: 0 auto; }
+    .sp-packs-head { text-align: center; margin-bottom: 2.5rem; }
+    .sp-packs-head h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem); color: white; margin-bottom: 0.5rem;
+    }
+    .sp-packs-head h2 em { color: var(--mango); font-style: italic; }
+    .sp-packs-head p { font-size: 0.9rem; color: rgba(255,255,255,0.55); }
+    .sp-cards {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
+    }
+    .sp-card {
+      background: rgba(255,255,255,0.05);
+      border: 1.5px solid rgba(255,255,255,0.12);
+      border-radius: 20px; padding: 1.75rem 1.5rem;
+      display: flex; flex-direction: column;
+      transition: border-color 0.25s, background 0.25s;
+    }
+    .sp-card:hover { border-color: rgba(245,166,35,0.5); background: rgba(255,255,255,0.08); }
+    .sp-card.featured { border-color: var(--mango); background: rgba(245,166,35,0.05); }
+    .sp-card-badge {
+      display: inline-block; background: var(--mango); color: #1a0800;
+      font-size: 0.65rem; font-weight: 800; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 0.25rem 0.75rem; border-radius: 50px;
+      margin-bottom: 1rem; width: fit-content;
+    }
+    .sp-card-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 700; color: white; margin-bottom: 0.5rem;
+    }
+    .sp-card-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem; font-weight: 700; color: var(--mango);
+      line-height: 1; margin-bottom: 0.2rem;
+    }
+    .sp-card-per { font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-bottom: 1.25rem; }
+    .sp-features { list-style: none; padding: 0; margin: 0 0 1.5rem; flex: 1; }
+    .sp-features li {
+      font-size: 0.82rem; color: rgba(255,255,255,0.72);
+      padding: 0.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.07);
+      display: flex; align-items: center; gap: 0.55rem;
+    }
+    .sp-features li i { color: var(--mango); font-size: 0.65rem; width: 12px; flex-shrink: 0; }
+    .btn-sp-add {
+      width: 100%; padding: 0.85rem; background: var(--mango); color: #1a0800;
+      border: none; border-radius: 50px; font-weight: 800; font-size: 0.85rem;
+      cursor: pointer; transition: background 0.2s, transform 0.15s;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      letter-spacing: 0.02em;
+    }
+    .btn-sp-add:hover:not(:disabled) { background: #f0b84a; transform: translateY(-1px); }
+    .btn-sp-add:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* ── Pack size toggle ── */
+    .sp-pack-toggle {
+      display: flex; gap: 0.4rem; margin-bottom: 1rem;
+    }
+    .sp-pack-btn {
+      flex: 1; padding: 0.45rem 0.5rem;
+      background: rgba(255,255,255,0.06);
+      border: 1.5px solid rgba(255,255,255,0.15);
+      border-radius: 50px; color: rgba(255,255,255,0.55);
+      font-size: 0.72rem; font-weight: 700; cursor: pointer;
+      transition: all 0.2s; white-space: nowrap;
+    }
+    .sp-pack-btn.active {
+      background: rgba(245,166,35,0.15);
+      border-color: var(--mango); color: var(--mango);
+    }
+
+    /* ── Variety pool chips ── */
+    .sp-pool-label {
+      font-size: 0.7rem; color: rgba(255,255,255,0.38);
+      margin-bottom: 0.65rem; letter-spacing: 0.03em; line-height: 1.5;
+    }
+    .sp-variety-chips {
+      display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1rem;
+    }
+    .sp-variety-chip {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.03em;
+      padding: 0.2rem 0.6rem; border-radius: 50px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.13);
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* ── Custom variety selector ── */
+    .sp-custom-selector { flex: 1; margin-bottom: 1rem; }
+    .sp-custom-count {
+      font-size: 0.76rem; color: rgba(255,255,255,0.5); margin-bottom: 0.6rem;
+    }
+    .sp-custom-count strong { color: var(--mango); }
+    .sp-custom-varieties {
+      display: flex; flex-direction: column; gap: 0.3rem;
+      max-height: 230px; overflow-y: auto; padding-right: 0.2rem;
+    }
+    .sp-custom-varieties::-webkit-scrollbar { width: 3px; }
+    .sp-custom-varieties::-webkit-scrollbar-thumb { background: rgba(245,166,35,0.35); border-radius: 2px; }
+    .sp-custom-var {
+      display: flex; align-items: center; gap: 0.55rem;
+      padding: 0.45rem 0.6rem; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      cursor: pointer; transition: all 0.15s; user-select: none;
+    }
+    .sp-custom-var:hover:not(.disabled) { border-color: rgba(245,166,35,0.3); background: rgba(245,166,35,0.05); }
+    .sp-custom-var.selected { border-color: var(--mango); background: rgba(245,166,35,0.1); }
+    .sp-custom-var.disabled { opacity: 0.3; cursor: not-allowed; }
+    .sp-custom-var-check {
+      width: 15px; height: 15px; border-radius: 4px; flex-shrink: 0;
+      border: 1.5px solid rgba(255,255,255,0.25); background: transparent;
+      display: flex; align-items: center; justify-content: center; transition: all 0.15s;
+    }
+    .sp-custom-var.selected .sp-custom-var-check {
+      background: var(--mango); border-color: var(--mango); color: #1a0800;
+    }
+    .sp-custom-var-name { font-size: 0.78rem; color: rgba(255,255,255,0.75); }
+
+    /* ── Back link ── */
+    .sp-back {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: rgba(255,255,255,0.55); font-size: 0.85rem;
+      text-decoration: none; margin-bottom: 2.5rem;
+      transition: color 0.2s; position: relative; z-index: 1;
+    }
+    .sp-back:hover { color: var(--mango); }
+
+    /* ── Marquee ticker ── */
+    .sp-ticker {
+      overflow: hidden; white-space: nowrap;
+      background: var(--mango); padding: 0.6rem 0;
+      font-size: 0.68rem; font-weight: 800; letter-spacing: 0.18em;
+      color: #1a0800; text-transform: uppercase;
+    }
+    .sp-ticker-inner {
+      display: inline-block;
+      animation: marquee 28s linear infinite;
+    }
+    .sp-ticker-inner span { padding: 0 2.5rem; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── Scarcity bar ── */
+    .sp-scarcity {
+      background: rgba(245,166,35,0.07);
+      border: 1px solid rgba(245,166,35,0.2);
+      border-radius: 12px; padding: 1rem 1.25rem;
+      margin-bottom: 2rem; text-align: center;
+    }
+    .sp-scarcity-label {
+      font-size: 0.82rem; color: rgba(255,255,255,0.75);
+      margin-bottom: 0.6rem; display: block;
+    }
+    .sp-scarcity-label strong { color: var(--mango); }
+    .sp-scarcity-track {
+      height: 6px; background: rgba(255,255,255,0.1);
+      border-radius: 50px; overflow: hidden;
+    }
+    .sp-scarcity-fill {
+      height: 100%; width: 61%;
+      background: linear-gradient(90deg, var(--mango), #f0b84a);
+      border-radius: 50px;
+      animation: fillIn 1.2s cubic-bezier(0.4,0,0.2,1) both;
+      animation-delay: 0.3s;
+    }
+    @keyframes fillIn { from { width: 0; } to { width: 61%; } }
+
+    /* ── Version badge on week cards ── */
+    .sp-week-version {
+      font-size: 0.6rem; font-weight: 800; letter-spacing: 0.1em;
+      color: rgba(245,166,35,0.6); margin-bottom: 0.35rem; display: block;
+      font-family: 'Lato', sans-serif;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 960px) {
+      .sp-cards { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+    }
+    @media (max-width: 760px) {
+      .sp-weeks { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .sp-hero { padding: 7rem 1.25rem 3.5rem; }
+      .sp-packs-section { padding: 2.5rem 1.25rem; }
+      .sp-timeline { padding: 2.5rem 1.25rem; }
+      .sp-weeks { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav id="navbar" class="scrolled">
+    <a href="index.html" style="display:flex; align-items:center; gap:0.5rem; text-decoration:none;">
+      <img src="Subject.png" alt="Aamrutham" class="nav-logo" />
+      <span style="font-size:0.75rem; font-weight:700; color:var(--leaf); letter-spacing:0.08em; text-transform:uppercase;">Home</span>
+    </a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html#story" onclick="closeNav()">Our Story</a></li>
+      <li><a href="index.html#process" onclick="closeNav()">Farm to You</a></li>
+      <li><a href="products.html" onclick="closeNav()">Our Mangoes</a></li>
+    </ul>
+    <div class="cart-icon-wrap" title="View cart">
+      <i class="fa-solid fa-bag-shopping"></i>
+      <span class="cart-label">BAG</span>
+      <span class="cart-bubble" style="display:none;">0</span>
+    </div>
+  </nav>
+
+  <!-- Cart -->
+  <div id="cart-overlay"></div>
+  <div id="cart-drawer">
+    <div class="cart-drawer-header">
+      <h3><i class="fa-solid fa-bag-shopping" style="color:#E07B39;margin-right:0.5rem;font-size:1rem;"></i>Your Cart</h3>
+      <button class="cart-close-btn" onclick="closeCartDrawer()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="cart-items"></div>
+    <div id="cart-footer" style="display:none;">
+      <div class="cart-total-row">
+        <span>Total</span>
+        <span id="cart-total-amt">₹0</span>
+      </div>
+      <button class="cart-checkout-btn" onclick="cartCheckout()">
+        <i class="fa-solid fa-lock fa-xs"></i> Proceed to Checkout
+      </button>
+      <p class="cart-note">Secure checkout · Razorpay</p>
+    </div>
+  </div>
+
+  <!-- ── Hero ── -->
+  <div class="sp-hero">
+    <div class="sp-hero-dots"></div>
+    <div class="sp-hero-content">
+      <a href="products.html" class="sp-back"><i class="fa-solid fa-arrow-left fa-xs"></i> Back to Mangoes</a>
+      <span class="sp-eyebrow">⚡ MaaS · Summer 2026 · Limited Slots</span>
+      <h1 class="sp-title">Mango as a<br /><em>Service</em></h1>
+      <p class="sp-sub">Every week through the season, a fresh box of rare, tree-ripened heritage mangoes arrives at your door — handpicked from our farms in Bobbili. Four deliveries Four weeks.</p>
+    </div>
+  </div>
+
+  <!-- ── Marquee Ticker ── -->
+  <div class="sp-ticker">
+    <div class="sp-ticker-inner">
+      <span>METTAVALASA PEECHU</span><span>·</span>
+      <span>IMAM PASAND</span><span>·</span>
+      <span>KOTHAPALLI KOBBARI</span><span>·</span>
+      <span>BOBBILI PEECHU</span><span>·</span>
+      <span>SUVARNAREKHA</span><span>·</span>
+      <span>CHINNA RASALU</span><span>·</span>
+      <span>BANGANAPALLI</span><span>·</span>
+      <span>PANDURI TEEPI MAMIDI</span><span>·</span>
+      <span>METTAVALASA PEECHU</span><span>·</span>
+      <span>IMAM PASAND</span><span>·</span>
+      <span>KOTHAPALLI KOBBARI</span><span>·</span>
+      <span>BOBBILI PEECHU</span><span>·</span>
+      <span>SUVARNAREKHA</span><span>·</span>
+      <span>CHINNA RASALU</span><span>·</span>
+      <span>BANGANAPALLI</span><span>·</span>
+      <span>PANDURI TEEPI MAMIDI</span><span>·</span>
+    </div>
+  </div>
+
+
+  <!-- ── Plan Selection ── -->
+  <div class="sp-packs-section">
+    <div class="sp-packs-inner">
+      <div class="sp-packs-head" data-aos="fade-up">
+        <h2>Pick Your <em>Pass</em></h2>
+        <p>One payment. Four drops. Free across Hyderabad.</p>
+      </div>
+
+      <!-- Scarcity bar -->
+      <div class="sp-scarcity" data-aos="fade-up">
+        <span class="sp-scarcity-label">⚡ Only <strong>18 slots</strong> available this season. <strong>11 claimed.</strong></span>
+        <div class="sp-scarcity-track"><div class="sp-scarcity-fill"></div></div>
+      </div>
+
+      <div class="sp-cards" data-aos="fade-up" data-aos-delay="100">
+
+        <!-- Premium Pass -->
+        <div class="sp-card">
+          <div class="sp-card-badge" style="background:rgba(245,166,35,0.12);color:var(--mango);border:1px solid rgba(245,166,35,0.35);">Premium</div>
+          <div class="sp-card-name">Premium Pass</div>
+          <div class="sp-pool-label">Any 3 varieties per drop, based on availability</div>
+          <div class="sp-variety-chips">
+            <span class="sp-variety-chip">Kothapalli Kobbari</span>
+            <span class="sp-variety-chip">Imam Pasand</span>
+            <span class="sp-variety-chip">Panduri Teepi Mamidi</span>
+            <span class="sp-variety-chip">Mettavalasa Peechu</span>
+            <span class="sp-variety-chip">Bobbili Peechu</span>
+          </div>
+          <div class="sp-pack-toggle">
+            <button class="sp-pack-btn active" onclick="setPackPremium(12, this)">12 pcs</button>
+            <button class="sp-pack-btn" onclick="setPackPremium(24, this)">24 pcs</button>
+          </div>
+          <div class="sp-card-price" id="price-premium">₹2,499</div>
+          <div class="sp-card-per">one-time · 4 drops · free delivery</div>
+          <ul class="sp-features">
+            <li><i class="fa-solid fa-check"></i> Rarest, most sought-after varieties</li>
+            <li><i class="fa-solid fa-check"></i> 3 varieties rotating across 4 drops</li>
+            <li><i class="fa-solid fa-check"></i> WhatsApp ping before each delivery</li>
+            <li><i class="fa-solid fa-check"></i> Free delivery across Hyderabad</li>
+          </ul>
+          <button class="btn-sp-add" onclick="addPremiumPass()">
+            <i class="fa-solid fa-bolt fa-xs"></i> <span id="cta-premium">Start Premium Pass — ₹2,499</span>
+          </button>
+        </div>
+
+        <!-- Exotic Pass -->
+        <div class="sp-card featured">
+          <div class="sp-card-badge">Most Popular</div>
+          <div class="sp-card-name">Exotic Pass</div>
+          <div class="sp-pool-label">Any 3 varieties per drop, based on availability</div>
+          <div class="sp-variety-chips">
+            <span class="sp-variety-chip">Banganapalli</span>
+            <span class="sp-variety-chip">Suvarnarekha</span>
+            <span class="sp-variety-chip">Chinna Rasalu</span>
+            <span class="sp-variety-chip">Pedda Rasalu</span>
+            <span class="sp-variety-chip">Cheruku Rasalu</span>
+            <span class="sp-variety-chip">Panchadara Kalasa</span>
+          </div>
+          <div class="sp-pack-toggle">
+            <button class="sp-pack-btn active" onclick="setPackExotic(12, this)">12 pcs</button>
+            <button class="sp-pack-btn" onclick="setPackExotic(24, this)">24 pcs</button>
+          </div>
+          <div class="sp-card-price" id="price-exotic">₹2,499</div>
+          <div class="sp-card-per">one-time · 4 drops · free delivery</div>
+          <ul class="sp-features">
+            <li><i class="fa-solid fa-check"></i> Golden classics &amp; rare sweet varieties</li>
+            <li><i class="fa-solid fa-check"></i> 3 varieties rotating across 4 drops</li>
+            <li><i class="fa-solid fa-check"></i> WhatsApp ping before each delivery</li>
+            <li><i class="fa-solid fa-check"></i> Free delivery across Hyderabad</li>
+          </ul>
+          <button class="btn-sp-add" onclick="addExoticPass()">
+            <i class="fa-solid fa-bolt fa-xs"></i> <span id="cta-exotic">Start Exotic Pass — ₹2,499</span>
+          </button>
+        </div>
+
+        <!-- Customised Pass -->
+        <div class="sp-card">
+          <div class="sp-card-badge" style="background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.75);border:1px solid rgba(255,255,255,0.2);">Your Choice</div>
+          <div class="sp-card-name">Customised Pass</div>
+          <div class="sp-pool-label">You pick the varieties. We deliver them.</div>
+          <div class="sp-pack-toggle">
+            <button class="sp-pack-btn active" onclick="setPackCustom(12, this)">12 pcs · Pick 3</button>
+            <button class="sp-pack-btn" onclick="setPackCustom(24, this)">24 pcs · Pick 5</button>
+          </div>
+          <div class="sp-custom-selector">
+            <div class="sp-custom-count" id="custom-count">Select <strong>3 varieties</strong> to continue</div>
+            <div class="sp-custom-varieties" id="custom-varieties"></div>
+          </div>
+          <div class="sp-card-price" id="price-custom">₹2,499</div>
+          <div class="sp-card-per">one-time · 4 drops · free delivery</div>
+          <button class="btn-sp-add" id="btn-custom" onclick="addCustomPass()" disabled>
+            <i class="fa-solid fa-bolt fa-xs"></i> <span id="cta-custom">Select 3 varieties first</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Footer ── -->
+  <footer style="background: rgba(255,255,255,0.03); border-top: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.45); text-align:center; padding: 2rem; font-size: 0.82rem;">
+    <p style="color: white; font-family: 'Playfair Display', serif; font-size: 1rem; margin-bottom: 0.4rem;">Aamrutham</p>
+    <p>Bobbili Farms · Hyderabad · Summer 2026</p>
+    <p style="margin-top: 0.5rem;"><a href="products.html" style="color: var(--mango); text-decoration: none;">← Back to Our Mangoes</a></p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 700, easing: 'ease-out-cubic', once: true, offset: 60 });
+
+    var navToggle = document.getElementById('nav-toggle');
+    var navLinks  = document.getElementById('nav-links');
+    navToggle.addEventListener('click', function() {
+      navToggle.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+    function closeNav() {
+      navToggle.classList.remove('open');
+      navLinks.classList.remove('open');
+    }
+    var navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', function() {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    var PRICES = { 12: 2499, 24: 4499 };
+    var premiumPack = 12, exoticPack = 12, customPack = 12;
+    var customSelected = [];
+
+    var VARIETIES_ALL = [
+      'Kothapalli Kobbari', 'Imam Pasand', 'Panduri Teepi Mamidi',
+      'Mettavalasa Peechu', 'Bobbili Peechu', 'Banganapalli',
+      'Suvarnarekha', 'Chinna Rasalu', 'Cheruku Rasalu', 'Panchadara Kalasa'
+    ];
+
+    function fmtPrice(n) {
+      return '₹' + n.toLocaleString('en-IN');
+    }
+
+    function setPackBtn(btn) {
+      btn.parentNode.querySelectorAll('.sp-pack-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+    }
+
+    function setPackPremium(n, btn) {
+      premiumPack = n; setPackBtn(btn);
+      document.getElementById('price-premium').textContent = fmtPrice(PRICES[n]);
+      document.getElementById('cta-premium').textContent = 'Start Premium Pass — ' + fmtPrice(PRICES[n]);
+    }
+
+    function setPackExotic(n, btn) {
+      exoticPack = n; setPackBtn(btn);
+      document.getElementById('price-exotic').textContent = fmtPrice(PRICES[n]);
+      document.getElementById('cta-exotic').textContent = 'Start Exotic Pass — ' + fmtPrice(PRICES[n]);
+    }
+
+    function setPackCustom(n, btn) {
+      customPack = n; customSelected = []; setPackBtn(btn);
+      document.getElementById('price-custom').textContent = fmtPrice(PRICES[n]);
+      renderCustomVarieties();
+      updateCustomCTA();
+    }
+
+    function renderCustomVarieties() {
+      var container = document.getElementById('custom-varieties');
+      container.innerHTML = '';
+      VARIETIES_ALL.forEach(function(v) {
+        var el = document.createElement('div');
+        el.className = 'sp-custom-var';
+        el.dataset.variety = v;
+        el.innerHTML = '<div class="sp-custom-var-check"><i class="fa-solid fa-check" style="font-size:0.5rem;display:none;"></i></div><span class="sp-custom-var-name">' + v + '</span>';
+        el.addEventListener('click', function() {
+          if (el.classList.contains('disabled')) return;
+          toggleCustomVariety(v, el);
+        });
+        container.appendChild(el);
+      });
+    }
+
+    function toggleCustomVariety(v, el) {
+      var limit = customPack === 12 ? 3 : 5;
+      var idx = customSelected.indexOf(v);
+      if (idx > -1) {
+        customSelected.splice(idx, 1);
+        el.classList.remove('selected');
+        el.querySelector('i').style.display = 'none';
+      } else {
+        if (customSelected.length >= limit) return;
+        customSelected.push(v);
+        el.classList.add('selected');
+        el.querySelector('i').style.display = 'block';
+      }
+      document.querySelectorAll('.sp-custom-var').forEach(function(row) {
+        var isSel = customSelected.indexOf(row.dataset.variety) > -1;
+        row.classList.toggle('disabled', !isSel && customSelected.length >= limit);
+      });
+      updateCustomCTA();
+    }
+
+    function updateCustomCTA() {
+      var limit = customPack === 12 ? 3 : 5;
+      var count = customSelected.length;
+      var btn = document.getElementById('btn-custom');
+      var remaining = limit - count;
+      if (count < limit) {
+        document.getElementById('custom-count').innerHTML = 'Select <strong>' + remaining + ' more variet' + (remaining === 1 ? 'y' : 'ies') + '</strong>';
+        btn.disabled = true;
+        document.getElementById('cta-custom').textContent = 'Select ' + limit + ' varieties first';
+      } else {
+        document.getElementById('custom-count').innerHTML = '<strong style="color:var(--mango)">✓ ' + count + ' varieties selected</strong>';
+        btn.disabled = false;
+        document.getElementById('cta-custom').textContent = 'Start Customised Pass — ' + fmtPrice(PRICES[customPack]);
+      }
+    }
+
+    function addPremiumPass() {
+      addToCart('season-premium-' + premiumPack, 'Premium Pass', premiumPack + ' pcs/drop × 4 drops', PRICES[premiumPack]);
+    }
+
+    function addExoticPass() {
+      addToCart('season-exotic-' + exoticPack, 'Exotic Pass', exoticPack + ' pcs/drop × 4 drops', PRICES[exoticPack]);
+    }
+
+    function addCustomPass() {
+      var limit = customPack === 12 ? 3 : 5;
+      if (customSelected.length < limit) return;
+      var cartId = 'season-custom-' + customPack + '-' + customSelected.slice().sort().join('').replace(/\s+/g, '').toLowerCase().substring(0, 20);
+      var packLabel = customPack + ' pcs · ' + customSelected.join(', ');
+      addToCart(cartId, 'Customised Pass', packLabel, PRICES[customPack]);
+    }
+
+    renderCustomVarieties();
+    updateCustomCTA();
+  </script>
+  <script src="cart.js"></script>
+</body>
+</html>

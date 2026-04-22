@@ -174,7 +174,7 @@ export const products = [
     name: 'Imam Pasand',
     telugu: 'ఇమామ్ పసంద్',
     meaning: 'Favourite of the Imam · Also known as Himayat',
-    shortTag: 'Royal · The Deccan’s Finest',
+    shortTag: "Royal · The Deccan’s Finest",
     heroTag: 'Royal · Dessert Mango · Fiberless',
     description:
       'The royal mango of the Deccan. Saffron-hued, zero-fibre, creamy pulp with sweetness that is profound yet balanced.',

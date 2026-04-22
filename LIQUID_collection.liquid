@@ -1,0 +1,121 @@
+<style>
+  .shop-hero {
+    background: linear-gradient(160deg, #0f2b06 0%, var(--leaf) 60%, #1a3a0a 100%);
+    padding: 8rem 2rem 4rem;
+    text-align: center;
+    color: white;
+  }
+
+  .shop-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    margin: 1rem 0;
+  }
+
+  .shop-hero em {
+    color: var(--mango);
+    font-style: italic;
+  }
+
+  .shop-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+  }
+
+  .section-header {
+    margin-bottom: 2rem;
+  }
+
+  .section-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mango-dark);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: var(--leaf);
+    margin-bottom: 1rem;
+  }
+
+  .section-title em {
+    color: var(--mango-dark);
+    font-style: italic;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+  }
+
+  .section-divider {
+    border: none;
+    border-top: 2px solid #f0e4cc;
+    margin: 2rem 0;
+  }
+</style>
+
+<!-- Hero Section -->
+<div class="shop-hero">
+  <p style="color: var(--mango); font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; margin-bottom: 0.75rem;">✦ Fresh from Bobbili · Hyderabad ✦</p>
+  <h1>Shop Our <em>Finest Mangoes</em></h1>
+  <p style="color: rgba(255,255,255,0.8); font-size: 1.05rem; margin-top: 1rem;">Naturally ripened · Pesticide-free · Available in 6pc, 12pc, 18pc packs</p>
+</div>
+
+<div class="shop-container">
+
+  <!-- SECTION 1: SIGNATURE PREMIUM VARIETIES (TOP) -->
+  <div class="section-header">
+    <span class="section-eyebrow">✦ Our Finest</span>
+    <h2 class="section-title">Signature <em>Premium</em> Varieties</h2>
+  </div>
+
+  <div class="products-grid">
+    {% for product in collection.products %}
+      {% if product.metafields.custom.variety_type.value == "signature" %}
+        {% include 'product-card' %}
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- SECTION 2: CORE VARIETIES (MIDDLE) -->
+  <div class="section-header">
+    <span class="section-eyebrow">✦ Also Available</span>
+    <h2 class="section-title">Core <em>Varieties</em></h2>
+  </div>
+
+  <div class="products-grid">
+    {% for product in collection.products %}
+      {% if product.metafields.custom.variety_type.value == "core" %}
+        {% include 'product-card' %}
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- SECTION 3: HERITAGE BOX (BOTTOM) -->
+  <div class="section-header">
+    <span class="section-eyebrow">✦ Premium Gift</span>
+    <h2 class="section-title">Aamrutham <em>Signature Box</em></h2>
+  </div>
+
+  <div class="products-grid">
+    {% for product in collection.products %}
+      {% if product.metafields.custom.variety_type.value == "heritage" %}
+        {% include 'product-card' %}
+      {% endif %}
+    {% endfor %}
+  </div>
+
+</div>

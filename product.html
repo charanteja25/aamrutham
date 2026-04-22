@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Premium Mango Varieties — Aamrutham</title>
+  <meta name="description" content="Explore rare premium mango varieties from Bobbili farms — Mettavalasa Peechu, Bobbili Peechu, Kothapalli Kobbari, Imam Pasand. Farm-fresh to Hyderabad." />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=Noto+Serif+Telugu:wght@400;600&display=swap" rel="stylesheet" />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            mango: '#F5A623', 'mango-dark': '#E07B39',
+            leaf: '#2D5016', 'leaf-light': '#4a7c2f',
+            cream: '#FFF8EC', 'cream-dark': '#F5EDD8',
+          }
+        }
+      }
+    }
+  </script>
+  <!-- AOS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Shared CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    body { background: #FEF8F0; }
+
+    /* ── Cart drawer ── */
+    #cart-overlay {
+      display: none !important; position: fixed !important;
+      inset: 0 !important; background: rgba(0,0,0,0.5) !important;
+      z-index: 9998 !important;
+    }
+    #cart-overlay.open { display: block !important; }
+
+    #cart-drawer {
+      position: fixed !important;
+      top: 0 !important; right: 0 !important; bottom: 0 !important;
+      width: 360px !important; max-width: 100vw !important;
+      background: #fff !important;
+      z-index: 9999 !important;
+      display: flex !important; flex-direction: column !important;
+      transform: translateX(100%) !important;
+      transition: transform 0.32s cubic-bezier(0.4,0,0.2,1) !important;
+      box-shadow: -4px 0 40px rgba(44,24,16,0.18) !important;
+    }
+    #cart-drawer.open { transform: translateX(0) !important; }
+
+    .cart-drawer-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 1.25rem; border-bottom: 1px solid #f0e8d8; flex-shrink: 0;
+      background: #fff;
+    }
+    .cart-drawer-header h3 {
+      font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #2D5016; margin: 0;
+    }
+    .cart-close-btn {
+      background: none; border: none; cursor: pointer; font-size: 1.1rem;
+      color: #9a7a5a; padding: 4px 8px; border-radius: 6px; line-height: 1;
+    }
+    .cart-close-btn:hover { background: #f5ede0; color: #2D5016; }
+
+    #cart-items { flex: 1; overflow-y: auto; }
+
+    .cart-empty {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; height: 100%; padding: 3rem 1.5rem; text-align: center; color: #9a7a5a;
+    }
+    .cart-empty i { font-size: 2.5rem; color: #e0d4c0; margin-bottom: 0.75rem; display: block; }
+    .cart-empty p { margin-bottom: 0.5rem; font-size: 0.9rem; }
+    .cart-empty a { color: #2D5016; font-weight: 700; text-decoration: none; font-size: 0.85rem; }
+
+    .cart-item {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 0.75rem; padding: 0.9rem 1.25rem; border-bottom: 1px solid #f5ede0;
+    }
+    .cart-item-info { flex: 1; min-width: 0; }
+    .cart-item-name { font-weight: 700; font-size: 0.88rem; color: #2D5016; margin-bottom: 0.15rem; }
+    .cart-item-pack { font-size: 0.75rem; color: #9a7a5a; margin-bottom: 0.5rem; }
+    .cart-qty-row { display: flex; align-items: center; gap: 0.4rem; }
+    .cart-qty-btn {
+      width: 24px; height: 24px; border: 1.5px solid #d8caba; border-radius: 5px;
+      background: #fff; cursor: pointer; font-size: 0.95rem; color: #2D5016;
+      display: flex; align-items: center; justify-content: center; line-height: 1; padding: 0;
+    }
+    .cart-qty-btn:hover { border-color: #2D5016; background: #2D5016; color: #fff; }
+    .cart-qty-val { font-weight: 700; font-size: 0.85rem; min-width: 18px; text-align: center; }
+    .cart-item-right {
+      display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; flex-shrink: 0;
+    }
+    .cart-item-price { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: #2D5016; }
+    .cart-remove-btn { background: none; border: none; cursor: pointer; color: #c0a080; font-size: 0.8rem; padding: 2px; }
+    .cart-remove-btn:hover { color: #c0392b; }
+
+    #cart-footer { padding: 1rem 1.25rem; border-top: 2px solid #f0e8d8; flex-shrink: 0; background: #fff; }
+    .cart-total-row {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;
+    }
+    .cart-total-row span:first-child { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: #9a7a5a; font-weight: 700; }
+    #cart-total-amt { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #2D5016; font-weight: 700; }
+    .cart-checkout-btn {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      width: 100%; padding: 0.8rem; background: #2D5016; color: #fff; border: none;
+      border-radius: 50px; font-weight: 700; font-size: 0.9rem; cursor: pointer;
+      transition: background 0.2s; margin-bottom: 0.5rem;
+    }
+    .cart-checkout-btn:hover { background: #E07B39; }
+    .cart-note { text-align: center; font-size: 0.7rem; color: #b09070; }
+
+    .cart-icon-wrap {
+      position: relative; cursor: pointer;
+      padding: 0.4rem 0.9rem 0.4rem 0.7rem; border-radius: 50px;
+      display: flex; align-items: center; gap: 0.4rem;
+      font-size: 1rem; color: white; flex-shrink: 0;
+      background: rgba(255,255,255,0.12);
+      border: 1.5px solid rgba(255,255,255,0.3);
+      transition: background 0.2s;
+    }
+    .cart-icon-wrap:hover { background: rgba(255,255,255,0.22); }
+    .cart-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; color: white; }
+    #navbar.scrolled .cart-icon-wrap {
+      color: var(--leaf);
+      background: rgba(45,80,22,0.08);
+      border-color: rgba(45,80,22,0.25);
+    }
+    #navbar.scrolled .cart-icon-wrap:hover { background: rgba(45,80,22,0.15); }
+    #navbar.scrolled .cart-label { color: var(--leaf); }
+    .cart-bubble {
+      position: absolute; top: -6px; right: -6px; min-width: 18px; height: 18px;
+      background: #E07B39; color: #fff; font-size: 0.62rem; font-weight: 700;
+      border-radius: 50px; display: flex; align-items: center; justify-content: center;
+      padding: 0 4px; pointer-events: none; border: 2px solid #2D5016;
+    }
+    @keyframes cartPop { 0%{transform:scale(1)} 40%{transform:scale(1.35)} 70%{transform:scale(0.92)} 100%{transform:scale(1)} }
+    .cart-pop { animation: cartPop 0.4s ease; }
+
+    /* ── Breadcrumb ── */
+    .breadcrumb {
+      padding: 5.5rem 2rem 0;
+      max-width: 1200px; margin: 0 auto;
+      font-size: 0.8rem; color: #9a7a5a;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .breadcrumb a { color: #9a7a5a; text-decoration: none; }
+    .breadcrumb a:hover { color: var(--leaf); }
+
+    /* ── Product layout ── */
+    .product-layout {
+      max-width: 1200px; margin: 0 auto;
+      padding: 2rem 2rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    /* ── Gallery ── */
+    .gallery-main {
+      width: 100%; aspect-ratio: 1;
+      border-radius: 20px; overflow: hidden;
+      background: #f0e8d8;
+      position: relative;
+    }
+    .gallery-main img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: opacity 0.3s;
+    }
+    .gallery-main .placeholder-bg {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .gallery-thumbs {
+      display: flex; gap: 0.75rem;
+      margin-top: 1rem; flex-wrap: wrap;
+    }
+    .gallery-thumb {
+      width: 72px; height: 72px;
+      border-radius: 10px; overflow: hidden;
+      cursor: pointer; border: 2px solid transparent;
+      transition: border-color 0.2s;
+      background: #f0e8d8;
+      flex-shrink: 0;
+    }
+    .gallery-thumb.active { border-color: var(--mango-dark); }
+    .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ── Product info ── */
+    .product-info { position: sticky; top: 5rem; }
+    .product-tag-line {
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--mango-dark); margin-bottom: 0.5rem;
+    }
+    .product-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--leaf); line-height: 1.1;
+      margin-bottom: 0.3rem;
+    }
+    .product-telugu {
+      font-family: 'Noto Serif Telugu', serif;
+      font-size: 1rem; color: var(--mango-dark);
+      margin-bottom: 1.25rem; display: block;
+    }
+    .product-badges {
+      display: flex; gap: 0.5rem; flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    .pbadge {
+      font-size: 0.72rem; font-weight: 700;
+      padding: 0.3rem 0.8rem; border-radius: 50px;
+      background: rgba(45,80,22,0.08); color: var(--leaf);
+      display: flex; align-items: center; gap: 0.3rem;
+    }
+    .pbadge.gold { background: rgba(245,166,35,0.12); color: #8a5c00; }
+
+    /* ── Price + pack ── */
+    .price-block {
+      background: white; border-radius: 16px;
+      padding: 1.5rem; margin-bottom: 1.5rem;
+      box-shadow: 0 2px 16px rgba(44,24,16,0.06);
+    }
+    .pack-label {
+      font-size: 0.72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: #9a7a5a; margin-bottom: 0.6rem; display: block;
+    }
+    .pack-options { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; }
+    .pack-btn {
+      flex: 1; padding: 0.5rem 0.25rem;
+      border: 2px solid #e0d4c0; border-radius: 10px;
+      background: white; font-size: 0.82rem; font-weight: 700;
+      cursor: pointer; color: #7a5c3e; transition: all 0.15s;
+      text-align: center;
+    }
+    .pack-btn.selected, .pack-btn:hover {
+      border-color: var(--leaf); background: var(--leaf); color: white;
+    }
+    .price-row {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .price-main {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem; color: var(--leaf); font-weight: 700;
+      line-height: 1;
+    }
+    .price-note { font-size: 0.75rem; color: #aaa; margin-top: 0.2rem; }
+
+    /* ── Pincode ── */
+    .pincode-wrap {
+      display: flex; gap: 0.5rem; margin-bottom: 0.75rem;
+    }
+    .pincode-input {
+      flex: 1; padding: 0.6rem 1rem;
+      border: 2px solid #e0d4c0; border-radius: 10px;
+      font-size: 0.9rem; outline: none;
+      transition: border-color 0.2s;
+    }
+    .pincode-input:focus { border-color: var(--leaf); }
+    .pincode-btn {
+      padding: 0.6rem 1.1rem; border-radius: 10px;
+      background: var(--leaf); color: white;
+      font-size: 0.82rem; font-weight: 700; border: none;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .pincode-btn:hover { background: var(--mango-dark); }
+    .pincode-msg {
+      font-size: 0.8rem; min-height: 1.2rem;
+      margin-bottom: 0.75rem;
+    }
+    .pincode-msg.ok { color: #2D5016; }
+    .pincode-msg.err { color: #c0392b; }
+
+    /* ── CTA buttons ── */
+    .btn-buynow {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0.5rem; width: 100%;
+      background: var(--mango); color: #1a0a00;
+      padding: 0.9rem; border-radius: 50px;
+      font-weight: 700; font-size: 1rem;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: all 0.25s; margin-bottom: 0.75rem;
+    }
+    .btn-buynow:hover {
+      background: var(--mango-dark); color: white;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(224,123,57,0.3);
+    }
+    .btn-whatsapp-sm {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0.5rem; width: 100%;
+      background: white; color: var(--leaf);
+      padding: 0.75rem; border-radius: 50px;
+      font-weight: 700; font-size: 0.9rem;
+      text-decoration: none;
+      border: 2px solid var(--leaf);
+      transition: all 0.2s;
+    }
+    .btn-whatsapp-sm:hover { background: var(--leaf); color: white; }
+
+    /* ── Delivery note ── */
+    .delivery-note {
+      display: flex; gap: 1.5rem; flex-wrap: wrap;
+      padding: 1rem 0; border-top: 1px solid #f0e8d8;
+      margin-top: 1rem;
+    }
+    .delivery-note-item {
+      display: flex; align-items: center; gap: 0.4rem;
+      font-size: 0.78rem; color: #7a5c3e; font-weight: 700;
+    }
+
+    /* ── Content sections ── */
+    .content-section {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 2rem 4rem;
+    }
+    .section-divider {
+      border: none; border-top: 1px solid #e8d9c0;
+      margin: 0 0 3rem;
+    }
+    .section-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: var(--leaf); margin-bottom: 1.5rem;
+    }
+
+    /* ── Story block ── */
+    .story-block {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 3rem; align-items: center; margin-bottom: 3rem;
+    }
+    .story-block img {
+      width: 100%; border-radius: 16px; object-fit: cover;
+      aspect-ratio: 4/3;
+    }
+    .story-block .story-placeholder {
+      width: 100%; border-radius: 16px;
+      aspect-ratio: 4/3;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .story-text p {
+      font-size: 1rem; line-height: 1.85;
+      color: #5a3e2b; margin-bottom: 1rem;
+    }
+    .story-text blockquote {
+      border-left: 3px solid var(--mango);
+      padding-left: 1.25rem; margin: 1.5rem 0;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; color: var(--leaf);
+      font-style: italic; line-height: 1.6;
+    }
+
+    /* ── Fruit profile ── */
+    .fruit-profile-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem; margin-bottom: 2rem;
+    }
+    .profile-card {
+      background: white; border-radius: 14px;
+      padding: 1.25rem; text-align: center;
+      box-shadow: 0 2px 12px rgba(44,24,16,0.05);
+    }
+    .profile-card .profile-icon {
+      font-size: 1.8rem; margin-bottom: 0.5rem;
+      color: var(--mango-dark);
+    }
+    .profile-card .profile-label {
+      font-size: 0.68rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: #9a7a5a; display: block; margin-bottom: 0.3rem;
+    }
+    .profile-card .profile-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; color: var(--leaf); font-weight: 600;
+    }
+
+    /* ── Nutrition ── */
+    .nutrition-card {
+      background: #1C1208; border-radius: 20px;
+      padding: 2rem; color: white;
+      display: grid; grid-template-columns: 1fr 2fr;
+      gap: 2rem; align-items: center;
+    }
+    .nutrition-title-block { text-align: center; }
+    .nutrition-title-block h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; color: var(--mango); margin-bottom: 0.25rem;
+    }
+    .nutrition-title-block p { font-size: 0.8rem; color: rgba(255,255,255,0.45); }
+    .nutrition-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+    }
+    .nutrition-item { text-align: center; }
+    .nutrition-item .n-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; color: white; font-weight: 700; line-height: 1;
+    }
+    .nutrition-item .n-unit { font-size: 0.7rem; color: var(--mango); font-weight: 700; }
+    .nutrition-item .n-label { font-size: 0.7rem; color: rgba(255,255,255,0.45); margin-top: 0.2rem; }
+
+    /* ── Shelf life ── */
+    .shelf-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+    .shelf-card {
+      background: white; border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 2px 12px rgba(44,24,16,0.05);
+      display: flex; align-items: flex-start; gap: 1rem;
+    }
+    .shelf-card i { color: var(--mango-dark); font-size: 1.3rem; margin-top: 0.15rem; flex-shrink: 0; }
+    .shelf-card h4 { font-size: 0.85rem; font-weight: 700; color: var(--leaf); margin-bottom: 0.25rem; }
+    .shelf-card p { font-size: 0.82rem; color: #7a5c3e; line-height: 1.6; }
+
+    /* ── Related products ── */
+    .related-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    }
+    .related-card {
+      background: white; border-radius: 14px; overflow: hidden;
+      box-shadow: 0 2px 12px rgba(44,24,16,0.06);
+      text-decoration: none; transition: transform 0.25s, box-shadow 0.25s;
+      display: block;
+    }
+    .related-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(44,24,16,0.1); }
+    .related-card .related-img {
+      width: 100%; height: 160px; object-fit: cover;
+    }
+    .related-card .related-placeholder {
+      width: 100%; height: 160px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .related-card .related-body { padding: 1rem; }
+    .related-card .related-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; color: var(--leaf); margin-bottom: 0.2rem;
+    }
+    .related-card .related-price { font-size: 0.85rem; color: var(--mango-dark); font-weight: 700; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .product-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .product-info { position: static; }
+      .story-block { grid-template-columns: 1fr; gap: 1.5rem; }
+      .fruit-profile-grid { grid-template-columns: repeat(2, 1fr); }
+      .nutrition-card { grid-template-columns: 1fr; }
+      .nutrition-grid { grid-template-columns: repeat(3, 1fr); }
+      .shelf-grid { grid-template-columns: 1fr; }
+      .related-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .related-grid { grid-template-columns: 1fr; }
+      .fruit-profile-grid { grid-template-columns: repeat(2, 1fr); }
+      .breadcrumb { padding-top: 5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav id="navbar" class="scrolled">
+    <a href="index.html">
+      <img src="Subject.png" alt="Aamrutham" class="nav-logo" />
+    </a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html#story" onclick="closeNav()">Our Story</a></li>
+      <li><a href="index.html#process" onclick="closeNav()">Farm to You</a></li>
+      <li><a href="products.html" onclick="closeNav()">Our Mangoes</a></li>
+    </ul>
+    <div class="cart-icon-wrap" title="View cart" style="cursor:pointer;">
+      <i class="fa-solid fa-bag-shopping"></i>
+      <span class="cart-label">BAG</span>
+      <span class="cart-bubble" style="display:none;">0</span>
+    </div>
+  </nav>
+
+  <!-- ── Cart Overlay + Drawer ── -->
+  <div id="cart-overlay"></div>
+  <div id="cart-drawer">
+    <div class="cart-drawer-header">
+      <h3><i class="fa-solid fa-bag-shopping" style="color:var(--mango-dark);margin-right:0.5rem;font-size:1rem;"></i>Your Cart</h3>
+      <button class="cart-close-btn" onclick="closeCartDrawer()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="cart-items"></div>
+    <div id="cart-footer" style="display:none;">
+      <div class="cart-total-row">
+        <span>Total</span>
+        <span id="cart-total-amt">₹0</span>
+      </div>
+      <button class="cart-checkout-btn" onclick="cartCheckout()">
+        <i class="fa-solid fa-lock fa-xs"></i> Proceed to Checkout
+      </button>
+      <p class="cart-note">Secure checkout · Razorpay</p>
+    </div>
+  </div>
+
+  <!-- ── Breadcrumb ── -->
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i>
+    <a href="products.html">Our Mangoes</a>
+    <i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i>
+    <span id="breadcrumb-name" style="color:#2D5016; font-weight:700;">—</span>
+  </div>
+
+  <!-- ── Product Layout ── -->
+  <div class="product-layout">
+
+    <!-- LEFT: Gallery -->
+    <div>
+      <div class="gallery-main" id="gallery-main">
+        <div class="placeholder-bg" id="main-placeholder" style="display:none;"></div>
+        <img id="main-img" src="" alt="" style="display:none;" />
+      </div>
+      <div class="gallery-thumbs" id="gallery-thumbs"></div>
+    </div>
+
+    <!-- RIGHT: Info -->
+    <div class="product-info">
+      <div class="product-tag-line" id="product-tag"></div>
+      <h1 class="product-title" id="product-title">—</h1>
+      <span class="product-telugu" id="product-telugu"></span>
+      <div class="product-badges" id="product-badges"></div>
+
+      <div class="price-block">
+        <span class="pack-label">Choose Pack Size</span>
+        <div class="pack-options" id="pack-options"></div>
+        <div class="price-row">
+          <div>
+            <div class="price-main" id="price-display">—</div>
+            <div class="price-note">incl. free delivery</div>
+          </div>
+        </div>
+
+        <!-- Pincode check -->
+        <div class="pincode-wrap">
+          <input class="pincode-input" type="tel" id="pincode-input" placeholder="Enter Hyderabad pincode" maxlength="6" pattern="[0-9]{6}" inputmode="numeric" />
+          <button class="pincode-btn" onclick="checkPincode()">Check</button>
+        </div>
+        <div class="pincode-msg" id="pincode-msg"></div>
+
+        <button class="btn-buynow" disabled style="display:inline-flex;align-items:center;gap:0.5rem;border:none;cursor:not-allowed;opacity:0.45;">
+          <i class="fa-solid fa-clock"></i> Orders Opening Soon
+        </button>
+
+        <div class="delivery-note">
+          <div class="delivery-note-item"><i class="fa-solid fa-truck-fast" style="color:var(--mango-dark);"></i> Free delivery ₹500+</div>
+          <div class="delivery-note-item"><i class="fa-solid fa-location-dot" style="color:var(--mango-dark);"></i> Hyderabad only</div>
+          <div class="delivery-note-item"><i class="fa-solid fa-ban" style="color:var(--mango-dark);"></i> Zero pesticides</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Content Sections ── -->
+  <div class="content-section">
+
+    <!-- Backstory -->
+    <hr class="section-divider" />
+    <h2 class="section-heading" data-aos="fade-up" id="story-heading">The Story</h2>
+    <div class="story-block" data-aos="fade-up">
+      <div>
+        <div class="story-placeholder" id="story-img-placeholder" style="display:none;"></div>
+        <img id="story-img" src="" alt="" style="width:100%;border-radius:16px;object-fit:cover;aspect-ratio:4/3;display:none;" />
+      </div>
+      <div class="story-text">
+        <p id="story-p1"></p>
+        <blockquote id="story-quote"></blockquote>
+        <p id="story-p2"></p>
+      </div>
+    </div>
+
+    <!-- Fruit Profile -->
+    <hr class="section-divider" />
+    <h2 class="section-heading" data-aos="fade-up">About This Mango</h2>
+    <div class="fruit-profile-grid" data-aos="fade-up" id="fruit-profile"></div>
+
+    <!-- Nutrition -->
+    <hr class="section-divider" />
+    <h2 class="section-heading" data-aos="fade-up">Nutritional Value <span style="font-size:0.9rem;font-weight:400;color:#9a7a5a;">per 100g</span></h2>
+    <div class="nutrition-card" data-aos="fade-up">
+      <div class="nutrition-title-block">
+        <h3 id="nutrition-name">—</h3>
+        <p>Naturally grown<br/>Zero chemicals</p>
+        <div style="margin-top:1rem;font-size:2.5rem;" id="nutrition-brix-display"></div>
+      </div>
+      <div class="nutrition-grid" id="nutrition-grid"></div>
+    </div>
+
+    <!-- Shelf Life & Precautions -->
+    <hr class="section-divider" style="margin-top:2rem;" />
+    <h2 class="section-heading" data-aos="fade-up">Storage & Care</h2>
+    <div class="shelf-grid" data-aos="fade-up" id="shelf-grid"></div>
+
+    <!-- Related Products -->
+    <hr class="section-divider" style="margin-top:2.5rem;" />
+    <h2 class="section-heading" data-aos="fade-up">You Might Also Like</h2>
+    <div class="related-grid" data-aos="fade-up" id="related-grid"></div>
+
+  </div>
+
+  <!-- ── WhatsApp Float ── -->
+  <a href="https://wa.me/917670826759?text=Hi%20Aamrutham!%20I%20want%20to%20order%20mangoes%20🥭" class="whatsapp-float" target="_blank" rel="noopener" title="Chat with us">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.556 4.117 1.532 5.845L.054 23.486a.5.5 0 00.611.611l5.641-1.478A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.793 9.793 0 01-4.983-1.358l-.356-.213-3.688.966.983-3.595-.233-.37A9.795 9.795 0 012.182 12C2.182 6.569 6.569 2.182 12 2.182S21.818 6.569 21.818 12 17.431 21.818 12 21.818z"/></svg>
+  </a>
+
+  <!-- Scripts -->
+  <script src="cart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 700, easing: 'ease-out-cubic', once: true, offset: 60 });
+
+    // ── Hamburger ──
+    const navToggle = document.getElementById('nav-toggle');
+    const navLinks  = document.getElementById('nav-links');
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+    function closeNav() { navToggle.classList.remove('open'); navLinks.classList.remove('open'); }
+
+    // ── Navbar scroll ──
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 60); });
+
+    // ── Hyderabad pincodes ──
+    const HYD_PINCODES = [
+      500001,500002,500003,500004,500005,500006,500007,500008,500009,500010,
+      500011,500012,500013,500014,500015,500016,500017,500018,500019,500020,
+      500021,500022,500023,500024,500025,500026,500027,500028,500029,500030,
+      500031,500032,500033,500034,500035,500036,500037,500038,500039,500040,
+      500041,500042,500043,500044,500045,500046,500047,500048,500049,500050,
+      500051,500052,500053,500054,500055,500056,500057,500058,500059,500060,
+      500061,500062,500063,500064,500065,500066,500067,500068,500069,500070,
+      500071,500072,500073,500074,500075,500076,500077,500078,500079,500080,
+      500081,500082,500083,500084,500085,500086,500087,500088,500089,500090,
+      500091,500092,500093,500094,500095,500096,500097,500098,500099,500100,
+      501301,501401,501501,501505,501506,502032
+    ];
+
+    function checkPincode() {
+      var val = parseInt(document.getElementById('pincode-input').value);
+      var msg = document.getElementById('pincode-msg');
+      if (!val || String(val).length !== 6) {
+        msg.textContent = 'Please enter a valid 6-digit pincode.';
+        msg.className = 'pincode-msg err';
+        return;
+      }
+      if (HYD_PINCODES.includes(val)) {
+        msg.innerHTML = '<i class="fa-solid fa-circle-check"></i> Delivery available to your area!';
+        msg.className = 'pincode-msg ok';
+      } else {
+        msg.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> Sorry, we deliver within Hyderabad only.';
+        msg.className = 'pincode-msg err';
+      }
+    }
+    document.getElementById('pincode-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') checkPincode();
+    });
+
+    // ── Product data ──
+    var PRODUCTS = {
+      'bobbili-peechu': {
+        id: 'bobbili-peechu',
+        name: 'Bobbili Peechu',
+        telugu: 'బొబ్బిలి పీచు — Pride of Bobbili',
+        tag: 'Heritage Variety · Fine-Fibrous',
+        badges: [
+          { icon: 'fa-droplet', label: 'Brix 19–23', cls: 'gold' },
+          { icon: 'fa-wheat-awn', label: 'Fine-Fibrous', cls: '' },
+          { icon: 'fa-sun', label: 'May–Jun', cls: '' },
+          { icon: 'fa-ban', label: 'Pesticide-Free', cls: '' },
+        ],
+        images: ['assets/Mango variety photos/Bobbili peechu.jpg'],
+        gradient: 'linear-gradient(160deg,#FFF8E1,#FFCC80,#FF8F00)',
+        gradientIcon: 'fa-star',
+        packs: [
+          { label: '6 pcs', price: 699 },
+          { label: '12 pcs', price: 1299 },
+          { label: '18 pcs', price: 1799 },
+        ],
+        story: {
+          heading: 'The Story of Bobbili Peechu',
+          p1: 'Bobbili is a town in Vizianagaram district famous for its veenas, its battle of 1757, and — to those who know — its mangoes. The Bobbili Peechu has been grown on the same red laterite farms here for as long as the oldest farmers can remember. "Peechu" in Telugu describes the fine, silk-like fibres that weave through the fruit\'s amber pulp — not coarse strands but almost invisible threads that carry an intensity of sweetness impossible to find in any hybrid variety. The soil here is iron-rich, slightly acidic, and drains perfectly after the monsoon — conditions that force the tree to concentrate every mineral into the fruit.',
+          quote: '"This is the mango that tastes like memory — eat it once and every other mango feels incomplete." — the way one Bobbili farmer described it, and we have not found a better description since.',
+          p2: 'We source Bobbili Peechu exclusively from farms that have practised zero-chemical natural farming for at least a decade — no pesticides, no synthetic fertilisers, no carbide ripening. Each fruit is hand-selected at peak maturity by farmers who know their trees individually, then naturally ripened on paddy straw in our packing facility. The result is a mango that carries the terroir of Bobbili in every squeeze — complex, floral, and deeply, memorably sweet. Best eaten the traditional way: squeeze the whole fruit in your palms, make a small cut, and drink.',
+          imgGradient: 'linear-gradient(160deg,#3d1200,#7B3F00,#d4820a)',
+        },
+        profile: [
+          { icon: 'fa-droplet', label: 'Texture', value: 'Juicy · Fine-Fibrous' },
+          { icon: 'fa-wind', label: 'Aroma', value: 'Deep Floral & Honey' },
+          { icon: 'fa-face-smile', label: 'Taste', value: 'Complex, Rich Sweet' },
+          { icon: 'fa-scissors', label: 'Best Eaten', value: 'Squeezed & drunk' },
+          { icon: 'fa-calendar', label: 'Season', value: 'May – June' },
+          { icon: 'fa-ruler', label: 'Size', value: 'Medium · 200–280g' },
+        ],
+        nutrition: {
+          brix: '19–23°',
+          items: [
+            { value: '60', unit: 'kcal', label: 'Calories' },
+            { value: '15g', unit: 'carbs', label: 'Carbohydrates' },
+            { value: '13g', unit: 'sugar', label: 'Natural Sugar' },
+            { value: '0.8g', unit: 'protein', label: 'Protein' },
+            { value: '1.6g', unit: 'fibre', label: 'Dietary Fibre' },
+            { value: 'C+A', unit: 'vitamins', label: 'Rich in' },
+          ]
+        },
+        shelf: [
+          { icon: 'fa-temperature-low', title: 'Refrigerate after ripening', body: 'Once ripe, store at 8–12°C. Consume within 3–5 days for best flavour.' },
+          { icon: 'fa-box-open', title: 'Room temperature ripening', body: 'If unripe on arrival, keep at room temperature for 1–2 days until fragrant.' },
+          { icon: 'fa-ban', title: 'Avoid direct sunlight', body: 'Do not leave in direct sun or extreme heat — it accelerates over-ripening.' },
+          { icon: 'fa-hand-holding-heart', title: 'Handle with care', body: 'Mangoes bruise easily. Keep in the box provided until ready to eat.' },
+        ],
+      },
+
+      'mettavalasa-peechu': {
+        id: 'mettavalasa-peechu',
+        name: 'Mettavalasa Peechu',
+        telugu: 'మెట్టవలస పీచు — Fibrous King from the Hills',
+        tag: 'Signature Variety · Heritage',
+        badges: [
+          { icon: 'fa-droplet', label: 'Brix 20–24', cls: 'gold' },
+          { icon: 'fa-wheat-awn', label: 'Fibrous', cls: '' },
+          { icon: 'fa-sun', label: 'May–Jun', cls: '' },
+          { icon: 'fa-ban', label: 'Pesticide-Free', cls: '' },
+        ],
+        images: ['assets/mettavalasa-peechu.jpg'],
+        gradient: 'linear-gradient(160deg,#FFF3CD,#FFD166,#F4A835)',
+        gradientIcon: 'fa-apple-whole',
+        packs: [
+          { label: '6 pcs', price: 699 },
+          { label: '12 pcs', price: 1299 },
+          { label: '18 pcs', price: 1799 },
+        ],
+        story: {
+          heading: 'The Story of Mettavalasa Peechu',
+          p1: 'Mettavalasa is a small village perched on elevated land near Bobbili, where cooler nights and mineral-rich red soil conspire to create something extraordinary. The mango that bears its name is a "Peechu" variety — meaning fibrous — but these are not rough strands. They are gossamer threads of concentrated sweetness that make every mouthful an act of slow, deliberate pleasure. The elevation here, roughly 200 metres above sea level, slows the ripening process just enough to allow sugars to build to extraordinary levels. Brix readings between 20 and 24 are common — among the highest of any fibrous variety anywhere in India.',
+          quote: '"You don\'t eat this mango — you drink it. You don\'t finish it — it finishes you." — the way Mettavalasa farmers describe their most prized fruit to anyone willing to listen.',
+          p2: 'The correct way to eat a Mettavalasa Peechu has been passed down like a ritual: roll the fruit gently between your palms to loosen the pulp from the seed, pinch off the tip, and drink the juice directly. What follows is an experience no glass of mango juice can replicate — intensely floral, fiercely sweet, warm with the memory of the farm it came from. We source exclusively from groves in Mettavalasa village where the trees are over forty years old, farmed without any chemical input. Young trees simply do not produce the same depth of flavour.',
+          imgGradient: 'linear-gradient(160deg,#0f2b06,#2D5016,#6b4200)',
+        },
+        profile: [
+          { icon: 'fa-droplet', label: 'Texture', value: 'Juicy · Silky Fibrous' },
+          { icon: 'fa-wind', label: 'Aroma', value: 'Intense Floral & Sweet' },
+          { icon: 'fa-face-smile', label: 'Taste', value: 'Explosively Sweet' },
+          { icon: 'fa-scissors', label: 'Best Eaten', value: 'Rolled & drunk whole' },
+          { icon: 'fa-calendar', label: 'Season', value: 'May – June' },
+          { icon: 'fa-ruler', label: 'Size', value: 'Medium · 180–260g' },
+        ],
+        nutrition: {
+          brix: '20–24°',
+          items: [
+            { value: '65', unit: 'kcal', label: 'Calories' },
+            { value: '16g', unit: 'carbs', label: 'Carbohydrates' },
+            { value: '14g', unit: 'sugar', label: 'Natural Sugar' },
+            { value: '0.9g', unit: 'protein', label: 'Protein' },
+            { value: '1.8g', unit: 'fibre', label: 'Dietary Fibre' },
+            { value: 'C+A', unit: 'vitamins', label: 'Rich in' },
+          ]
+        },
+        shelf: [
+          { icon: 'fa-temperature-low', title: 'Refrigerate after ripening', body: 'Once ripe, store at 8–12°C. Consume within 3–4 days for best flavour.' },
+          { icon: 'fa-box-open', title: 'Room temperature ripening', body: 'If unripe on arrival, keep at room temperature for 1–2 days until fragrant.' },
+          { icon: 'fa-ban', title: 'Avoid direct sunlight', body: 'Do not leave in direct sun or extreme heat — it accelerates over-ripening.' },
+          { icon: 'fa-hand-holding-heart', title: 'Handle with care', body: 'Mangoes bruise easily. Keep in the box provided until ready to eat.' },
+        ],
+      },
+
+      'kothapalli-kobbari': {
+        id: 'kothapalli-kobbari',
+        name: 'Kothapalli Kobbari',
+        telugu: 'కొత్తపల్లి కొబ్బరి — The Coconut Mango',
+        tag: 'Exotic · Fiberless · Rare',
+        badges: [
+          { icon: 'fa-droplet', label: 'Brix 21–25', cls: 'gold' },
+          { icon: 'fa-wheat-awn', label: 'Fiberless', cls: '' },
+          { icon: 'fa-sun', label: 'Jun–Jul', cls: '' },
+          { icon: 'fa-ban', label: 'Pesticide-Free', cls: '' },
+        ],
+        images: ['assets/Mango variety photos/Kothapalli Kobbari 2026 live.jpg', 'assets/Mango variety photos/kothapilli kobbari_.jpg'],
+        gradient: 'linear-gradient(160deg,#FFF9E5,#FFE082,#FFC107)',
+        gradientIcon: 'fa-droplets',
+        packs: [
+          { label: '6 pcs', price: 849 },
+          { label: '12 pcs', price: 1599 },
+          { label: '18 pcs', price: 2099 },
+        ],
+        story: {
+          heading: 'The Story of Kothapalli Kobbari',
+          p1: 'Kothapalli is a small village in Vizianagaram district where a handful of families have been quietly growing one of India\'s most unusual mangoes for generations — and almost nobody outside the district has ever heard of it. "Kobbari" is the Telugu word for coconut. The name was given by the farmers themselves, and it is precisely accurate: beneath the rich mango sweetness of this fiberless variety lies a faint, unmistakable note of fresh coconut — not artificial, not perfume-like, but real, subtle, and utterly captivating. The pulp is cream-coloured, dense, and completely smooth — no fibre whatsoever — with a Brix reading between 21 and 25 that places it among our sweetest offerings.',
+          quote: '"If you blindfolded someone and gave them a slice of Kothapalli Kobbari, they would ask you which coconut dessert they were eating. Then you show them the mango seed and they cannot believe it." — a farmer from Kothapalli village.',
+          p2: 'We source the Kothapalli Kobbari from a single family grove in Kothapalli village — the same trees that have been producing this variety for over fifty years. The grove is farmed entirely without chemicals, using traditional methods passed down within the family. Because availability is extremely limited, this is the rarest variety in our collection. Each fruit is hand-selected at full maturity, when the skin turns a deep golden-yellow and the coconut aroma is detectable from a metre away. Eat it sliced cold from the refrigerator — the chill sharpens the coconut note magnificently.',
+          imgGradient: 'linear-gradient(160deg,#1a1200,#5a3e00,#c49200)',
+        },
+        profile: [
+          { icon: 'fa-droplet', label: 'Texture', value: 'Creamy · Fiberless' },
+          { icon: 'fa-wind', label: 'Aroma', value: 'Mango + Fresh Coconut' },
+          { icon: 'fa-face-smile', label: 'Taste', value: 'Rich Sweet + Coconut' },
+          { icon: 'fa-scissors', label: 'Best Eaten', value: 'Sliced cold' },
+          { icon: 'fa-calendar', label: 'Season', value: 'June – July' },
+          { icon: 'fa-ruler', label: 'Size', value: 'Medium · 220–300g' },
+        ],
+        nutrition: {
+          brix: '21–25°',
+          items: [
+            { value: '68', unit: 'kcal', label: 'Calories' },
+            { value: '17g', unit: 'carbs', label: 'Carbohydrates' },
+            { value: '15g', unit: 'sugar', label: 'Natural Sugar' },
+            { value: '0.8g', unit: 'protein', label: 'Protein' },
+            { value: '1.2g', unit: 'fibre', label: 'Dietary Fibre' },
+            { value: 'C+B6', unit: 'vitamins', label: 'Rich in' },
+          ]
+        },
+        shelf: [
+          { icon: 'fa-temperature-low', title: 'Refrigerate after ripening', body: 'Once ripe, store at 8–12°C. Consume within 3–5 days for best flavour.' },
+          { icon: 'fa-box-open', title: 'Room temperature ripening', body: 'If unripe on arrival, keep at room temperature for 1–2 days until fragrant.' },
+          { icon: 'fa-ban', title: 'Avoid direct sunlight', body: 'Do not leave in direct sun or extreme heat — it accelerates over-ripening.' },
+          { icon: 'fa-hand-holding-heart', title: 'Handle with care', body: 'Mangoes bruise easily. Keep in the box provided until ready to eat.' },
+        ],
+      },
+
+      'imam-pasand': {
+        id: 'imam-pasand',
+        name: 'Imam Pasand',
+        telugu: 'ఇమామ్ పసంద్ — Also known as Himayat',
+        tag: 'Royal · Dessert Mango · Fiberless',
+        badges: [
+          { icon: 'fa-droplet', label: 'Brix 18–22', cls: 'gold' },
+          { icon: 'fa-wheat-awn', label: 'Fiberless · Creamy', cls: '' },
+          { icon: 'fa-sun', label: 'Jun–Jul', cls: '' },
+          { icon: 'fa-crown', label: 'Royal Variety', cls: 'gold' },
+        ],
+        images: ['assets/Mango variety photos/imam pasand 2026 live_.jpg', 'assets/Mango variety photos/imam pasand 2026 live 2.jpg'],
+        gradient: 'linear-gradient(160deg,#FFF0E0,#FFAB76,#E07B39)',
+        gradientIcon: 'fa-crown',
+        packs: [
+          { label: '6 pcs', price: 999 },
+          { label: '12 pcs', price: 1899 },
+          { label: '18 pcs', price: 2699 },
+        ],
+        story: {
+          heading: 'The Story of Imam Pasand',
+          p1: 'The Imam Pasand — also known as Himayat across Andhra and Telangana — is the royal mango of the Deccan plateau, and it has been treated as such for centuries. Its name translates to "the Imam\'s favourite," a reference to the reverence of Islamic scholars and noblemen who prized it above all others at the courts of Hyderabad. A single fruit can weigh up to 600 grams. The saffron-yellow skin is smooth, the flesh inside is completely fiberless and carries the colour of aged turmeric — dense, custard-like, and so rich that a single slice constitutes a full dessert. The sweetness is profound but never cloying, balanced by a subtle tartness that keeps you reaching for another piece.',
+          quote: '"There is a reason this mango has been called the favourite of learned men for five hundred years. Intelligence recognises the finest things." — a Hyderabad mango merchant, overheard at the Malakpet market.',
+          p2: 'The Imam Pasand has the shortest season of any variety we grow — a narrow window of three to four weeks at the height of summer when conditions are perfect. Outside that window, the fruit does not achieve its characteristic depth of flavour. We grow it on our Bobbili farms using Subhash Palekar\'s zero-budget natural farming methods, allowing the trees to set fruit naturally without any hormonal treatment. The result is a mango of extraordinary size, extraordinary sweetness, and extraordinary scarcity. Once you eat it, you understand why Hyderabad\'s old families would reserve their allocation months in advance.',
+          imgGradient: 'linear-gradient(160deg,#0a0602,#1C1208,#4a2400)',
+        },
+        profile: [
+          { icon: 'fa-droplet', label: 'Texture', value: 'Creamy · Custard-like' },
+          { icon: 'fa-wind', label: 'Aroma', value: 'Saffron, Floral & Rich' },
+          { icon: 'fa-face-smile', label: 'Taste', value: 'Profound · Never Cloying' },
+          { icon: 'fa-scissors', label: 'Best Eaten', value: 'Sliced · as dessert' },
+          { icon: 'fa-calendar', label: 'Season', value: 'June – July (brief)' },
+          { icon: 'fa-ruler', label: 'Size', value: 'Large · 400–600g' },
+        ],
+        nutrition: {
+          brix: '18–22°',
+          items: [
+            { value: '70', unit: 'kcal', label: 'Calories' },
+            { value: '18g', unit: 'carbs', label: 'Carbohydrates' },
+            { value: '16g', unit: 'sugar', label: 'Natural Sugar' },
+            { value: '1g', unit: 'protein', label: 'Protein' },
+            { value: '1g', unit: 'fibre', label: 'Dietary Fibre' },
+            { value: 'C+A', unit: 'vitamins', label: 'Rich in' },
+          ]
+        },
+        shelf: [
+          { icon: 'fa-temperature-low', title: 'Refrigerate after ripening', body: 'Once ripe, store at 8–12°C. Consume within 4–6 days for best flavour.' },
+          { icon: 'fa-box-open', title: 'Room temperature ripening', body: 'If unripe on arrival, keep at room temperature for 2–3 days until fragrant.' },
+          { icon: 'fa-ban', title: 'Avoid direct sunlight', body: 'Do not leave in direct sun or extreme heat — it accelerates over-ripening.' },
+          { icon: 'fa-hand-holding-heart', title: 'Handle with care', body: 'Large and dense — keep in the box provided. Bruising affects flavour.' },
+        ],
+      },
+
+      'panduri-teepi-mamidi': {
+        id: 'panduri-teepi-mamidi',
+        name: 'Panduri Teepi Mamidi',
+        telugu: 'పాండురి తీపి మావిడి — The Village Heirloom',
+        tag: 'Heritage · Juicy · Rare',
+        badges: [
+          { icon: 'fa-droplet', label: 'Brix 20–24', cls: 'gold' },
+          { icon: 'fa-wheat-awn', label: 'Juicy', cls: '' },
+          { icon: 'fa-sun', label: 'May–Jun', cls: '' },
+          { icon: 'fa-ban', label: 'Pesticide-Free', cls: '' },
+        ],
+        images: [],
+        gradient: 'linear-gradient(160deg,#FFF8E1,#FFD54F,#FF8F00)',
+        gradientIcon: 'fa-seedling',
+        packs: [
+          { label: '6 pcs', price: 749 },
+          { label: '12 pcs', price: 1399 },
+          { label: '18 pcs', price: 1899 },
+        ],
+        story: {
+          heading: 'The Story of Panduri Teepi Mamidi',
+          p1: 'Ask a mango expert to name the rarest varieties of Andhra Pradesh and Panduri Teepi Mamidi will almost certainly not come up — because almost nobody outside Panduri village in Vizianagaram district has ever tasted it. "Teepi" simply means sweet in Telugu, but that single word understates what this mango actually is: a buttery, aromatic, completely fiberless fruit with a complex sweetness that reveals itself in layers — first a bright, tropical top note, then a deep honeyed middle, then a long, floral finish that lingers for minutes. The trees in Panduri are old, farmed by families who have no interest in selling to markets and every interest in keeping their grove exactly as it has always been.',
+          quote: '"Why would we sell these trees? Our grandfather planted them. Our children will eat from them. Money cannot buy what time builds." — the family from whose grove we source every single Panduri Teepi Mamidi.',
+          p2: 'We spent two seasons building the trust of one family in Panduri before they agreed to let us bring their mangoes to Hyderabad. The arrangement is simple: they farm exactly as they always have — no changes, no chemicals, no compromises — and we take what they can spare. Availability is extremely limited each season. The fiberless pulp is smooth as cream, the colour is a deep saffron-orange, and the aroma when you cut one open is enough to stop a room mid-conversation. This is a mango you eat slowly, in silence, because it deserves your full attention.',
+          imgGradient: 'linear-gradient(160deg,#1a0f00,#4a2e00,#9a6200)',
+        },
+        profile: [
+          { icon: 'fa-droplet', label: 'Texture', value: 'Buttery · Fiberless' },
+          { icon: 'fa-wind', label: 'Aroma', value: 'Tropical & Deeply Floral' },
+          { icon: 'fa-face-smile', label: 'Taste', value: 'Layered · Honeyed Finish' },
+          { icon: 'fa-scissors', label: 'Best Eaten', value: 'Sliced slowly' },
+          { icon: 'fa-calendar', label: 'Season', value: 'May – June' },
+          { icon: 'fa-ruler', label: 'Size', value: 'Medium · 200–280g' },
+        ],
+        nutrition: {
+          brix: '20–24°',
+          items: [
+            { value: '65', unit: 'kcal', label: 'Calories' },
+            { value: '16g', unit: 'carbs', label: 'Carbohydrates' },
+            { value: '14g', unit: 'sugar', label: 'Natural Sugar' },
+            { value: '0.9g', unit: 'protein', label: 'Protein' },
+            { value: '1.5g', unit: 'fibre', label: 'Dietary Fibre' },
+            { value: 'C+A', unit: 'vitamins', label: 'Rich in' },
+          ]
+        },
+        shelf: [
+          { icon: 'fa-temperature-low', title: 'Refrigerate after ripening', body: 'Once ripe, store at 8–12°C. Consume within 3–5 days for best flavour.' },
+          { icon: 'fa-box-open', title: 'Room temperature ripening', body: 'If unripe on arrival, keep at room temperature for 1–2 days until fragrant.' },
+          { icon: 'fa-ban', title: 'Avoid direct sunlight', body: 'Do not leave in direct sun or extreme heat — it accelerates over-ripening.' },
+          { icon: 'fa-hand-holding-heart', title: 'Handle with care', body: 'Mangoes bruise easily. Keep in the box provided until ready to eat.' },
+        ],
+      },
+
+      'suvarnarekha': {
+        id: 'suvarnarekha',
+        name: 'Suvarnarekha',
+        telugu: 'సువర్ణరేఖ — The Golden Streak',
+        tag: 'Heritage · Andhra Pradesh',
+        badges: [
+          { icon: 'fa-droplet', label: 'Brix 19–23', cls: 'gold' },
+          { icon: 'fa-wheat-awn', label: 'Juicy', cls: '' },
+          { icon: 'fa-sun', label: 'May–Jun', cls: '' },
+          { icon: 'fa-ban', label: 'Pesticide-Free', cls: '' },
+        ],
+        images: ['assets/Mango variety photos/suvarnarekha 2026 live.jpg', 'assets/Mango variety photos/Suvarna rekha 2026 live 2.jpg', 'assets/Mango variety photos/Suvarna rekha_.jpg'],
+        gradient: 'linear-gradient(160deg,#FFFDE7,#FFE57F,#FFB300)',
+        gradientIcon: 'fa-star',
+        packs: [
+          { label: '6 pcs', price: 699 },
+          { label: '12 pcs', price: 1299 },
+          { label: '18 pcs', price: 1799 },
+        ],
+        story: {
+          heading: 'The Story of Suvarnarekha',
+          p1: 'Suvarnarekha means "golden streak" in Telugu — a name given by the farmers who noticed the distinctive bright line that appears along the skin as the fruit approaches peak ripeness. It is nature\'s own indicator, a colour signal evolved over centuries of cultivation to tell you exactly when to eat. The variety is fiberless, with a firm but juicy flesh and an aroma that fills a room the moment you cut the skin. Its sweetness is deep and complex, with a slight citrus brightness that sets it apart from the heavier, richer fibrous mangoes. Among those who grow up in Andhra households, Suvarnarekha is considered the ideal balance — sweet enough to satisfy, light enough to eat three in a sitting.',
+          quote: '"When the gold streak appears, it is ready. When it disappears, you waited too long." — Andhra farming wisdom, simple and exact.',
+          p2: 'The Suvarnarekha is one of the longer-season varieties in our collection, available from May through June — giving it a wider window than many of its rarer counterparts. We grow it across multiple plots on our Bobbili farms using zero-chemical natural farming, allowing each tree to produce at its own pace rather than forcing early yields. The flesh colour is a bright, clear yellow — almost luminous — and the juice yield is exceptional, making it a favourite for fresh mango juice and milkshakes as well as direct consumption. One of those mangoes that works perfectly in every context.',
+          imgGradient: 'linear-gradient(160deg,#1a1400,#4a3c00,#9a8000)',
+        },
+        profile: [
+          { icon: 'fa-droplet', label: 'Texture', value: 'Juicy · Fiberless' },
+          { icon: 'fa-wind', label: 'Aroma', value: 'Bright, Citrus-Floral' },
+          { icon: 'fa-face-smile', label: 'Taste', value: 'Balanced Sweet' },
+          { icon: 'fa-scissors', label: 'Best Eaten', value: 'Sliced · juice · milkshake' },
+          { icon: 'fa-calendar', label: 'Season', value: 'May – June' },
+          { icon: 'fa-ruler', label: 'Size', value: 'Medium · 200–300g' },
+        ],
+        nutrition: {
+          brix: '19–23°',
+          items: [
+            { value: '62', unit: 'kcal', label: 'Calories' },
+            { value: '15g', unit: 'carbs', label: 'Carbohydrates' },
+            { value: '13g', unit: 'sugar', label: 'Natural Sugar' },
+            { value: '0.8g', unit: 'protein', label: 'Protein' },
+            { value: '1.4g', unit: 'fibre', label: 'Dietary Fibre' },
+            { value: 'C+A', unit: 'vitamins', label: 'Rich in' },
+          ]
+        },
+        shelf: [
+          { icon: 'fa-temperature-low', title: 'Refrigerate after ripening', body: 'Once ripe, store at 8–12°C. Consume within 3–5 days for best flavour.' },
+          { icon: 'fa-box-open', title: 'Room temperature ripening', body: 'If unripe on arrival, keep at room temperature for 1–2 days until fragrant.' },
+          { icon: 'fa-ban', title: 'Avoid direct sunlight', body: 'Do not leave in direct sun or extreme heat — it accelerates over-ripening.' },
+          { icon: 'fa-hand-holding-heart', title: 'Handle with care', body: 'Mangoes bruise easily. Keep in the box provided until ready to eat.' },
+        ],
+      },
+
+      'banganapalli': {
+        id: 'banganapalli',
+        name: 'Banganapalli',
+        telugu: 'బంగినపల్లి — The People\'s Mango',
+        tag: 'Classic · Kurnool, Andhra Pradesh',
+        badges: [
+          { icon: 'fa-droplet', label: 'Brix 17–21', cls: 'gold' },
+          { icon: 'fa-wheat-awn', label: 'Fiberless', cls: '' },
+          { icon: 'fa-sun', label: 'Apr–Jun', cls: '' },
+          { icon: 'fa-ban', label: 'Pesticide-Free', cls: '' },
+        ],
+        images: ['assets/Mango variety photos/banganapalli 2026 live.jpg', 'assets/Mango variety photos/banganapalli live 2026_.jpg', 'assets/Mango variety photos/banganapalli.jpg'],
+        gradient: 'linear-gradient(160deg,#FFFBF0,#FFE0A0,#FFC040)',
+        gradientIcon: 'fa-lemon',
+        packs: [
+          { label: '6 pcs', price: 599 },
+          { label: '12 pcs', price: 1099 },
+          { label: '18 pcs', price: 1499 },
+        ],
+        story: {
+          heading: 'The Story of Banganapalli',
+          p1: 'The Banganapalli holds a GI tag — a Geographical Indication certification that recognises it as a product of Banganapalle town in Kurnool district, Andhra Pradesh. It is the mango that most Telugu families grew up with: large, golden-skinned, fiberless, with a mild honey sweetness and delicate fragrance that made it the country\'s most widely consumed premium mango for decades. But "widely consumed" in the market means something very different from what we grow. Commercial Banganapalli is harvested early, sprayed with ethylene, waxed, and stored for weeks before it reaches you. What you get is a pale imitation — correct in shape, wrong in flavour.',
+          quote: '"If Alphonso is the king of Maharashtra, Banganapalli is the king of Andhra. And ours has never been dethroned by a chemical." — our farm manager, with complete seriousness.',
+          p2: 'Our Banganapalli is grown on Bobbili farms and harvested only at natural maturity — when the skin has turned fully golden, the aroma is detectable before you even open the box, and the flesh inside is the colour of fresh butter. No wax, no ethylene, no cold storage before ripening. The difference is not subtle: the fragrance is three times more intense, the flesh is noticeably juicier, and the sweetness has a complexity that commercially grown fruit completely lacks. It is the same variety, grown the way it was meant to be grown — and the result is a mango that reminds you why Banganapalli became famous in the first place.',
+          imgGradient: 'linear-gradient(160deg,#1a0e00,#4a3000,#9a6600)',
+        },
+        profile: [
+          { icon: 'fa-droplet', label: 'Texture', value: 'Smooth · Fiberless' },
+          { icon: 'fa-wind', label: 'Aroma', value: 'Butter · Honey Fragrance' },
+          { icon: 'fa-face-smile', label: 'Taste', value: 'Mild, Balanced Sweet' },
+          { icon: 'fa-scissors', label: 'Best Eaten', value: 'Sliced · milkshake · aam ras' },
+          { icon: 'fa-calendar', label: 'Season', value: 'April – June' },
+          { icon: 'fa-ruler', label: 'Size', value: 'Large · 300–450g' },
+        ],
+        nutrition: {
+          brix: '17–21°',
+          items: [
+            { value: '60', unit: 'kcal', label: 'Calories' },
+            { value: '15g', unit: 'carbs', label: 'Carbohydrates' },
+            { value: '13g', unit: 'sugar', label: 'Natural Sugar' },
+            { value: '0.8g', unit: 'protein', label: 'Protein' },
+            { value: '1.2g', unit: 'fibre', label: 'Dietary Fibre' },
+            { value: 'C+B6', unit: 'vitamins', label: 'Rich in' },
+          ]
+        },
+        shelf: [
+          { icon: 'fa-temperature-low', title: 'Refrigerate after ripening', body: 'Once ripe, store at 8–12°C. Consume within 4–6 days.' },
+          { icon: 'fa-box-open', title: 'Room temperature ripening', body: 'If unripe on arrival, keep at room temperature for 1–2 days until fragrant.' },
+          { icon: 'fa-ban', title: 'Avoid direct sunlight', body: 'Do not leave in direct sun or extreme heat — it accelerates over-ripening.' },
+          { icon: 'fa-hand-holding-heart', title: 'Handle with care', body: 'Mangoes bruise easily. Keep in the box provided until ready to eat.' },
+        ],
+      },
+
+      'chinna-rasalu': {
+        id: 'chinna-rasalu',
+        name: 'Chinna Rasalu',
+        telugu: 'చిన్న రసాలు — The Little Nectar',
+        tag: 'Heritage · AP & Telangana',
+        badges: [
+          { icon: 'fa-droplet', label: 'Brix 21–26', cls: 'gold' },
+          { icon: 'fa-wheat-awn', label: 'Juicy', cls: '' },
+          { icon: 'fa-sun', label: 'May–Jun', cls: '' },
+          { icon: 'fa-ban', label: 'Pesticide-Free', cls: '' },
+        ],
+        images: ['assets/Mango variety photos/chinna rasalu 2026 live_.jpg', 'assets/Mango variety photos/chinna rasalu.jpg'],
+        gradient: 'linear-gradient(160deg,#FFF3E0,#FFCC80,#EF8C00)',
+        gradientIcon: 'fa-droplets',
+        packs: [
+          { label: '6 pcs', price: 649 },
+          { label: '12 pcs', price: 1199 },
+          { label: '18 pcs', price: 1649 },
+        ],
+        story: {
+          heading: 'The Story of Chinna Rasalu',
+          p1: '"Chinna" means small in Telugu. "Rasalu" means juice — or more precisely, nectar. The Chinna Rasalu is a small mango, rarely larger than a large lemon, but it carries a sweetness per gram that exceeds almost every other variety we grow. Brix readings of 21 to 26 are consistent across the season — placing it among the sweetest mangoes in India by any objective measure. Every Telugu household that grew up in AP or Telangana has a story about Chinna Rasalu summers: eating them by the dozen, juice running down your arms, the thin skin tossed aside in a pile while you reach for another. There is nothing restrained or elegant about eating a Chinna Rasalu. That is entirely the point.',
+          quote: '"You cannot eat just one. You cannot eat just five. The Chinna Rasalu does not know the concept of enough." — a customer from Secunderabad, after her first order.',
+          p2: 'The Chinna Rasalu\'s small size comes with a remarkable pulp-to-seed ratio — the seed is proportionally tiny, meaning almost every gram of the fruit is pure, intensely sweet flesh. The skin is paper-thin, which is why the traditional eating method is to roll it gently, pierce the tip with your teeth, and drink the contents. Nothing is wasted. The aroma is distinctly honey-and-floral, the texture is almost liquid — more like a juice concentrate wrapped in skin than a conventional mango. We grow it without chemical inputs on our Bobbili farms, harvesting only when fully ripe. The difference from commercially harvested Chinna Rasalu is stark: more juice, higher sweetness, deeper aroma.',
+          imgGradient: 'linear-gradient(160deg,#1a0a00,#4a2800,#9a5c00)',
+        },
+        profile: [
+          { icon: 'fa-droplet', label: 'Texture', value: 'Very Juicy · Almost Liquid' },
+          { icon: 'fa-wind', label: 'Aroma', value: 'Honey & Floral' },
+          { icon: 'fa-face-smile', label: 'Taste', value: 'Intensely Sweet · Nectar-like' },
+          { icon: 'fa-scissors', label: 'Best Eaten', value: 'Pierced & drunk whole' },
+          { icon: 'fa-calendar', label: 'Season', value: 'May – June' },
+          { icon: 'fa-ruler', label: 'Size', value: 'Small · 100–160g' },
+        ],
+        nutrition: {
+          brix: '21–26°',
+          items: [
+            { value: '68', unit: 'kcal', label: 'Calories' },
+            { value: '17g', unit: 'carbs', label: 'Carbohydrates' },
+            { value: '15g', unit: 'sugar', label: 'Natural Sugar' },
+            { value: '0.8g', unit: 'protein', label: 'Protein' },
+            { value: '1.3g', unit: 'fibre', label: 'Dietary Fibre' },
+            { value: 'C+A', unit: 'vitamins', label: 'Rich in' },
+          ]
+        },
+        shelf: [
+          { icon: 'fa-temperature-low', title: 'Refrigerate after ripening', body: 'Once ripe, store at 8–12°C. Consume within 2–4 days — small mangoes ripen fast.' },
+          { icon: 'fa-box-open', title: 'Room temperature ripening', body: 'If unripe on arrival, keep at room temperature for 1 day until fragrant.' },
+          { icon: 'fa-ban', title: 'Avoid direct sunlight', body: 'Do not leave in direct sun or extreme heat — it accelerates over-ripening.' },
+          { icon: 'fa-hand-holding-heart', title: 'Handle with care', body: 'Small and delicate — handle gently and keep in the box until ready to eat.' },
+        ],
+      },
+
+      'cheruku-rasalu': {
+        id: 'cheruku-rasalu',
+        name: 'Cheruku Rasalu',
+        telugu: 'చెరుకు రసాలు — The Sugarcane Sweetness',
+        tag: 'Heritage · Andhra Pradesh',
+        badges: [
+          { icon: 'fa-droplet', label: 'Brix 22–27', cls: 'gold' },
+          { icon: 'fa-wheat-awn', label: 'Juicy', cls: '' },
+          { icon: 'fa-sun', label: 'May–Jul', cls: '' },
+          { icon: 'fa-ban', label: 'Pesticide-Free', cls: '' },
+        ],
+        images: ['assets/Mango variety photos/cheruku rasalu 2026 live.jpg', 'assets/Mango variety photos/cheruku rasalu.jpg'],
+        gradient: 'linear-gradient(160deg,#F3FFE3,#C8E6A0,#6BAE35)',
+        gradientIcon: 'fa-droplets',
+        packs: [
+          { label: '6 pcs', price: 699 },
+          { label: '12 pcs', price: 1299 },
+          { label: '18 pcs', price: 1799 },
+        ],
+        story: {
+          heading: 'The Story of Cheruku Rasalu',
+          p1: '"Cheruku" is the Telugu word for sugarcane — and the person who named this mango was not exaggerating. The Cheruku Rasalu carries Brix readings between 22 and 27, placing it among the sweetest mango varieties documented anywhere in India. But unlike some extremely high-Brix mangoes that taste one-dimensional, the Cheruku Rasalu has a complexity to its sweetness — a bright, grassy top note reminiscent of fresh sugarcane juice, followed by a deep fruity sweetness, and a lingering finish that stays with you long after the fruit is gone. It is predominantly juicy with a light, almost negligible fibre — the kind that enhances texture rather than interrupting it.',
+          quote: '"This is not sweetness you taste with your tongue. It is sweetness you feel in your chest." — the way a farmer in Vizianagaram described it the first time we visited his grove.',
+          p2: 'The Cheruku Rasalu has a deceptive appearance: its skin stays greenish even at full ripeness, which causes inexperienced buyers to dismiss it as unripe. This is precisely why it remains relatively unknown outside Andhra despite being one of the most exceptional varieties grown here. You must know what you are looking for — a slight yellowing at the base, a sweet grassy fragrance, a slight give when pressed. Our farmers have decades of practice making this judgement, and we harvest only at that precise moment. Eat it the traditional way: roll, squeeze, tear the tip, drink.',
+          imgGradient: 'linear-gradient(160deg,#0a1a00,#1e4a00,#3a8000)',
+        },
+        profile: [
+          { icon: 'fa-droplet', label: 'Texture', value: 'Very Juicy · Light Fibre' },
+          { icon: 'fa-wind', label: 'Aroma', value: 'Fresh Sugarcane & Grass' },
+          { icon: 'fa-face-smile', label: 'Taste', value: 'Sugarcane-Sweet · Complex' },
+          { icon: 'fa-scissors', label: 'Best Eaten', value: 'Rolled & drunk' },
+          { icon: 'fa-calendar', label: 'Season', value: 'May – July' },
+          { icon: 'fa-ruler', label: 'Size', value: 'Medium · 180–260g' },
+        ],
+        nutrition: {
+          brix: '22–27°',
+          items: [
+            { value: '72', unit: 'kcal', label: 'Calories' },
+            { value: '18g', unit: 'carbs', label: 'Carbohydrates' },
+            { value: '16g', unit: 'sugar', label: 'Natural Sugar' },
+            { value: '0.9g', unit: 'protein', label: 'Protein' },
+            { value: '1.2g', unit: 'fibre', label: 'Dietary Fibre' },
+            { value: 'C+A', unit: 'vitamins', label: 'Rich in' },
+          ]
+        },
+        shelf: [
+          { icon: 'fa-temperature-low', title: 'Refrigerate after ripening', body: 'Once ripe, store at 8–12°C. Consume within 3–5 days for best flavour.' },
+          { icon: 'fa-box-open', title: 'Room temperature ripening', body: 'If unripe on arrival, keep at room temperature for 1–2 days. Stays green even when ripe.' },
+          { icon: 'fa-ban', title: 'Avoid direct sunlight', body: 'Do not leave in direct sun or extreme heat — it accelerates over-ripening.' },
+          { icon: 'fa-hand-holding-heart', title: 'Handle with care', body: 'Mangoes bruise easily. Keep in the box provided until ready to eat.' },
+        ],
+      },
+
+      'panchadara-kalisa': {
+        id: 'panchadara-kalisa',
+        name: 'Panchadara Kalisa',
+        telugu: 'పంచదార కలిస — The Sugar Pot',
+        tag: 'Heritage · East Godavari',
+        badges: [
+          { icon: 'fa-droplet', label: 'Brix 20–25', cls: 'gold' },
+          { icon: 'fa-wheat-awn', label: 'Juicy', cls: '' },
+          { icon: 'fa-sun', label: 'May–Jun', cls: '' },
+          { icon: 'fa-ban', label: 'Pesticide-Free', cls: '' },
+        ],
+        images: ['assets/Mango variety photos/panchadara kalisa.jpg'],
+        gradient: 'linear-gradient(160deg,#FFF8F0,#FFD0A0,#FF9040)',
+        gradientIcon: 'fa-jar',
+        packs: [
+          { label: '6 pcs', price: 749 },
+          { label: '12 pcs', price: 1399 },
+          { label: '18 pcs', price: 1899 },
+        ],
+        story: {
+          heading: 'The Story of Panchadara Kalisa',
+          p1: '"Panchadara" is the Telugu word for sugar. "Kalisa" means mixed or blended. The name is both a description and a warning: this mango is not sweet like most mangoes are sweet. It is sweet the way a well-made syrup is sweet — concentrated, full, enveloping. From East Godavari district, a region where the Godavari river deposits rich alluvial silt into the soil every monsoon, this variety has been cultivated on the same floodplain farms for generations. The alluvial soil gives the fruit an unusual density of flavour — minerals drawn from river sediment across hundreds of kilometres, concentrated into a fruit the size of your fist.',
+          quote: '"You don\'t add sugar to this mango. This mango is the sugar, and everything else at the table knows it." — the way East Godavari farmers describe their proudest variety.',
+          p2: 'The Panchadara Kalisa has a distinctive pot-like shape — wider in the middle than at either end — that has given it a second nickname in some villages: the "sugar pot." The skin is thick, which protects the exceptionally juicy flesh inside and gives it a longer shelf life than most heritage varieties. The flesh is smooth, almost fiberless, with a bright orange colour and a honey-floral aroma that is detectable even before the fruit is cut. We source it from farms in East Godavari that use traditional flood-irrigation methods and zero chemical inputs — a combination that produces a sweetness so complete it genuinely needs no accompaniment.',
+          imgGradient: 'linear-gradient(160deg,#1a0800,#4a2200,#9a5000)',
+        },
+        profile: [
+          { icon: 'fa-droplet', label: 'Texture', value: 'Juicy · Almost Fiberless' },
+          { icon: 'fa-wind', label: 'Aroma', value: 'Honey · Floral · Rich' },
+          { icon: 'fa-face-smile', label: 'Taste', value: 'Concentrated Sweet' },
+          { icon: 'fa-scissors', label: 'Best Eaten', value: 'Sliced · eat as dessert' },
+          { icon: 'fa-calendar', label: 'Season', value: 'May – June' },
+          { icon: 'fa-ruler', label: 'Size', value: 'Medium · 200–280g' },
+        ],
+        nutrition: {
+          brix: '20–25°',
+          items: [
+            { value: '67', unit: 'kcal', label: 'Calories' },
+            { value: '17g', unit: 'carbs', label: 'Carbohydrates' },
+            { value: '15g', unit: 'sugar', label: 'Natural Sugar' },
+            { value: '0.9g', unit: 'protein', label: 'Protein' },
+            { value: '1.4g', unit: 'fibre', label: 'Dietary Fibre' },
+            { value: 'C+A', unit: 'vitamins', label: 'Rich in' },
+          ]
+        },
+        shelf: [
+          { icon: 'fa-temperature-low', title: 'Refrigerate after ripening', body: 'Once ripe, store at 8–12°C. Consume within 3–5 days for best flavour.' },
+          { icon: 'fa-box-open', title: 'Room temperature ripening', body: 'If unripe on arrival, keep at room temperature for 1–2 days until fragrant.' },
+          { icon: 'fa-ban', title: 'Avoid direct sunlight', body: 'Do not leave in direct sun or extreme heat — it accelerates over-ripening.' },
+          { icon: 'fa-hand-holding-heart', title: 'Handle with care', body: 'Mangoes bruise easily. Keep in the box provided until ready to eat.' },
+        ],
+      },
+    };
+
+    // ── Render page ──
+    function renderProduct(p) {
+      // Title / meta
+      document.title = p.name + ' — Aamrutham';
+      document.getElementById('breadcrumb-name').textContent = p.name;
+      document.getElementById('product-tag').textContent = p.tag;
+      document.getElementById('product-title').textContent = p.name;
+      document.getElementById('product-telugu').textContent = p.telugu;
+      document.getElementById('story-heading').textContent = p.story.heading;
+      document.getElementById('nutrition-name').textContent = p.name;
+      document.getElementById('nutrition-brix-display').innerHTML = '<span style="color:var(--mango);font-family:\'Playfair Display\',serif;font-size:1rem;">Brix</span><br/><span style="font-size:2rem;font-weight:700;">' + p.nutrition.brix + '</span>';
+
+      // Badges
+      var badgesHtml = p.badges.map(function(b) {
+        return '<span class="pbadge ' + b.cls + '"><i class="fa-solid ' + b.icon + '"></i> ' + b.label + '</span>';
+      }).join('');
+      document.getElementById('product-badges').innerHTML = badgesHtml;
+
+      // Gallery
+      var mainImg = document.getElementById('main-img');
+      var mainPlaceholder = document.getElementById('main-placeholder');
+      mainPlaceholder.style.background = p.gradient;
+      mainPlaceholder.innerHTML = '<i class="fa-solid ' + p.gradientIcon + '" style="font-size:6rem;color:rgba(0,0,0,0.15);"></i>';
+      if (p.images && p.images.length > 0) {
+        mainImg.onerror = function() {
+          this.style.display = 'none';
+          mainPlaceholder.style.display = 'flex';
+        };
+        mainImg.onload = function() {
+          this.style.display = '';
+          mainPlaceholder.style.display = 'none';
+        };
+        mainImg.alt = p.name;
+        mainImg.src = p.images[0];
+      } else {
+        mainImg.style.display = 'none';
+        mainPlaceholder.style.display = 'flex';
+      }
+
+      var thumbsHtml = p.images.map(function(src, i) {
+        return '<div class="gallery-thumb ' + (i === 0 ? 'active' : '') + '" onclick="switchImg(\'' + src + '\', this)">' +
+          '<img src="' + src + '" alt="' + p.name + ' ' + (i+1) + '" onerror="this.parentElement.style.background=\'' + p.gradient + '\'" />' +
+          '</div>';
+      }).join('');
+      document.getElementById('gallery-thumbs').innerHTML = thumbsHtml;
+
+      // Packs
+      var packsHtml = p.packs.map(function(pk, i) {
+        return '<button class="pack-btn ' + (i===0?'selected':'') + '" onclick="selectPack(this)">' + pk.label + '</button>';
+      }).join('');
+      document.getElementById('pack-options').innerHTML = packsHtml;
+      document.getElementById('price-display').innerHTML = '<span style="font-size:1rem;font-weight:700;color:#9a7a5a;letter-spacing:0.08em;text-transform:uppercase;">Pricing Coming Soon</span>';
+
+      // CTA
+      var waMsg = encodeURIComponent('Hi Aamrutham! I\u2019d like to pre-order *' + p.name + '* \uD83E\uDD6D Could you share availability and pricing? (Pack of 12 or 24)');
+      var btnWa = document.getElementById('btn-whatsapp');
+      if (btnWa) btnWa.href = 'https://wa.me/917670826759?text=' + waMsg;
+
+      // Story
+      document.getElementById('story-p1').textContent = p.story.p1;
+      document.getElementById('story-quote').textContent = p.story.quote;
+      document.getElementById('story-p2').textContent = p.story.p2;
+      var storyImg = document.getElementById('story-img');
+      var storyPlaceholder = document.getElementById('story-img-placeholder');
+      storyPlaceholder.style.background = p.story.imgGradient;
+      storyPlaceholder.innerHTML = '<i class="fa-solid fa-seedling" style="font-size:4rem;color:rgba(255,255,255,0.2);"></i>';
+      if (p.images && p.images.length > 0) {
+        storyImg.onerror = function() { this.style.display = 'none'; storyPlaceholder.style.display = 'flex'; };
+        storyImg.onload  = function() { this.style.display = ''; storyPlaceholder.style.display = 'none'; };
+        storyImg.src = p.images[0];
+      } else {
+        storyImg.style.display = 'none';
+        storyPlaceholder.style.display = 'flex';
+      }
+
+      // Fruit profile
+      var profileHtml = p.profile.map(function(item) {
+        return '<div class="profile-card">' +
+          '<div class="profile-icon"><i class="fa-solid ' + item.icon + '"></i></div>' +
+          '<span class="profile-label">' + item.label + '</span>' +
+          '<span class="profile-value">' + item.value + '</span>' +
+          '</div>';
+      }).join('');
+      document.getElementById('fruit-profile').innerHTML = profileHtml;
+
+      // Nutrition
+      var nutHtml = p.nutrition.items.map(function(n) {
+        return '<div class="nutrition-item">' +
+          '<div class="n-value">' + n.value + '</div>' +
+          '<div class="n-unit">' + n.unit + '</div>' +
+          '<div class="n-label">' + n.label + '</div>' +
+          '</div>';
+      }).join('');
+      document.getElementById('nutrition-grid').innerHTML = nutHtml;
+
+      // Shelf life
+      var shelfHtml = p.shelf.map(function(s) {
+        return '<div class="shelf-card">' +
+          '<i class="fa-solid ' + s.icon + '"></i>' +
+          '<div><h4>' + s.title + '</h4><p>' + s.body + '</p></div>' +
+          '</div>';
+      }).join('');
+      document.getElementById('shelf-grid').innerHTML = shelfHtml;
+
+      // Related products
+      var others = Object.values(PRODUCTS).filter(function(x) { return x.id !== p.id; });
+      var relHtml = others.map(function(r) {
+        return '<a class="related-card" href="product.html?id=' + r.id + '">' +
+          '<img class="related-img" src="' + r.images[0] + '" alt="' + r.name + '" ' +
+          'onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'" />' +
+          '<div class="related-placeholder" style="background:' + r.gradient + ';display:none;">' +
+          '<i class="fa-solid ' + r.gradientIcon + '" style="font-size:3rem;color:rgba(0,0,0,0.15);"></i></div>' +
+          '<div class="related-body">' +
+          '<div class="related-name">' + r.name + '</div>' +
+          '<div class="related-price" style="color:#9a7a5a;">Coming Soon</div>' +
+          '</div></a>';
+      }).join('');
+      document.getElementById('related-grid').innerHTML = relHtml;
+    }
+
+    function switchImg(src, thumb) {
+      var mainImg = document.getElementById('main-img');
+      var mainPlaceholder = document.getElementById('main-placeholder');
+      mainImg.style.opacity = '0';
+      setTimeout(function() {
+        mainImg.onerror = function() { this.style.display = 'none'; mainPlaceholder.style.display = 'flex'; };
+        mainImg.onload  = function() { this.style.display = ''; mainPlaceholder.style.display = 'none'; this.style.opacity = '1'; };
+        mainImg.src = src;
+      }, 200);
+      document.querySelectorAll('.gallery-thumb').forEach(function(t) { t.classList.remove('active'); });
+      thumb.classList.add('active');
+    }
+
+    function selectPack(btn) {
+      document.querySelectorAll('.pack-btn').forEach(function(b) { b.classList.remove('selected'); });
+      btn.classList.add('selected');
+    }
+
+    // ── Init ──
+    var params = new URLSearchParams(window.location.search);
+    var id = params.get('id') || 'bobbili-peechu';
+    if (params.get('id') && !PRODUCTS[params.get('id')]) {
+      window.location.replace('products.html');
+    }
+    var product = PRODUCTS[id] || PRODUCTS['bobbili-peechu'];
+    window._currentProduct = product; // expose for cart.js
+    renderProduct(product);
+  </script>
+</body>
+</html>

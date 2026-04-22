@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout — Aamrutham</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+  <style>
+    :root {
+      --mango:      #F5A623;
+      --mango-deep: #D4861A;
+      --leaf:       #2D5016;
+      --leaf-light: #3d6b1e;
+      --cream:      #FFF8EC;
+      --cream-dark: #F5EDD8;
+      --ink:        #1C1208;
+      --text:       #3d2c0f;
+      --muted:      #8a7055;
+      --border:     #e8d9be;
+      --success:    #2D5016;
+      --error:      #c0392b;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--cream);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    .checkout-header {
+      background: var(--ink);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+      border-bottom: 2px solid var(--mango);
+    }
+    .checkout-header a {
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      display: flex; align-items: center; gap: 0.4rem;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+    .checkout-header a:hover { opacity: 1; }
+    .header-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: var(--mango);
+      letter-spacing: 0.02em;
+    }
+    .header-step {
+      font-size: 0.8rem;
+      color: rgba(255,248,236,0.5);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    /* ── Progress Bar ── */
+    .progress-bar {
+      background: var(--cream-dark);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      gap: 0;
+      align-items: center;
+      justify-content: center;
+    }
+    .progress-step {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted);
+      transition: color 0.3s;
+    }
+    .progress-step.active { color: var(--leaf); }
+    .progress-step.done { color: var(--mango-deep); }
+    .progress-dot {
+      width: 24px; height: 24px; border-radius: 50%;
+      border: 2px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; font-weight: 700;
+      transition: all 0.3s;
+      background: white;
+    }
+    .progress-step.active .progress-dot { border-color: var(--leaf); background: var(--leaf); color: white; }
+    .progress-step.done .progress-dot { border-color: var(--mango); background: var(--mango); color: white; }
+    .progress-line {
+      flex: 1; max-width: 60px; height: 2px;
+      background: var(--border); margin: 0 0.5rem;
+      transition: background 0.3s;
+    }
+    .progress-line.done { background: var(--mango); }
+
+    /* ── Layout ── */
+    .checkout-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    /* ── Panels ── */
+    .panel {
+      background: white;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: 0 4px 32px rgba(44,24,16,0.06);
+    }
+    .panel-head {
+      padding: 1.4rem 1.75rem 1.2rem;
+      border-bottom: 1px solid var(--cream-dark);
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .panel-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--cream-dark);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; color: var(--leaf);
+    }
+    .panel-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; font-weight: 600;
+      color: var(--ink);
+    }
+    .panel-subtitle { font-size: 0.78rem; color: var(--muted); margin-top: 0.1rem; }
+    .panel-body { padding: 1.5rem 1.75rem; }
+
+    /* ── Form ── */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-full { grid-column: 1 / -1; }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+    .form-label {
+      font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .form-label span { color: var(--error); margin-left: 2px; }
+    .form-input, .form-select, .form-textarea {
+      background: var(--cream);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 0.7rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--ink);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      width: 100%;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--leaf);
+      box-shadow: 0 0 0 3px rgba(45,80,22,0.1);
+      background: white;
+    }
+    .form-input.error { border-color: var(--error); }
+    .form-error { font-size: 0.75rem; color: var(--error); display: none; }
+    .form-input.error + .form-error { display: block; }
+    .form-textarea { resize: vertical; min-height: 80px; }
+    .form-hint { font-size: 0.72rem; color: var(--muted); margin-top: 0.2rem; }
+
+    .phone-wrap { display: flex; gap: 0; }
+    .phone-prefix {
+      background: var(--cream-dark);
+      border: 1.5px solid var(--border);
+      border-right: none;
+      border-radius: 10px 0 0 10px;
+      padding: 0.7rem 0.85rem;
+      font-size: 0.88rem; font-weight: 600;
+      color: var(--muted);
+      display: flex; align-items: center; gap: 0.35rem;
+      white-space: nowrap;
+    }
+    .phone-prefix img { width: 18px; }
+    .phone-wrap .form-input { border-radius: 0 10px 10px 0; }
+
+    .section-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--mango-deep);
+      margin: 1.5rem 0 1rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1; height: 1px; background: var(--cream-dark);
+    }
+    .section-label:first-child { margin-top: 0; }
+
+    /* ── Order Summary ── */
+    .order-items { display: flex; flex-direction: column; gap: 1rem; }
+    .order-item {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 0.75rem;
+      background: var(--cream);
+      border-radius: 12px;
+      border: 1px solid var(--cream-dark);
+    }
+    .order-item-img {
+      width: 56px; height: 56px; border-radius: 10px;
+      object-fit: cover; flex-shrink: 0;
+      background: var(--cream-dark);
+    }
+    .order-item-img-placeholder {
+      width: 56px; height: 56px; border-radius: 10px;
+      background: var(--cream-dark);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; flex-shrink: 0;
+    }
+    .order-item-info { flex: 1; min-width: 0; }
+    .order-item-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.92rem; font-weight: 600; color: var(--ink);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .order-item-meta { font-size: 0.78rem; color: var(--muted); margin-top: 0.1rem; }
+    .order-item-qty {
+      display: flex; align-items: center; gap: 0.5rem;
+      margin-top: 0.4rem;
+    }
+    .qty-btn {
+      width: 24px; height: 24px; border-radius: 6px;
+      border: 1.5px solid var(--border);
+      background: white; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; color: var(--text);
+      transition: all 0.15s;
+    }
+    .qty-btn:hover { border-color: var(--leaf); color: var(--leaf); }
+    .qty-val { font-size: 0.85rem; font-weight: 600; min-width: 20px; text-align: center; }
+    .order-item-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem; font-weight: 500;
+      color: var(--ink); text-align: right; flex-shrink: 0;
+    }
+    .remove-item {
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 0.75rem;
+      transition: color 0.2s; padding: 0.2rem;
+    }
+    .remove-item:hover { color: var(--error); }
+
+    .empty-cart {
+      text-align: center; padding: 2.5rem 1rem;
+      color: var(--muted);
+    }
+    .empty-cart i { font-size: 2.5rem; color: var(--border); display: block; margin-bottom: 0.75rem; }
+    .empty-cart p { margin-bottom: 1rem; font-size: 0.9rem; }
+    .empty-cart a {
+      color: var(--leaf); text-decoration: none; font-weight: 600;
+      font-size: 0.88rem;
+    }
+
+    /* ── Totals ── */
+    .totals { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--border); }
+    .total-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.35rem 0;
+      font-size: 0.88rem; color: var(--text);
+    }
+    .total-row.subtotal { color: var(--muted); font-size: 0.83rem; }
+    .total-row.delivery { color: var(--muted); font-size: 0.83rem; }
+    .total-row.grand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 600;
+      color: var(--ink);
+      padding-top: 0.75rem; margin-top: 0.4rem;
+      border-top: 1.5px solid var(--border);
+    }
+    .free-badge {
+      background: #e8f5e9; color: #2D5016;
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.15rem 0.5rem; border-radius: 20px;
+    }
+
+    /* ── Promo Code ── */
+    .promo-wrap {
+      display: flex; gap: 0.5rem;
+      margin-top: 1.25rem; padding-top: 1.25rem;
+      border-top: 1px solid var(--cream-dark);
+    }
+    .promo-input {
+      flex: 1;
+      background: var(--cream);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 0.6rem 0.9rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem; color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s;
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .promo-input:focus { border-color: var(--leaf); }
+    .promo-apply {
+      background: var(--cream-dark);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 0.6rem 1rem;
+      font-size: 0.82rem; font-weight: 600;
+      color: var(--text); cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .promo-apply:hover { border-color: var(--leaf); color: var(--leaf); }
+
+    /* ── Trust Badges ── */
+    .trust-strip {
+      display: flex; gap: 0.5rem; flex-wrap: wrap;
+      margin-top: 1.25rem; padding-top: 1.25rem;
+      border-top: 1px solid var(--cream-dark);
+    }
+    .trust-badge {
+      display: flex; align-items: center; gap: 0.4rem;
+      font-size: 0.72rem; font-weight: 500; color: var(--muted);
+      background: var(--cream); border-radius: 20px;
+      padding: 0.3rem 0.6rem; border: 1px solid var(--cream-dark);
+    }
+    .trust-badge i { color: var(--leaf); font-size: 0.7rem; }
+
+    /* ── Pay Button ── */
+    .pay-btn {
+      width: 100%;
+      background: var(--leaf);
+      color: white;
+      border: none;
+      border-radius: 14px;
+      padding: 1rem 1.5rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem; font-weight: 600;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 6px 24px rgba(45,80,22,0.25);
+      margin-top: 1.5rem;
+      letter-spacing: 0.02em;
+    }
+    .pay-btn:hover:not(:disabled) { background: var(--leaf-light); transform: translateY(-1px); box-shadow: 0 10px 32px rgba(45,80,22,0.3); }
+    .pay-btn:active:not(:disabled) { transform: translateY(0); }
+    .pay-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .pay-btn .pay-amount {
+      background: rgba(255,255,255,0.15);
+      border-radius: 8px; padding: 0.15rem 0.6rem;
+      font-size: 0.9rem;
+    }
+
+    /* ── Gift Toggle ── */
+    .toggle-switch { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .toggle-slider {
+      position: absolute; inset: 0; background: var(--border);
+      border-radius: 24px; cursor: pointer; transition: background 0.2s;
+    }
+    .toggle-slider::before {
+      content: ''; position: absolute; width: 18px; height: 18px; border-radius: 50%;
+      background: white; left: 3px; top: 3px; transition: transform 0.2s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
+    .toggle-switch input:checked + .toggle-slider { background: var(--leaf); }
+    .toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
+
+    .secure-note {
+      text-align: center;
+      font-size: 0.72rem; color: var(--muted);
+      margin-top: 0.75rem;
+      display: flex; align-items: center; justify-content: center; gap: 0.35rem;
+    }
+    .secure-note i { color: var(--leaf); }
+
+    /* ── Success State ── */
+    #success-screen {
+      display: none;
+      position: fixed; inset: 0;
+      background: var(--cream);
+      z-index: 1000;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+    #success-screen.show { display: flex; }
+    .success-icon {
+      width: 90px; height: 90px; border-radius: 50%;
+      background: #e8f5e9;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem; color: var(--leaf);
+      margin-bottom: 1.5rem;
+      animation: pop 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @keyframes pop {
+      from { transform: scale(0); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+    .success-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 700;
+      color: var(--ink); margin-bottom: 0.5rem;
+    }
+    .success-sub { color: var(--muted); font-size: 0.95rem; max-width: 380px; line-height: 1.7; }
+    .success-id {
+      background: var(--cream-dark);
+      border-radius: 10px; padding: 0.6rem 1.25rem;
+      font-size: 0.82rem; color: var(--text);
+      margin: 1.25rem 0;
+      font-family: monospace; letter-spacing: 0.05em;
+    }
+    .success-actions { display: flex; gap: 0.75rem; margin-top: 0.5rem; }
+    .btn-back-home {
+      background: var(--leaf); color: white;
+      border: none; border-radius: 50px;
+      padding: 0.75rem 1.75rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem; font-weight: 600;
+      cursor: pointer; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-back-home:hover { background: var(--leaf-light); }
+    .btn-wa-confirm {
+      background: #25D366; color: white;
+      border: none; border-radius: 50px;
+      padding: 0.75rem 1.75rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem; font-weight: 600;
+      cursor: pointer; text-decoration: none;
+      display: flex; align-items: center; gap: 0.4rem;
+      transition: background 0.2s;
+    }
+    .btn-wa-confirm:hover { background: #1fba58; }
+
+    /* ── Loading Spinner ── */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 800px) {
+      .checkout-wrap {
+        grid-template-columns: 1fr;
+        padding: 1.25rem 1rem 4rem;
+        gap: 1.25rem;
+      }
+      /* Show summary below form on mobile */
+      .order-panel { order: -1; }
+      .form-grid { grid-template-columns: 1fr; }
+      .checkout-header { padding: 0.85rem 1.25rem; }
+      .header-step { display: none; }
+    }
+
+    /* ── Delivery Option Tiles ── */
+    .delivery-options { display: flex; gap: 0.75rem; }
+    .delivery-tile {
+      flex: 1; padding: 0.85rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 12px; cursor: pointer;
+      transition: all 0.2s; position: relative;
+      background: var(--cream);
+    }
+    .delivery-tile input[type=radio] { position: absolute; opacity: 0; }
+    .delivery-tile.selected { border-color: var(--leaf); background: white; box-shadow: 0 0 0 3px rgba(45,80,22,0.1); }
+    .delivery-tile-title { font-size: 0.85rem; font-weight: 600; color: var(--ink); margin-bottom: 0.15rem; }
+    .delivery-tile-sub { font-size: 0.75rem; color: var(--muted); }
+    .delivery-tile-price { font-size: 0.8rem; font-weight: 700; color: var(--leaf); margin-top: 0.3rem; }
+    .delivery-check {
+      position: absolute; top: 0.5rem; right: 0.5rem;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--leaf); color: white;
+      display: none; align-items: center; justify-content: center;
+      font-size: 0.6rem;
+    }
+    .delivery-tile.selected .delivery-check { display: flex; }
+
+    /* ── Floating ornament ── */
+    .ornament {
+      position: fixed; pointer-events: none; z-index: 0;
+      opacity: 0.04; font-size: 18rem;
+      user-select: none;
+    }
+    .ornament-1 { bottom: -3rem; right: -3rem; transform: rotate(-20deg); }
+    .ornament-2 { top: 8rem; left: -4rem; transform: rotate(15deg); font-size: 12rem; opacity: 0.03; }
+  </style>
+</head>
+<body>
+
+  <!-- Ornaments -->
+  <div class="ornament ornament-1">🥭</div>
+  <div class="ornament ornament-2">🌿</div>
+
+  <!-- Header -->
+  <header class="checkout-header">
+    <a href="products.html"><i class="fa-solid fa-arrow-left fa-xs"></i> Continue Shopping</a>
+    <span class="header-brand">Aamrutham</span>
+    <span class="header-step">Secure Checkout</span>
+  </header>
+
+  <!-- Progress -->
+  <div class="progress-bar">
+    <div class="progress-step done" id="step-cart">
+      <div class="progress-dot"><i class="fa-solid fa-check" style="font-size:0.6rem;"></i></div>
+      <span>Cart</span>
+    </div>
+    <div class="progress-line done"></div>
+    <div class="progress-step active" id="step-details">
+      <div class="progress-dot">2</div>
+      <span>Details</span>
+    </div>
+    <div class="progress-line" id="line-2"></div>
+    <div class="progress-step" id="step-payment">
+      <div class="progress-dot">3</div>
+      <span>Payment</span>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <main class="checkout-wrap">
+
+    <!-- LEFT: Delivery Form -->
+    <div>
+      <!-- Contact -->
+      <div class="panel" style="margin-bottom: 1.5rem;">
+        <div class="panel-head">
+          <div class="panel-icon"><i class="fa-solid fa-user"></i></div>
+          <div>
+            <div class="panel-title">Contact Details</div>
+            <div class="panel-subtitle">We'll send order updates here</div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">First Name <span>*</span></label>
+              <input id="fname" class="form-input" type="text" placeholder="Ravi" autocomplete="given-name" />
+              <span class="form-error">Required</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name <span>*</span></label>
+              <input id="lname" class="form-input" type="text" placeholder="Kumar" autocomplete="family-name" />
+              <span class="form-error">Required</span>
+            </div>
+            <div class="form-group form-full">
+              <label class="form-label">WhatsApp Number <span>*</span></label>
+              <div class="phone-wrap">
+                <div class="phone-prefix">🇮🇳 +91</div>
+                <input id="phone" class="form-input" type="tel" placeholder="9876543210" maxlength="10" autocomplete="tel" />
+              </div>
+              <span class="form-hint">Order confirmation will be sent on WhatsApp</span>
+              <span class="form-error" id="phone-error">Enter valid 10-digit number</span>
+            </div>
+            <div class="form-group form-full">
+              <label class="form-label">Email Address</label>
+              <input id="email" class="form-input" type="email" placeholder="ravi@email.com" autocomplete="email" />
+              <span class="form-hint">Optional — for invoice copy</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Delivery Address -->
+      <div class="panel" style="margin-bottom: 1.5rem;">
+        <div class="panel-head">
+          <div class="panel-icon"><i class="fa-solid fa-location-dot"></i></div>
+          <div>
+            <div class="panel-title">Delivery Address</div>
+            <div class="panel-subtitle">Currently delivering within Hyderabad</div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="form-grid">
+            <div class="form-group form-full">
+              <label class="form-label">Flat / House No, Building <span>*</span></label>
+              <input id="addr1" class="form-input" type="text" placeholder="Flat 4B, Green Valley Apts" autocomplete="address-line1" />
+              <span class="form-error">Required</span>
+            </div>
+            <div class="form-group form-full">
+              <label class="form-label">Street / Area / Landmark <span>*</span></label>
+              <input id="addr2" class="form-input" type="text" placeholder="Banjara Hills, near Jubilee Hills check post" autocomplete="address-line2" />
+              <span class="form-error">Required</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Pincode <span>*</span></label>
+              <input id="pincode" class="form-input" type="text" placeholder="500034" maxlength="6" />
+              <span class="form-error" id="pin-error">Enter valid pincode</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">City</label>
+              <input id="city" class="form-input" type="text" value="Hyderabad" readonly style="background: var(--cream-dark); color: var(--muted);" />
+            </div>
+            <div class="form-group form-full">
+              <label class="form-label">Delivery Instructions</label>
+              <textarea id="instructions" class="form-textarea" placeholder="Leave at door, call on arrival, prefer morning delivery…"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gift Panel -->
+      <div class="panel" style="margin-bottom: 1.5rem;">
+        <div class="panel-head">
+          <div class="panel-icon"><i class="fa-solid fa-gift"></i></div>
+          <div>
+            <div class="panel-title">Is this a Gift?</div>
+            <div class="panel-subtitle">Add a message and recipient details</div>
+          </div>
+          <label style="margin-left:auto; display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+            <span style="font-size:0.78rem; color:var(--muted);">Gift order</span>
+            <div class="toggle-switch">
+              <input type="checkbox" id="is-gift-toggle" onchange="toggleGiftSection(this.checked)" />
+              <span class="toggle-slider"></span>
+            </div>
+          </label>
+        </div>
+        <div class="panel-body" id="gift-section" style="display:none;">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Recipient Name</label>
+              <input id="gift-to-name" class="form-input" type="text" placeholder="Who is this for?" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Recipient WhatsApp</label>
+              <div class="phone-wrap">
+                <div class="phone-prefix">🇮🇳 +91</div>
+                <input id="gift-to-phone" class="form-input" type="tel" placeholder="9876543210" maxlength="10" />
+              </div>
+            </div>
+            <div class="form-group form-full">
+              <label class="form-label">Gift Message <span style="font-weight:400;text-transform:none;letter-spacing:0;">(optional, max 200 chars)</span></label>
+              <textarea id="gift-message-co" class="form-textarea" maxlength="200" placeholder="Write a personal note to go with the mangoes…"></textarea>
+              <div class="form-hint" id="gift-char-count-co" style="text-align:right;">0 / 200</div>
+            </div>
+            <div class="form-group form-full">
+              <label style="display:flex; align-items:center; gap:0.6rem; cursor:pointer;">
+                <input type="checkbox" id="gift-wrap-co" style="width:16px; height:16px;" onchange="updateTotals()" />
+                <span style="font-size:0.88rem; color:var(--text);">Include premium gift wrapping <strong style="color:var(--mango-deep);">+₹149</strong></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Delivery Slot -->
+      <div class="panel">
+        <div class="panel-head">
+          <div class="panel-icon"><i class="fa-solid fa-truck"></i></div>
+          <div>
+            <div class="panel-title">Delivery Option</div>
+            <div class="panel-subtitle">Freshness guaranteed — harvested to order</div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="delivery-options">
+            <label class="delivery-tile selected" id="tile-standard" onclick="selectDelivery('standard')">
+              <input type="radio" name="delivery" value="standard" checked />
+              <div class="delivery-tile-title">Standard</div>
+              <div class="delivery-tile-sub">3–5 business days</div>
+              <div class="delivery-tile-price" id="std-price">FREE</div>
+              <div class="delivery-check"><i class="fa-solid fa-check" style="font-size:0.55rem;"></i></div>
+            </label>
+            <label class="delivery-tile" id="tile-express" onclick="selectDelivery('express')">
+              <input type="radio" name="delivery" value="express" />
+              <div class="delivery-tile-title">Express</div>
+              <div class="delivery-tile-sub">Next day delivery</div>
+              <div class="delivery-tile-price">+ ₹99</div>
+              <div class="delivery-check"><i class="fa-solid fa-check" style="font-size:0.55rem;"></i></div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Order Summary -->
+    <div class="order-panel">
+      <div class="panel" style="position: sticky; top: 80px;">
+        <div class="panel-head">
+          <div class="panel-icon"><i class="fa-solid fa-basket-shopping"></i></div>
+          <div>
+            <div class="panel-title">Order Summary</div>
+            <div class="panel-subtitle" id="item-count-label">Loading…</div>
+          </div>
+        </div>
+        <div class="panel-body">
+
+          <!-- Items -->
+          <div id="order-items-list" class="order-items">
+            <div style="text-align:center; padding: 1rem; color: var(--muted); font-size:0.85rem;">Loading cart…</div>
+          </div>
+
+          <!-- Promo -->
+          <div class="promo-wrap">
+            <input class="promo-input" id="promo-input" type="text" placeholder="PROMO CODE" />
+            <button class="promo-apply" onclick="applyPromo()">Apply</button>
+          </div>
+          <div id="promo-msg" style="font-size:0.75rem; margin-top: 0.4rem; display:none;"></div>
+
+          <!-- Totals -->
+          <div class="totals">
+            <div class="total-row subtotal">
+              <span>Subtotal</span>
+              <span id="subtotal-amt">—</span>
+            </div>
+            <div class="total-row delivery">
+              <span>Delivery</span>
+              <span id="delivery-amt"><span class="free-badge">FREE</span></span>
+            </div>
+            <div class="total-row" id="discount-row" style="display:none; color: #2D5016;">
+              <span>Discount</span>
+              <span id="discount-amt" style="color: #2D5016;">—</span>
+            </div>
+            <div class="total-row grand">
+              <span>Total</span>
+              <span id="grand-total-amt">—</span>
+            </div>
+          </div>
+
+          <!-- Trust -->
+          <div class="trust-strip">
+            <div class="trust-badge"><i class="fa-solid fa-shield-halved"></i> Secure Payment</div>
+            <div class="trust-badge"><i class="fa-solid fa-leaf"></i> Natural · No Chemicals</div>
+            <div class="trust-badge"><i class="fa-solid fa-rotate-left"></i> Easy Returns</div>
+          </div>
+
+          <!-- Pay Button -->
+          <button class="pay-btn" id="pay-btn" onclick="initiatePayment()" disabled>
+            <i class="fa-solid fa-lock fa-xs"></i>
+            Pay Securely
+            <span class="pay-amount" id="pay-btn-amt">₹0</span>
+          </button>
+          <p class="secure-note"><i class="fa-solid fa-shield-halved"></i> 256-bit SSL secured · Powered by Razorpay</p>
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Success Screen -->
+  <div id="success-screen">
+    <div class="success-icon"><i class="fa-solid fa-check"></i></div>
+    <h1 class="success-title">Order Confirmed! 🥭</h1>
+    <p class="success-sub">Your fresh mangoes are on their way. We'll send updates on WhatsApp and confirm the delivery slot soon.</p>
+    <div class="success-id" id="success-payment-id">Payment ID: —</div>
+    <div class="success-actions">
+      <a href="index.html" class="btn-back-home">Back to Home</a>
+      <button class="btn-wa-confirm" id="wa-confirm-btn" onclick="sendWAConfirm()">
+        <i class="fa-brands fa-whatsapp"></i> Get WhatsApp Update
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // ── Config ──
+    var RAZORPAY_KEY = 'rzp_test_REPLACE_WITH_YOUR_KEY'; // ← replace with your Razorpay key
+    var BUSINESS_PHONE = '917670826759';
+    var CART_KEY = 'aamrutham_cart';
+
+    // ── Product image map ──
+    var PRODUCT_IMAGES = {
+      'bobbili-peechu':      'assets/Mango variety photos/Bobbili peechu.jpg',
+      'mettavalasa-peechu':  'assets/mettavalasa-peechu.jpg',
+      'kothapalli-kobbari':  'assets/Mango variety photos/Kothapalli Kobbari 2026 live.jpg',
+      'imam-pasand':         'assets/Mango variety photos/imam pasand 2026 live_.jpg',
+      'suvarnarekha':        'assets/Mango variety photos/suvarnarekha 2026 live.jpg',
+      'banganapalli':        'assets/Mango variety photos/banganapalli 2026 live.jpg',
+      'chinna-rasalu':       'assets/Mango variety photos/chinna rasalu 2026 live_.jpg',
+      'cheruku-rasalu':      'assets/Mango variety photos/cheruku rasalu 2026 live.jpg',
+      'panchadara-kalisa':   'assets/Mango variety photos/panchadara kalisa.jpg',
+      'panduri-teepi-mamidi': '',
+    };
+
+    var cart = [];
+    var deliveryMode = 'standard';
+    var deliveryFee = 0;
+    var discountAmt = 0;
+    var promoApplied = false;
+    var paymentId = '';
+    var customerPhone = '';
+
+    // ── Init ──
+    function getCart() {
+      try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); }
+      catch(e) { return []; }
+    }
+    function saveCart(c) { localStorage.setItem(CART_KEY, JSON.stringify(c)); }
+
+    function escHtml(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
+
+    function formatINR(n) { return '₹' + n.toLocaleString('en-IN'); }
+
+    function getSubtotal() {
+      return cart.reduce(function(s, i) { return s + i.price * i.qty; }, 0);
+    }
+
+    function getGiftWrapFee() {
+      var el = document.getElementById('gift-wrap-co');
+      var fromCheckout = el && el.checked;
+      var inCart = cart.some(function(i) { return i.id === 'gift-wrapping'; });
+      return (fromCheckout && !inCart) ? 149 : 0;
+    }
+
+    function getTotal() {
+      return getSubtotal() + deliveryFee - discountAmt + getGiftWrapFee();
+    }
+
+    function toggleGiftSection(on) {
+      document.getElementById('gift-section').style.display = on ? 'block' : 'none';
+      updateTotals();
+    }
+
+    function renderCart() {
+      cart = getCart();
+      var list = document.getElementById('order-items-list');
+      var count = cart.reduce(function(s, i) { return s + i.qty; }, 0);
+      document.getElementById('item-count-label').textContent = count + ' item' + (count !== 1 ? 's' : '');
+
+      if (cart.length === 0) {
+        list.innerHTML = '<div class="empty-cart"><i class="fa-solid fa-basket-shopping"></i><p>Your cart is empty</p><a href="products.html">Browse mangoes →</a></div>';
+        document.getElementById('pay-btn').disabled = true;
+        updateTotals();
+        return;
+      }
+
+      list.innerHTML = cart.map(function(item) {
+        var img = PRODUCT_IMAGES[item.id] || '';
+        var imgHtml = img
+          ? '<img class="order-item-img" src="' + escHtml(img) + '" alt="' + escHtml(item.name) + '" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'" /><div class="order-item-img-placeholder" style="display:none;">🥭</div>'
+          : '<div class="order-item-img-placeholder">🥭</div>';
+        var safeKey = item.key.replace(/'/g, "\\'");
+        return '<div class="order-item" id="oi-' + escHtml(item.key.replace(/[^a-z0-9]/gi,'')) + '">' +
+          imgHtml +
+          '<div class="order-item-info">' +
+            '<div class="order-item-name">' + escHtml(item.name) + '</div>' +
+            '<div class="order-item-meta">' + escHtml(item.packLabel) + ' · ' + formatINR(item.price) + ' each</div>' +
+            '<div class="order-item-qty">' +
+              '<button class="qty-btn" onclick="changeQty(\'' + safeKey + '\', -1)"><i class="fa-solid fa-minus" style="font-size:0.6rem;"></i></button>' +
+              '<span class="qty-val">' + item.qty + '</span>' +
+              '<button class="qty-btn" onclick="changeQty(\'' + safeKey + '\', 1)"><i class="fa-solid fa-plus" style="font-size:0.6rem;"></i></button>' +
+            '</div>' +
+          '</div>' +
+          '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.5rem;">' +
+            '<div class="order-item-price">' + formatINR(item.price * item.qty) + '</div>' +
+            '<button class="remove-item" onclick="removeItem(\'' + safeKey + '\')"><i class="fa-solid fa-xmark"></i></button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+
+      updateTotals();
+      document.getElementById('pay-btn').disabled = cart.length === 0;
+    }
+
+    function updateTotals() {
+      var sub = getSubtotal();
+      var total = getTotal();
+      document.getElementById('subtotal-amt').textContent = formatINR(sub);
+      document.getElementById('delivery-amt').innerHTML = deliveryFee === 0
+        ? '<span class="free-badge">FREE</span>'
+        : formatINR(deliveryFee);
+      if (discountAmt > 0) {
+        document.getElementById('discount-row').style.display = 'flex';
+        document.getElementById('discount-amt').textContent = '−' + formatINR(discountAmt);
+      } else {
+        document.getElementById('discount-row').style.display = 'none';
+      }
+      document.getElementById('grand-total-amt').textContent = formatINR(total);
+      document.getElementById('pay-btn-amt').textContent = formatINR(total);
+    }
+
+    function changeQty(key, delta) {
+      cart = getCart();
+      var item = cart.find(function(i) { return i.key === key; });
+      if (!item) return;
+      item.qty = Math.max(1, item.qty + delta);
+      saveCart(cart);
+      renderCart();
+    }
+
+    function removeItem(key) {
+      cart = getCart().filter(function(i) { return i.key !== key; });
+      saveCart(cart);
+      renderCart();
+    }
+
+    function selectDelivery(mode) {
+      deliveryMode = mode;
+      deliveryFee = mode === 'express' ? 99 : 0;
+      document.getElementById('tile-standard').classList.toggle('selected', mode === 'standard');
+      document.getElementById('tile-express').classList.toggle('selected', mode === 'express');
+      updateTotals();
+    }
+
+    function applyPromo() {
+      var code = document.getElementById('promo-input').value.trim().toUpperCase();
+      var msg = document.getElementById('promo-msg');
+      if (!code) return;
+      // Demo promo codes
+      var promos = { 'SUMMER26': 100, 'AAMRUTHAM': 50, 'FIRSTORDER': 150 };
+      if (promos[code]) {
+        discountAmt = promos[code];
+        promoApplied = true;
+        msg.style.display = 'block';
+        msg.style.color = '#2D5016';
+        msg.textContent = '✓ Promo applied — ' + formatINR(promos[code]) + ' off!';
+        updateTotals();
+      } else {
+        msg.style.display = 'block';
+        msg.style.color = '#c0392b';
+        msg.textContent = 'Invalid or expired promo code.';
+      }
+    }
+
+    // ── Validation ──
+    function validate() {
+      var ok = true;
+      var fields = [
+        { id: 'fname', req: true },
+        { id: 'lname', req: true },
+        { id: 'addr1', req: true },
+        { id: 'addr2', req: true },
+      ];
+      fields.forEach(function(f) {
+        var el = document.getElementById(f.id);
+        var val = el.value.trim();
+        if (f.req && !val) { el.classList.add('error'); ok = false; }
+        else { el.classList.remove('error'); }
+      });
+
+      var phone = document.getElementById('phone').value.replace(/\D/g,'');
+      var phoneEl = document.getElementById('phone');
+      if (phone.length !== 10) {
+        phoneEl.classList.add('error');
+        document.getElementById('phone-error').style.display = 'block';
+        ok = false;
+      } else {
+        phoneEl.classList.remove('error');
+        document.getElementById('phone-error').style.display = 'none';
+      }
+
+      var pin = document.getElementById('pincode').value.replace(/\D/g,'');
+      var pinEl = document.getElementById('pincode');
+      if (pin.length !== 6) {
+        pinEl.classList.add('error');
+        document.getElementById('pin-error').style.display = 'block';
+        ok = false;
+      } else {
+        pinEl.classList.remove('error');
+        document.getElementById('pin-error').style.display = 'none';
+      }
+
+      if (!ok) {
+        var firstError = document.querySelector('.form-input.error');
+        if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return ok;
+    }
+
+    // ── Payment ──
+    function initiatePayment() {
+      if (!validate()) return;
+      if (cart.length === 0) return;
+
+      var btn = document.getElementById('pay-btn');
+      btn.disabled = true;
+      btn.innerHTML = '<div class="spinner"></div> Preparing…';
+
+      var fname = document.getElementById('fname').value.trim();
+      var lname = document.getElementById('lname').value.trim();
+      var phone = document.getElementById('phone').value.replace(/\D/g,'');
+      var email = document.getElementById('email').value.trim() || '';
+      customerPhone = phone;
+
+      // Mark step 3 active
+      document.getElementById('step-payment').classList.add('active');
+      document.getElementById('line-2').classList.add('done');
+
+      var total = getTotal();
+
+      var options = {
+        key: RAZORPAY_KEY,
+        amount: total * 100,
+        currency: 'INR',
+        name: 'Aamrutham',
+        description: 'Fresh Natural Mangoes — ' + cart.length + ' variety' + (cart.length > 1 ? 'ies' : ''),
+        image: 'https://charanteja25.github.io/aamrutham/assets/logo.png',
+        handler: function(response) {
+          paymentId = response.razorpay_payment_id;
+          onPaymentSuccess(response);
+        },
+        prefill: {
+          name: fname + ' ' + lname,
+          email: email,
+          contact: '+91' + phone,
+        },
+        notes: (function() {
+          var n = {
+            address: document.getElementById('addr1').value + ', ' + document.getElementById('addr2').value,
+            pincode: document.getElementById('pincode').value,
+            delivery: deliveryMode,
+            instructions: document.getElementById('instructions').value,
+          };
+          if (document.getElementById('is-gift-toggle').checked) {
+            n.gift_order = 'yes';
+            n.gift_to_name = document.getElementById('gift-to-name').value.trim();
+            n.gift_to_phone = '+91' + document.getElementById('gift-to-phone').value.replace(/\D/g,'');
+            n.gift_message = document.getElementById('gift-message-co').value.trim();
+            n.gift_wrapping = document.getElementById('gift-wrap-co').checked ? 'yes' : 'no';
+          }
+          return n;
+        })(),
+        theme: { color: '#2D5016' },
+        modal: {
+          ondismiss: function() {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-lock fa-xs"></i> Pay Securely <span class="pay-amount" id="pay-btn-amt">' + formatINR(total) + '</span>';
+            document.getElementById('step-payment').classList.remove('active');
+            document.getElementById('line-2').classList.remove('done');
+          }
+        }
+      };
+
+      var rzp = new Razorpay(options);
+      rzp.on('payment.failed', function(response) {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-lock fa-xs"></i> Retry Payment <span class="pay-amount">' + formatINR(total) + '</span>';
+        alert('Payment failed: ' + response.error.description + '. Please try again.');
+      });
+      rzp.open();
+    }
+
+    function onPaymentSuccess(response) {
+      localStorage.removeItem(CART_KEY);
+      localStorage.removeItem('aamrutham_gift');
+
+      // Update success screen
+      document.getElementById('success-payment-id').textContent = 'Payment ID: ' + response.razorpay_payment_id;
+      document.getElementById('step-payment').classList.add('done');
+
+      // Show success
+      document.getElementById('success-screen').classList.add('show');
+    }
+
+    function sendWAConfirm() {
+      var items = cart.map(function(i) { return i.name + ' × ' + i.qty + ' (' + i.packLabel + ')'; }).join(', ');
+      var msg = '🥭 *Aamrutham Order Confirmed!*\n\nPayment ID: ' + paymentId + '\n\nItems: ' + items + '\n\nPlease confirm my delivery slot. Thank you!';
+      window.open('https://wa.me/' + BUSINESS_PHONE + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+    }
+
+    // ── Boot ──
+    document.addEventListener('DOMContentLoaded', function() {
+      cart = getCart();
+      renderCart();
+
+      // Live phone format
+      document.getElementById('phone').addEventListener('input', function() {
+        this.value = this.value.replace(/\D/g,'').slice(0,10);
+      });
+      document.getElementById('pincode').addEventListener('input', function() {
+        this.value = this.value.replace(/\D/g,'').slice(0,6);
+      });
+      document.getElementById('gift-to-phone').addEventListener('input', function() {
+        this.value = this.value.replace(/\D/g,'').slice(0,10);
+      });
+      document.getElementById('gift-message-co').addEventListener('input', function() {
+        document.getElementById('gift-char-count-co').textContent = this.value.length + ' / 200';
+      });
+
+      // Pre-fill gift data from products.html gift form
+      try {
+        var savedGift = JSON.parse(localStorage.getItem('aamrutham_gift') || 'null');
+        if (savedGift) {
+          document.getElementById('is-gift-toggle').checked = true;
+          toggleGiftSection(true);
+          if (savedGift.recipientName)  document.getElementById('gift-to-name').value = savedGift.recipientName;
+          if (savedGift.recipientPhone) document.getElementById('gift-to-phone').value = savedGift.recipientPhone;
+          if (savedGift.message) {
+            document.getElementById('gift-message-co').value = savedGift.message;
+            document.getElementById('gift-char-count-co').textContent = savedGift.message.length + ' / 200';
+          }
+          if (savedGift.wrapping) document.getElementById('gift-wrap-co').checked = true;
+          updateTotals();
+        }
+      } catch(e) {}
+    });
+  </script>
+</body>
+</html>
