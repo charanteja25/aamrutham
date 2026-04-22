@@ -103,18 +103,6 @@ export function CartProvider({ children }) {
   };
 
   const addToCart = (product, pack, price, sourceElement, useLogoSource = false) => {
-    if (shouldSuggestSeasonPass(product)) {
-      setPendingCartItem({
-        product,
-        pack,
-        price,
-        sourceElement,
-        useLogoSource,
-      });
-      setShowSeasonPassPrompt(true);
-      return;
-    }
-
     commitAddToCart(product, pack, price, sourceElement, useLogoSource);
   };
 

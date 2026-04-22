@@ -14,7 +14,9 @@ import { InventoryProvider } from './context/InventoryContext';
 import AdminLoginPage from './pages/AdminLoginPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import TeamPage from './pages/TeamPage';
-import SeasonPassPrompt from "./components/SeasonPassPrompt";
+import MaasPage from './pages/MaasPage';
+import SignatureBoxPage from './pages/SignatureBoxPage';
+import ValuesPage from './pages/ValuesPage';
 
 function ScrollManager() {
   const location = useLocation();
@@ -62,11 +64,13 @@ export default function App() {
           <Route path="/products/:id" element={<ProductDetailPage />} />
           <Route path="/payment/success" element={<PaymentSuccessPage />} />
           <Route path="/payment/failure" element={<PaymentFailurePage />} />
-          <Route path="/team" element={<TeamPage />} />        
+          <Route path="/team" element={<TeamPage />} />
+          <Route path="/maas" element={<MaasPage />} />
+          <Route path="/signature-box" element={<SignatureBoxPage />} />
+          <Route path="/values" element={<ValuesPage />} />
         </Routes>
         <Footer />
         <WhatsAppFloat />
-        <SeasonPassPrompt />
       </div>
     </InventoryProvider>
   );

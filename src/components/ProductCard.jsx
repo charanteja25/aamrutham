@@ -27,7 +27,6 @@ export default function ProductCard({ product, showDetails = true }) {
       <div className="product-card-visual" style={{ background: product.gradient }}>
         <div className="product-card-badge">{product.category === 'premium' ? 'Signature' : 'Variety'}</div>
 
-        {/* Stock badge — low / sold-out */}
         {badge && (
           <div className={`stock-badge ${badge.cls}`}>{badge.label}</div>
         )}

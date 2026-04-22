@@ -11,7 +11,10 @@ export default function ProductDetailPage() {
   const [pincode, setPincode] = useState('');
   const [message, setMessage] = useState('');
   const [isValid, setIsValid] = useState(null);
+  const [activeImg, setActiveImg] = useState(`/assets/varieties/${product.id}.jpg`);
   const { addToCart } = useCart();
+
+  const allImages = [`/assets/varieties/${product.id}.jpg`, ...(product.extraImages || [])];
 
   const related = useMemo(() => products.filter((item) => item.category === 'premium' && item.id !== product.id).slice(0, 3), [product.id]);
 
@@ -42,9 +45,34 @@ export default function ProductDetailPage() {
         </div>
 
         <div className="container detail-grid">
-          <div className="detail-visual" style={{ background: product.gradient }}>
-            <img src="/assets/Subject.png" alt="Aamrutham" className="detail-brand-art" />
-            <div className="detail-fruit-mark">{product.name}</div>
+          <div className="detail-visual-col">
+            <div className="detail-visual" style={{ background: product.gradient }}>
+              <img
+                src={activeImg}
+                alt={product.name}
+                className="detail-variety-photo"
+                onError={e => {
+                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.nextSibling.style.display = 'block';
+                }}
+              />
+              <img src="/assets/Subject.png" alt="Aamrutham" className="detail-brand-art" style={{ display: 'none' }} />
+              <div className="detail-fruit-mark">{product.name}</div>
+            </div>
+            {allImages.length > 1 && (
+              <div className="detail-thumbs">
+                {allImages.map((img, i) => (
+                  <button
+                    key={i}
+                    className={`detail-thumb${activeImg === img ? ' active' : ''}`}
+                    onClick={() => setActiveImg(img)}
+                    style={{ background: product.gradient }}
+                  >
+                    <img src={img} alt={`${product.name} ${i + 1}`} />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="detail-copy">
@@ -89,72 +117,71 @@ export default function ProductDetailPage() {
         </div>
       </section>
 
-      <section className="section section-white">
-        <div className="container detail-story-grid">
-          <div>
-            <p className="section-eyebrow">The Story</p>
-            <h2 className="section-title">{product.story.heading}</h2>
-            <p>{product.story.p1}</p>
-            <blockquote>{product.story.quote}</blockquote>
-            <p>{product.story.p2}</p>
+      {product.story && (
+        <section className="section section-white">
+          <div className="container detail-story-grid">
+            <div>
+              <p className="section-eyebrow">The Story</p>
+              <h2 className="section-title">{product.story.heading}</h2>
+              <p>{product.story.p1}</p>
+              <blockquote>{product.story.quote}</blockquote>
+              <p>{product.story.p2}</p>
+            </div>
+            <div className="detail-story-art">
+              <img src="/assets/aam-final.png" alt="Aamrutham story art" />
+            </div>
           </div>
-          <div className="detail-story-art">
-            <img src="/assets/aam-final.png" alt="Aamrutham story art" />
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      <section className="section section-cream-dark">
-        <div className="container">
-          <div className="section-head">
-            <p className="section-eyebrow">About This Mango</p>
-            <h2 className="section-title">Fruit profile</h2>
-          </div>
-          <div className="profile-grid">
-            {product.profile.map(([label, value]) => (
-              <div className="profile-card" key={label}>
-                <div className="profile-label">{label}</div>
-                <div className="profile-value">{value}</div>
+      {(product.profile || product.nutrition) && (
+        <section className="section section-cream-dark">
+          <div className="container detail-facts-grid">
+            {product.profile && (
+              <div>
+                <p className="section-eyebrow" style={{ marginBottom: '1rem' }}>Fruit Profile</p>
+                <div className="profile-grid">
+                  {product.profile.map(([label, value]) => (
+                    <div className="profile-card" key={label}>
+                      <div className="profile-label">{label}</div>
+                      <div className="profile-value">{value}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
+            )}
+            {product.nutrition && (
+              <div>
+                <p className="section-eyebrow" style={{ marginBottom: '1rem' }}>Nutrition · per 100g</p>
+                <div className="nutrition-grid compact">
+                  {product.nutrition.map(([label, value]) => (
+                    <div className="nutrition-item" key={label}>
+                      <strong>{value}</strong>
+                      <span>{label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      <section className="section nutrition-section">
-        <div className="container nutrition-box">
-          <div className="nutrition-head">
-            <p className="section-eyebrow gold">Nutritional Value</p>
-            <h2>{product.name}</h2>
-            <p>Per 100g · Naturally grown</p>
+      {product.storage && (
+        <section className="section section-white">
+          <div className="container">
+            <p className="section-eyebrow" style={{ marginBottom: '1rem' }}>Storage & Care</p>
+            <div className="storage-grid">
+              {product.storage.map(([title, text]) => (
+                <div className="storage-card" key={title}>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="nutrition-grid">
-            {product.nutrition.map(([label, value]) => (
-              <div className="nutrition-item" key={label}>
-                <strong>{value}</strong>
-                <span>{label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section section-white">
-        <div className="container">
-          <div className="section-head">
-            <p className="section-eyebrow">Storage & Care</p>
-            <h2 className="section-title">Handle it the right way</h2>
-          </div>
-          <div className="storage-grid">
-            {product.storage.map(([title, text]) => (
-              <div className="storage-card" key={title}>
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <section className="section section-cream">
         <div className="container">
