@@ -5,6 +5,33 @@
 import { Router } from "express";
 import crypto from "crypto";
 import pool from "../db.js";
+import { sendOrderConfirmation } from "../email.js";
+
+const VARIETY_CODES = {
+  'mettavalasa-peechu': 'MP',
+  'bobbili-peechu': 'BP',
+  'kothapalli-kobbari': 'KK',
+  'imam-pasand': 'IP',
+  'suvarnarekha': 'SR',
+  'banganapalli': 'BN',
+  'chinna-rasalu': 'CR',
+  'pedda-rasalu': 'PR',
+  'panduri-mavidi': 'PM',
+  'children-mango-pack': 'KP',
+  'signature-box': 'SB',
+  'season-pass-12': 'SP12',
+  'season-pass-24': 'SP24',
+};
+
+function generateAamOrderId(cartItems, firstName) {
+  const d = new Date();
+  const date = String(d.getDate()).padStart(2,'0') + String(d.getMonth()+1).padStart(2,'0') + String(d.getFullYear()).slice(-2);
+  const first = cartItems[0];
+  const code = VARIETY_CODES[first?.productId] || 'AAM';
+  const pack = (first?.packLabel || '').replace(/\s+/g,'');
+  const name = (firstName || 'Guest').slice(0,8).toUpperCase().replace(/[^A-Z]/g,'');
+  return 'AAM-' + code + '-' + pack + '-' + date + '-' + name;
+}
 
 const router = Router();
 
@@ -36,6 +63,16 @@ router.post("/verify", async (req, res) => {
   try {
     await client.query("BEGIN");
 
+    // Fetch cart items for order ID generation
+    const orderFetch = await client.query(
+      `SELECT cart_items, amount FROM orders WHERE razorpay_order_id = $1`,
+      [razorpay_order_id]
+    );
+    const cartItems = orderFetch.rows[0]?.cart_items || [];
+    const amount = orderFetch.rows[0]?.amount || 0;
+    const firstName = (customer.name || 'Guest').split(' ')[0];
+    const aamOrderId = generateAamOrderId(cartItems, firstName);
+
     // Mark order as paid
     const orderResult = await client.query(
       `UPDATE orders
@@ -44,14 +81,16 @@ router.post("/verify", async (req, res) => {
            customer_name       = $2,
            customer_email      = $3,
            customer_contact    = $4,
+           aam_order_id        = $5,
            updated_at          = NOW()
-       WHERE razorpay_order_id = $5
+       WHERE razorpay_order_id = $6
        RETURNING id`,
       [
         razorpay_payment_id,
         customer.name    || null,
         customer.email   || null,
         customer.contact || null,
+        aamOrderId,
         razorpay_order_id,
       ]
     );
@@ -86,7 +125,18 @@ router.post("/verify", async (req, res) => {
     }
 
     await client.query("COMMIT");
-    res.json({ success: true, orderId: orderResult.rows[0].id });
+    res.json({ success: true, orderId: orderResult.rows[0].id, aamOrderId });
+
+    // Send confirmation email (non-blocking)
+    if (customer.email) {
+      sendOrderConfirmation({
+        to: customer.email,
+        name: customer.name || 'Customer',
+        aamOrderId,
+        cartItems,
+        amount,
+      }).catch(e => console.error('Email failed:', e.message));
+    }
   } catch (err) {
     await client.query("ROLLBACK");
     console.error("Payment verification failed:", err);
