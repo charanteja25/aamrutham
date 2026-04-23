@@ -1,0 +1,115 @@
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { products, buildWhatsAppUrl } from '../data/products';
+import VarietyCarousel from '../components/VarietyCarousel';
+import { useCart } from '../context/CartContext';
+
+function VarietyTile({ product }) {
+  const [selectedPack, setSelectedPack] = useState(product.packPrices[0]);
+  const { addToCart } = useCart();
+  const isSignature = product.category === 'premium';
+  return (
+    <div className="variety-tile">
+      <Link to={`/products/${product.id}`} className="variety-tile-img" style={{ background: product.gradient }}>
+        <img
+          src={`/assets/varieties/${product.id}.jpg`}
+          alt={product.name}
+          onError={e => { e.currentTarget.style.display = 'none'; }}
+        />
+        <span className={`variety-tile-badge ${isSignature ? 'badge-signature' : 'badge-heritage'}`}>
+          {isSignature ? 'Signature' : 'Heritage'}
+        </span>
+      </Link>
+      <div className="variety-tile-body">
+        <Link to={`/products/${product.id}`} className="variety-tile-name">{product.name}</Link>
+        <div className="variety-tile-telugu">{product.telugu} · {product.meaning}</div>
+        <p className="variety-tile-intro">{product.description}</p>
+        <Link to={`/products/${product.id}`} className="variety-tile-more">View more for details →</Link>
+      </div>
+      <div className="variety-tile-footer">
+        <div className="variety-tile-pack-row">
+          {product.packPrices.map(p => (
+            <button
+              key={p.label}
+              className={`variety-tile-pack-btn${selectedPack.label === p.label ? ' active' : ''}`}
+              onClick={() => setSelectedPack(p)}
+            >{p.label}</button>
+          ))}
+        </div>
+        <div className="variety-tile-footer-row">
+          <span className="variety-tile-price">₹{selectedPack.price.toLocaleString('en-IN')}</span>
+          <button
+            className="variety-tile-cart-btn"
+            onClick={() => addToCart(product, selectedPack.label, selectedPack.price, null, null, true)}
+          >Add to cart</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function ProductsPage() {
+  const varieties = products.filter(p => p.category === 'premium' || p.category === 'more');
+
+  return (
+    <main>
+      <div className="products-mini-hero">
+        <p className="section-eyebrow gold">✦ Bobbili Farms · Hyderabad ✦</p>
+        <h1>Our Mangoes, <em>Your Summer</em></h1>
+        <p className="products-mini-sub">Naturally ripened · Pesticide-free · Bobbili farms</p>
+      </div>
+
+      <div className="products-strip">
+        <span className="products-strip-title">Our Mangoes</span>
+        <div className="products-strip-ticker">
+          <div className="products-strip-ticker-inner">
+            {[...varieties, ...varieties].map((p, i) => (
+              <span key={i}>{p.name} <span className="products-strip-dot">·</span> </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <VarietyCarousel />
+
+      <section className="delivery-strip">
+        <div>Hyderabad delivery</div>
+        <div>Zero pesticides</div>
+        <div>Summer 2026</div>
+        <div>Secure Razorpay Checkout</div>
+      </section>
+
+      <section className="section section-cream">
+        <div className="container">
+          <div data-aos="fade-up">
+            <span className="section-eyebrow">✦ Farm to Doorstep</span>
+            <h2 className="section-title">Our <em>Varieties</em></h2>
+            <p className="section-subtitle">Heritage varieties from Bobbili's finest estates. Tap any variety to explore and order.</p>
+          </div>
+
+          <div className="variety-tiles-grid">
+            {varieties.map(product => <VarietyTile key={product.id} product={product} />)}
+          </div>
+        </div>
+      </section>
+
+      <section className="section feedback-section">
+        <div className="container center narrow">
+          <p className="section-eyebrow">✦ Help Us Grow</p>
+          <h2 className="section-title">Share Your Feedback</h2>
+          <p className="section-subtitle">
+            Tried our mangoes or curious about a variety? Tell us what you think and help shape the next season.
+          </p>
+          <a
+            className="btn btn-leaf"
+            href={buildWhatsAppUrl('Hi! I tried your mangoes and wanted to share some feedback.')}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Share on WhatsApp
+          </a>
+        </div>
+      </section>
+    </main>
+  );
+}
