@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { API_BASE } from '../config.js';
 import { useNavigate } from 'react-router-dom';
 
 const STATUS_COLORS = {
@@ -69,7 +70,7 @@ function OrdersTab() {
 
   const load = useCallback(async () => {
     const q = filter ? `&status=${filter}` : '';
-    const res = await fetch(`/api/admin/orders?page=${page}&limit=20${q}`, { headers: authHeaders() });
+    const res = await fetch(`${API_BASE}/api/admin/orders?page=${page}&limit=20${q}`, { headers: authHeaders() });
     if (res.ok) setData(await res.json());
   }, [page, filter]);
 
@@ -77,7 +78,7 @@ function OrdersTab() {
 
   async function updateStatus(orderId, status) {
     setUpdating(orderId);
-    const res = await fetch(`/api/admin/orders/${orderId}/status`, {
+    const res = await fetch(`${API_BASE}/api/admin/orders/${orderId}/status`, {
       method: 'PATCH',
       headers: authHeaders(),
       body: JSON.stringify({ status }),
@@ -196,7 +197,7 @@ function InventoryTab() {
   const [saved, setSaved]   = useState(null);
 
   async function load() {
-    const res = await fetch('/api/admin/inventory', { headers: authHeaders() });
+    const res = await fetch(`${API_BASE}/api/admin/inventory', { headers: authHeaders() });
     if (res.ok) {
       const data = await res.json();
       setItems(data);
@@ -212,7 +213,7 @@ function InventoryTab() {
     const stock = parseInt(edits[productId]);
     if (isNaN(stock) || stock < 0) return;
     setSaving(productId);
-    const res = await fetch(`/api/admin/inventory/${productId}`, {
+    const res = await fetch(`${API_BASE}/api/admin/inventory/${productId}`, {
       method: 'PUT',
       headers: authHeaders(),
       body: JSON.stringify({ stock }),
@@ -309,7 +310,7 @@ export default function AdminDashboardPage() {
   useEffect(() => {
     const token = localStorage.getItem('admin_token');
     if (!token) { navigate('/admin', { replace: true }); return; }
-    fetch('/api/admin/stats', { headers: authHeaders() })
+    fetch(`${API_BASE}/api/admin/stats', { headers: authHeaders() })
       .then(r => r.ok ? r.json() : Promise.reject())
       .then(setStats)
       .catch(() => { localStorage.removeItem('admin_token'); navigate('/admin', { replace: true }); });

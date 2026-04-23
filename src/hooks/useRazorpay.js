@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { API_BASE } from "../config.js";
 
 export function useRazorpay() {
   const openCheckout = useCallback(async ({ amount, cartItems, onSuccess, onFailure }) => {
@@ -10,7 +11,7 @@ export function useRazorpay() {
     // 1. Create order on backend
     let orderData;
     try {
-      const res = await fetch("/api/orders/create", {
+      const res = await fetch(`${API_BASE}/api/orders/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ amount, cartItems }),
@@ -38,7 +39,7 @@ export function useRazorpay() {
       // 3. Verify payment on backend after success
       async handler(response) {
         try {
-          const verifyRes = await fetch("/api/payments/verify", {
+          const verifyRes = await fetch(`${API_BASE}/api/payments/verify`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

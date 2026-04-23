@@ -6,6 +6,7 @@
  *   refreshInventory()                 → manually re-fetch after cart changes
  */
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import { API_BASE } from "../config.js";
 
 const InventoryContext = createContext(null);
 
@@ -16,7 +17,7 @@ export function InventoryProvider({ children }) {
 
   const fetchInventory = useCallback(async () => {
     try {
-      const res = await fetch("/api/inventory");
+      const res = await fetch(`${API_BASE}/api/inventory`);
       if (!res.ok) return;
       const data = await res.json();
       setInventoryMap(data.inventory ?? {});
