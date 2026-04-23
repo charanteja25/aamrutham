@@ -15,10 +15,12 @@ import pool from "../db.js";
 
 const router = Router();
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
+function getRazorpay() {
+  return new Razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET,
+  });
+}
 
 const LOCK_MINUTES = 5;
 
@@ -39,6 +41,11 @@ router.post("/create", async (req, res) => {
     for (const item of cartItems) {
       const { productId, packLabel, qty = 1 } = item;
 
+      await client.query(
+        `SELECT stock FROM inventory WHERE product_id = $1 AND pack_label = $2 FOR UPDATE`,
+        [productId, packLabel]
+      );
+
       const { rows } = await client.query(
         `SELECT
            i.stock,
@@ -49,8 +56,7 @@ router.post("/create", async (req, res) => {
          LEFT JOIN inventory_reservations r
            ON r.product_id = i.product_id AND r.pack_label = i.pack_label
          WHERE i.product_id = $1 AND i.pack_label = $2
-         GROUP BY i.stock
-         FOR UPDATE OF i`,
+         GROUP BY i.stock`,
         [productId, packLabel]
       );
 
@@ -78,7 +84,7 @@ router.post("/create", async (req, res) => {
     // ── 2. Create Razorpay order ────────────────────────────────────────────
     let rzpOrder;
     try {
-      rzpOrder = await razorpay.orders.create({
+      rzpOrder = await getRazorpay().orders.create({
         amount: amountPaise,
         currency: "INR",
         receipt: `rcpt_${Date.now()}`,
