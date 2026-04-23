@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { API_BASE } from "../config.js";
+
+export const LAST_ORDER_KEY = 'aam_last_order';
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useInventory } from "../context/InventoryContext";
@@ -137,7 +139,7 @@ export default function CartDrawer() {
 
           if (verifyRes.ok) {
             const verifyData = await verifyRes.json();
-            sessionStorage.setItem('aam_last_order', JSON.stringify({
+            sessionStorage.setItem(LAST_ORDER_KEY, JSON.stringify({
               aamOrderId: verifyData.aamOrderId,
               paymentId: response.razorpay_payment_id,
               items: items.map(i => ({ name: i.name, packLabel: i.packLabel, qty: i.qty, price: i.price })),

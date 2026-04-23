@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { LAST_ORDER_KEY } from '../components/CartDrawer';
 
 const STEPS = [
   { label: 'Order Confirmed', sub: 'We have your order', icon: '✅' },
@@ -16,7 +17,7 @@ export default function PaymentSuccessPage() {
 
   useEffect(() => {
     clearCart?.();
-    const raw = sessionStorage.getItem('aam_last_order');
+    const raw = sessionStorage.getItem(LAST_ORDER_KEY);
     if (raw) {
       try { setOrder(JSON.parse(raw)); } catch {}
     }

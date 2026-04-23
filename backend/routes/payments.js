@@ -63,17 +63,9 @@ router.post("/verify", async (req, res) => {
   try {
     await client.query("BEGIN");
 
-    // Fetch cart items for order ID generation
-    const orderFetch = await client.query(
-      `SELECT cart_items, amount FROM orders WHERE razorpay_order_id = $1`,
-      [razorpay_order_id]
-    );
-    const cartItems = orderFetch.rows[0]?.cart_items || [];
-    const amount = orderFetch.rows[0]?.amount || 0;
     const firstName = (customer.name || 'Guest').split(' ')[0];
-    const aamOrderId = generateAamOrderId(cartItems, firstName);
 
-    // Mark order as paid
+    // Fetch cart data and mark paid in one query
     const orderResult = await client.query(
       `UPDATE orders
        SET status              = 'paid',
@@ -81,16 +73,14 @@ router.post("/verify", async (req, res) => {
            customer_name       = $2,
            customer_email      = $3,
            customer_contact    = $4,
-           aam_order_id        = $5,
            updated_at          = NOW()
-       WHERE razorpay_order_id = $6
-       RETURNING id`,
+       WHERE razorpay_order_id = $5
+       RETURNING id, cart_items, amount`,
       [
         razorpay_payment_id,
         customer.name    || null,
         customer.email   || null,
         customer.contact || null,
-        aamOrderId,
         razorpay_order_id,
       ]
     );
@@ -100,7 +90,16 @@ router.post("/verify", async (req, res) => {
       return res.status(404).json({ error: "Order not found" });
     }
 
-    // Fetch active reservations for this order
+    const cartItems = orderResult.rows[0].cart_items || [];
+    const amount = orderResult.rows[0].amount || 0;
+    const aamOrderId = generateAamOrderId(cartItems, firstName);
+
+    await client.query(
+      `UPDATE orders SET aam_order_id = $1 WHERE razorpay_order_id = $2`,
+      [aamOrderId, razorpay_order_id]
+    );
+
+    // Fetch active reservations and decrement stock
     const { rows: reservations } = await client.query(
       `SELECT id, product_id, pack_label, qty
        FROM inventory_reservations
@@ -109,20 +108,16 @@ router.post("/verify", async (req, res) => {
     );
 
     for (const r of reservations) {
-      // Decrement base stock (floor at 0 — shouldn't go below, but safety first)
       await client.query(
-        `UPDATE inventory
-         SET stock = GREATEST(0, stock - $1)
-         WHERE product_id = $2 AND pack_label = $3`,
+        `UPDATE inventory SET stock = GREATEST(0, stock - $1) WHERE product_id = $2 AND pack_label = $3`,
         [r.qty, r.product_id, r.pack_label]
       );
-
-      // Mark reservation as confirmed
-      await client.query(
-        `UPDATE inventory_reservations SET status = 'confirmed' WHERE id = $1`,
-        [r.id]
-      );
     }
+
+    await client.query(
+      `UPDATE inventory_reservations SET status = 'confirmed' WHERE razorpay_order_id = $1 AND status = 'active'`,
+      [razorpay_order_id]
+    );
 
     await client.query("COMMIT");
     res.json({ success: true, orderId: orderResult.rows[0].id, aamOrderId });
