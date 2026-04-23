@@ -136,11 +136,18 @@ export default function CartDrawer() {
           });
 
           if (verifyRes.ok) {
+            const verifyData = await verifyRes.json();
+            sessionStorage.setItem('aam_last_order', JSON.stringify({
+              aamOrderId: verifyData.aamOrderId,
+              paymentId: response.razorpay_payment_id,
+              items: items.map(i => ({ name: i.name, packLabel: i.packLabel, qty: i.qty, price: i.price })),
+              total: items.reduce((s, i) => s + i.price * i.qty, 0),
+            }));
             setActiveOrderId(null);
             setLockExpiresAt(null);
             setIsOpen(false);
             refreshInventory();
-            navigate(`/payment/success?payment_id=${response.razorpay_payment_id}`);
+            navigate('/payment/success');
           } else {
             setStockError("Payment verification failed. Please contact support.");
           }
