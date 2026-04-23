@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import Navbar from './components/Navbar';
 import CartDrawer from './components/CartDrawer';
 import CartAnimation from './components/CartAnimation';
@@ -45,10 +46,13 @@ export default function App() {
 
   if (isAdmin) {
     return (
-      <Routes>
-        <Route path="/admin" element={<AdminLoginPage />} />
-        <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
-      </Routes>
+      <>
+        <Routes>
+          <Route path="/admin" element={<AdminLoginPage />} />
+          <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
+        </Routes>
+        <Analytics />
+      </>
     );
   }
   return (
@@ -71,6 +75,7 @@ export default function App() {
         <Footer />
         <WhatsAppFloat />
         <SeasonPassPrompt />
+        <Analytics />
       </div>
     </InventoryProvider>
   );
