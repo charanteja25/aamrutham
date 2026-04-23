@@ -33,8 +33,8 @@ export const products = [
     badges: ['Brix 20-24', 'Fibrous Pulp', 'May - June', 'Pesticide-Free'],
     packPrices: [
       { label: '6 pcs', price: 699 },
-      { label: '24 pcs', price: 2300 },
-      { label: '12 pcs', price: 1299 }
+      { label: '12 pcs', price: 1299 },
+      { label: '24 pcs', price: 2300 }
     ],
     category: 'premium',
     accent: 'gold',
@@ -82,8 +82,8 @@ export const products = [
     badges: ['Brix 19-23', 'Fine-Fibrous', 'May - June', 'Pesticide-Free'],
     packPrices: [
       { label: '6 pcs', price: 699 },
-      { label: '24 pcs', price: 2300 },
-      { label: '12 pcs', price: 1299 }
+      { label: '12 pcs', price: 1299 },
+      { label: '24 pcs', price: 2300 }
     ],
     category: 'premium',
     accent: 'leaf',
@@ -132,8 +132,8 @@ export const products = [
     badges: ['Brix 21-25', 'Fiberless', 'June - July', 'Pesticide-Free'],
     packPrices: [
       { label: '6 pcs', price: 849 },
-      { label: '24 pcs', price: 2900 },
-      { label: '12 pcs', price: 1599 }
+      { label: '12 pcs', price: 1599 },
+      { label: '24 pcs', price: 2900 }
     ],
     category: 'premium',
     accent: 'gold',
@@ -182,8 +182,8 @@ export const products = [
     badges: ['Brix 18-22', 'Fiberless · Creamy', 'June - July', 'Royal Variety'],
     packPrices: [
       { label: '6 pcs', price: 999 },
-      { label: '24 pcs', price: 3400 },
-      { label: '12 pcs', price: 1899 }
+      { label: '12 pcs', price: 1899 },
+      { label: '24 pcs', price: 3400 }
     ],
     category: 'premium',
     accent: 'leaf',
@@ -230,8 +230,8 @@ export const products = [
     badges: ['Brix 18-21', 'Fiberless', 'May - June', 'Pesticide-Free'],
     packPrices: [
       { label: '6 pcs', price: 749 },
-      { label: '24 pcs', price: 2700 },
-      { label: '12 pcs', price: 1499 }
+      { label: '12 pcs', price: 1499 },
+      { label: '24 pcs', price: 2700 }
     ],
     category: 'more',
     accent: 'gold',
@@ -278,8 +278,8 @@ export const products = [
     badges: ['Brix 16-20', 'Fiberless', 'April - June', 'GI-Tagged'],
     packPrices: [
       { label: '6 pcs', price: 699 },
-      { label: '24 pcs', price: 2500 },
-      { label: '12 pcs', price: 1399 }
+      { label: '12 pcs', price: 1399 },
+      { label: '24 pcs', price: 2500 }
     ],
     category: 'more',
     accent: 'leaf',
@@ -326,8 +326,8 @@ export const products = [
     badges: ['Brix 22-26', 'Juicy', 'May - July', 'Pesticide-Free'],
     packPrices: [
       { label: '6 pcs', price: 649 },
-      { label: '24 pcs', price: 2300 },
-      { label: '12 pcs', price: 1299 }
+      { label: '12 pcs', price: 1299 },
+      { label: '24 pcs', price: 2300 }
     ],
     category: 'more',
     accent: 'gold',
@@ -374,8 +374,8 @@ export const products = [
     badges: ['Brix 20-24', 'Full-bodied', 'May - July', 'Pesticide-Free'],
     packPrices: [
       { label: '6 pcs', price: 749 },
-      { label: '24 pcs', price: 2700 },
-      { label: '12 pcs', price: 1499 }
+      { label: '12 pcs', price: 1499 },
+      { label: '24 pcs', price: 2700 }
     ],
     category: 'more',
     accent: 'leaf',
@@ -421,8 +421,8 @@ export const products = [
     badges: ['Brix 23-28', 'Aromatic', 'May - June', 'Pesticide-Free'],
     packPrices: [
       { label: '6 pcs', price: 849 },
-      { label: '24 pcs', price: 3100 },
-      { label: '12 pcs', price: 1699 }
+      { label: '12 pcs', price: 1699 },
+      { label: '24 pcs', price: 3100 }
     ],
     category: 'more',
     accent: 'gold',
@@ -471,8 +471,8 @@ export const products = [
     badges: ['Pack of 6', 'Ages 2-10', 'Fiberless', 'Kid-Friendly'],
     packPrices: [
       { label: '6 pcs', price: 499 },
-      { label: '24 pcs', price: 1600 },
-      { label: '12 pcs', price: 899 }
+      { label: '12 pcs', price: 899 },
+      { label: '24 pcs', price: 1600 }
     ],
     category: 'premium',
     accent: 'gold',
