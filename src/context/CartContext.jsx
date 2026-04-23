@@ -12,7 +12,7 @@ function readCart() {
   }
 }
 
-function shouldSuggestSeasonPass(product) {
+function shouldSuggestSeasonPass(product, currentCount, lastPrompted, cartItemCount) {
   if (!product) return false;
 
   const id = (product.id || "").toLowerCase();
@@ -20,10 +20,23 @@ function shouldSuggestSeasonPass(product) {
   const category = (product.category || "").toLowerCase();
 
   if (id.includes("season-pass")) return false;
-  if (id === "heritage-box") return true;
+  if (id === "heritage-box") return false;
   if (name.includes("season pass")) return false;
 
-  return category === "premium" || category === "more";
+  if (cartItemCount > 1) return false;
+
+  const newCount = currentCount;
+  const timesPrompted = lastPrompted;
+  
+  if (timesPrompted === 0 && newCount === 1) return true;
+  if (timesPrompted === 1 && newCount === 3) return true;
+  if (timesPrompted === 3 && newCount === 6) return true;
+  if (timesPrompted === 6 && newCount === 10) return true;
+  if (timesPrompted === 10 && newCount === 14) return true;
+  if (timesPrompted === 14 && newCount === 18) return true;
+  if (timesPrompted >= 18 && (newCount - timesPrompted) >= 4) return true;
+
+  return false;
 }
 
 export function CartProvider({ children }) {
@@ -34,6 +47,8 @@ export function CartProvider({ children }) {
 
   const [showSeasonPassPrompt, setShowSeasonPassPrompt] = useState(false);
   const [pendingCartItem, setPendingCartItem] = useState(null);
+  const [addToCartCount, setAddToCartCount] = useState(0);
+  const [lastPromptedCount, setLastPromptedCount] = useState(0);
 
   useEffect(() => {
     setItems(readCart());
@@ -103,7 +118,10 @@ export function CartProvider({ children }) {
   };
 
   const addToCart = (product, pack, price, sourceElement, useLogoSource = false) => {
-    if (shouldSuggestSeasonPass(product)) {
+    const currentCount = addToCartCount + 1;
+    setAddToCartCount(currentCount);
+
+    if (shouldSuggestSeasonPass(product, currentCount, lastPromptedCount, items.length)) {
       setPendingCartItem({
         product,
         pack,
@@ -129,6 +147,7 @@ export function CartProvider({ children }) {
       );
     }
 
+    setLastPromptedCount(addToCartCount);
     setPendingCartItem(null);
     setShowSeasonPassPrompt(false);
   };
@@ -144,6 +163,7 @@ export function CartProvider({ children }) {
   };
 
   const closeSeasonPassPrompt = () => {
+    setLastPromptedCount(addToCartCount);
     setShowSeasonPassPrompt(false);
     setPendingCartItem(null);
   };

@@ -120,7 +120,7 @@ const styles = `
   /* walk-in: translates from off-left into final resting position */
   .f-walk {
     position: absolute; bottom: 0;
-    animation: fWalkIn 540ms cubic-bezier(0.20, 0, 0.42, 1) forwards;
+    animation: fWalkIn 400ms cubic-bezier(0.20, 0, 0.42, 1) forwards;
   }
   @keyframes fWalkIn {
     from { transform: translateX(-110px); opacity: 0.05; }
@@ -136,140 +136,157 @@ const styles = `
     50%      { transform: translateY(-2px); }
   }
 
-  /* ── Farmer body: 36px wide × 72px tall, facing RIGHT ── */
-  .f-man { position: relative; width: 36px; height: 72px; }
+  /* ── Farmer body: 40px wide × 80px tall, facing RIGHT ── */
+  .f-man { position: relative; width: 40px; height: 80px; }
 
-  /* ─ Pagdi (saffron turban, rolls up on forehead) ─ */
+  /* ─ Pagdi (saffron turban, more detailed) ─ */
   .f-pagdi {
-    position: absolute; top: 0; left: 4px;
-    width: 28px; height: 14px;
-    background: linear-gradient(165deg, #ffb200, #e06e00);
-    border-radius: 50% 50% 28% 28% / 62% 62% 38% 38%;
-    box-shadow: inset 0 -2px 0 rgba(0,0,0,.10);
+    position: absolute; top: -2px; left: 4px;
+    width: 32px; height: 18px;
+    background: linear-gradient(180deg, #f5a623 0%, #e08820 40%, #c96d10 100%);
+    border-radius: 50% 50% 30% 30% / 65% 65% 35% 35%;
+    box-shadow: 
+      inset 0 3px 6px rgba(255,255,255,.25),
+      inset 0 -2px 4px rgba(0,0,0,.15),
+      0 4px 8px rgba(0,0,0,.2);
   }
   /* horizontal wrap band */
   .f-pagdi::before {
     content: ''; position: absolute;
-    top: 7px; left: -3px; width: 34px; height: 5px;
-    background: #c86000; border-radius: 3px;
+    top: 8px; left: -2px; width: 36px; height: 6px;
+    background: linear-gradient(180deg, #d4820a, #b56a08);
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.15);
   }
-  /* pagdi tail/knot visible on the right (since farmer faces right) */
+  /* pagdi tail/knot visible on the right */
   .f-pagdi::after {
     content: ''; position: absolute;
-    top: 1px; right: -6px; width: 10px; height: 10px;
-    background: radial-gradient(circle at 38% 38%, #e07500, #b85000);
-    border-radius: 50% 40% 50% 42%;
+    top: 0px; right: -8px; width: 12px; height: 14px;
+    background: linear-gradient(135deg, #e69520, #c46d10);
+    border-radius: 50% 40% 50% 45%;
+    box-shadow: 1px 2px 4px rgba(0,0,0,.15);
   }
 
-  /* ─ Face (dark south-Indian skin, rounded jaw) ─ */
+  /* ─ Face (south-Indian skin tone, more detailed) ─ */
   .f-face {
-    position: absolute; top: 10px; left: 9px;
-    width: 18px; height: 20px;
-    background: radial-gradient(ellipse at 40% 38%, #9c5220, #6b2e08);
-    border-radius: 46% 46% 52% 52%;
-    box-shadow: inset -3px -3px 0 rgba(0,0,0,.13);
+    position: absolute; top: 12px; left: 10px;
+    width: 20px; height: 22px;
+    background: radial-gradient(ellipse at 45% 35%, #b87333 0%, #8b5a2b 50%, #6b4423 100%);
+    border-radius: 45% 45% 50% 50%;
+    box-shadow: 
+      inset -2px -2px 4px rgba(0,0,0,.15),
+      inset 2px 2px 3px rgba(255,255,255,.1);
   }
-  /* eyes (two dots) */
+  /* eyes (more expressive) */
   .f-face::before {
     content: ''; position: absolute;
-    top: 6px; left: 3px;
-    width: 4px; height: 4px;
-    background: #140600; border-radius: 50%;
+    top: 7px; left: 3px;
+    width: 5px; height: 5px;
+    background: #1a0a00; border-radius: 50%;
     box-shadow:
-      0 0 0 1.5px rgba(255,255,255,.18),
-      9px 0 0 #140600,
-      9px 0 0 1.5px rgba(255,255,255,.18);
+      0 0 0 1.5px rgba(255,255,255,.22),
+      9px 0 0 #1a0a00,
+      9px 0 0 1.5px rgba(255,255,255,.22);
   }
   /* eyebrows */
   .f-face::after {
     content: ''; position: absolute;
-    top: 3px; left: 2px;
-    width: 6px; height: 2px;
-    background: #140600; border-radius: 2px;
-    box-shadow: 8px 0 0 #140600;
+    top: 4px; left: 2px;
+    width: 7px; height: 2.5px;
+    background: #2a1a0a; border-radius: 2px;
+    box-shadow: 9px 0 0 #2a1a0a;
   }
 
   /* ─ Nose ─ */
   .f-nose {
-    position: absolute; top: 21px; left: 15px;
-    width: 6px; height: 4px;
-    background: #5a2008;
+    position: absolute; top: 24px; left: 16px;
+    width: 7px; height: 5px;
+    background: linear-gradient(135deg, #8b5a2b, #6b4423);
     border-radius: 50%;
-    box-shadow: -1px 2px 0 rgba(0,0,0,.15);
+    box-shadow: -1px 2px 2px rgba(0,0,0,.2);
   }
 
-  /* ─ Thick south-Indian mustache ─ */
+  /* ─ Thick mustache ─ */
   .f-mustache {
-    position: absolute; top: 24px; left: 10px;
-    width: 16px; height: 5px;
-    background: #0e0400;
-    border-radius: 5px 5px 8px 8px;
+    position: absolute; top: 27px; left: 11px;
+    width: 18px; height: 6px;
+    background: linear-gradient(180deg, #1a0a00, #0d0500);
+    border-radius: 6px 6px 10px 10px;
+    box-shadow: 0 2px 3px rgba(0,0,0,.25);
   }
-  /* center gap to read as two halves */
+  /* center gap */
   .f-mustache::after {
     content: ''; position: absolute;
-    top: 0; left: 7px; width: 2px; height: 5px;
-    background: #6b2e08;
+    top: 0; left: 8px; width: 2px; height: 6px;
+    background: #8b5a2b;
   }
 
   /* ─ Neck ─ */
   .f-neck {
-    position: absolute; top: 29px; left: 13px;
-    width: 10px; height: 5px;
-    background: #6b2e08; border-radius: 3px;
+    position: absolute; top: 32px; left: 14px;
+    width: 12px; height: 6px;
+    background: linear-gradient(180deg, #8b5a2b, #6b4423);
+    border-radius: 3px;
+    box-shadow: inset 0 -1px 2px rgba(0,0,0,.15);
   }
 
-  /* ─ Kurta (white Indian cotton shirt) ─ */
+  /* ─ Kurta (white Indian cotton shirt, more detailed) ─ */
   .f-kurta {
-    position: absolute; top: 33px; left: 6px;
-    width: 24px; height: 20px;
-    background: linear-gradient(170deg, #f8f4ec, #ece4d0);
-    border-radius: 3px 3px 0 0;
-    box-shadow: inset -2px 0 0 rgba(0,0,0,.06);
+    position: absolute; top: 37px; left: 6px;
+    width: 28px; height: 24px;
+    background: linear-gradient(180deg, #faf7f0 0%, #f0ebe0 50%, #e8e2d4 100%);
+    border-radius: 4px 4px 2px 2px;
+    box-shadow: 
+      inset -2px 0 3px rgba(0,0,0,.04),
+      inset 2px 0 2px rgba(255,255,255,.5);
   }
   /* V-neck placket */
   .f-kurta::before {
     content: ''; position: absolute;
-    top: 0; left: 9px;
+    top: 0; left: 10px;
     width: 0; height: 0;
-    border-left: 3px solid transparent;
-    border-right: 3px solid transparent;
-    border-top: 8px solid #d8d0be;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 10px solid #d8d0be;
   }
   /* center seam */
   .f-kurta::after {
     content: ''; position: absolute;
-    top: 8px; left: 11px;
-    width: 2px; height: 12px;
-    background: rgba(0,0,0,.05);
+    top: 10px; left: 13px;
+    width: 2px; height: 14px;
+    background: rgba(0,0,0,.06);
   }
 
   /* ─ Dhoti (white, wider than kurta, with drape) ─ */
   .f-dhoti {
-    position: absolute; top: 52px; left: 3px;
-    width: 30px; height: 20px;
-    background: linear-gradient(175deg, #f4efe4, #e6dece);
-    border-radius: 3px 3px 7px 7px;
+    position: absolute; top: 58px; left: 2px;
+    width: 36px; height: 22px;
+    background: linear-gradient(180deg, #f5f1e8 0%, #e8e2d6 50%, #ddd6c8 100%);
+    border-radius: 4px 4px 8px 8px;
+    box-shadow: 
+      inset 0 1px 0 rgba(255,255,255,.6),
+      0 2px 4px rgba(0,0,0,.08);
   }
   /* fold lines */
   .f-dhoti::before {
     content: ''; position: absolute;
-    top: 0; left: 7px; width: 2px; height: 20px;
-    background: rgba(0,0,0,.055); border-radius: 1px;
+    top: 1px; left: 9px; width: 2px; height: 21px;
+    background: rgba(0,0,0,.04); border-radius: 1px;
   }
   .f-dhoti::after {
     content: ''; position: absolute;
-    top: 0; left: 18px; width: 2px; height: 20px;
-    background: rgba(0,0,0,.055); border-radius: 1px;
+    top: 1px; left: 22px; width: 2px; height: 21px;
+    background: rgba(0,0,0,.04); border-radius: 1px;
   }
 
   /* ─ Bare feet (dark, peek below dhoti) ─ */
   .f-leg-l, .f-leg-r {
     position: absolute; bottom: 0;
-    width: 9px; height: 20px;
-    background: linear-gradient(175deg, #7a3508, #522008);
-    border-radius: 4px 4px 5px 5px;
+    width: 11px; height: 22px;
+    background: linear-gradient(180deg, #8b5a3a 0%, #5c3a20 100%);
+    border-radius: 5px 5px 6px 6px;
     transform-origin: top center;
+    box-shadow: inset -1px 0 2px rgba(0,0,0,.2);
   }
   /* 2 walk-cycles (280ms each = 560ms), then hold */
   .f-leg-l {
@@ -277,26 +294,28 @@ const styles = `
     animation: fLegL 280ms ease-in-out 2 alternate;
   }
   .f-leg-r {
-    left: 18px;
+    left: 20px;
     animation: fLegR 280ms ease-in-out 2 alternate;
     animation-delay: 140ms;
   }
   @keyframes fLegL { from { transform: rotate(-23deg); } to { transform: rotate(23deg);  } }
   @keyframes fLegR { from { transform: rotate(23deg);  } to { transform: rotate(-23deg); } }
 
-  /* ─ Arms ─ */
+  /* ─ Arms (more detailed) ─ */
   .f-arm-l, .f-arm-r {
-    position: absolute; top: 35px;
-    width: 22px; height: 7px;
-    background: #7a3508; border-radius: 8px;
+    position: absolute; top: 38px;
+    width: 26px; height: 8px;
+    background: linear-gradient(180deg, #8b5a3a 0%, #6b4428 100%);
+    border-radius: 10px;
+    box-shadow: inset 0 1px 2px rgba(255,255,255,.1);
   }
   /* left arm: behind body, swings back-forward while walking, raises on pluck */
   .f-arm-l {
-    left: -5px;
+    left: -6px;
     transform-origin: right center;
     animation:
       fArmWalkL  280ms ease-in-out 2 alternate,
-      fArmRaiseL 350ms ease-in-out 560ms 1 forwards;
+      fArmRaiseL 400ms ease-in-out 420ms 1 forwards;
   }
   @keyframes fArmWalkL {
     from { transform: rotate(28deg); }
@@ -311,11 +330,11 @@ const styles = `
 
   /* right arm: forward swing while walking, raises on pluck */
   .f-arm-r {
-    right: -5px;
+    right: -6px;
     transform-origin: left center;
     animation:
       fArmWalkR  280ms ease-in-out 2 alternate,
-      fArmRaiseR 350ms ease-in-out 560ms 1 forwards;
+      fArmRaiseR 400ms ease-in-out 420ms 1 forwards;
   }
   @keyframes fArmWalkR {
     from { transform: rotate(-14deg); }
@@ -328,20 +347,22 @@ const styles = `
     100% { transform: rotate(-80deg); }
   }
 
-  /* ─ Hands (small rounds at arm tips) ─ */
+  /* ─ Hands (more detailed) ─ */
   .f-hand-l, .f-hand-r {
-    position: absolute; top: -3px;
-    width: 10px; height: 10px;
-    background: #9c5220; border-radius: 50%;
+    position: absolute; top: -4px;
+    width: 12px; height: 12px;
+    background: linear-gradient(135deg, #a06830, #7a4a20);
+    border-radius: 50%;
+    box-shadow: inset -1px -1px 2px rgba(0,0,0,.15);
   }
-  .f-hand-l { right: -5px; }
-  .f-hand-r { right: -5px; }
+  .f-hand-l { right: -6px; }
+  .f-hand-r { right: -6px; }
 
   /* ─ Dust puff left behind as farmer strides in ─ */
   .f-dust {
     position: fixed; width: 36px; height: 12px;
     background: radial-gradient(ellipse, rgba(180,130,58,.28) 0%, transparent 70%);
-    animation: fDust 560ms ease-out forwards;
+    animation: fDust 420ms ease-out forwards;
   }
   @keyframes fDust {
     from { transform: scaleX(0.3) translateX(-12px); opacity: .9; }
@@ -386,8 +407,8 @@ export default function MangoThattaAnimation({ active, onDone }) {
 
     /* Farmer stands just left of the logo when he "arrives" at the tree.
        He walks in from 110px further left (off-screen or just visible). */
-    const farmerDestLeft = Math.max(8, lr.left - 30);
-    const farmerTop      = Math.max(2, lr.top + lr.height / 2 - 52); // vertically centred in navbar
+    const farmerDestLeft = Math.max(8, lr.left - 34);
+    const farmerTop      = Math.max(2, lr.top + lr.height / 2 - 58); // vertically centred in navbar
 
     /* Hanging mango: below the logo's bottom-center */
     const hangStemLeft  = lr.left + lr.width  / 2 - 2;
@@ -419,7 +440,7 @@ export default function MangoThattaAnimation({ active, onDone }) {
     const controlX = startX + (hoverX - startX) * 0.48 + 20;
     const controlY = Math.min(startY, hoverY) - 110;
 
-    /* Farmer's hands "pluck" at ~800ms — mango detaches */
+    /* Farmer's hands "pluck" at ~820ms — mango detaches */
     const cutTimer = setTimeout(() => {
       setShowHanging(false);
       setMangoFlying(true);
@@ -473,7 +494,7 @@ export default function MangoThattaAnimation({ active, onDone }) {
     const sceneTimer = setTimeout(() => {
       setShowFarmer(false);
       setShowHanging(false);
-    }, 1320);
+    }, 1400);
 
     return () => {
       clearTimeout(cutTimer);
@@ -507,7 +528,7 @@ export default function MangoThattaAnimation({ active, onDone }) {
         {showFarmer && layout && (
           <>
             <div className="f-scene"
-              style={{ left: layout.farmerDestLeft, top: layout.farmerTop, height: 72 }}>
+              style={{ left: layout.farmerDestLeft, top: layout.farmerTop, height: 80 }}>
               <div className="f-walk">
                 <div className="f-bob">
                   <div className="f-man">
