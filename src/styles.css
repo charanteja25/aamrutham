@@ -979,6 +979,25 @@ input {
   color: var(--mango-dark);
 }
 
+.nav-pill-outline {
+  border: 1.5px solid var(--leaf);
+  color: var(--leaf) !important;
+  background: transparent;
+  padding: 0.6rem 1.1rem;
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  text-decoration: none !important;
+  transition: background 0.18s, color 0.18s;
+}
+.nav-pill-outline:hover,
+.nav-pill-outline.active {
+  background: var(--leaf);
+  color: var(--white) !important;
+}
+
 .nav-pill {
   background: var(--leaf);
   color: var(--white) !important;
@@ -1941,20 +1960,11 @@ input {
   .process-mobile-stack {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    max-height: 78vh;
-    overflow-y: auto;
-    scroll-snap-type: y mandatory;
-    padding-right: 4px;
-    scrollbar-width: none;
-  }
-
-  .process-mobile-stack::-webkit-scrollbar {
-    display: none;
+    gap: 1.25rem;
+    padding: 0 0.25rem;
   }
 
   .process-mobile-card {
-    scroll-snap-align: start;
     background: white;
     border-radius: 18px;
     overflow: hidden;
@@ -1963,7 +1973,7 @@ input {
 
   .process-mobile-image-wrap {
     position: relative;
-    height: 220px;
+    height: 240px;
   }
 
   .process-mobile-image {
@@ -2541,6 +2551,45 @@ input {
   max-width: 520px; margin: 0 auto;
 }
 
+/* Pillar tabs */
+.tm2-tabs {
+  display: flex; gap: 0; background: #fff;
+  border-bottom: 1px solid #e8d9c4;
+  overflow-x: auto; scrollbar-width: none;
+  position: sticky; top: 78px; z-index: 50;
+}
+.tm2-tabs::-webkit-scrollbar { display: none; }
+.tm2-tab {
+  flex: 1; min-width: 90px;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 0.85rem 0.5rem;
+  background: none; border: none; border-bottom: 3px solid transparent;
+  cursor: pointer; transition: border-color 0.2s, color 0.2s;
+  color: #8a6e52; font-family: inherit;
+}
+.tm2-tab:hover { color: #2D5016; }
+.tm2-tab.active { border-bottom-color: currentColor; }
+.tm2-tab-numeral {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.75rem; opacity: 0.5; line-height: 1;
+}
+.tm2-tab-name {
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+
+/* Active panel */
+.tm2-panel {
+  position: relative;
+  padding: 2rem 2rem 3rem;
+  min-height: 60vh;
+  animation: tm2FadeIn 0.25s ease;
+}
+@keyframes tm2FadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .tm2-pillar-wrap { position: sticky; top: 78px; }
 .tm2-pillar {
   height: calc(100vh - 78px);
@@ -2602,7 +2651,7 @@ input {
   width: 90px; min-height: 110px; flex-shrink: 0;
   overflow: hidden; background: #f0e8d8;
 }
-.tm2-card-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tm2-card-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; }
 .tm2-card-placeholder {
   width: 100%; height: 100%; min-height: 110px;
   display: flex; align-items: center; justify-content: center;
@@ -2627,6 +2676,7 @@ input {
   text-transform: uppercase; margin-bottom: 0.4rem;
 }
 .tm2-card-bio { font-size: 0.75rem; color: #5a3e2b; line-height: 1.6; }
+.tm2-card-tap-hint { display: none; }
 
 .tm2-closing {
   background: #2D5016; padding: 4rem 2rem; text-align: center;
@@ -2647,10 +2697,87 @@ input {
 }
 .tm2-closing-btn:hover { background: #E07B39; color: white; }
 
+/* Member popup */
+.tm2-popup-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(28,18,8,0.7);
+  backdrop-filter: blur(4px);
+  display: flex; align-items: flex-end; justify-content: center;
+  padding: 0;
+}
+.tm2-popup {
+  position: relative;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  width: 100%; max-width: 520px;
+  max-height: 88vh; overflow-y: auto;
+  animation: tm2SlideUp 0.28s ease;
+}
+@keyframes tm2SlideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+.tm2-popup-close {
+  position: absolute; top: 1rem; right: 1rem;
+  background: rgba(0,0,0,0.07); border: none;
+  width: 32px; height: 32px; border-radius: 50%;
+  font-size: 0.9rem; cursor: pointer; color: #5a3e2b;
+  display: flex; align-items: center; justify-content: center;
+}
+.tm2-popup-photo {
+  width: 100%; height: 260px; overflow: hidden;
+  background: #f5ede0;
+}
+.tm2-popup-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center 20%;
+  display: block;
+}
+.tm2-popup-body { padding: 1.25rem 1.25rem 2rem; }
+.tm2-popup-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; font-weight: 600;
+  color: #1C1208; margin: 0.4rem 0 0.2rem;
+}
+.tm2-popup-bio {
+  font-size: 0.88rem; color: #5a3e2b;
+  line-height: 1.75; margin-top: 0.75rem;
+}
+
 @media (max-width: 640px) {
-  .tm2-members-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-  .tm2-pillar-head { gap: 1rem; }
-  .tm2-pillar-numeral { font-size: 2.5rem; }
+  .tm2-tabs { top: 60px; }
+  .tm2-tab { padding: 0.7rem 0.4rem; min-width: 72px; }
+  .tm2-tab-name { font-size: 0.62rem; }
+
+  .tm2-panel { padding: 1.25rem 1rem 2rem; }
+
+  /* 2-column compact grid */
+  .tm2-members-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+
+  /* Card: stacked, tappable */
+  .tm2-card { flex-direction: column; cursor: pointer; }
+  .tm2-card-photo {
+    width: 100%; height: 160px; min-height: unset;
+    background: #f5ede0;
+  }
+  .tm2-card-photo img {
+    object-fit: contain;
+    object-position: center bottom;
+  }
+  .tm2-card-body { padding: 0.65rem 0.75rem 0.85rem; }
+
+  /* Hide bio on mobile — shown in popup instead */
+  .tm2-card-bio { display: none; }
+  .tm2-card-telugu { display: none; }
+  .tm2-card-tap-hint {
+    display: block; margin-top: 0.4rem;
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; color: #a07850; opacity: 0.8;
+  }
+
+  .tm2-pillar-head { gap: 0.75rem; }
+  .tm2-pillar-numeral { font-size: 2rem; }
+  .tm2-pillar-en { font-size: 1.4rem; }
 }
 
 /* ── Our Promise Bar ── */
@@ -3197,6 +3324,71 @@ h1, h2, h3 { font-weight: 400; }
   line-height: 1.7;
   margin: 0;
 }
+
+/* MaaS Premium Popup */
+.maas-popup-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(5, 15, 2, 0.82);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+}
+.maas-popup {
+  position: relative;
+  background: linear-gradient(160deg, #0d1f08 0%, #0a1706 100%);
+  border: 1px solid rgba(245,166,35,0.25);
+  border-radius: 20px;
+  padding: 2.5rem 2rem 2rem;
+  max-width: 460px; width: 100%;
+  text-align: center;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(245,166,35,0.1);
+}
+.maas-popup-badge {
+  display: inline-block;
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: #F5A623;
+  background: rgba(245,166,35,0.12);
+  border: 1px solid rgba(245,166,35,0.3);
+  padding: 4px 14px; border-radius: 100px;
+  margin-bottom: 1.25rem;
+}
+.maas-popup-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 400; line-height: 1.25;
+  color: white; margin-bottom: 1rem;
+}
+.maas-popup-title em { color: #F5A623; font-style: italic; }
+.maas-popup-body {
+  font-size: 0.9rem; color: rgba(255,255,255,0.65);
+  line-height: 1.75; margin-bottom: 1.5rem;
+}
+.maas-popup-detail {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+  justify-content: center; margin-bottom: 1.75rem;
+}
+.maas-popup-detail span {
+  font-size: 0.72rem; color: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 4px 12px; border-radius: 100px;
+}
+.maas-popup-cta {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: #F5A623; color: #0d1f08;
+  font-weight: 700; font-size: 0.95rem;
+  padding: 0.85rem 2rem; border-radius: 50px;
+  text-decoration: none; transition: background 0.2s, transform 0.15s;
+  width: 100%; justify-content: center;
+}
+.maas-popup-cta:hover { background: #ffbb3d; transform: translateY(-1px); }
+.maas-popup-close {
+  position: absolute; top: 1rem; right: 1rem;
+  background: none; border: none;
+  color: rgba(255,255,255,0.35); font-size: 1.1rem;
+  cursor: pointer; padding: 4px 8px; transition: color 0.15s;
+}
+.maas-popup-close:hover { color: rgba(255,255,255,0.7); }
 
 /* Ticker */
 .maas-ticker {

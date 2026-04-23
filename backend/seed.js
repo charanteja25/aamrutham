@@ -41,6 +41,10 @@ const inventoryRows = [
   { product_id: 'heritage-box', pack_label: 'Pack of 12', stock: 20 },
   { product_id: 'heritage-box', pack_label: 'Pack of 24', stock: 15 },
 
+  // ── Signature Box ────────────────────────────────────────────────────────
+  { product_id: 'signature-box', pack_label: '12 pcs', stock: 30 },
+  { product_id: 'signature-box', pack_label: '24 pcs', stock: 20 },
+
   // ── More varieties (12 pcs only) ───────────────────────────────────────
   { product_id: 'suvarnarekha',   pack_label: '12 pcs', stock: 60 },
   { product_id: 'banganapalli',   pack_label: '12 pcs', stock: 80 },

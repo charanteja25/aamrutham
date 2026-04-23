@@ -73,13 +73,17 @@ export function CartProvider({ children }) {
     }
   };
 
-  const commitAddToCart = (product, pack, price, sourceElement, useLogoSource = false) => {
+  const commitAddToCart = (product, pack, price, sourceElement, useLogoSource = false, meta = null) => {
     const key = `${product.id}||${pack}`;
 
     setItems((current) => {
       const found = current.find((item) => item.key === key);
 
       if (found) {
+        // For items with meta (e.g. gift orders), always add as new line
+        if (meta) {
+          return [...current, { key: `${key}||${Date.now()}`, id: product.id, name: product.name, packLabel: pack, price, qty: 1, meta }];
+        }
         return current.map((item) =>
           item.key === key ? { ...item, qty: item.qty + 1 } : item
         );
@@ -94,6 +98,7 @@ export function CartProvider({ children }) {
           packLabel: pack,
           price,
           qty: 1,
+          meta: meta || undefined,
         },
       ];
     });
@@ -102,8 +107,8 @@ export function CartProvider({ children }) {
     setShowAnimation(true);
   };
 
-  const addToCart = (product, pack, price, sourceElement, useLogoSource = false) => {
-    commitAddToCart(product, pack, price, sourceElement, useLogoSource);
+  const addToCart = (product, pack, price, sourceElement, useLogoSource = false, meta = null) => {
+    commitAddToCart(product, pack, price, sourceElement, useLogoSource, meta);
   };
 
   const ignoreSeasonPassSuggestion = () => {

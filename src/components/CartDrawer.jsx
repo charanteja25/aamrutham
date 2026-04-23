@@ -4,6 +4,8 @@ import { useCart } from "../context/CartContext";
 import { useInventory } from "../context/InventoryContext";
 import LockTimer from "./LockTimer";
 
+const API = import.meta.env.VITE_API_URL || "";
+
 function loadRazorpayScript() {
   return new Promise((resolve) => {
     if (window.Razorpay) { resolve(true); return; }
@@ -76,6 +78,7 @@ export default function CartDrawer() {
             qty: i.qty,
             name: i.name,
             price: i.price,
+            ...(i.meta ? { meta: i.meta } : {}),
           })),
         }),
       });

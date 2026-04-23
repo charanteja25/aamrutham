@@ -27,7 +27,7 @@ export default function Navbar() {
         <div className={`nav-links ${open ? 'open' : ''}`}>
           <a href="/#story" onClick={closeMenu}>Our Story</a>
           <a href="/#process" onClick={closeMenu}>Farm to You</a>
-          <Link to="/products" onClick={closeMenu} className={isProducts ? 'active' : ''}>Our Mangoes</Link>
+          <Link to="/products" onClick={closeMenu} className={`nav-pill-outline${isProducts ? ' active' : ''}`}>Order Mangoes</Link>
           <Link to="/team" onClick={closeMenu} className={location.pathname === '/team' ? 'active' : ''}>Our Team</Link>
           <Link to="/values" onClick={closeMenu} className={location.pathname === '/values' ? 'active' : ''}>Our Values</Link>
           <button className="nav-pill" onClick={() => { openCart(true); closeMenu(); }}>Order Now ✦</button>

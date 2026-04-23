@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const PILLARS = [
@@ -29,7 +29,7 @@ const PILLARS = [
     theme: 'leaf',
     members: [
       { name: 'Sitaramaswamy Kankanalapalli', telugu: 'ప్రధాన రూపశిల్పి', role: 'Chief Architect', tag: 'SPNF', image: '/assets/team/sitaramaswamy.jpg', bio: "Shapes the land according to the principles of Subhash Palekar Natural Farming — contouring water, spacing canopies, planning companion species across the grove's 12-year arc." },
-      { name: 'Sujatha Kankanalapalli', telugu: 'ప్రణాళికా నిర్వాహకులు', role: 'Planning Manager', tag: 'Operations', image: '/assets/team/sujatha.jpg', bio: 'Translates vision into a calendar: when to mulch, when to graft, when to welcome the monsoon. The farm\'s memory and its almanac.' },
+      { name: 'Sujatha Kankanalapalli', telugu: 'ప్రణాళికా నిర్వాహకులు', role: 'Planning Manager', tag: 'Operations', image: '/assets/team/sujatha.jpg', facePos: 'top', bio: 'Translates vision into a calendar: when to mulch, when to graft, when to welcome the monsoon. The farm\'s memory and its almanac.' },
     ],
   },
   {
@@ -43,7 +43,7 @@ const PILLARS = [
     theme: 'terra',
     members: [
       { name: 'Lakshmi', telugu: 'లక్ష్మి', role: 'Farmer', tag: 'Since day one', image: '/assets/team/laxmi.jpg', bio: 'Tends the groves and prepares the desi-cow broths that feed every root on the farm.' },
-      { name: 'Tavudu', telugu: 'తవుడు', role: 'Farmer', tag: 'Water & soil', image: '/assets/team/tavudu.jpg', bio: "Keeper of the irrigation channels — reads the land's thirst the way others read the sky." },
+      { name: 'Tavudu', telugu: 'తవుడు', role: 'Farmer', tag: 'Water & soil', image: '/assets/team/tavudu.jpg', facePos: 'top', bio: "Keeper of the irrigation channels — reads the land's thirst the way others read the sky." },
       { name: 'Mariamma', telugu: 'మరియమ్మ', role: 'Farmer', tag: 'Canopy care', image: '/assets/team/mariama.jpg', bio: 'Grafts, prunes, and the quiet hand behind every tree that fruits well in its first year.' },
       { name: 'Pyditalli', telugu: 'పైడితల్లి', role: 'Farmer', tag: 'Harvest', image: '/assets/team/pyditalli.jpg', bio: 'Harvests at first light, when the mangoes are coolest. Knows ripeness by weight alone.' },
     ],
@@ -59,8 +59,8 @@ const PILLARS = [
     theme: 'mango',
     members: [
       { name: 'Akarsh', telugu: 'ఆకర్ష్', role: 'Founder', tag: 'Founder', image: '/assets/team/akarsh.jpg', bio: 'Third-generation on this land. Founded Aamrutham in 2026 to bring heritage, tree-ripened varieties out of the grove and onto the table.' },
-      { name: 'Charan Teja', telugu: 'చరణ్ తేజ', role: 'Co-founder', tag: 'Operations', image: '/assets/team/charanteja.jpg', bio: 'Keeps the operations honest — from cold chain to customer hand-off.' },
-      { name: 'Srikanth', telugu: 'శ్రీకాంత్', role: 'Co-founder', tag: 'Growth', image: '/assets/team/srikanth.jpg', bio: 'Builds the channels that take the orchard to the city, one pre-order at a time.' },
+      { name: 'Charan Teja', telugu: 'చరణ్ తేజ', role: 'Co-founder', tag: 'Operations', image: '/assets/team/charanteja.jpg', facePos: 'center 35%', bio: 'Keeps the operations honest — from cold chain to customer hand-off.' },
+      { name: 'Srikanth', telugu: 'శ్రీకాంత్', role: 'Co-founder', tag: 'Growth', image: '/assets/team/srikanth.jpg', facePos: 'center 35%', bio: 'Builds the channels that take the orchard to the city, one pre-order at a time.' },
       { name: 'Ganesh', telugu: 'గణేష్', role: 'Co-founder', tag: 'Brand', image: null, fallback: '🎨', bio: 'The storyteller. Threads the farm\'s philosophy through every touchpoint.' },
       { name: 'R. S. Sai', telugu: 'ఆర్. ఎస్. సాయి', role: 'Co-founder', tag: 'Partnerships', image: '/assets/team/rs-sai.jpg', bio: 'Steward of the craft — relationships with farmers, buyers, and the long-view vision of Mangoes as a Service.' },
     ],
@@ -68,19 +68,45 @@ const PILLARS = [
 ];
 
 const THEME_COLORS = {
-  ochre: { main: '#C58A3E', bg: '', tag: '#fdf2e0', tagText: '#5B3A15', border: '#C58A3E' },
-  leaf:  { main: '#3F6B3A', bg: '#F7F0E6', tag: '#eaf3de', tagText: '#1F3A1D', border: '#3F6B3A' },
-  terra: { main: '#B5502E', bg: '', tag: '#faeae3', tagText: '#5B2311', border: '#B5502E' },
-  mango: { main: '#E3A432', bg: '#F7F0E6', tag: '#fef7e0', tagText: '#6A430E', border: '#E3A432' },
+  ochre: { main: '#C58A3E', tag: '#fdf2e0', tagText: '#5B3A15' },
+  leaf:  { main: '#3F6B3A', tag: '#eaf3de', tagText: '#1F3A1D' },
+  terra: { main: '#B5502E', tag: '#faeae3', tagText: '#5B2311' },
+  mango: { main: '#E3A432', tag: '#fef7e0', tagText: '#6A430E' },
 };
 
-function MemberCard({ member, theme }) {
+const PILLAR_BG = ['#F4EBD4', '#F7F0E6', '#F4EBD4', '#F7F0E6'];
+
+function MemberPopup({ member, theme, onClose }) {
   const t = THEME_COLORS[theme];
   return (
-    <div className="tm2-card">
+    <div className="tm2-popup-overlay" onClick={onClose}>
+      <div className="tm2-popup" onClick={e => e.stopPropagation()}>
+        <button className="tm2-popup-close" onClick={onClose} aria-label="Close">✕</button>
+        <div className="tm2-popup-photo">
+          {member.image
+            ? <img src={member.image} alt={member.name} style={{ objectPosition: member.facePos || 'center 20%' }} />
+            : <div className="tm2-card-placeholder">{member.fallback || '🌿'}</div>
+          }
+        </div>
+        <div className="tm2-popup-body">
+          <span className="tm2-card-tag" style={{ background: t.tag, color: t.tagText }}>{member.tag}</span>
+          <span className="tm2-card-telugu" style={{ display: 'block', marginTop: '0.5rem' }}>{member.telugu}</span>
+          <p className="tm2-popup-name">{member.name}</p>
+          <p className="tm2-card-role" style={{ color: t.main }}>{member.role}</p>
+          <p className="tm2-popup-bio">{member.bio}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MemberCard({ member, theme, onTap }) {
+  const t = THEME_COLORS[theme];
+  return (
+    <div className="tm2-card" onClick={onTap}>
       <div className="tm2-card-photo">
         {member.image
-          ? <img src={member.image} alt={member.name} />
+          ? <img src={member.image} alt={member.name} style={{ objectPosition: member.facePos || 'center 20%' }} />
           : <div className="tm2-card-placeholder">{member.fallback || '🌿'}</div>
         }
       </div>
@@ -90,16 +116,55 @@ function MemberCard({ member, theme }) {
         <p className="tm2-card-name">{member.name}</p>
         <p className="tm2-card-role" style={{ color: t.main }}>{member.role}</p>
         <p className="tm2-card-bio">{member.bio}</p>
+        <span className="tm2-card-tap-hint">Their story inside →</span>
       </div>
     </div>
   );
 }
 
-function Pillar({ pillar, index }) {
+export default function TeamPage() {
+  const [active, setActive] = useState(3); // default: Founders
+  const [popup, setPopup] = useState(null); // { member, theme }
+
+  const pillar = PILLARS[active];
   const t = THEME_COLORS[pillar.theme];
+
   return (
-    <div className="tm2-pillar-wrap" style={{ zIndex: 10 + index }}>
-      <section className="tm2-pillar" style={{ background: index % 2 === 1 ? '#F7F0E6' : '#F4EBD4' }}>
+    <main>
+      {popup && <MemberPopup member={popup.member} theme={popup.theme} onClose={() => setPopup(null)} />}
+      <section className="tm2-hero">
+        <div className="tm2-hero-inner">
+          <span className="tm2-eyebrow">The People Behind Every Mango</span>
+          <h1 className="tm2-title">Our <em>Circle</em></h1>
+          <span className="tm2-hero-telugu">మా బృందం</span>
+          <p className="tm2-subtitle">A mango doesn't grow alone. Neither do we. Meet the humans, animals, and living systems that make Aamrutham possible.</p>
+        </div>
+      </section>
+
+      {/* Pillar tabs */}
+      <div className="tm2-tabs">
+        {PILLARS.map((p, i) => {
+          const tc = THEME_COLORS[p.theme];
+          return (
+            <button
+              key={p.id}
+              className={`tm2-tab${active === i ? ' active' : ''}`}
+              style={active === i ? { borderColor: tc.main, color: tc.main } : {}}
+              onClick={() => setActive(i)}
+            >
+              <span className="tm2-tab-numeral" style={active === i ? { color: tc.main } : {}}>{p.numeral}</span>
+              <span className="tm2-tab-name">{p.english[1]}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Active pillar panel */}
+      <section
+        key={pillar.id}
+        className="tm2-panel"
+        style={{ background: PILLAR_BG[active] }}
+      >
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: t.main }} />
         <div className="tm2-pillar-inner">
           <div className="tm2-pillar-head">
@@ -113,27 +178,17 @@ function Pillar({ pillar, index }) {
           </div>
           <p className="tm2-pillar-blurb" style={{ borderColor: t.main }}>{pillar.blurb}</p>
           <div className="tm2-members-grid">
-            {pillar.members.map(m => <MemberCard key={m.name} member={m} theme={pillar.theme} />)}
+            {pillar.members.map(m => (
+              <MemberCard
+                key={m.name}
+                member={m}
+                theme={pillar.theme}
+                onTap={() => setPopup({ member: m, theme: pillar.theme })}
+              />
+            ))}
           </div>
         </div>
       </section>
-    </div>
-  );
-}
-
-export default function TeamPage() {
-  return (
-    <main>
-      <section className="tm2-hero">
-        <div className="tm2-hero-inner">
-          <span className="tm2-eyebrow">The People Behind Every Mango</span>
-          <h1 className="tm2-title">Our <em>Circle</em></h1>
-          <span className="tm2-hero-telugu">మా బృందం</span>
-          <p className="tm2-subtitle">A mango doesn't grow alone. Neither do we. Meet the humans, animals, and living systems that make Aamrutham possible.</p>
-        </div>
-      </section>
-
-      {PILLARS.map((p, i) => <Pillar key={p.id} pillar={p} index={i} />)}
 
       <section className="tm2-closing">
         <div className="tm2-closing-inner">

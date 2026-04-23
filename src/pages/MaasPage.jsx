@@ -48,11 +48,41 @@ const TICKER_ITEMS = [
   'SUVARNAREKHA', 'CHINNA RASALU', 'BANGANAPALLI', 'PANDURI TEEPI MAMIDI',
 ];
 
+function PremiumPopup({ pass, url, onClose }) {
+  return (
+    <div className="maas-popup-overlay" onClick={onClose}>
+      <div className="maas-popup" onClick={e => e.stopPropagation()}>
+        <div className="maas-popup-badge">✦ Exclusive</div>
+        <h2 className="maas-popup-title">You're joining a small,<br /><em>exclusive circle.</em></h2>
+        <p className="maas-popup-body">
+          As a MaaS subscriber, we don't just deliver mangoes — we coordinate with you personally, from your first box to your last. Our team will reach out on WhatsApp to confirm your slot, plan your delivery schedule, and make sure every week is exactly right.
+        </p>
+        <div className="maas-popup-detail">
+          <span>🥭 {pass.name}</span>
+          <span>⚡ 4 weeks · Free delivery</span>
+          <span>📦 Hyderabad</span>
+        </div>
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="maas-popup-cta"
+          onClick={onClose}
+        >
+          Continue to WhatsApp →
+        </a>
+        <button className="maas-popup-close" onClick={onClose} aria-label="Close">✕</button>
+      </div>
+    </div>
+  );
+}
+
 export default function MaasPage() {
   const [premiumPack, setPremiumPack] = useState(12);
   const [exoticPack, setExoticPack] = useState(12);
   const [customPack, setCustomPack] = useState(12);
   const [customSelected, setCustomSelected] = useState([]);
+  const [popup, setPopup] = useState(null); // { pass, url }
 
   const customLimit = customPack === 12 ? 3 : 5;
 
@@ -65,12 +95,18 @@ export default function MaasPage() {
   }
 
   function buildOrderUrl(passName, pack, varieties) {
-    const msg = `Hi! I'd like to order the *${passName}* (${pack} pcs/week × 4 weeks) — ₹${PRICES[pack].toLocaleString('en-IN')}.\nVarieties: ${varieties.join(', ')}.\nPlease confirm my slot.`;
+    const msg = `Hi! I'd like to join the *${passName}* (${pack} pcs/week × 4 weeks) — ₹${PRICES[pack].toLocaleString('en-IN')}.\nVarieties: ${varieties.join(', ')}.\nLooking forward to the season!`;
     return buildWhatsAppUrl(msg);
+  }
+
+  function handlePassClick(e, pass, pack, varieties) {
+    e.preventDefault();
+    setPopup({ pass, url: buildOrderUrl(pass.name, pack, varieties) });
   }
 
   return (
     <main style={{ background: '#050f02', color: 'white', minHeight: '100vh' }}>
+      {popup && <PremiumPopup pass={popup.pass} url={popup.url} onClose={() => setPopup(null)} />}
       {/* Hero */}
       <section className="maas-hero">
         <div className="maas-hero-dots" />
@@ -133,9 +169,9 @@ export default function MaasPage() {
                   {pass.features.map(f => <li key={f}><span className="maas-check">✓</span> {f}</li>)}
                 </ul>
                 <a
-                  href={buildOrderUrl(pass.name, pack, pass.varieties)}
-                  target="_blank" rel="noopener noreferrer"
+                  href="#"
                   className="btn-maas"
+                  onClick={e => handlePassClick(e, pass, pack, pass.varieties)}
                 >
                   ⚡ Start {pass.name} — ₹{PRICES[pack].toLocaleString('en-IN')}
                 </a>
@@ -172,9 +208,9 @@ export default function MaasPage() {
             <div className="maas-card-per">one-time · 4 weeks · free delivery</div>
             {customSelected.length === customLimit ? (
               <a
-                href={buildOrderUrl('Customised Pass', customPack, customSelected)}
-                target="_blank" rel="noopener noreferrer"
+                href="#"
                 className="btn-maas"
+                onClick={e => handlePassClick(e, { name: 'Customised Pass' }, customPack, customSelected)}
               >
                 ⚡ Start Customised Pass — ₹{PRICES[customPack].toLocaleString('en-IN')}
               </a>

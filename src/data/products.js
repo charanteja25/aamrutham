@@ -1,4 +1,4 @@
-export const whatsappPhone = '919177266273';
+export const whatsappPhone = '917670826759';
 
 export const HYD_PINCODES = [
   500001,500002,500003,500004,500005,500006,500007,500008,500009,500010,

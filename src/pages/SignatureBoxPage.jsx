@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { buildWhatsAppUrl } from '../data/products';
+import { useCart } from '../context/CartContext';
 
 const PACKS = [
   { label: '12 pcs', price: 1999 },
@@ -14,7 +14,13 @@ const VARIETIES = [
   { name: 'Imam Pasand', note: 'The Royal Mango — saffron-hued, zero-fibre, creamy, Deccan royalty' },
 ];
 
+const SIGBOX_PRODUCT = {
+  id: 'signature-box',
+  name: 'Aamrutham Signature Box',
+};
+
 export default function SignatureBoxPage() {
+  const { addToCart, setIsOpen } = useCart();
   const [packIdx, setPackIdx] = useState(0);
   const [giftEnabled, setGiftEnabled] = useState(false);
   const [recipientName, setRecipientName] = useState('');
@@ -24,14 +30,11 @@ export default function SignatureBoxPage() {
   const pack = PACKS[packIdx];
 
   function handleOrder() {
-    let msg = `Hi! I'd like to order the *Aamrutham Signature Box* (${pack.label}) — ₹${pack.price.toLocaleString('en-IN')}.\nVarieties: Kothapalli Kobbari, Panduri Teepi Mamidi, Bobbili Peechu, Imam Pasand.`;
-    if (giftEnabled && recipientName) {
-      msg += `\n\n🎁 Gift for: ${recipientName}`;
-      if (recipientPhone) msg += ` (${recipientPhone})`;
-      if (giftMessage) msg += `\nMessage: "${giftMessage}"`;
-    }
-    msg += '\n\nPlease confirm my order.';
-    window.open(buildWhatsAppUrl(msg), '_blank', 'noopener,noreferrer');
+    const meta = giftEnabled && recipientName
+      ? { gift: true, recipientName, recipientPhone, giftMessage }
+      : undefined;
+    addToCart(SIGBOX_PRODUCT, pack.label, pack.price, null, false, meta);
+    setIsOpen(true);
   }
 
   return (
