@@ -33,7 +33,7 @@ export default function CartDrawer() {
   async function releaseOrder(orderId) {
     if (!orderId) return;
     try {
-      await fetch(`${API_BASE}/api/payments/release`, {
+      await fetch(API_BASE + '/api/payments/release', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ razorpay_order_id: orderId }),
@@ -68,7 +68,7 @@ export default function CartDrawer() {
     // 2. Call backend — creates Razorpay order + locks inventory for 5 min
     let orderData;
     try {
-      const res = await fetch(`${API_BASE}/api/orders/create`, {
+      const res = await fetch(API_BASE + '/api/orders/create', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -125,7 +125,7 @@ export default function CartDrawer() {
       handler: async function (response) {
         // Payment succeeded — verify on backend
         try {
-          const verifyRes = await fetch(`${API_BASE}/api/payments/verify`, {
+          const verifyRes = await fetch(API_BASE + '/api/payments/verify', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

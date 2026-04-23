@@ -17,7 +17,7 @@ export function InventoryProvider({ children }) {
 
   const fetchInventory = useCallback(async () => {
     try {
-      const res = await fetch(`${API_BASE}/api/inventory`);
+      const res = await fetch(API_BASE + '/api/inventory');
       if (!res.ok) return;
       const data = await res.json();
       setInventoryMap(data.inventory ?? {});
