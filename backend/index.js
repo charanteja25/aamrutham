@@ -9,7 +9,19 @@ import adminRouter from "./routes/admin.js";
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(cors({ origin: process.env.FRONTEND_URL || "http://localhost:5173" }));
+app.use(cors({
+  origin: (origin, cb) => {
+    if (!origin) return cb(null, true);
+    const allowed = (process.env.FRONTEND_URL || '').split(',').map(s => s.trim());
+    if (
+      allowed.includes(origin) ||
+      origin.endsWith('.vercel.app') ||
+      origin === 'http://localhost:5173'
+    ) return cb(null, true);
+    cb(new Error('CORS: ' + origin + ' not allowed'));
+  },
+  credentials: true,
+}));
 app.use(express.json());
 
 app.use("/api/orders", ordersRouter);
