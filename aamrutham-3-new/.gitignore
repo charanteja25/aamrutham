@@ -1,6 +1,0 @@
-*node_modules*
-*dist*
-.claude*
-*.env
-.DS_Store
-.vite/
