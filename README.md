@@ -1,5 +1,6 @@
 # Aamrutham — Production Setup Guide
 
+
 Stack: **React (Vite) + Node/Express + PostgreSQL + Razorpay**  
 Deployment target: **AWS EC2 (Ubuntu 22.04) + PostgreSQL** *(local on EC2 or RDS — both covered)*
 
