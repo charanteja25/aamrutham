@@ -12,6 +12,14 @@
 import { Router } from "express";
 import Razorpay from "razorpay";
 import pool from "../db.js";
+// Reuse the single source of truth from the frontend — pure ESM data module.
+import { HYD_PINCODES } from "../../src/data/products.js";
+
+const SERVICEABLE_PINCODES = new Set(HYD_PINCODES);
+const isServiceablePincode = (pin) => {
+  const n = Number(String(pin).trim());
+  return Number.isFinite(n) && SERVICEABLE_PINCODES.has(n);
+};
 
 const router = Router();
 
@@ -25,10 +33,34 @@ function getRazorpay() {
 const LOCK_MINUTES = 5;
 
 router.post("/create", async (req, res) => {
-  const { amount, cartItems } = req.body;
+  const { amount, cartItems, customer = {} } = req.body;
 
   if (!amount || !Array.isArray(cartItems) || cartItems.length === 0) {
     return res.status(400).json({ error: "amount and cartItems are required" });
+  }
+
+  // Address + contact are mandatory so we can ship the order. These are also
+  // prefilled into Razorpay so the customer doesn't retype them.
+  const required = ["name", "contact", "address_line1", "city", "state", "pincode"];
+  const missing = required.filter((k) => !customer[k] || String(customer[k]).trim() === "");
+  if (missing.length) {
+    return res.status(400).json({
+      error: "Missing customer fields",
+      fields: missing,
+    });
+  }
+
+  if (!/^[0-9]{6}$/.test(String(customer.pincode).trim())) {
+    return res.status(400).json({ error: "Pincode must be 6 digits" });
+  }
+  if (!isServiceablePincode(customer.pincode)) {
+    return res.status(400).json({
+      error: "Sorry, we currently deliver within Hyderabad only.",
+      code: "pincode_not_serviceable",
+    });
+  }
+  if (!/^[0-9]{10}$/.test(String(customer.contact).replace(/\D/g, "").slice(-10))) {
+    return res.status(400).json({ error: "Contact must be a 10-digit mobile number" });
   }
 
   const amountPaise = Math.round(amount * 100);
@@ -111,9 +143,25 @@ router.post("/create", async (req, res) => {
     // ── 4. Insert orders row ────────────────────────────────────────────────
     await client.query(
       `INSERT INTO orders
-         (razorpay_order_id, amount, currency, cart_items)
-       VALUES ($1, $2, $3, $4)`,
-      [rzpOrder.id, amountPaise, "INR", JSON.stringify(cartItems)]
+         (razorpay_order_id, amount, currency, cart_items,
+          customer_name, customer_email, customer_contact,
+          address_line1, address_line2, address_city, address_state, address_pincode, address_landmark)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
+      [
+        rzpOrder.id,
+        amountPaise,
+        "INR",
+        JSON.stringify(cartItems),
+        customer.name?.trim() || null,
+        customer.email?.trim() || null,
+        String(customer.contact).replace(/\D/g, "").slice(-10),
+        customer.address_line1?.trim() || null,
+        customer.address_line2?.trim() || null,
+        customer.city?.trim() || null,
+        customer.state?.trim() || null,
+        String(customer.pincode).trim(),
+        customer.landmark?.trim() || null,
+      ]
     );
 
     await client.query("COMMIT");

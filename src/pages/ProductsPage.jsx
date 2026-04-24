@@ -1,12 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { products, buildWhatsAppUrl } from '../data/products';
+import { isSeasonPassActive } from '../data/season';
 import VarietyCarousel from '../components/VarietyCarousel';
 import { useCart } from '../context/CartContext';
+import { useInventory } from '../context/InventoryContext';
 
 function VarietyTile({ product }) {
   const [selectedPack, setSelectedPack] = useState(product.packPrices[0]);
   const { addToCart } = useCart();
+  const { getAvailable } = useInventory();
+
+  // Once inventory loads, if the default-selected pack has 0 stock, switch to
+  // the first pack that's actually in stock so the UI doesn't misleadingly
+  // show "Coming Soon" for an entire product that has other packs available.
+  useEffect(() => {
+    const current = getAvailable(product.id, selectedPack.label);
+    if (current === null) return;      // inventory still loading
+    if (current > 0) return;           // already on a good pack
+    const firstAvail = product.packPrices.find(
+      (p) => (getAvailable(product.id, p.label) ?? 0) > 0
+    );
+    if (firstAvail && firstAvail.label !== selectedPack.label) {
+      setSelectedPack(firstAvail);
+    }
+  }, [getAvailable, product, selectedPack.label]);
+
+  const available = getAvailable(product.id, selectedPack.label);
+  const isSoldOut = available === 0;
   const isSignature = product.category === 'premium';
   return (
     <div className="variety-tile">
@@ -19,6 +40,7 @@ function VarietyTile({ product }) {
         <span className={`variety-tile-badge ${isSignature ? 'badge-signature' : 'badge-heritage'}`}>
           {isSignature ? 'Signature' : 'Heritage'}
         </span>
+        {isSoldOut && <span className="variety-tile-soldout">Coming Soon</span>}
       </Link>
       <div className="variety-tile-body">
         <Link to={`/products/${product.id}`} className="variety-tile-name">{product.name}</Link>
@@ -28,23 +50,48 @@ function VarietyTile({ product }) {
       </div>
       <div className="variety-tile-footer">
         <div className="variety-tile-pack-row">
-          {product.packPrices.map(p => (
-            <button
-              key={p.label}
-              className={`variety-tile-pack-btn${selectedPack.label === p.label ? ' active' : ''}`}
-              onClick={() => setSelectedPack(p)}
-            >{p.label}</button>
-          ))}
+          {product.packPrices.map(p => {
+            const packAvail = getAvailable(product.id, p.label);
+            const packOut = packAvail === 0;
+            return (
+              <button
+                key={p.label}
+                className={`variety-tile-pack-btn${selectedPack.label === p.label ? ' active' : ''}${packOut ? ' out' : ''}`}
+                onClick={() => !packOut && setSelectedPack(p)}
+                title={packOut ? 'Out of stock' : undefined}
+              >{p.label}{packOut && ' ✕'}</button>
+            );
+          })}
         </div>
         <div className="variety-tile-footer-row">
           <span className="variety-tile-price">₹{selectedPack.price.toLocaleString('en-IN')}</span>
-          <button
-            className="variety-tile-cart-btn"
-            onClick={() => addToCart(product, selectedPack.label, selectedPack.price, null, null, true)}
-          >Add to cart</button>
+          {isSoldOut ? (
+            <span className="sold-out-chip">Coming Soon</span>
+          ) : (
+            <button
+              className="variety-tile-cart-btn"
+              onClick={() => addToCart(product, selectedPack.label, selectedPack.price, null, null, true)}
+            >Add to cart</button>
+          )}
         </div>
       </div>
     </div>
+  );
+}
+
+function SeasonPassTile() {
+  return (
+    <Link to="/maas" className="variety-tile season-pass-tile">
+      <div className="season-pass-tile-glow" aria-hidden="true" />
+      <div className="season-pass-tile-inner">
+        <span className="season-pass-tile-eyebrow">⚡ Season Pass</span>
+        <h3 className="season-pass-tile-title">Try them <em>all</em></h3>
+        <p className="season-pass-tile-copy">
+          Four weeks. One payment. Rare heritage varieties delivered fresh every week, curated by our team.
+        </p>
+        <span className="season-pass-tile-cta">Explore Season Pass →</span>
+      </div>
+    </Link>
   );
 }
 
@@ -76,7 +123,6 @@ export default function ProductsPage() {
         <div>Hyderabad delivery</div>
         <div>Zero pesticides</div>
         <div>Summer 2026</div>
-        <div>Secure Razorpay Checkout</div>
       </section>
 
       <section className="section section-cream">
@@ -89,6 +135,7 @@ export default function ProductsPage() {
 
           <div className="variety-tiles-grid">
             {varieties.map(product => <VarietyTile key={product.id} product={product} />)}
+            {isSeasonPassActive() && <SeasonPassTile />}
           </div>
         </div>
       </section>

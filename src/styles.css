@@ -81,7 +81,7 @@ input {
 
 .section-eyebrow {
   margin: 0 0 0.75rem;
-  font-size: 0.78rem;
+  font-size: 0.92rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--mango-dark);
@@ -124,6 +124,7 @@ input {
 .heritage-copy p {
   color: #6d5138;
   line-height: 1.8;
+  font-size: 1.1rem;
 }
 
 .section-head {
@@ -234,6 +235,161 @@ input {
   border-radius: 28px;
   box-shadow: var(--shadow);
 }
+
+/* ── Product Detail: Variety Specimen Card ── */
+.detail-specimen {
+  background: #fffdf7;
+  border: 1px solid #f0e4cc;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 18px 48px rgba(44, 24, 16, 0.10);
+}
+.detail-specimen-photo {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+}
+.detail-specimen-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.detail-specimen-body {
+  padding: 1.5rem 1.6rem 1.6rem;
+}
+.detail-specimen-eyebrow {
+  margin: 0 0 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mango-dark);
+}
+.detail-specimen-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.55rem;
+  color: var(--leaf);
+  margin: 0 0 0.2rem;
+  font-weight: 600;
+}
+.detail-specimen-telugu {
+  margin: 0 0 1rem;
+  font-family: 'Noto Serif Telugu', serif;
+  font-size: 1rem;
+  color: #8a6540;
+}
+.detail-specimen-telugu em {
+  font-style: italic;
+  font-family: 'Playfair Display', serif;
+  color: #6b5535;
+}
+.detail-specimen-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.1rem;
+}
+.detail-specimen-tags span {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--leaf);
+  background: rgba(45, 80, 22, 0.08);
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+}
+.detail-specimen-facts {
+  margin: 0;
+  padding: 1rem 0 0;
+  border-top: 1px dashed #e6d4a8;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem 1.2rem;
+}
+.detail-specimen-facts div { margin: 0; }
+.detail-specimen-facts dt {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #a07850;
+  margin-bottom: 2px;
+}
+.detail-specimen-facts dd {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #3b2507;
+  font-family: 'Playfair Display', serif;
+}
+@media (max-width: 768px) {
+  .detail-specimen-photo { height: 220px; }
+  .detail-specimen-facts { grid-template-columns: 1fr 1fr; }
+}
+
+/* ── Mangoes Per Day Chart ── */
+.mpd-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.mpd-head {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.mpd-sub {
+  color: #6d5138;
+  font-size: 1.02rem;
+  line-height: 1.65;
+  max-width: 620px;
+  margin: 0.5rem auto 0;
+}
+.mpd-figure {
+  margin: 1.5rem 0 0;
+  padding: 1.25rem 1rem 0.5rem;
+  background: linear-gradient(180deg, #fffdf7 0%, #fbf4e3 100%);
+  border: 1px solid #f0e4cc;
+  border-radius: 20px;
+  box-shadow: 0 18px 40px rgba(44, 24, 16, 0.08);
+}
+.mpd-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.mpd-caption {
+  margin: 0.5rem 0.5rem 0.75rem;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: #8a7453;
+  font-style: italic;
+}
+.mpd-legend {
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.4rem 1rem;
+}
+.mpd-legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.88rem;
+  color: #5b3a15;
+}
+.mpd-legend-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #c68311;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 3px #c68311;
+  flex-shrink: 0;
+}
+.mpd-legend-label { line-height: 1.4; }
+@media (max-width: 640px) {
+  .mpd-svg { min-height: 280px; }
+  .mpd-caption { font-size: 0.78rem; }
+}
 .story-farm-photo {
   width: 100%; height: 420px;
   object-fit: cover;
@@ -336,6 +492,7 @@ input {
 .featured-card h3 {
   margin: 0 0 0.6rem;
   font-family: 'Playfair Display', serif;
+  font-size: 1.55rem;
   color: var(--leaf);
 }
 
@@ -366,7 +523,7 @@ input {
 
 .featured-tag,
 .product-card-tag {
-  font-size: 0.72rem;
+  font-size: 0.85rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--mango-dark);
@@ -376,16 +533,18 @@ input {
 .featured-telugu,
 .detail-telugu,
 .product-card-telugu {
-  margin: 0.2rem 0 0.6rem;
+  margin: 0.3rem 0 0.7rem;
   color: var(--mango-dark);
   font-family: 'Noto Serif Telugu', serif;
+  font-size: 1.05rem;
 }
 
 .featured-meaning,
 .product-card-meaning {
-  margin: 0 0 0.8rem;
+  margin: 0 0 0.95rem;
   font-style: italic;
   color: #8a6540;
+  font-size: 0.98rem;
 }
 
 .featured-text {
@@ -521,6 +680,160 @@ input {
   font-weight: 700;
 }
 
+/* ── Sold-out chip (replaces add-to-cart button when stock = 0) ── */
+.sold-out-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  background: #fce4ec;
+  color: #b71c1c;
+  border: 1.5px solid rgba(183,28,28,0.25);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: default;
+  user-select: none;
+}
+.sold-out-chip--large {
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+}
+
+/* Sold-out ribbon on variety tile image (top-right corner). */
+.variety-tile-soldout {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  padding: 0.3rem 0.75rem;
+  background: rgba(183,28,28,0.95);
+  color: #fff;
+  border-radius: 50px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  z-index: 1;
+}
+
+/* Pack-pill disabled state when that pack is out of stock. */
+.variety-tile-pack-btn.out {
+  opacity: 0.4;
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+
+/* ── Season Pass tile (appended to variety grid) ── */
+.variety-tile.season-pass-tile {
+  position: relative;
+  border: 1px solid rgba(230,190,120,0.28);
+  border-top: 1px solid rgba(245,210,150,0.5);
+  background:
+    linear-gradient(180deg, rgba(245,180,110,0.08) 0%, transparent 22%),
+    radial-gradient(ellipse 80% 60% at 65% 35%, rgba(50,110,40,0.42) 0%, transparent 70%),
+    linear-gradient(160deg, #0a1a05 0%, #040a02 100%);
+  color: #fff;
+  overflow: hidden;
+  min-height: 100%;
+}
+.season-pass-tile-glow {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(245,166,35,0.10) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  pointer-events: none;
+}
+.season-pass-tile-inner {
+  position: relative;
+  padding: 1.6rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  min-height: 360px;
+}
+.season-pass-tile-eyebrow {
+  display: inline-block;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #F5A623;
+  margin-bottom: 0.75rem;
+}
+.season-pass-tile-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.9rem;
+  line-height: 1.15;
+  margin: 0 0 0.75rem;
+  color: #fff;
+  font-weight: 600;
+}
+.season-pass-tile-title em { color: #F5A623; font-style: italic; }
+.season-pass-tile-copy {
+  color: rgba(240,230,210,0.7);
+  font-size: 0.98rem;
+  line-height: 1.65;
+  margin: 0 0 1.5rem;
+}
+.season-pass-tile-cta {
+  display: inline-block;
+  background: #F5A623;
+  color: #1a0a00;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.65rem 1.2rem;
+  border-radius: 999px;
+  align-self: flex-start;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+  transition: background 0.2s, transform 0.15s;
+}
+.variety-tile.season-pass-tile:hover {
+  transform: translateY(-4px);
+  border-color: rgba(245,166,35,0.5);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(230,190,120,0.12);
+}
+.variety-tile.season-pass-tile:hover .season-pass-tile-cta {
+  background: #ffbb3d;
+}
+
+/* ── Season Pass inline nudge (Product Detail) ── */
+.detail-pass-nudge {
+  display: block;
+  margin-top: 1rem;
+  padding: 0.9rem 1rem;
+  background: linear-gradient(135deg, #fff7e0 0%, #fde9b8 100%);
+  border: 1px solid #f0d28c;
+  border-left: 3px solid #e8a020;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #5B3A15;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.detail-pass-nudge:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(232,160,32,0.18);
+}
+.detail-pass-nudge-label {
+  display: block;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #b67014;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+}
+.detail-pass-nudge-body {
+  display: block;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #6b5535;
+}
+
+
 .heritage-section {
   background: linear-gradient(160deg, #0f2408 0%, #2d5016 60%, #1f390d 100%);
   color: var(--white);
@@ -565,8 +878,9 @@ input {
   background: var(--white);
   color: #7c5b39;
   border-radius: 999px;
-  padding: 0.55rem 1rem;
+  padding: 0.6rem 1.15rem;
   font-weight: 700;
+  font-size: 0.95rem;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -637,7 +951,7 @@ input {
 
 .product-card-visual {
   position: relative;
-  min-height: 230px;
+  min-height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -668,11 +982,13 @@ input {
 }
 
 .product-card-body {
-  padding: 1.4rem;
+  padding: 1.6rem;
+  font-size: 1.02rem;
 }
 
 .product-card-text {
   margin: 0.85rem 0 1rem;
+  font-size: 1rem;
 }
 
 .product-card-footer {
@@ -695,16 +1011,15 @@ input {
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--leaf);
-  font-size: 1.6rem;
+  font-size: 1.9rem;
   line-height: 1;
 }
 
 .price-note,
 .cart-note,
-.product-card-meaning,
 .page-note {
   color: #967659;
-  font-size: 0.8rem;
+  font-size: 0.92rem;
 }
 
 .feedback-section {
@@ -2810,129 +3125,271 @@ input {
 }
 
 /* ── Values Page ── */
+/* ── Values page ─────────────────────────────────────────────────────── */
 .vals-hero {
-  background: var(--cream-dark);
+  background:
+    radial-gradient(ellipse at 50% 120%, rgba(45,80,22,0.08) 0%, transparent 60%),
+    linear-gradient(180deg, var(--cream-dark) 0%, #f5ecd6 100%);
   text-align: center;
-  padding: 5rem 1.5rem 3rem;
+  padding: 6rem 1.5rem 4rem;
   position: relative;
+  overflow: hidden;
 }
 .vals-hero::before {
   content: ''; position: absolute; inset: 0;
-  background-image: radial-gradient(circle, rgba(197,138,62,0.07) 1px, transparent 1px);
-  background-size: 28px 28px; pointer-events: none;
+  background-image: radial-gradient(circle, rgba(197,138,62,0.08) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  pointer-events: none;
+}
+.vals-hero::after {
+  content: ''; position: absolute; left: 25%; right: 25%; bottom: 0;
+  height: 1px; background: linear-gradient(90deg, transparent, rgba(45,80,22,0.3), transparent);
+  pointer-events: none;
 }
 .vals-hero-inner { position: relative; z-index: 1; }
 .vals-eyebrow {
-  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.22em;
-  text-transform: uppercase; color: #a07850; display: block; margin-bottom: 1rem;
+  font-size: 0.85rem; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--mango-dark);
+  display: block; margin-bottom: 1rem;
 }
 .vals-title {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 400;
-  color: #1C1208; margin-bottom: 0.75rem;
+  font-size: clamp(2.6rem, 5.5vw, 3.8rem); font-weight: 400;
+  color: #1C1208; margin-bottom: 0.85rem;
+  letter-spacing: -0.01em;
 }
 .vals-title em { color: var(--leaf); font-style: italic; }
-.vals-sub { font-size: 1rem; color: #5a3e2b; max-width: 520px; margin: 0 auto; line-height: 1.75; }
+.vals-sub {
+  font-size: 1.15rem; color: #5a3e2b;
+  max-width: 580px; margin: 0 auto; line-height: 1.75;
+}
 
-.vals-wrap { padding: 4rem 0 2rem; }
+.vals-wrap { padding: 4.5rem 0 2.5rem; }
+
+/* Featured value — "Truth over trends" */
 .vals-featured {
-  display: grid; grid-template-columns: 280px 1fr; gap: 3rem;
-  padding-bottom: 3rem; margin-bottom: 3rem;
+  position: relative;
+  display: grid; grid-template-columns: 300px 1fr; gap: 3.5rem;
+  padding: 2rem 0 3.5rem 0;
+  margin-bottom: 3.5rem;
   border-bottom: 1px solid #e8d9c4;
 }
-.vals-feat-left { display: flex; flex-direction: column; gap: 0.5rem; }
+.vals-featured::before {
+  content: ''; position: absolute; left: 0; top: 1.5rem;
+  width: 4px; height: calc(100% - 5rem);
+  background: linear-gradient(180deg, var(--leaf), transparent);
+  border-radius: 2px;
+  opacity: 0.55;
+}
+.vals-feat-left {
+  display: flex; flex-direction: column; gap: 0.75rem;
+  padding-left: 1.5rem;
+}
 .vals-feat-num {
   font-family: 'Playfair Display', serif;
-  font-size: 3rem; font-weight: 300; opacity: 0.18; color: var(--leaf); line-height: 1;
+  font-size: 4.5rem; font-weight: 300;
+  color: var(--leaf); opacity: 0.22;
+  line-height: 0.9;
 }
 .vals-feat-title {
   font-family: 'Playfair Display', serif;
-  font-size: 1.5rem; font-weight: 400; color: #1C1208; font-style: italic;
+  font-size: 1.8rem; font-weight: 400;
+  color: #1C1208; font-style: italic;
+  line-height: 1.2;
 }
 .vals-feat-tag {
-  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em;
   text-transform: uppercase; color: var(--leaf);
 }
-.vals-feat-body { font-size: 1rem; color: #5a3e2b; line-height: 1.8; margin-bottom: 1.25rem; }
-.vals-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.vals-feat-body {
+  font-size: 1.1rem; color: #5a3e2b; line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+.vals-pills { display: flex; flex-wrap: wrap; gap: 0.55rem; }
 .vals-pills span {
   background: #eaf3de; color: #1F3A1D;
-  font-size: 0.72rem; font-weight: 700; padding: 0.3rem 0.85rem;
-  border-radius: 50px; letter-spacing: 0.06em;
+  font-size: 0.82rem; font-weight: 700;
+  padding: 0.4rem 1rem;
+  border-radius: 50px; letter-spacing: 0.04em;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.vals-pills span:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(45,80,22,0.14);
 }
 
+/* Values cards (02 / 03 / 04) */
 .vals-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem;
 }
 .vals-card {
-  background: white; border-radius: 16px; padding: 1.75rem;
+  position: relative;
+  background: white; border-radius: 18px;
+  padding: 2rem 1.75rem 1.75rem;
   border: 1px solid #e8d9c4;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  overflow: hidden;
 }
+.vals-card::before {
+  content: ''; position: absolute; left: 0; top: 0;
+  width: 100%; height: 3px;
+  background: linear-gradient(90deg, var(--leaf) 0%, var(--mango) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.vals-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 42px rgba(44,24,16,0.10);
+  border-color: rgba(45,80,22,0.25);
+}
+.vals-card:hover::before { opacity: 1; }
 .vals-card-num {
   font-family: 'Playfair Display', serif;
-  font-size: 2rem; font-weight: 300; opacity: 0.18; display: block; margin-bottom: 0.5rem;
+  font-size: 2.6rem; font-weight: 300;
+  color: var(--leaf); opacity: 0.2;
+  display: block; margin-bottom: 0.5rem;
+  line-height: 1;
 }
 .vals-card-title {
   font-family: 'Playfair Display', serif;
-  font-size: 1.15rem; font-weight: 400; font-style: italic;
-  color: #1C1208; margin-bottom: 0.75rem;
+  font-size: 1.35rem; font-weight: 400; font-style: italic;
+  color: #1C1208; margin-bottom: 0.85rem;
+  line-height: 1.3;
 }
-.vals-card-body { font-size: 0.88rem; color: #5a3e2b; line-height: 1.75; margin-bottom: 1rem; }
-.vals-bullets { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.35rem; }
-.vals-bullets li { font-size: 0.82rem; color: #5a3e2b; padding-left: 1rem; position: relative; }
-.vals-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--leaf); }
+.vals-card-body {
+  font-size: 1rem; color: #5a3e2b;
+  line-height: 1.75; margin-bottom: 1.1rem;
+}
+.vals-bullets {
+  list-style: none; padding: 0.85rem 0 0;
+  margin: 0;
+  display: flex; flex-direction: column; gap: 0.5rem;
+  border-top: 1px dashed #e6d4a8;
+}
+.vals-bullets li {
+  font-size: 0.95rem; color: #5a3e2b;
+  padding-left: 1.1rem; position: relative;
+  line-height: 1.55;
+}
+.vals-bullets li::before {
+  content: '✦'; position: absolute; left: 0; top: 1px;
+  color: var(--mango); font-size: 0.7rem;
+}
 
+/* Wide card — "05 Responsibility" */
 .vals-card-wide {
   grid-column: 1 / -1;
   display: grid; grid-template-columns: 320px 1fr; gap: 3rem;
-  background: white; border-radius: 16px; padding: 2rem;
-  border: 1px solid #e8d9c4; align-items: start;
+  background: linear-gradient(180deg, #ffffff 0%, #fdf9f0 100%);
+  border-radius: 18px; padding: 2.25rem 2.25rem;
+  border: 1px solid #e8d9c4;
+  align-items: start;
+  transition: box-shadow 0.25s ease;
 }
-.vals-wide-left { display: flex; flex-direction: column; gap: 0.75rem; }
+.vals-card-wide:hover {
+  box-shadow: 0 18px 42px rgba(44,24,16,0.08);
+}
+.vals-wide-left { display: flex; flex-direction: column; gap: 0.85rem; }
 .vals-green-tag {
-  display: inline-block; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em;
-  text-transform: uppercase; background: #eaf3de; color: #1F3A1D;
-  padding: 0.3rem 0.85rem; border-radius: 50px; width: fit-content;
+  display: inline-block; font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  background: #eaf3de; color: #1F3A1D;
+  padding: 0.4rem 1rem; border-radius: 50px; width: fit-content;
 }
-.vals-wide-right { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
-.vals-resp-pillar { display: flex; flex-direction: column; gap: 0.25rem; }
-.vals-resp-icon { font-size: 1.5rem; }
-.vals-resp-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 400; font-style: italic; color: #1C1208; }
-.vals-resp-desc { font-size: 0.82rem; color: #5a3e2b; line-height: 1.7; }
+.vals-wide-right {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+}
+.vals-resp-pillar {
+  display: flex; flex-direction: column; gap: 0.5rem;
+  padding: 1.1rem 1rem 1.1rem 0;
+  border-left: 2px solid rgba(45,80,22,0.15);
+  padding-left: 1.15rem;
+  transition: border-color 0.2s ease;
+}
+.vals-resp-pillar:hover { border-left-color: var(--leaf); }
+.vals-resp-icon { font-size: 1.8rem; }
+.vals-resp-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem; font-weight: 500;
+  color: #1C1208; margin: 0;
+  line-height: 1.3;
+}
+.vals-resp-desc {
+  font-size: 0.95rem; color: #5a3e2b;
+  line-height: 1.7; margin: 0;
+}
 
+/* Closing */
 .vals-closing {
-  text-align: center; padding: 3rem 1.5rem;
-  display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
-  border-top: 1px solid #e8d9c4; margin-top: 2rem;
+  text-align: center; padding: 4rem 1.5rem 2rem;
+  display: flex; flex-direction: column; align-items: center; gap: 1.75rem;
+  border-top: 1px solid #e8d9c4; margin-top: 2.5rem;
 }
 .vals-closing-text {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(1.3rem, 3vw, 1.8rem); font-weight: 400;
-  color: #1C1208; line-height: 1.5;
+  font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 400;
+  color: #1C1208; line-height: 1.55;
+  max-width: 640px;
 }
 .vals-closing-text em { color: var(--leaf); font-style: italic; }
 .vals-stamp {
   display: flex; flex-direction: column; align-items: center;
-  border: 2px solid var(--leaf); border-radius: 50%; width: 80px; height: 80px;
+  border: 2px solid var(--leaf);
+  border-radius: 50%; width: 96px; height: 96px;
   justify-content: center; color: var(--leaf);
+  background: #fffdf7;
+  box-shadow: 0 6px 18px rgba(45,80,22,0.12);
+  transition: transform 0.3s ease;
 }
-.vals-stamp-year { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; }
-.vals-stamp-label { font-size: 0.55rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; text-align: center; }
+.vals-stamp:hover { transform: scale(1.05) rotate(-3deg); }
+.vals-stamp-year {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; font-weight: 700;
+  line-height: 1;
+}
+.vals-stamp-label {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; text-align: center;
+  margin-top: 4px; line-height: 1.2;
+}
 
 .vals-cta {
-  background: var(--leaf); padding: 4rem 1.5rem; text-align: center;
+  background:
+    radial-gradient(ellipse at center top, rgba(245,166,35,0.12) 0%, transparent 60%),
+    var(--leaf);
+  padding: 4.5rem 1.5rem; text-align: center;
+  position: relative;
+  overflow: hidden;
 }
 .vals-cta h2 {
-  font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.4rem);
-  font-weight: 400; color: white; margin-bottom: 0.75rem;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  font-weight: 400; color: white; margin-bottom: 0.85rem;
+  position: relative;
 }
 .vals-cta h2 em { color: var(--mango); font-style: italic; }
-.vals-cta p { color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; }
+.vals-cta p {
+  color: rgba(255,255,255,0.78);
+  margin-bottom: 1.75rem;
+  font-size: 1.08rem;
+  position: relative;
+}
 
 @media (max-width: 900px) {
-  .vals-featured { grid-template-columns: 1fr; gap: 1.5rem; }
-  .vals-grid { grid-template-columns: 1fr; }
-  .vals-card-wide { grid-template-columns: 1fr; }
+  .vals-featured { grid-template-columns: 1fr; gap: 1.75rem; padding-left: 0; }
+  .vals-featured::before { display: none; }
+  .vals-feat-left { padding-left: 0; }
+  .vals-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+  .vals-card-wide { grid-template-columns: 1fr; gap: 2rem; padding: 1.75rem; }
+  .vals-wide-right { grid-template-columns: 1fr; gap: 1rem; }
+  .vals-resp-pillar { padding: 0.75rem 0 0.75rem 1rem; }
+}
+@media (min-width: 901px) and (max-width: 1100px) {
+  .vals-wide-right { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
 }
 
 /* ── Variety tiles — no image, gradient bg ── */
@@ -3038,6 +3495,51 @@ h1, h2, h3 { font-weight: 400; }
   border-color: var(--leaf);
 }
 .home-offer-card.featured .home-offer-cta { color: var(--mango); }
+
+/* Home offer card — "season closed" variant. Keeps the palette but muted. */
+.home-offer-card.seasonpass--closed {
+  cursor: default;
+  pointer-events: none;
+  opacity: 0.85;
+}
+.home-offer-card.seasonpass--closed h3::after {
+  content: " · closed";
+  font-size: 0.75em;
+  color: rgba(255,255,255,0.55);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+
+/* Season Pass variant — matches the MaaS page aesthetic. */
+.home-offer-card.seasonpass {
+  position: relative;
+  color: #fff;
+  border: 1px solid rgba(230,190,120,0.25);
+  border-top: 1px solid rgba(245,210,150,0.55);
+  background:
+    linear-gradient(180deg, rgba(245,180,110,0.10) 0%, transparent 22%),
+    radial-gradient(ellipse 85% 60% at 70% 40%, rgba(50,110,40,0.45) 0%, transparent 70%),
+    linear-gradient(160deg, #0a1a05 0%, #040a02 100%);
+  overflow: hidden;
+}
+.home-offer-card.seasonpass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(245,166,35,0.10) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  pointer-events: none;
+}
+.home-offer-card.seasonpass .home-offer-icon { color: #F5A623; position: relative; }
+.home-offer-card.seasonpass h3 { color: #fff; position: relative; }
+.home-offer-card.seasonpass p { color: rgba(240,230,210,0.7); position: relative; }
+.home-offer-card.seasonpass .home-offer-cta { color: #F5A623; position: relative; }
+.home-offer-card.seasonpass:hover {
+  border-color: rgba(245,166,35,0.5);
+  box-shadow: 0 18px 44px rgba(0,0,0,0.4), 0 0 0 1px rgba(230,190,120,0.12);
+}
 .home-offer-icon { font-size: 2rem; }
 .home-offer-card h3 { margin: 0; font-family: 'Playfair Display', serif; font-size: 1.25rem; }
 .home-offer-card p { margin: 0; font-size: 0.9rem; line-height: 1.6; opacity: 0.8; }
@@ -3115,13 +3617,13 @@ h1, h2, h3 { font-weight: 400; }
 /* ── Variety Tiles Grid ── */
 .variety-tiles-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
   margin-top: 2.5rem;
 }
 .variety-tile {
   display: block; text-decoration: none;
-  background: white; border-radius: 14px;
+  background: white; border-radius: 18px;
   overflow: hidden; border: 1px solid #f0e4cc;
   transition: transform 0.25s, box-shadow 0.25s;
 }
@@ -3130,7 +3632,7 @@ h1, h2, h3 { font-weight: 400; }
   box-shadow: 0 12px 32px rgba(44,24,16,0.12);
 }
 .variety-tile-img {
-  position: relative; height: 160px;
+  position: relative; height: 240px;
   background: #f5ede0; overflow: hidden;
 }
 .variety-tile-img img {
@@ -3166,40 +3668,40 @@ h1, h2, h3 { font-weight: 400; }
   box-shadow: 0 12px 32px rgba(44,24,16,0.12);
 }
 .variety-tile-body {
-  padding: 0.85rem 1rem 0.6rem; flex: 1;
+  padding: 1.25rem 1.4rem 0.9rem; flex: 1;
 }
 .variety-tile-name {
   font-family: 'Playfair Display', serif;
-  font-size: 1rem; font-weight: 600; color: var(--leaf); line-height: 1.25;
+  font-size: 1.45rem; font-weight: 600; color: var(--leaf); line-height: 1.2;
   text-decoration: none; display: block;
 }
 .variety-tile-name:hover { text-decoration: underline; }
 .variety-tile-telugu {
   font-family: 'Noto Serif Telugu', serif;
-  font-size: 0.68rem; color: #9a7a5a; margin: 0.15rem 0 0.45rem;
+  font-size: 0.95rem; color: #9a7a5a; margin: 0.3rem 0 0.6rem;
 }
 .variety-tile-intro {
-  font-size: 0.75rem; color: #7a5a3a; line-height: 1.5;
+  font-size: 0.95rem; color: #6d5138; line-height: 1.65;
   margin: 0; display: -webkit-box; -webkit-line-clamp: 3;
   -webkit-box-orient: vertical; overflow: hidden;
 }
 .variety-tile-more {
-  display: inline-block; margin-top: 0.5rem;
-  font-size: 0.72rem; font-weight: 600; color: var(--leaf);
-  text-decoration: none; opacity: 0.8;
+  display: inline-block; margin-top: 0.7rem;
+  font-size: 0.88rem; font-weight: 600; color: var(--leaf);
+  text-decoration: none; opacity: 0.85;
 }
 .variety-tile-more:hover { opacity: 1; text-decoration: underline; }
 .variety-tile-footer {
-  padding: 0.65rem 1rem 0.85rem;
+  padding: 1rem 1.4rem 1.2rem;
   border-top: 1px solid #f0e4cc;
   background: #fdfaf5;
 }
 .variety-tile-pack-row {
-  display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.6rem;
+  display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.85rem;
 }
 .variety-tile-pack-btn {
-  font-size: 0.62rem; font-weight: 600; padding: 0.18rem 0.5rem;
-  border-radius: 50px; border: 1px solid #d4b88a; background: none;
+  font-size: 0.85rem; font-weight: 600; padding: 0.4rem 0.85rem;
+  border-radius: 50px; border: 1.5px solid #d4b88a; background: none;
   color: #7a5a3a; cursor: pointer; transition: all 0.15s;
 }
 .variety-tile-pack-btn.active {
@@ -3207,28 +3709,33 @@ h1, h2, h3 { font-weight: 400; }
 }
 .variety-tile-footer-row {
   display: flex; align-items: center; justify-content: space-between;
+  gap: 0.75rem;
 }
 .variety-tile-price {
   font-family: 'Inter', sans-serif;
-  font-size: 0.95rem; font-weight: 700; color: var(--leaf);
+  font-size: 1.4rem; font-weight: 700; color: var(--leaf);
   letter-spacing: -0.01em;
 }
 .variety-tile-cart-btn {
-  font-size: 0.68rem; font-weight: 700; padding: 0.35rem 0.8rem;
+  font-size: 0.95rem; font-weight: 700; padding: 0.6rem 1.1rem;
   border-radius: 50px; border: none;
   background: var(--leaf); color: white; cursor: pointer;
   transition: opacity 0.15s;
 }
 .variety-tile-cart-btn:hover { opacity: 0.85; }
 .variety-tile-badge {
-  position: absolute; top: 0.75rem; left: 0.75rem;
-  font-size: 0.62rem; font-weight: 700; padding: 0.25rem 0.65rem;
+  position: absolute; top: 0.85rem; left: 0.85rem;
+  font-size: 0.78rem; font-weight: 700; padding: 0.35rem 0.85rem;
   border-radius: 50px; letter-spacing: 0.06em; text-transform: uppercase;
 }
 .badge-signature { background: var(--mango); color: #1a0a00; }
 .badge-heritage { background: var(--leaf); color: white; }
-@media (max-width: 900px) { .variety-tiles-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 600px) { .variety-tiles-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 1100px) { .variety-tiles-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) {
+  .variety-tiles-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+  .variety-tile-img { height: 220px; }
+  .variety-tile-name { font-size: 1.3rem; }
+}
 
 /* ── Products Page Upsell Grid ── */
 .products-upsell-grid {
@@ -3279,14 +3786,30 @@ h1, h2, h3 { font-weight: 400; }
   min-height: 60vh;
   display: flex;
   align-items: center;
-  background: radial-gradient(ellipse at 60% 40%, #0d2e05 0%, #050f02 70%);
+  /* Deep forest emerald with a warm brass bloom off-center, so it reads "heirloom orchard"
+     rather than "jungle". Thin gold light-leak at the top of the page for richness. */
+  background:
+    linear-gradient(180deg, rgba(245,180,110,0.09) 0%, transparent 22%),
+    radial-gradient(ellipse 80% 55% at 60% 32%, rgba(50,110,40,0.45) 0%, transparent 70%),
+    radial-gradient(ellipse 45% 35% at 20% 85%, rgba(180,120,45,0.18) 0%, transparent 70%),
+    linear-gradient(175deg, #0a1a05 0%, #040a02 100%);
   padding: 7rem 0 4rem;
   overflow: hidden;
 }
+.maas-hero::after {
+  content: "";
+  position: absolute;
+  left: 10%; right: 10%; bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(230,190,120,0.45), transparent);
+  pointer-events: none;
+}
 .maas-hero-dots {
   position: absolute; inset: 0;
-  background-image: radial-gradient(rgba(245,166,35,0.08) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(245,166,35,0.10) 1px, transparent 1px);
   background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
 }
 .maas-hero-content { position: relative; z-index: 1; }
 .maas-back {
@@ -3318,10 +3841,10 @@ h1, h2, h3 { font-weight: 400; }
 }
 .maas-title em { color: var(--mango); font-style: italic; }
 .maas-sub {
-  color: rgba(255,255,255,0.65);
-  font-size: 1rem;
-  max-width: 540px;
-  line-height: 1.7;
+  color: rgba(240,230,210,0.72);
+  font-size: 1.15rem;
+  max-width: 580px;
+  line-height: 1.75;
   margin: 0;
 }
 
@@ -3360,8 +3883,37 @@ h1, h2, h3 { font-weight: 400; }
 }
 .maas-popup-title em { color: #F5A623; font-style: italic; }
 .maas-popup-body {
-  font-size: 0.9rem; color: rgba(255,255,255,0.65);
-  line-height: 1.75; margin-bottom: 1.5rem;
+  font-size: 0.95rem; color: rgba(255,255,255,0.72);
+  line-height: 1.75; margin-bottom: 1rem;
+  text-align: left;
+}
+.maas-popup-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.maas-popup-list li {
+  position: relative;
+  padding-left: 1.4rem;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.55;
+}
+.maas-popup-list li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #F5A623;
+  font-size: 0.85rem;
+}
+.maas-popup-list strong {
+  color: #ffd28b;
+  font-weight: 700;
 }
 .maas-popup-detail {
   display: flex; flex-wrap: wrap; gap: 0.5rem;
@@ -3418,6 +3970,95 @@ h1, h2, h3 { font-weight: 400; }
   to { transform: translateX(-50%); }
 }
 
+/* MaaS deadline pill — shown in the hero while enrolment is open. */
+.maas-deadline {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+  padding: 0.65rem 1rem;
+  background: rgba(245,166,35,0.08);
+  border: 1px solid rgba(245,166,35,0.25);
+  border-radius: 999px;
+  color: rgba(255,230,200,0.85);
+  font-size: 0.88rem;
+  letter-spacing: 0.02em;
+}
+.maas-deadline-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #F5A623;
+  box-shadow: 0 0 0 4px rgba(245,166,35,0.18);
+  animation: maas-pulse 2.2s ease-in-out infinite;
+}
+@keyframes maas-pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(245,166,35,0.18); }
+  50%      { box-shadow: 0 0 0 7px rgba(245,166,35,0.05); }
+}
+.maas-deadline-label {
+  color: rgba(255,230,200,0.6);
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+}
+.maas-deadline-date {
+  color: #fff;
+  font-weight: 600;
+}
+.maas-deadline-countdown {
+  color: #F5A623;
+  font-weight: 500;
+  padding-left: 0.5rem;
+  border-left: 1px solid rgba(245,166,35,0.3);
+}
+.maas-deadline-countdown strong {
+  color: #fff; font-weight: 700;
+  margin-right: 1px;
+}
+
+/* Season-over banner on the MaaS page. */
+.maas-closed {
+  padding: 4rem 1.5rem 5rem;
+}
+.maas-closed-card {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 2.5rem 2.25rem;
+  text-align: center;
+  background:
+    linear-gradient(180deg, rgba(245,180,110,0.10) 0%, transparent 40%),
+    rgba(255,255,255,0.04);
+  border: 1px solid rgba(230,190,120,0.2);
+  border-top: 1px solid rgba(245,210,150,0.45);
+  border-radius: 22px;
+}
+.maas-closed-eyebrow {
+  display: inline-block;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #F5A623;
+  margin-bottom: 1rem;
+}
+.maas-closed-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 3.2vw, 2.3rem);
+  color: #fff;
+  margin: 0 0 1rem;
+  font-weight: 500;
+  line-height: 1.25;
+}
+.maas-closed-title em { color: #F5A623; font-style: italic; }
+.maas-closed-body {
+  color: rgba(240,230,210,0.72);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
 /* Packs */
 .maas-packs-section {
   padding: 4rem 0 6rem;
@@ -3428,12 +4069,12 @@ h1, h2, h3 { font-weight: 400; }
 }
 .maas-packs-head h2 {
   font-family: 'Playfair Display', serif;
-  font-size: 2.2rem;
+  font-size: 2.6rem;
   color: white;
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.6rem;
 }
 .maas-packs-head h2 em { color: var(--mango); font-style: italic; }
-.maas-packs-head p { color: rgba(255,255,255,0.5); margin: 0; }
+.maas-packs-head p { color: rgba(255,230,200,0.6); margin: 0; font-size: 1.05rem; }
 
 .maas-scarcity {
   max-width: 480px;
@@ -3466,20 +4107,30 @@ h1, h2, h3 { font-weight: 400; }
   align-items: start;
 }
 .maas-card {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 16px;
-  padding: 1.75rem 1.5rem;
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(245,190,120,0.05) 0%, rgba(255,255,255,0.02) 55%),
+    rgba(255,255,255,0.04);
+  border: 1px solid rgba(230,190,120,0.14);
+  border-top: 1px solid rgba(245,210,150,0.32);
+  border-radius: 18px;
+  padding: 1.9rem 1.6rem;
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
-  transition: border-color 0.2s;
+  gap: 0.9rem;
+  transition: border-color 0.2s, transform 0.25s, box-shadow 0.25s;
 }
-.maas-card:hover { border-color: rgba(245,166,35,0.35); }
+.maas-card:hover {
+  border-color: rgba(245,166,35,0.45);
+  transform: translateY(-3px);
+  box-shadow: 0 22px 48px rgba(0,0,0,0.45), 0 0 0 1px rgba(230,190,120,0.12);
+}
 .maas-card.featured {
-  border-color: var(--mango);
-  background: rgba(245,166,35,0.06);
-  position: relative;
+  border-color: rgba(245,166,35,0.55);
+  background:
+    linear-gradient(180deg, rgba(245,190,120,0.14) 0%, rgba(245,166,35,0.05) 55%),
+    rgba(245,166,35,0.04);
+  box-shadow: 0 0 0 1px rgba(245,166,35,0.2), 0 22px 48px rgba(0,0,0,0.4);
 }
 .maas-card-badge {
   display: inline-block;
@@ -3590,14 +4241,29 @@ h1, h2, h3 { font-weight: 400; }
   min-height: 55vh;
   display: flex;
   align-items: center;
-  background: radial-gradient(ellipse at 50% 40%, #2a0d00 0%, #0f0500 70%);
+  /* Layered: warm terracotta glow over deep mahogany, with a gold light-leak near the top. */
+  background:
+    linear-gradient(180deg, rgba(245,180,110,0.10) 0%, transparent 22%),
+    radial-gradient(ellipse 75% 55% at 50% 32%, rgba(170,75,25,0.42) 0%, transparent 70%),
+    linear-gradient(180deg, #1b0700 0%, #0a0200 100%);
   padding: 7rem 0 4rem;
   overflow: hidden;
 }
+.sigbox-hero::after {
+  /* Fine gold hairline separating hero from the rest. */
+  content: "";
+  position: absolute;
+  left: 10%; right: 10%; bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(224,170,110,0.45), transparent);
+  pointer-events: none;
+}
 .sigbox-hero-dots {
   position: absolute; inset: 0;
-  background-image: radial-gradient(rgba(224,123,57,0.08) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(224,123,57,0.10) 1px, transparent 1px);
   background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
 }
 .sigbox-hero-content { position: relative; z-index: 1; }
 .sigbox-back {
@@ -3628,10 +4294,10 @@ h1, h2, h3 { font-weight: 400; }
 }
 .sigbox-title em { color: #e07b39; font-style: italic; }
 .sigbox-sub {
-  color: rgba(255,255,255,0.6);
-  font-size: 1rem;
-  max-width: 520px;
-  line-height: 1.7;
+  color: rgba(255,230,205,0.68);
+  font-size: 1.15rem;
+  max-width: 560px;
+  line-height: 1.75;
 }
 
 .sigbox-contents {
@@ -3653,23 +4319,32 @@ h1, h2, h3 { font-weight: 400; }
   gap: 1.25rem;
 }
 .sigbox-variety {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 12px;
-  padding: 1.5rem 1.25rem;
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(245,190,120,0.06) 0%, rgba(255,255,255,0.02) 60%),
+    rgba(255,255,255,0.04);
+  border: 1px solid rgba(224,170,110,0.14);
+  border-top: 1px solid rgba(245,200,140,0.35);
+  border-radius: 14px;
+  padding: 1.75rem 1.4rem;
   text-align: center;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, transform 0.25s, box-shadow 0.25s;
 }
-.sigbox-variety:hover { border-color: rgba(224,123,57,0.35); }
-.sigbox-variety-icon { font-size: 2rem; display: block; margin-bottom: 0.75rem; }
+.sigbox-variety:hover {
+  border-color: rgba(224,123,57,0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(224,170,110,0.1);
+}
+.sigbox-variety-icon { font-size: 2.2rem; display: block; margin-bottom: 0.85rem; }
 .sigbox-variety-name {
   font-family: 'Playfair Display', serif;
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: white;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.55rem;
   font-weight: 600;
+  letter-spacing: 0.01em;
 }
-.sigbox-variety-note { font-size: 0.78rem; color: rgba(255,255,255,0.45); line-height: 1.5; }
+.sigbox-variety-note { font-size: 0.92rem; color: rgba(255,225,200,0.55); line-height: 1.6; }
 
 .sigbox-order {
   padding: 3rem 0 6rem;

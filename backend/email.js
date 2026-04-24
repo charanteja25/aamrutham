@@ -1,6 +1,15 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Lazily construct so the server can still boot even if RESEND_API_KEY is
+// missing in a particular environment. Email sends are best-effort anyway.
+let _resend = null;
+function getResend() {
+  if (_resend) return _resend;
+  const key = process.env.RESEND_API_KEY;
+  if (!key) throw new Error("RESEND_API_KEY not set");
+  _resend = new Resend(key);
+  return _resend;
+}
 
 export async function sendOrderConfirmation({ to, name, aamOrderId, cartItems, amount }) {
   const itemRows = cartItems.map(i =>
@@ -11,7 +20,7 @@ export async function sendOrderConfirmation({ to, name, aamOrderId, cartItems, a
     </tr>`
   ).join('');
 
-  await resend.emails.send({
+  await getResend().emails.send({
     from: 'Aamrutham <support@aamrutham.com>',
     to,
     subject: `Order Confirmed – ${aamOrderId}`,

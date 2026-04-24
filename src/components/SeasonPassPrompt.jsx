@@ -43,13 +43,13 @@ export default function SeasonPassPrompt() {
             margin: 0,
             marginBottom: "8px",
             color: "#c69214",
-            fontSize: "0.75rem",
+            fontSize: "0.8rem",
             fontWeight: 700,
             letterSpacing: "0.12em",
             textTransform: "uppercase",
           }}
         >
-          ✦ Better Value Option
+          ⚡ Loving the Varieties?
         </p>
 
         {/* Title */}
@@ -57,12 +57,13 @@ export default function SeasonPassPrompt() {
           style={{
             margin: 0,
             marginBottom: "10px",
-            fontSize: "1.35rem",
-            lineHeight: 1.3,
+            fontSize: "1.5rem",
+            lineHeight: 1.25,
             color: "#2f2f2f",
+            fontFamily: "'Playfair Display', serif",
           }}
         >
-          Check Season Pass first?
+          Try our <em style={{ color: "#c69214" }}>Season Pass</em>
         </h3>
 
         {/* Description */}
@@ -71,11 +72,12 @@ export default function SeasonPassPrompt() {
             margin: 0,
             marginBottom: "18px",
             color: "#555",
-            lineHeight: 1.6,
-            fontSize: "0.95rem",
+            lineHeight: 1.65,
+            fontSize: "1rem",
           }}
         >
-          You may get better weekly value with our Season Pass. Want to take a quick look before adding this?
+          Since you're picking more than one, our Season Pass might be a better deal —
+          rare heritage mangoes delivered fresh every week for 4 weeks, one payment, free delivery.
         </p>
 
         {/* Actions */}
@@ -89,13 +91,14 @@ export default function SeasonPassPrompt() {
               color: "#1a1a1a",
               border: "none",
               borderRadius: "999px",
-              padding: "12px 16px",
+              padding: "13px 18px",
               fontWeight: 700,
+              fontSize: "0.95rem",
               cursor: "pointer",
-              boxShadow: "0 6px 18px rgba(244,179,49,0.25)",
+              boxShadow: "0 6px 18px rgba(244,179,49,0.3)",
             }}
           >
-            View Season Pass
+            View Season Pass →
           </button>
 
           <button
@@ -104,15 +107,16 @@ export default function SeasonPassPrompt() {
               flex: 1,
               minWidth: "140px",
               background: "#fff",
-              color: "#444",
+              color: "#555",
               border: "1px solid #e6e6e6",
               borderRadius: "999px",
-              padding: "12px 16px",
+              padding: "13px 18px",
               fontWeight: 600,
+              fontSize: "0.92rem",
               cursor: "pointer",
             }}
           >
-            Skip & Add
+            No thanks, add
           </button>
         </div>
       </div>

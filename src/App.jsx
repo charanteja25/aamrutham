@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import CartDrawer from './components/CartDrawer';
 import CartAnimation from './components/CartAnimation';
+import SeasonPassPrompt from './components/SeasonPassPrompt';
 import Footer from './components/Footer';
 import WhatsAppFloat from './components/WhatsAppFloat';
 import HomePage from './pages/HomePage';
@@ -58,6 +59,7 @@ export default function App() {
         <Navbar />
         <CartDrawer />
         <CartAnimation />
+        <SeasonPassPrompt />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/products" element={<ProductsPage />} />

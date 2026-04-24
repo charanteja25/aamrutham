@@ -32,11 +32,18 @@ export function InventoryProvider({ children }) {
     return () => clearInterval(id);
   }, [fetchInventory]);
 
-  /** Returns available qty, or null if inventory hasn't loaded yet. */
+  /**
+   * Returns available qty, or null only while still loading.
+   *
+   *   null          → inventory hasn't loaded yet (spinner state)
+   *   0             → explicit zero stock OR no row exists for this pack
+   *                   (treated the same way — no sellable unit → "Coming Soon")
+   *   positive int  → actual live availability
+   */
   function getAvailable(productId, packLabel) {
     if (inventoryMap === null) return null;
     const key = `${productId}|${packLabel}`;
-    return inventoryMap[key] ?? null;
+    return inventoryMap[key] ?? 0;
   }
 
   return (

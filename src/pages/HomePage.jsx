@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { homeProcessSteps } from '../data/products';
+import { isSeasonPassActive, SEASON_OVER_YEAR } from '../data/season';
 import ProcessShowcase from '../components/ProcessShowcase';
 
 export default function HomePage() {
@@ -102,12 +103,24 @@ export default function HomePage() {
               <p>Four prized heritage varieties in one curated gift-worthy box. Perfect as a gift or an introduction.</p>
               <span className="home-offer-cta">View Signature Box →</span>
             </Link>
-            <Link to="/maas" className="home-offer-card">
-              <span className="home-offer-icon">⚡</span>
-              <h3>Mango as a Service</h3>
-              <p>A fresh drop of rare varieties delivered every week for four weeks. One payment. Four drops.</p>
-              <span className="home-offer-cta">Get Season Pass →</span>
-            </Link>
+            {isSeasonPassActive() ? (
+              <Link to="/maas" className="home-offer-card seasonpass">
+                <span className="home-offer-icon">⚡</span>
+                <h3>Mango as a Service</h3>
+                <p>A fresh drop of rare varieties delivered every week for four weeks. One payment. Four drops.</p>
+                <span className="home-offer-cta">Get Season Pass →</span>
+              </Link>
+            ) : (
+              <div className="home-offer-card seasonpass seasonpass--closed" aria-disabled="true">
+                <span className="home-offer-icon" style={{ opacity: 0.6 }}>⚡</span>
+                <h3>Mango as a Service</h3>
+                <p>
+                  Season {SEASON_OVER_YEAR} is complete — thank you for a sweet run.
+                  We'll be back with next year's harvest.
+                </p>
+                <span className="home-offer-cta" style={{ opacity: 0.65 }}>Season closed</span>
+              </div>
+            )}
           </div>
         </div>
       </section>

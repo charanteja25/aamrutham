@@ -1,7 +1,12 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { buildWhatsAppUrl } from "../data/products";
+import { isSeasonPassActive } from "../data/season";
 
 const CART_KEY = "aamrutham_cart";
+// Flag written when the user clicks "View Season Pass" in the popup, so a
+// subsequent Season Pass add-to-cart knows to replace the cart instead of
+// appending. Session-scoped — doesn't survive tab close.
+const PASS_SWITCH_FLAG = "aamrutham_pass_switch_from_popup";
 const CartContext = createContext(null);
 
 function readCart() {
@@ -12,18 +17,11 @@ function readCart() {
   }
 }
 
-function shouldSuggestSeasonPass(product) {
+function isSeasonPassProduct(product) {
   if (!product) return false;
-
   const id = (product.id || "").toLowerCase();
   const name = (product.name || "").toLowerCase();
-  const category = (product.category || "").toLowerCase();
-
-  if (id.includes("season-pass")) return false;
-  if (id === "heritage-box") return true;
-  if (name.includes("season pass")) return false;
-
-  return category === "premium" || category === "more";
+  return id.includes("season-pass") || name.includes("season pass");
 }
 
 export function CartProvider({ children }) {
@@ -34,6 +32,8 @@ export function CartProvider({ children }) {
 
   const [showSeasonPassPrompt, setShowSeasonPassPrompt] = useState(false);
   const [pendingCartItem, setPendingCartItem] = useState(null);
+  // Suppress repeat prompts for the rest of the session once the user decides.
+  const [passPromptDismissed, setPassPromptDismissed] = useState(false);
 
   useEffect(() => {
     setItems(readCart());
@@ -75,8 +75,31 @@ export function CartProvider({ children }) {
 
   const commitAddToCart = (product, pack, price, sourceElement, useLogoSource = false, meta = null) => {
     const key = `${product.id}||${pack}`;
+    const isPass = isSeasonPassProduct(product);
+
+    // If the user came to /maas by way of the popup and is now adding the
+    // Season Pass, replace the cart: the pass supersedes the individual items
+    // they were originally considering. For any other scenario, append normally.
+    let switchFromPopup = false;
+    try {
+      switchFromPopup = isPass && window.sessionStorage.getItem(PASS_SWITCH_FLAG) === "1";
+      if (switchFromPopup) window.sessionStorage.removeItem(PASS_SWITCH_FLAG);
+    } catch { /* sessionStorage can throw in some private-mode browsers */ }
 
     setItems((current) => {
+      // Popup-initiated pass switch: discard everything else, keep only the pass.
+      if (switchFromPopup) {
+        return [{
+          key,
+          id: product.id,
+          name: product.name,
+          packLabel: pack,
+          price,
+          qty: 1,
+          meta: meta || undefined,
+        }];
+      }
+
       const found = current.find((item) => item.key === key);
 
       if (found) {
@@ -108,6 +131,14 @@ export function CartProvider({ children }) {
   };
 
   const addToCart = (product, pack, price, sourceElement, useLogoSource = false, meta = null) => {
+    // Prompt once per session when the cart grows beyond a single item.
+    // Skip for the season pass itself, and for repeat views after the user decides.
+    const alreadyHasItem = items.length >= 1;
+    if (alreadyHasItem && !isSeasonPassProduct(product) && !passPromptDismissed && isSeasonPassActive()) {
+      setPendingCartItem({ product, pack, price, sourceElement, useLogoSource, meta });
+      setShowSeasonPassPrompt(true);
+      return;
+    }
     commitAddToCart(product, pack, price, sourceElement, useLogoSource, meta);
   };
 
@@ -118,27 +149,36 @@ export function CartProvider({ children }) {
         pendingCartItem.pack,
         pendingCartItem.price,
         pendingCartItem.sourceElement,
-        pendingCartItem.useLogoSource
+        pendingCartItem.useLogoSource,
+        pendingCartItem.meta
       );
     }
-
     setPendingCartItem(null);
     setShowSeasonPassPrompt(false);
+    setPassPromptDismissed(true);
   };
 
   const viewSeasonPassDetails = () => {
     setShowSeasonPassPrompt(false);
     setPendingCartItem(null);
-
-    const seasonPassSection = document.getElementById("season-pass-section");
-    if (seasonPassSection) {
-      seasonPassSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    setPassPromptDismissed(true);
+    // Arm the "replace cart on Season Pass add" flag. If the user actually
+    // adds the pass after arriving at /maas, commitAddToCart clears the rest.
+    // If they come back without adding, the cart is unchanged.
+    try {
+      if (typeof window !== "undefined") {
+        window.sessionStorage.setItem(PASS_SWITCH_FLAG, "1");
+      }
+    } catch { /* ignore */ }
+    if (typeof window !== "undefined") {
+      window.location.href = "/maas";
     }
   };
 
   const closeSeasonPassPrompt = () => {
     setShowSeasonPassPrompt(false);
     setPendingCartItem(null);
+    setPassPromptDismissed(true);
   };
 
   const hideAnimation = () => {

@@ -1,8 +1,11 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import { HYD_PINCODES, getProductById, products } from '../data/products';
+import { isSeasonPassActive } from '../data/season';
 import { useCart } from '../context/CartContext';
+import { useInventory } from '../context/InventoryContext';
+import MangoesPerDayChart from '../components/MangoesPerDayChart';
 
 export default function ProductDetailPage() {
   const { id } = useParams();
@@ -13,6 +16,22 @@ export default function ProductDetailPage() {
   const [isValid, setIsValid] = useState(null);
   const [activeImg, setActiveImg] = useState(`/assets/varieties/${product.id}.jpg`);
   const { addToCart } = useCart();
+  const { getAvailable } = useInventory();
+
+  // Auto-select the first in-stock pack once inventory loads.
+  useEffect(() => {
+    const current = getAvailable(product.id, selectedPack.label);
+    if (current === null) return;
+    if (current > 0) return;
+    const firstAvail = product.packPrices.find(
+      (p) => (getAvailable(product.id, p.label) ?? 0) > 0
+    );
+    if (firstAvail && firstAvail.label !== selectedPack.label) {
+      setSelectedPack(firstAvail);
+    }
+  }, [getAvailable, product, selectedPack.label]);
+
+  const isSoldOut = getAvailable(product.id, selectedPack.label) === 0;
 
   const allImages = [`/assets/varieties/${product.id}.jpg`, ...(product.extraImages || [])];
 
@@ -110,8 +129,44 @@ export default function ProductDetailPage() {
               {message && <p className={`pincode-message ${isValid ? 'ok' : 'error'}`}>{message}</p>}
 
               <div className="detail-actions">
-                <button className="btn btn-soft" onClick={() => addToCart(product, selectedPack.label, selectedPack.price, null, true)}>Add to cart</button>
+                {isSoldOut ? (
+                  <span className="sold-out-chip sold-out-chip--large">Coming Soon</span>
+                ) : (
+                  <button className="btn btn-soft" onClick={() => addToCart(product, selectedPack.label, selectedPack.price, null, true)}>
+                    Add to cart
+                  </button>
+                )}
               </div>
+
+              {isSeasonPassActive() && (() => {
+                // Season Pass prices: 12 pcs/wk → ₹2,499; 24 pcs/wk → ₹4,499.
+                // Pick the closer tier based on the selected pack size.
+                const packPcs = parseInt(selectedPack.label, 10) || 12;
+                const passPrice = packPcs >= 18 ? 4499 : 2499;
+                const passLabel = packPcs >= 18 ? '24 pcs/week' : '12 pcs/week';
+                const fourWeekTotal = selectedPack.price * 4;
+                const savings = fourWeekTotal - passPrice;
+                if (savings > 200) {
+                  return (
+                    <Link to="/maas" className="detail-pass-nudge">
+                      <span className="detail-pass-nudge-label">⚡ Going heavy on {product.name}?</span>
+                      <span className="detail-pass-nudge-body">
+                        4 weeks of {selectedPack.label} = ₹{fourWeekTotal.toLocaleString('en-IN')}.
+                        {' '}Season Pass ({passLabel}) = ₹{passPrice.toLocaleString('en-IN')}.
+                        {' '}<strong>You save ₹{savings.toLocaleString('en-IN')}.</strong>
+                      </span>
+                    </Link>
+                  );
+                }
+                return (
+                  <Link to="/maas" className="detail-pass-nudge">
+                    <span className="detail-pass-nudge-label">⚡ Love {product.name}?</span>
+                    <span className="detail-pass-nudge-body">
+                      Our <strong>Season Pass</strong> sends you this and other rare varieties every week for 4 weeks. →
+                    </span>
+                  </Link>
+                );
+              })()}
             </div>
           </div>
         </div>
@@ -127,9 +182,42 @@ export default function ProductDetailPage() {
               <blockquote>{product.story.quote}</blockquote>
               <p>{product.story.p2}</p>
             </div>
-            <div className="detail-story-art">
-              <img src="/assets/aam-final.png" alt="Aamrutham story art" />
-            </div>
+
+            {/* Specimen card — pulls the most distinctive facts about THIS mango
+                so the right column is specific to the variety, not a brand logo. */}
+            <aside className="detail-specimen">
+              <div className="detail-specimen-photo" style={{ background: product.gradient }}>
+                <img
+                  src={`/assets/varieties/${product.id}.jpg`}
+                  alt={product.name}
+                  onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                />
+              </div>
+              <div className="detail-specimen-body">
+                <p className="detail-specimen-eyebrow">Variety Card</p>
+                <h3 className="detail-specimen-name">{product.name}</h3>
+                <p className="detail-specimen-telugu">{product.telugu} · <em>{product.meaning}</em></p>
+
+                {product.badges?.length > 0 && (
+                  <div className="detail-specimen-tags">
+                    {product.badges.slice(0, 4).map((b) => (
+                      <span key={b}>{b}</span>
+                    ))}
+                  </div>
+                )}
+
+                {product.profile?.length > 0 && (
+                  <dl className="detail-specimen-facts">
+                    {product.profile.slice(0, 4).map(([label, value]) => (
+                      <div key={label}>
+                        <dt>{label}</dt>
+                        <dd>{value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                )}
+              </div>
+            </aside>
           </div>
         </section>
       )}
@@ -166,6 +254,12 @@ export default function ProductDetailPage() {
           </div>
         </section>
       )}
+
+      <section className="section section-white">
+        <div className="container">
+          <MangoesPerDayChart />
+        </div>
+      </section>
 
       {product.storage && (
         <section className="section section-white">

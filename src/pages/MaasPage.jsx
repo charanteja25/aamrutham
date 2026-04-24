@@ -1,6 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { buildWhatsAppUrl } from '../data/products';
+import { API_BASE } from '../config.js';
+import {
+  isSeasonPassActive,
+  SEASON_OVER_YEAR,
+  SEASON_PASS_CUTOFF_LABEL,
+  timeUntilCutoff,
+} from '../data/season';
 
 const VARIETIES_ALL = [
   'Kothapalli Kobbari', 'Imam Pasand', 'Panduri Teepi Mamidi',
@@ -48,19 +55,49 @@ const TICKER_ITEMS = [
   'SUVARNAREKHA', 'CHINNA RASALU', 'BANGANAPALLI', 'PANDURI TEEPI MAMIDI',
 ];
 
+function DeadlineBanner() {
+  // Refresh every minute so the live counter ticks down.
+  const [left, setLeft] = useState(timeUntilCutoff());
+  useEffect(() => {
+    const id = setInterval(() => setLeft(timeUntilCutoff()), 60 * 1000);
+    return () => clearInterval(id);
+  }, []);
+  if (!left) return null;
+  return (
+    <div className="maas-deadline">
+      <span className="maas-deadline-dot" aria-hidden="true" />
+      <span className="maas-deadline-label">Enrolment closes</span>
+      <span className="maas-deadline-date">{SEASON_PASS_CUTOFF_LABEL}</span>
+      <span className="maas-deadline-countdown">
+        {left.days > 0 && <><strong>{left.days}</strong>d </>}
+        <strong>{left.hours}</strong>h{' '}
+        <strong>{left.minutes}</strong>m left
+      </span>
+    </div>
+  );
+}
+
 function PremiumPopup({ pass, url, onClose }) {
   return (
     <div className="maas-popup-overlay" onClick={onClose}>
       <div className="maas-popup" onClick={e => e.stopPropagation()}>
         <div className="maas-popup-badge">✦ Exclusive</div>
-        <h2 className="maas-popup-title">You're joining a small,<br /><em>exclusive circle.</em></h2>
+        <h2 className="maas-popup-title">Your pass, <em>your way.</em></h2>
         <p className="maas-popup-body">
-          As a MaaS subscriber, we don't just deliver mangoes — we coordinate with you personally, from your first box to your last. Our team will reach out on WhatsApp to confirm your slot, plan your delivery schedule, and make sure every week is exactly right.
+          Every MaaS subscription is built around <strong>you</strong>. On WhatsApp, our team will plan:
+        </p>
+        <ul className="maas-popup-list">
+          <li><strong>How many</strong> mangoes a week — 6, 12, 24, or a number that fits your family</li>
+          <li><strong>Which varieties</strong> and how much of each — more Imam Pasand, fewer Banganapalli, etc.</li>
+          <li><strong>When</strong> each box arrives — the day and time-window that works for you</li>
+        </ul>
+        <p className="maas-popup-body" style={{ marginTop: '1rem', marginBottom: '1.25rem' }}>
+          Message us now — a real person will connect with you in seconds.
         </p>
         <div className="maas-popup-detail">
           <span>🥭 {pass.name}</span>
-          <span>⚡ 4 weeks · Free delivery</span>
-          <span>📦 Hyderabad</span>
+          <span>⚡ Customisable</span>
+          <span>📦 Hyderabad · Free delivery</span>
         </div>
         <a
           href={url}
@@ -83,6 +120,18 @@ export default function MaasPage() {
   const [customPack, setCustomPack] = useState(12);
   const [customSelected, setCustomSelected] = useState([]);
   const [popup, setPopup] = useState(null); // { pass, url }
+  const [slots, setSlots] = useState(null); // { total, claimed, available } | null
+
+  // Fetch live slot counts so the scarcity bar reflects DB-backed numbers
+  // set by the admin dashboard. Falls through silently if the API is down.
+  useEffect(() => {
+    fetch(API_BASE + '/api/season-pass/slots')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (data && data.total > 0) setSlots(data);
+      })
+      .catch(() => { /* leave slots null — scarcity section will hide */ });
+  }, []);
 
   const customLimit = customPack === 12 ? 3 : 5;
 
@@ -115,9 +164,10 @@ export default function MaasPage() {
           <span className="maas-eyebrow">⚡ MaaS · Summer 2026 · Limited Slots</span>
           <h1 className="maas-title">Mango as a<br /><em>Service</em></h1>
           <p className="maas-sub">
-            Every week through the season, a fresh box of rare, tree-ripened heritage mangoes arrives at your door —
-            handpicked from our farms in Bobbili. Four deliveries. Four weeks.
+            A fresh box of rare, tree-ripened heritage mangoes arrives at your door —
+            handpicked from our farms in Bobbili. Pick a pass, and we'll shape the rest around you.
           </p>
+          {isSeasonPassActive() && <DeadlineBanner />}
         </div>
       </section>
 
@@ -133,19 +183,52 @@ export default function MaasPage() {
         </div>
       </div>
 
+      {/* Season closed banner — replaces the packs section entirely when over. */}
+      {!isSeasonPassActive() && (
+        <section className="maas-closed container">
+          <div className="maas-closed-card">
+            <span className="maas-closed-eyebrow">⚡ Season {SEASON_OVER_YEAR} · Complete</span>
+            <h2 className="maas-closed-title">The <em>Season Pass</em> is over for this year</h2>
+            <p className="maas-closed-body">
+              Enrolment closed on {SEASON_PASS_CUTOFF_LABEL}. Thank you to everyone who joined the
+              {' '}{SEASON_OVER_YEAR} season — the orchard is resting, and we'll open the window again
+              with next year's harvest.
+            </p>
+            <p className="maas-closed-body" style={{ marginTop: '0.5rem' }}>
+              In the meantime, single varieties may still be available —
+              {' '}<Link to="/products" style={{ color: '#F5A623', textDecoration: 'underline' }}>browse our mangoes →</Link>
+            </p>
+          </div>
+        </section>
+      )}
+
       {/* Packs */}
+      {isSeasonPassActive() && (
       <section className="maas-packs-section container">
         <div className="maas-packs-head">
-          <h2>Pick Your <em>Pass</em></h2>
-          <p>One payment. Four weeks. Free across Hyderabad.</p>
+          <h2>Start with a <em>Pass</em></h2>
+          <p>One payment. Free delivery across Hyderabad. Everything else — shaped around you.</p>
         </div>
 
-        <div className="maas-scarcity">
-          <span>⚡ Only <strong>18 slots</strong> available this season. <strong>11 claimed.</strong></span>
-          <div className="maas-scarcity-track">
-            <div className="maas-scarcity-fill" style={{ width: '61%' }} />
-          </div>
-        </div>
+        {slots && slots.total > 0 && (() => {
+          const pct = Math.min(100, Math.round((slots.claimed / slots.total) * 100));
+          const soldOut = slots.available === 0;
+          return (
+            <div className="maas-scarcity">
+              <span>
+                ⚡ {soldOut ? (
+                  <><strong>All {slots.total} slots claimed</strong> for this season.</>
+                ) : (
+                  <>Only <strong>{slots.total} slots</strong> available this season.
+                    {' '}<strong>{slots.claimed} claimed</strong> · {slots.available} left.</>
+                )}
+              </span>
+              <div className="maas-scarcity-track">
+                <div className="maas-scarcity-fill" style={{ width: `${pct}%` }} />
+              </div>
+            </div>
+          );
+        })()}
 
         <div className="maas-cards">
           {PASSES.map(pass => {
@@ -222,6 +305,7 @@ export default function MaasPage() {
           </div>
         </div>
       </section>
+      )}
     </main>
   );
 }
