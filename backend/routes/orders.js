@@ -40,17 +40,20 @@ router.post("/create", async (req, res) => {
       const { productId, packLabel, qty = 1 } = item;
 
       const { rows } = await client.query(
-        `SELECT
-           i.stock,
-           COALESCE(SUM(r.qty) FILTER (
-             WHERE r.status = 'active' AND r.expires_at > NOW()
-           ), 0) AS reserved
-         FROM inventory i
-         LEFT JOIN inventory_reservations r
-           ON r.product_id = i.product_id AND r.pack_label = i.pack_label
-         WHERE i.product_id = $1 AND i.pack_label = $2
-         GROUP BY i.stock
-         FOR UPDATE OF i`,
+        `WITH inv AS (
+           SELECT i.stock
+           FROM inventory i
+           WHERE i.product_id = $1 AND i.pack_label = $2
+           FOR UPDATE
+         ),
+         reserved AS (
+           SELECT COALESCE(SUM(qty), 0) AS total
+           FROM inventory_reservations
+           WHERE product_id = $1 AND pack_label = $2
+             AND status = 'active' AND expires_at > NOW()
+         )
+         SELECT inv.stock, reserved.total AS reserved
+         FROM inv, reserved`,
         [productId, packLabel]
       );
 
@@ -61,7 +64,7 @@ router.post("/create", async (req, res) => {
         });
       }
 
-      const available = Number(rows[0].stock) - Number(rows[0].reserved);
+      const available = Number(rows[0].stock) - Number(rows[0].total);
 
       if (available < qty) {
         await client.query("ROLLBACK");

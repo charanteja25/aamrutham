@@ -151,6 +151,13 @@ export default function CartDrawer() {
         },
       },
       prefill: { name: "", contact: "" },
+      config: {
+        display: {
+          blocks: {
+            address: { required: true },
+          },
+        },
+      },
       theme: { color: "#2d5016" },
     };
 
