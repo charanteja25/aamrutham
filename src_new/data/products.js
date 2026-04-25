@@ -29,27 +29,27 @@ export const products = [
     description:
       'Named after the elevated village near Bobbili where cool nights concentrate sugars to extraordinary levels. Thick, silky fibrous strands carry an intense floral sweetness unlike anything you have tasted.',
     fullDescription:
-      'A mango meant to be sucked, not sliced — a true childhood ritual you never forget. Grown through natural farming and ripened without carbide or chemical shortcuts.',
-    badges: ['Brix 20-24', 'Fibrous Pulp', 'May - June', 'Pesticide-Free'],
+      'A mango meant to be sucked, not sliced — a true childhood ritual you never forget. Grown through natural farming and ripened without carbide or chemical shortcuts. Mettavalasa Peechu is exceptionally rich in dietary fibre — far more than most fruits — making it as nourishing as it is delicious. Its natural fibre supports digestion, sustains energy, and makes every bite genuinely good for you.',
+    badges: ['Brix 20-24', 'Fibrous Pulp', 'May - June', 'Pesticide-Free', 'Bobbili Origin'],
     packPrices: [
-      { label: '6 pcs', price: 699 },
-      { label: '8 pcs', price: 899 },
-      { label: '12 pcs', price: 1299 }
+      { label: '6 pcs', price: 600 },
+      { label: '12 pcs', price: 1200 },
+      { label: '18 pcs', price: 1800 }
     ],
     category: 'premium',
     accent: 'gold',
     gradient: 'linear-gradient(160deg, #fff3cd 0%, #ffd166 45%, #f4a835 100%)',
     story: {
       heading: 'The Story of Mettavalasa Peechu',
-      p1: 'Named after the elevated village of Mettavalasa near Bobbili, this variety thrives on higher ground where cooler nights help concentrate sugars to extraordinary levels.',
-      quote: '"You do not eat this mango — you drink it."',
-      p2: 'The silky fibrous strands carry intense floral sweetness best experienced the traditional way: sucked straight from the skin. It is messy, fragrant, and unforgettable.'
+      p1: 'In the quiet, fertile lands of Mettavalasa region from Bobbili, a rare mango variety has been cherished for generations. Grown on elevated terrain and shaped by time, this fruit carries the essence of its land in every bite.\n\nThis unique variety was brought from Mettavalasa region and grafted by Sala Sitarama Swamy, who first established it in his farm — laying the foundation for a legacy that continues to thrive.',
+      quote: '"These trees are not just farms — they are living history."',
+      p2: 'Today, that legacy lives on in Bobbili, where over 100-year-old mango trees are carefully preserved and nurtured by Kotagiri Vamsi Krishna.'
     },
     profile: [
       ['Texture', 'Juicy · Fibrous'],
       ['Aroma', 'Intense Floral'],
       ['Taste', 'Intensely Sweet'],
-      ['Best Eaten', 'Sucked from skin'],
+      ['Best Eaten', 'Hand Peeled'],
       ['Season', 'May - June'],
       ['Size', 'Medium · 180-260g']
     ],
@@ -78,12 +78,12 @@ export const products = [
     description:
       'Born from the red laterite soil of Bobbili, grown on the same land for generations. Rich amber pulp and fine fibres — almost silk threads of flavour.',
     fullDescription:
-      'Farmers call it the mango that tastes like memory. Best squeezed and sipped straight from the skin.',
-    badges: ['Brix 19-23', 'Fine-Fibrous', 'May - June', 'Pesticide-Free'],
+      'Farmers call it the mango that tastes like memory. Best squeezed and sipped straight from the skin. Bobbili Peechu is one of the richest natural sources of dietary fibre among all fruits — its fine, thread-like fibres are not just texture, they are nourishment. Regular consumption supports healthy digestion and sustained energy in a way that most commercial fruit simply cannot match.',
+    badges: ['Brix 19-23', 'Fine-Fibrous', 'May - June', 'Pesticide-Free', 'Bobbili Origin'],
     packPrices: [
-      { label: '6 pcs', price: 699 },
-      { label: '8 pcs', price: 899 },
-      { label: '12 pcs', price: 1299 }
+      { label: '6 pcs', price: 500 },
+      { label: '12 pcs', price: 1000 },
+      { label: '18 pcs', price: 1500 }
     ],
     category: 'premium',
     accent: 'leaf',
@@ -91,15 +91,15 @@ export const products = [
     extraImages: ['/assets/varieties/bobbili-peechu-2.jpg'],
     story: {
       heading: 'The Story of Bobbili Peechu',
-      p1: 'Grown on the same red laterite soil of Bobbili for generations, Bobbili Peechu carries the weight of history in every bite. "Peechu" refers to its fine, thread-like fibres that weave through amber pulp.',
-      quote: '"The mango that tastes like memory."',
-      p2: 'Sourced from Bobbili and naturally ripened on paddy straw, it keeps the texture, sweetness, and nostalgia that commercial fruit rarely preserves.'
+      p1: 'Bobbili Peechu is known for its rich, juicy flavour and distinctive texture — a mango that carries both taste and tradition in every bite.\n\nBobbili Peechu is more than a mango — it is a story rooted in the legacy of the Bobbili Samsthanam.\n\nIt is said that Raja Ravu Swetachalapathi Ramakrishna Ranga Rao was once gifted two mango saplings of a variety known as Kallem Lo Mamidi by the Timmapuram Zamindar. Struck by its exceptional taste, he later named this variety "Bobbili Peechumanu."',
+      quote: '"A mango named by a king, remembered by generations."',
+      p2: 'This history has been shared and preserved by Ravu Venkata Swetha Chalapathi Kumar Krishna Ranga Rao, popularly known as Baby Nayana garu, the present-day scion of the Bobbili Samsthanam and grandson of the Raja.'
     },
     profile: [
       ['Texture', 'Juicy · Fine-Fibrous'],
       ['Aroma', 'Rich & Floral'],
       ['Taste', 'Deep, Complex Sweet'],
-      ['Best Eaten', 'Sucked from skin'],
+      ['Best Eaten', 'Hand Peeled'],
       ['Season', 'May - June'],
       ['Size', 'Medium · 200-280g']
     ],
@@ -119,21 +119,69 @@ export const products = [
     ]
   },
   {
+    id: 'panduri-mavidi',
+    name: 'Panduri Mavidi',
+    telugu: 'పాండురి మావిడి',
+    meaning: 'The Village Heirloom',
+    shortTag: 'Signature Variety · Pithapuram',
+    heroTag: 'Signature Variety · Heirloom · Aromatic',
+    description:
+      'Buttery, aromatic flesh with floral sweetness and a deep heirloom character.',
+    badges: ['Brix 23-28', 'Aromatic', 'Intensely Sweet', 'May - June', 'Pesticide-Free'],
+    packPrices: [
+      { label: '6 pcs', price: 600 },
+      { label: '12 pcs', price: 1150 },
+      { label: '18 pcs', price: 1700 }
+    ],
+    category: 'premium',
+    accent: 'gold',
+    gradient: 'linear-gradient(160deg, #fff8e0 0%, #ffd979 55%, #eeaa2a 100%)',
+    extraImages: ['/assets/varieties/panduri-mavidi-2.jpg'],
+    story: {
+      heading: 'The Story of Panduri Mavidi',
+      p1: 'Pandurivari mango is a rare, ancient variety once grown in the royal gardens of Andhra. Kings not only enjoyed its unique taste but also carefully preserved these trees, sharing the fruit with close circles and allied kingdoms as a symbol of pride and lineage.\n\nThese trees grow up to 100 feet tall and live for hundreds of years, with some still standing today in the Godavari regions. The fruit is small in size, but rich in flavour — and unlike most mangoes, it does not change colour when it ripens.\n\nThere are many stories about its origin. One says a mango was stolen from a royal orchard and planted in the Velagathuru region, from where it spread through grafting. Even today, families in the Godavari belt continue the tradition of sharing this mango as a mark of heritage.',
+      quote: '"A fruit once valued by kings, now slowly finding its way back."',
+      p2: 'Over time, this variety nearly disappeared. Today, through the efforts of farmers, nurseries, and conscious growing, it is slowly being revived.\n\nAt Aamrutham, we bring this mango to you not just for its taste, but to preserve a variety once valued by kings and rooted in our land.'
+    },
+    profile: [
+      ['Texture', 'Buttery · Smooth'],
+      ['Aroma', 'Floral & Deep'],
+      ['Taste', 'Dessert-Sweet'],
+      ['Best Eaten', 'Hand Peeled'],
+      ['Season', 'May - June'],
+      ['Size', 'Medium · 180-260g']
+    ],
+    nutrition: [
+      ['Calories', '72 kcal'],
+      ['Carbohydrates', '18g'],
+      ['Natural Sugar', '16g'],
+      ['Protein', '1g'],
+      ['Dietary Fibre', '1.3g'],
+      ['Rich in', 'Vitamins A + C']
+    ],
+    storage: [
+      ['Refrigerate after ripening', 'Store at 8-12°C once ripe and consume within 3-4 days.'],
+      ['Room temperature ripening', 'Ripen at room temperature 1-2 days if firm on arrival.'],
+      ['Avoid direct sunlight', 'High sugar content means it over-ripens quickly in heat.'],
+      ['Handle with care', 'Butter-soft flesh bruises easily — leave in box until ready.']
+    ]
+  },
+  {
     id: 'kothapalli-kobbari',
     name: 'Kothapalli Kobbari',
     telugu: 'కొత్తపల్లి కొబ్బరి',
     meaning: 'The Coconut Mango',
     shortTag: 'Exotic · Nearly Unknown Outside Vizianagaram',
-    heroTag: 'Exotic · Fiberless · Rare',
+    heroTag: 'Exotic · Full of Fibre · Rare',
     description:
       '"Kobbari" means coconut in Telugu — and this variety earns that name. Creamy, fiberless pulp carries a faint but unmistakable coconut undertone below rich mango sweetness.',
     fullDescription:
-      'Originating from Kothapalli village, this is one of the most unusual mangoes in the collection — an experience, not just a fruit.',
-    badges: ['Brix 21-25', 'Fiberless', 'June - July', 'Pesticide-Free'],
+      'Originating from Kothapalli village, this is one of the most unusual mangoes in the collection — an experience, not just a fruit. Kothapalli Kobbari is remarkably high in dietary fibre, setting it apart from most fruits. Its fibre-dense flesh supports digestion, aids gut health, and makes it one of the healthiest mangoes you can eat — a rare combination of extraordinary flavour and genuine nutritional benefit.',
+    badges: ['Brix 21-25', 'Full of Fibre', 'June - July', 'Pesticide-Free'],
     packPrices: [
-      { label: '6 pcs', price: 849 },
-      { label: '8 pcs', price: 1099 },
-      { label: '12 pcs', price: 1599 }
+      { label: '6 pcs', price: 500 },
+      { label: '12 pcs', price: 950 },
+      { label: '18 pcs', price: 1400 }
     ],
     category: 'premium',
     accent: 'gold',
@@ -141,15 +189,15 @@ export const products = [
     extraImages: ['/assets/varieties/kothapalli-kobbari-2.jpg', '/assets/varieties/kothapalli-kobbari-3.jpg'],
     story: {
       heading: 'The Story of Kothapalli Kobbari',
-      p1: 'Nearly unknown outside Vizianagaram district, Kothapalli Kobbari is one of the rarest mango varieties in Andhra Pradesh. It is named for the subtle coconut character hidden in the flesh.',
-      quote: '"An experience, not just a fruit."',
-      p2: 'Completely fiberless and cream-textured, it has a faint but unforgettable coconut undertone beneath rich mango sweetness. It is the kind of variety people remember for years.'
+      p1: 'From the coastal belt of Kakinada, in a small village called Kothapalli, comes a mango unlike any other. Centuries ago, the entire Kothapalli region of East Godavari district had only a single tree of this variety — and from that one tree, a legacy was born.\n\nKnown as Kothapalli Kobbari, this rare regional cultivar carries a signature that surprises everyone who tastes it — a gentle, natural aroma reminiscent of tender coconut. In Telugu, "Kobbari" means coconut, and this mango lives up to its name with every bite.',
+      quote: '"One tree. One village. One flavour the world almost never knew."',
+      p2: 'What makes this variety truly special is its versatility. With its thin peel, high fibre content, and small seed, the raw mango is prized for pickling — the high fibre gives the pickle an exceptionally long shelf life, making it a favourite among pickle makers. When ripe, it is rich and aromatic, and was traditionally presented as a gift to VIPs — a fruit reserved for those worth honouring.'
     },
     profile: [
-      ['Texture', 'Creamy · Fiberless'],
+      ['Texture', 'Creamy · Full of Fibre'],
       ['Aroma', 'Coconut Undertone'],
       ['Taste', 'Rich + Coconut Notes'],
-      ['Best Eaten', 'Sliced or spooned'],
+      ['Best Eaten', 'Hand Peeled'],
       ['Season', 'June - July'],
       ['Size', 'Medium · 220-300g']
     ],
@@ -174,16 +222,16 @@ export const products = [
     telugu: 'ఇమామ్ పసంద్',
     meaning: 'Favourite of the Imam · Also known as Himayat',
     shortTag: "Royal · The Deccan's Finest",
-    heroTag: 'Royal · Dessert Mango · Fiberless',
+    heroTag: 'Royal · Dessert Mango · Cut Variety',
     description:
       'The royal mango of the Deccan. Saffron-hued, zero-fibre, creamy pulp with sweetness that is profound yet balanced.',
     fullDescription:
       'Available for only a brief peak-season window, Imam Pasand is one of the most sought-after fruits in the collection.',
     badges: ['Brix 18-22', 'Fiberless · Creamy', 'June - July', 'Royal Variety'],
     packPrices: [
-      { label: '6 pcs', price: 999 },
-      { label: '8 pcs', price: 1299 },
-      { label: '12 pcs', price: 1899 }
+      { label: '6 pcs', price: 600 },
+      { label: '12 pcs', price: 1200 },
+      { label: '18 pcs', price: 1800 }
     ],
     category: 'premium',
     accent: 'leaf',
@@ -191,15 +239,15 @@ export const products = [
     extraImages: ['/assets/varieties/imam-pasand-2.jpg', '/assets/varieties/imam-pasand-3.jpg'],
     story: {
       heading: 'The Story of Imam Pasand',
-      p1: "Known as Himayat in parts of Andhra, Imam Pasand has been revered for centuries as one of the Deccan's royal mangoes. Large, aromatic, and creamy, it delivers dessert-like richness without heaviness.",
-      quote: '"Rare. Worth every bite."',
-      p2: 'Its brief seasonal availability makes it one of the most anticipated varieties every summer. The fruit is elegant, fragrant, and deeply memorable.'
+      p1: 'Imam Pasand — also known as Himayat in Andhra Pradesh and Telangana — is one of the most celebrated mango varieties in India. Its name translates to "The Favourite of the Imam," a title that speaks to centuries of royal reverence.\n\nSome accounts trace this variety to the courts of Mughal Emperor Humayun, where it was called "Humayun Pasand." Others say it was the Nawabs of Hyderabad who embraced and cultivated it most devotedly, making it a prized delicacy of the Deccan. Whether Mughal or Nizam, this mango has always belonged to royalty.',
+      quote: '"Not just a mango — a fruit fit for emperors."',
+      p2: 'What sets Imam Pasand apart is everything about it. The fruit is large — often 450 to 800 grams — with a deep golden-yellow flesh that is buttery, completely fiberless, and offers maximum pulp thanks to its distinctively thin skin and small seed. The taste is profoundly sweet with a gentle hint of tartness, and the floral aroma is unlike anything else in the season.\n\nIt ripens only in May and June, making it one of the rarest and most anticipated fruits of summer. At Aamrutham, we grow it the way it deserves — naturally, without shortcuts, from trees that carry this legacy forward.'
     },
     profile: [
       ['Texture', 'Creamy · Custard-like'],
       ['Aroma', 'Saffron & Floral'],
       ['Taste', 'Profound Sweetness'],
-      ['Best Eaten', 'Sliced or as dessert'],
+      ['Best Eaten', 'Cut Variety'],
       ['Season', 'June - July'],
       ['Size', 'Large · 400-600g']
     ],
@@ -229,9 +277,9 @@ export const products = [
       'Fiberless, aromatic pulp with bright citrusy sweetness and a golden streak across the skin.',
     badges: ['Brix 18-21', 'Fiberless', 'May - June', 'Pesticide-Free'],
     packPrices: [
-      { label: '6 pcs', price: 749 },
-      { label: '8 pcs', price: 999 },
-      { label: '12 pcs', price: 1499 }
+      { label: '6 pcs', price: 350 },
+      { label: '12 pcs', price: 600 },
+      { label: '18 pcs', price: 900 }
     ],
     category: 'more',
     accent: 'gold',
@@ -277,9 +325,9 @@ export const products = [
       'Large, smooth golden skin and fiberless flesh with mild honey sweetness and universal appeal.',
     badges: ['Brix 16-20', 'Fiberless', 'April - June', 'GI-Tagged'],
     packPrices: [
-      { label: '6 pcs', price: 699 },
-      { label: '8 pcs', price: 899 },
-      { label: '12 pcs', price: 1399 }
+      { label: '6 pcs', price: 500 },
+      { label: '12 pcs', price: 900 },
+      { label: '18 pcs', price: 1300 }
     ],
     category: 'more',
     accent: 'leaf',
@@ -325,9 +373,9 @@ export const products = [
       'Small but intensely sweet with syrup-like pulp. A childhood favourite in many Telugu homes.',
     badges: ['Brix 22-26', 'Juicy', 'May - July', 'Pesticide-Free'],
     packPrices: [
-      { label: '6 pcs', price: 649 },
-      { label: '8 pcs', price: 849 },
-      { label: '12 pcs', price: 1299 }
+      { label: '6 pcs', price: 350 },
+      { label: '12 pcs', price: 600 },
+      { label: '18 pcs', price: 900 }
     ],
     category: 'more',
     accent: 'gold',
@@ -373,9 +421,9 @@ export const products = [
       'A larger, richer sibling to Chinna Rasalu with deeper amber pulp and lingering sweetness.',
     badges: ['Brix 20-24', 'Full-bodied', 'May - July', 'Pesticide-Free'],
     packPrices: [
-      { label: '6 pcs', price: 749 },
-      { label: '8 pcs', price: 999 },
-      { label: '12 pcs', price: 1499 }
+      { label: '6 pcs', price: 400 },
+      { label: '12 pcs', price: 750 },
+      { label: '18 pcs', price: 1150 }
     ],
     category: 'more',
     accent: 'leaf',
@@ -410,54 +458,6 @@ export const products = [
     ]
   },
   {
-    id: 'panduri-mavidi',
-    name: 'Panduri Mavidi',
-    telugu: 'పాండురి మావిడి',
-    meaning: 'The Village Heirloom',
-    shortTag: 'Pithapuram',
-    heroTag: 'Heirloom · Rare · Aromatic',
-    description:
-      'Buttery, aromatic flesh with floral sweetness and a deep heirloom character.',
-    badges: ['Brix 23-28', 'Aromatic', 'May - June', 'Pesticide-Free'],
-    packPrices: [
-      { label: '6 pcs', price: 849 },
-      { label: '8 pcs', price: 1099 },
-      { label: '12 pcs', price: 1699 }
-    ],
-    category: 'more',
-    accent: 'gold',
-    gradient: 'linear-gradient(160deg, #fff8e0 0%, #ffd979 55%, #eeaa2a 100%)',
-    extraImages: ['/assets/varieties/panduri-mavidi-2.jpg'],
-    story: {
-      heading: 'The Story of Panduri Mavidi',
-      p1: 'From the village groves of Pithapuram, Panduri Mavidi is a rare heirloom variety that has survived only because small family farms kept it alive. Buttery and floral, it is one of the highest Brix varieties in the entire collection.',
-      quote: '"The mango the village never forgot."',
-      p2: 'At Brix 23-28, it borders on dessert-sweet — with a butter-soft texture and deeply floral finish that lingers. Extraordinarily rare outside Andhra.'
-    },
-    profile: [
-      ['Texture', 'Buttery · Smooth'],
-      ['Aroma', 'Floral & Deep'],
-      ['Taste', 'Dessert-Sweet'],
-      ['Best Eaten', 'Sliced · Room temp'],
-      ['Season', 'May - June'],
-      ['Size', 'Medium · 180-260g']
-    ],
-    nutrition: [
-      ['Calories', '72 kcal'],
-      ['Carbohydrates', '18g'],
-      ['Natural Sugar', '16g'],
-      ['Protein', '1g'],
-      ['Dietary Fibre', '1.3g'],
-      ['Rich in', 'Vitamins A + C']
-    ],
-    storage: [
-      ['Refrigerate after ripening', 'Store at 8-12°C once ripe and consume within 3-4 days.'],
-      ['Room temperature ripening', 'Ripen at room temperature 1-2 days if firm on arrival.'],
-      ['Avoid direct sunlight', 'High sugar content means it over-ripens quickly in heat.'],
-      ['Handle with care', 'Butter-soft flesh bruises easily — leave in box until ready.']
-    ]
-  },
-  {
     id: 'children-mango-pack',
     name: 'Kids Mango Pack',
     telugu: 'పిల్లల మావిడి ప్యాక్',
@@ -470,9 +470,9 @@ export const products = [
       'We have handpicked the sweetest, most kid-friendly mangoes for your little ones. These are smaller in size, completely fiberless, and have just the right amount of sweetness for children ages 2-10. Perfect for lunchboxes, summer snacks, and happy little faces!',
     badges: ['Pack of 6', 'Ages 2-10', 'Fiberless', 'Kid-Friendly'],
     packPrices: [
-      { label: '6 pcs', price: 499 },
-      { label: '8 pcs', price: 649 },
-      { label: '12 pcs', price: 899 }
+      { label: '6 pcs', price: 400 },
+      { label: '12 pcs', price: 750 },
+      { label: '18 pcs', price: 1100 }
     ],
     category: 'premium',
     accent: 'gold',
