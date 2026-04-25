@@ -72,7 +72,11 @@ export default function ProductCard({ product, showDetails = true }) {
       <div className="product-card-footer">
         <div>
           <div className="price">₹{selectedPack.price.toLocaleString('en-IN')}</div>
-          <div className="price-note">incl. free delivery</div>
+          <div className="price-note">
+            {selectedPack.price < 500
+              ? 'Delivery fee applicable for orders below ₹500'
+              : 'incl. free delivery'}
+          </div>
         </div>
         <div className="product-card-actions">
           {showDetails && product.category === 'premium' && (
