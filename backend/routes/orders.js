@@ -13,7 +13,7 @@ import { Router } from "express";
 import Razorpay from "razorpay";
 import pool from "../db.js";
 // Reuse the single source of truth from the frontend — pure ESM data module.
-import { HYD_PINCODES } from "../../src/data/products.js";
+import { HYD_PINCODES } from "../data/products.js";
 
 const SERVICEABLE_PINCODES = new Set(HYD_PINCODES);
 const isServiceablePincode = (pin) => {

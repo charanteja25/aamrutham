@@ -15,7 +15,7 @@ import bcrypt from "bcryptjs";
 import pool from "./db.js";
 // Import the single source of truth from the frontend so inventory rows can
 // never drift from the product catalogue shown to customers.
-import { products, seasonPassProducts } from "../src/data/products.js";
+import { products, seasonPassProducts } from "./data/products.js";
 
 // ===== Admin User Data =====
 const adminUsername = process.env.ADMIN_USERNAME || "admin";
