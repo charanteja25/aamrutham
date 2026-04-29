@@ -81,12 +81,15 @@ function VarietyTile({ product }) {
           })}
         </div>
         <div className="variety-tile-footer-row">
-          <span className="variety-tile-price">
-            <span style={{ textDecoration: 'line-through', color: '#aaa', fontWeight: 400, fontSize: '0.95rem', marginRight: '0.3rem' }}>
-              ₹{(selectedPack.price + 101).toLocaleString('en-IN')}
+          <div>
+            <span className="variety-tile-price">
+              <span style={{ textDecoration: 'line-through', color: '#aaa', fontWeight: 400, fontSize: '0.95rem', marginRight: '0.3rem' }}>
+                ₹{(selectedPack.price + 101).toLocaleString('en-IN')}
+              </span>
+              ₹{selectedPack.price.toLocaleString('en-IN')}
             </span>
-            ₹{selectedPack.price.toLocaleString('en-IN')}
-          </span>
+            <Link to="/pricing" className="pricing-link">ℹ️ Why this price?</Link>
+          </div>
           {isSoldOut ? (
             <span className="sold-out-chip">Coming Soon</span>
           ) : (

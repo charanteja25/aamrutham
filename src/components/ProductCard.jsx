@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+
 import { useCart } from '../context/CartContext';
 import { useInventory } from '../context/InventoryContext';
 
@@ -116,6 +117,7 @@ export default function ProductCard({ product, showDetails = true }) {
             </span>
             ₹{selectedPack.price.toLocaleString('en-IN')}
           </div>
+          <Link to="/pricing" className="pricing-link">ℹ️ Why this price?</Link>
           <div className="price-note">
             {selectedPack.price < 500
               ? 'Delivery fee applicable for orders below ₹500'
