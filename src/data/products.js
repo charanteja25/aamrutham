@@ -82,7 +82,7 @@ export const products = [
       'Born from the red laterite soil of Bobbili, grown on the same land for generations. Rich amber pulp and fine fibres — almost silk threads of flavour.',
     fullDescription:
       'Farmers call it the mango that tastes like memory. Best squeezed and sipped straight from the skin. Bobbili Peechu is one of the richest natural sources of dietary fibre among all fruits — its fine, thread-like fibres are not just texture, they are nourishment. Regular consumption supports healthy digestion and sustained energy in a way that most commercial fruit simply cannot match.',
-    badges: ['Brix 19-23', 'Fine-Fibrous', 'May - June', 'Pesticide-Free', 'Bobbili Origin'],
+    badges: ['Brix 22-25', 'Fine-Fibrous', 'May - June', 'Pesticide-Free', 'Bobbili Origin'],
     packPrices: [
       { label: '6 pcs', price: 499 },
       { label: '12 pcs', price: 999 },
