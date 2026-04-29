@@ -47,7 +47,7 @@ function VarietyTile({ product }) {
           onError={e => { e.currentTarget.style.display = 'none'; }}
         />
         <span className={`variety-tile-badge ${isSignature ? 'badge-signature' : 'badge-heritage'}`}>
-          {isSignature ? 'Signature' : 'Heritage'}
+          {isSignature ? 'Signature' : 'Exotic'}
         </span>
         {isSoldOut && <span className="variety-tile-soldout">Coming Soon</span>}
       </Link>

@@ -58,7 +58,7 @@ export default function ProductCard({ product, showDetails = true }) {
           />
         )}
 
-        <div className="product-card-badge">{product.category === 'premium' ? 'Signature' : 'Variety'}</div>
+        <div className="product-card-badge">{product.category === 'premium' ? 'Signature' : 'Exotic'}</div>
 
         {badge && (
           <div className={`stock-badge ${badge.cls}`}>{badge.label}</div>
