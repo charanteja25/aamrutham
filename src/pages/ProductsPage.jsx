@@ -23,6 +23,16 @@ function strikePrice(packPrices, selectedPack) {
   return sixOriginal * (qty / 6);
 }
 
+function savePercent(packPrices, pack) {
+  const sixPack = packPrices.find(p => p.label === '6 pcs');
+  if (!sixPack || pack.label === '6 pcs') return null;
+  const basePerUnit = sixPack.price / 6;
+  const qty = parseInt(pack.label);
+  const packPerUnit = pack.price / qty;
+  const pct = Math.round((basePerUnit - packPerUnit) / basePerUnit * 100);
+  return pct > 0 ? pct : null;
+}
+
 function VarietyTile({ product }) {
   const [selectedPack, setSelectedPack] = useState(product.packPrices[0]);
   const { addToCart } = useCart();
@@ -90,6 +100,9 @@ function VarietyTile({ product }) {
                 {p.label === '12 pcs' && <span className="pack-most-bought-badge">Our Pick</span>}
                 {p.label === '18 pcs' && <span className="pack-most-bought-badge pack-best-value-badge">Best Value</span>}
                 {p.label}
+                {savePercent(product.packPrices, p) && (
+                  <span className="pack-save-pct">Save {savePercent(product.packPrices, p)}%</span>
+                )}
                 {packWeight(product.avgWeightGrams, p.label) && (
                   <span style={{ color: 'var(--mango-dark)', fontWeight: 700, fontSize: '0.78rem' }}>
                     {' '}({packWeight(product.avgWeightGrams, p.label)})

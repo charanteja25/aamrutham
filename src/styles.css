@@ -3866,6 +3866,13 @@ h1, h2, h3 { font-weight: 400; }
 .pack-best-value-badge { color: var(--leaf) !important; }
 .variety-tile-pack-btn.active .pack-best-value-badge,
 .pack-btn.selected .pack-best-value-badge { color: rgba(255,255,255,0.85) !important; }
+.pack-save-pct {
+  display: block; font-size: 0.6rem; font-weight: 800;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  color: #c0392b; line-height: 1; margin-top: 1px;
+}
+.variety-tile-pack-btn.active .pack-save-pct,
+.pack-btn.selected .pack-save-pct { color: rgba(255,220,200,0.9); }
 @media (max-width: 768px) {
   .variety-tile-pack-row { gap: 0.35rem; flex-wrap: nowrap; }
   .variety-tile-pack-btn {

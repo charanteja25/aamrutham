@@ -21,6 +21,16 @@ function strikePrice(packPrices, selectedPack) {
   return sixOriginal * (qty / 6);
 }
 
+function savePercent(packPrices, pack) {
+  const sixPack = packPrices.find(p => p.label === '6 pcs');
+  if (!sixPack || pack.label === '6 pcs') return null;
+  const basePerUnit = sixPack.price / 6;
+  const qty = parseInt(pack.label);
+  const packPerUnit = pack.price / qty;
+  const pct = Math.round((basePerUnit - packPerUnit) / basePerUnit * 100);
+  return pct > 0 ? pct : null;
+}
+
 /** Returns { label, className } for the availability indicator */
 function stockBadge(available) {
   if (available === null) return null;              // still loading
@@ -106,6 +116,9 @@ export default function ProductCard({ product, showDetails = true }) {
                   {pack.label === '12 pcs' && <span className="pack-most-bought-badge">Our Pick</span>}
                   {pack.label === '18 pcs' && <span className="pack-most-bought-badge pack-best-value-badge">Best Value</span>}
                   {pack.label}
+                  {savePercent(product.packPrices, pack) && (
+                    <span className="pack-save-pct">Save {savePercent(product.packPrices, pack)}%</span>
+                  )}
                   {packWeight(product.avgWeightGrams, pack.label) && (
                     <span style={{ color: 'var(--mango-dark)', fontWeight: 700, fontSize: '0.78rem' }}>
                       {' '}({packWeight(product.avgWeightGrams, pack.label)})
