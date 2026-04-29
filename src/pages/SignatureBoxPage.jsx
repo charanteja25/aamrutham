@@ -9,7 +9,7 @@ const PACKS = [
 
 const VARIETIES = [
   { name: 'Mettavalasa Peechu', note: 'The Pride of Bobbili — silky fibrous, floral sweetness, a childhood ritual', img: '/assets/varieties/mettavalasa-peechu.jpg' },
-  { name: 'Kothapalli Kobbari',  note: 'The Coconut Mango — fiberless, with a faint coconut undertone',           img: '/assets/varieties/kothapalli-kobbari.jpg' },
+  { name: 'Kothapalli Kobbari',  note: 'The Coconut Mango — full of fibre, with a faint coconut undertone',        img: '/assets/varieties/kothapalli-kobbari.jpg' },
   { name: 'Panduri Teepi Mamidi',note: 'The Royal Heirloom — buttery, aromatic, nearly unknown outside Panduri',  img: '/assets/varieties/panduri-mavidi.jpg' },
   { name: 'Bobbili Peechu',      note: 'The Pride of Bobbili — fibrous, intensely sweet, best squeezed whole',    img: '/assets/varieties/bobbili-peechu.jpg' },
   { name: 'Imam Pasand',         note: 'The Royal Mango — saffron-hued, zero-fibre, creamy, Deccan royalty',      img: '/assets/varieties/imam-pasand.jpg' },
