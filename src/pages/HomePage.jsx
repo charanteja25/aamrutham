@@ -10,7 +10,7 @@ export default function HomePage() {
       <section className="hero-section">
         <div className="container hero-grid">
           <div className="hero-copy">
-            <p className="hero-eyebrow">✦ Bobbili Farms · Hyderabad ✦</p>
+            <p className="hero-eyebrow">✦ Natural Farming · గో ఆధారిత వ్యవసాయం · Bobbili Since 2013 ✦</p>
             <h1>
               Taste the <span>ఆమృతం</span> of Mangoes
             </h1>
