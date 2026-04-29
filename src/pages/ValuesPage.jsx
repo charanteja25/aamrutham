@@ -11,7 +11,7 @@ const VALUES = [
   {
     num: '03',
     title: 'Nature is our partner',
-    body: 'Desi cows, healthy soil, biodiversity — not add-ons. The foundation of everything we grow. Subhash Palekar Natural Farming is not a certification we chase. It\'s how we\'ve worked since 2014.',
+    body: 'Desi cows, healthy soil, biodiversity — not add-ons. The foundation of everything we grow. Subhash Palekar Natural Farming is not a certification we chase. It\'s how we\'ve worked since 2013.',
     bullets: ['Soil alive, not chemical-dependent', 'Trees nourished, not forced', 'Farms as ecosystems, not factories'],
   },
   {
@@ -95,7 +95,7 @@ export default function ValuesPage() {
         <div className="vals-closing">
           <p className="vals-closing-text">Aamrutham is not just about mangoes.<br />It's about bringing back <em>food you can trust.</em></p>
           <div className="vals-stamp">
-            <span className="vals-stamp-year">2014</span>
+            <span className="vals-stamp-year">2013</span>
             <span className="vals-stamp-label">Natural Farming</span>
           </div>
         </div>
