@@ -3,6 +3,15 @@ import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useInventory } from '../context/InventoryContext';
 
+function packWeight(avgWeightGrams, label) {
+  const qty = parseInt(label);
+  if (!avgWeightGrams || !qty) return null;
+  const [min, max] = avgWeightGrams;
+  const minKg = (qty * min / 1000).toFixed(1);
+  const maxKg = (qty * max / 1000).toFixed(1);
+  return min === max ? `${minKg} kgs` : `${minKg}–${maxKg} kgs`;
+}
+
 /** Returns { label, className } for the availability indicator */
 function stockBadge(available) {
   if (available === null) return null;              // still loading
@@ -86,6 +95,11 @@ export default function ProductCard({ product, showDetails = true }) {
                   title={packOut ? 'Out of stock' : undefined}
                 >
                   {pack.label}
+                  {packWeight(product.avgWeightGrams, pack.label) && (
+                    <span style={{ opacity: 0.65, fontWeight: 400 }}>
+                      {' '}({packWeight(product.avgWeightGrams, pack.label)})
+                    </span>
+                  )}
                   {packOut && ' ✕'}
                 </button>
               );

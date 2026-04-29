@@ -36,6 +36,7 @@ export const products = [
       { label: '12 pcs', price: 1200 },
       { label: '18 pcs', price: 1800 }
     ],
+    avgWeightGrams: [300, 350],
     category: 'premium',
     accent: 'gold',
     gradient: 'linear-gradient(160deg, #fff3cd 0%, #ffd166 45%, #f4a835 100%)',
@@ -85,6 +86,7 @@ export const products = [
       { label: '12 pcs', price: 1000 },
       { label: '18 pcs', price: 1500 }
     ],
+    avgWeightGrams: [200, 250],
     category: 'premium',
     accent: 'leaf',
     gradient: 'linear-gradient(160deg, #fff8e1 0%, #ffcc80 50%, #ff8f00 100%)',
@@ -133,6 +135,7 @@ export const products = [
       { label: '12 pcs', price: 1150 },
       { label: '18 pcs', price: 1700 }
     ],
+    avgWeightGrams: [200, 200],
     category: 'premium',
     accent: 'gold',
     gradient: 'linear-gradient(160deg, #fff8e0 0%, #ffd979 55%, #eeaa2a 100%)',
@@ -183,6 +186,7 @@ export const products = [
       { label: '12 pcs', price: 950 },
       { label: '18 pcs', price: 1400 }
     ],
+    avgWeightGrams: [200, 250],
     category: 'premium',
     accent: 'gold',
     gradient: 'linear-gradient(160deg, #fff9e5 0%, #ffe082 50%, #ffc107 100%)',
@@ -233,6 +237,7 @@ export const products = [
       { label: '12 pcs', price: 1200 },
       { label: '18 pcs', price: 1800 }
     ],
+    avgWeightGrams: [350, 350],
     category: 'premium',
     accent: 'leaf',
     gradient: 'linear-gradient(160deg, #fff0e0 0%, #ffab76 45%, #e07b39 100%)',
@@ -281,6 +286,7 @@ export const products = [
       { label: '12 pcs', price: 600 },
       { label: '18 pcs', price: 900 }
     ],
+    avgWeightGrams: [250, 280],
     category: 'more',
     accent: 'gold',
     gradient: 'linear-gradient(160deg, #fff4c7 0%, #ffd760 55%, #f0a82b 100%)',
@@ -329,6 +335,7 @@ export const products = [
       { label: '12 pcs', price: 900 },
       { label: '18 pcs', price: 1300 }
     ],
+    avgWeightGrams: [350, 350],
     category: 'more',
     accent: 'leaf',
     gradient: 'linear-gradient(160deg, #fff1cf 0%, #ffdd87 55%, #f5a623 100%)',
@@ -377,6 +384,7 @@ export const products = [
       { label: '12 pcs', price: 600 },
       { label: '18 pcs', price: 900 }
     ],
+    avgWeightGrams: [200, 200],
     category: 'more',
     accent: 'gold',
     gradient: 'linear-gradient(160deg, #fff3db 0%, #ffc86d 55%, #eb8d23 100%)',
@@ -425,6 +433,7 @@ export const products = [
       { label: '12 pcs', price: 750 },
       { label: '18 pcs', price: 1150 }
     ],
+    avgWeightGrams: [300, 300],
     category: 'more',
     accent: 'leaf',
     gradient: 'linear-gradient(160deg, #fff0d2 0%, #ffbe62 55%, #de7e16 100%)',
