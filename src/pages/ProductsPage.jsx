@@ -40,7 +40,7 @@ function VarietyTile({ product }) {
   const isSignature = product.category === 'premium';
   return (
     <div className="variety-tile">
-      <Link to={`/products/${product.id}`} className="variety-tile-img" style={{ background: product.gradient }}>
+      <Link to={`/products/${product.id}`} className="variety-tile-img" data-product={product.id} style={{ background: product.gradient }}>
         <img
           src={`/assets/varieties/${product.id}.jpg`}
           alt={product.name}

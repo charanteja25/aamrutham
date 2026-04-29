@@ -47,7 +47,7 @@ export default function ProductCard({ product, showDetails = true }) {
   const isSoldOut = available === 0;
 
   return (
-    <article className="product-card" data-accent={product.accent}>
+    <article className="product-card" data-accent={product.accent} data-product={product.id}>
       <div className="product-card-visual" style={{ background: product.gradient }}>
         {!imgFailed && (
           <img
