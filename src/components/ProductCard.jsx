@@ -116,9 +116,6 @@ export default function ProductCard({ product, showDetails = true }) {
                   {pack.label === '12 pcs' && <span className="pack-most-bought-badge">Our Pick</span>}
                   {pack.label === '18 pcs' && <span className="pack-most-bought-badge pack-best-value-badge">Best Value</span>}
                   {pack.label}
-                  {savePercent(product.packPrices, pack) && (
-                    <span className="pack-save-pct">Save {savePercent(product.packPrices, pack)}%</span>
-                  )}
                   {packWeight(product.avgWeightGrams, pack.label) && (
                     <span style={{ color: 'var(--mango-dark)', fontWeight: 700, fontSize: '0.78rem' }}>
                       {' '}({packWeight(product.avgWeightGrams, pack.label)})

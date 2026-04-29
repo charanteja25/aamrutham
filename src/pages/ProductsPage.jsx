@@ -100,9 +100,6 @@ function VarietyTile({ product }) {
                 {p.label === '12 pcs' && <span className="pack-most-bought-badge">Our Pick</span>}
                 {p.label === '18 pcs' && <span className="pack-most-bought-badge pack-best-value-badge">Best Value</span>}
                 {p.label}
-                {savePercent(product.packPrices, p) && (
-                  <span className="pack-save-pct">Save {savePercent(product.packPrices, p)}%</span>
-                )}
                 {packWeight(product.avgWeightGrams, p.label) && (
                   <span style={{ color: 'var(--mango-dark)', fontWeight: 700, fontSize: '0.78rem' }}>
                     {' '}({packWeight(product.avgWeightGrams, p.label)})
