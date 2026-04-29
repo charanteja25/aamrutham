@@ -162,7 +162,7 @@ export default function ProductsPage() {
           <div data-aos="fade-up">
             <span className="section-eyebrow">✦ Farm to Doorstep</span>
             <h2 className="section-title">Our <em>Varieties</em></h2>
-            <p className="section-subtitle">Heritage varieties from Bobbili's finest estates. Tap any variety to explore and order.</p>
+            <p className="section-subtitle">Heritage varieties from our farm in Bobbili.</p>
           </div>
 
           <div className="variety-tiles-grid">
