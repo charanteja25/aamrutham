@@ -3863,6 +3863,9 @@ h1, h2, h3 { font-weight: 400; }
 .variety-tile-pack-btn.active .pack-most-bought-badge { color: rgba(255,255,255,0.85); }
 .pack-btn.most-bought { border-color: var(--mango-dark); position: relative; }
 .pack-btn.selected.most-bought .pack-most-bought-badge { color: rgba(255,255,255,0.85); }
+.pack-best-value-badge { color: var(--leaf) !important; }
+.variety-tile-pack-btn.active .pack-best-value-badge,
+.pack-btn.selected .pack-best-value-badge { color: rgba(255,255,255,0.85) !important; }
 @media (max-width: 768px) {
   .variety-tile-pack-row { gap: 0.35rem; flex-wrap: nowrap; }
   .variety-tile-pack-btn {

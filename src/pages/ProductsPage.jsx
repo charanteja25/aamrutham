@@ -80,6 +80,7 @@ function VarietyTile({ product }) {
                 title={packOut ? 'Out of stock' : undefined}
               >
                 {p.label === '12 pcs' && <span className="pack-most-bought-badge">Our Pick</span>}
+                {p.label === '18 pcs' && <span className="pack-most-bought-badge pack-best-value-badge">Best Value</span>}
                 {p.label}
                 {packWeight(product.avgWeightGrams, p.label) && (
                   <span style={{ color: 'var(--mango-dark)', fontWeight: 700, fontSize: '0.78rem' }}>

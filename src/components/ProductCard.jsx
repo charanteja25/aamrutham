@@ -96,6 +96,7 @@ export default function ProductCard({ product, showDetails = true }) {
                   title={packOut ? 'Out of stock' : undefined}
                 >
                   {pack.label === '12 pcs' && <span className="pack-most-bought-badge">Our Pick</span>}
+                  {pack.label === '18 pcs' && <span className="pack-most-bought-badge pack-best-value-badge">Best Value</span>}
                   {pack.label}
                   {packWeight(product.avgWeightGrams, pack.label) && (
                     <span style={{ color: 'var(--mango-dark)', fontWeight: 700, fontSize: '0.78rem' }}>
