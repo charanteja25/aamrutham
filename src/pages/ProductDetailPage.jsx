@@ -15,6 +15,7 @@ export default function ProductDetailPage() {
   const [message, setMessage] = useState('');
   const [isValid, setIsValid] = useState(null);
   const [activeImg, setActiveImg] = useState(`/assets/varieties/${product.id}.jpg`);
+  const [factsTab, setFactsTab] = useState('profile');
   const { addToCart } = useCart();
   const { getAvailable } = useInventory();
 
@@ -222,15 +223,22 @@ export default function ProductDetailPage() {
         </section>
       )}
 
-      {(product.profile || product.nutrition) && (
-        <section className="section section-cream-dark">
-          <div className="container detail-facts-grid">
-            {product.profile && (
-              <div>
-                <p className="section-eyebrow" style={{ marginBottom: '1rem' }}>Fruit Profile</p>
-                <div className="profile-grid">
+      {(product.profile || product.nutrition || product.storage) && (
+        <section className="section section-cream-dark detail-facts-section">
+          <div className="container">
+
+            {/* ── Tabbed Profile / Nutrition / Storage ── */}
+            <div className="detail-tabs">
+              {product.profile  && <button className={`detail-tab-btn${factsTab === 'profile'   ? ' active' : ''}`} onClick={() => setFactsTab('profile')}>🥭 Fruit Profile</button>}
+              {product.nutrition && <button className={`detail-tab-btn${factsTab === 'nutrition' ? ' active' : ''}`} onClick={() => setFactsTab('nutrition')}>🌿 Nutrition</button>}
+              {product.storage  && <button className={`detail-tab-btn${factsTab === 'storage'   ? ' active' : ''}`} onClick={() => setFactsTab('storage')}>📦 Storage & Care</button>}
+            </div>
+
+            {factsTab === 'profile' && product.profile && (
+              <div className="detail-tab-panel">
+                <div className="profile-grid profile-grid--compact">
                   {product.profile.map(([label, value]) => (
-                    <div className="profile-card" key={label}>
+                    <div className="profile-card profile-card--compact" key={label}>
                       <div className="profile-label">{label}</div>
                       <div className="profile-value">{value}</div>
                     </div>
@@ -238,12 +246,12 @@ export default function ProductDetailPage() {
                 </div>
               </div>
             )}
-            {product.nutrition && (
-              <div>
-                <p className="section-eyebrow" style={{ marginBottom: '1rem' }}>Nutrition · per 100g</p>
-                <div className="nutrition-grid compact">
+
+            {factsTab === 'nutrition' && product.nutrition && (
+              <div className="detail-tab-panel">
+                <div className="nutrition-grid nutrition-grid--compact">
                   {product.nutrition.map(([label, value]) => (
-                    <div className="nutrition-item" key={label}>
+                    <div className="nutrition-item nutrition-item--compact" key={label}>
                       <strong>{value}</strong>
                       <span>{label}</span>
                     </div>
@@ -251,28 +259,24 @@ export default function ProductDetailPage() {
                 </div>
               </div>
             )}
-          </div>
-        </section>
-      )}
 
-      <section className="section section-white">
-        <div className="container">
-          <MangoesPerDayChart />
-        </div>
-      </section>
-
-      {product.storage && (
-        <section className="section section-white">
-          <div className="container">
-            <p className="section-eyebrow" style={{ marginBottom: '1rem' }}>Storage & Care</p>
-            <div className="storage-grid">
-              {product.storage.map(([title, text]) => (
-                <div className="storage-card" key={title}>
-                  <h3>{title}</h3>
-                  <p>{text}</p>
+            {factsTab === 'storage' && product.storage && (
+              <div className="detail-tab-panel">
+                <div className="storage-grid storage-grid--compact">
+                  {product.storage.map(([title, text]) => (
+                    <div className="storage-card storage-card--compact" key={title}>
+                      <h3>{title}</h3>
+                      <p>{text}</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+            )}
+
+            <div className="detail-chart-wrap">
+              <MangoesPerDayChart />
             </div>
+
           </div>
         </section>
       )}

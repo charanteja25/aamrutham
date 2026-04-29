@@ -1207,6 +1207,61 @@ input {
 .detail-facts-grid .nutrition-item span { color: #6b4c32; }
 @media (max-width: 700px) { .detail-facts-grid { grid-template-columns: 1fr; gap: 2rem; } }
 
+/* ── Detail page tabbed facts section ── */
+.detail-facts-section { padding: 2.5rem 0; }
+.detail-tabs {
+  display: flex; gap: 0.5rem; flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+.detail-tab-btn {
+  padding: 0.5rem 1.1rem; border-radius: 50px;
+  border: 1.5px solid #d4b88a; background: none;
+  color: #7a5a3a; font-size: 0.82rem; font-weight: 700;
+  cursor: pointer; transition: all 0.15s;
+}
+.detail-tab-btn.active {
+  background: var(--leaf); border-color: var(--leaf); color: white;
+}
+.detail-tab-panel { animation: fadeIn 0.2s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* Compact profile grid */
+.profile-grid--compact {
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important;
+  gap: 0.75rem;
+}
+.profile-card--compact {
+  padding: 0.75rem 1rem !important;
+}
+.profile-card--compact .profile-label { font-size: 0.65rem; }
+.profile-card--compact .profile-value { font-size: 0.9rem; margin-top: 0.3rem; }
+
+/* Compact nutrition grid */
+.nutrition-grid--compact {
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 0.65rem;
+}
+.nutrition-item--compact {
+  padding: 0.65rem 0.75rem !important;
+  border-radius: 12px !important;
+  background: rgba(44,24,16,0.06) !important;
+  border: 1px solid rgba(44,24,16,0.1) !important;
+}
+.nutrition-item--compact strong { font-size: 1rem !important; color: var(--leaf) !important; }
+.nutrition-item--compact span   { font-size: 0.72rem !important; color: #6b4c32 !important; margin-top: 0.2rem !important; }
+
+/* Compact storage grid */
+.storage-grid--compact {
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+  gap: 0.75rem;
+}
+.storage-card--compact { padding: 0.9rem 1rem !important; }
+.storage-card--compact h3 { font-size: 0.85rem !important; margin-bottom: 0.3rem !important; }
+.storage-card--compact p  { font-size: 0.82rem !important; }
+
+/* Chart inside the facts section */
+.detail-chart-wrap { margin-top: 2rem; }
+
 .nutrition-head h2 {
   color: var(--white);
   font-size: 2.2rem;
