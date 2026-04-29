@@ -13,6 +13,14 @@ function packWeight(avgWeightGrams, label) {
   return min === max ? `~${minKg} kgs` : `~${minKg}–${maxKg} kgs`;
 }
 
+function strikePrice(packPrices, selectedPack) {
+  const sixPack = packPrices.find(p => p.label === '6 pcs');
+  if (!sixPack) return selectedPack.price + 101;
+  const sixOriginal = sixPack.price + 101;
+  const qty = parseInt(selectedPack.label);
+  return sixOriginal * (qty / 6);
+}
+
 /** Returns { label, className } for the availability indicator */
 function stockBadge(available) {
   if (available === null) return null;              // still loading
@@ -115,7 +123,7 @@ export default function ProductCard({ product, showDetails = true }) {
         <div>
           <div className="price">
             <span style={{ textDecoration: 'line-through', color: '#aaa', fontWeight: 400, fontSize: '0.9rem', marginRight: '0.3rem' }}>
-              ₹{(selectedPack.price + 101).toLocaleString('en-IN')}
+              ₹{strikePrice(product.packPrices, selectedPack).toLocaleString('en-IN')}
             </span>
             ₹{selectedPack.price.toLocaleString('en-IN')}
           </div>

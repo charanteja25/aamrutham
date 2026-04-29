@@ -15,6 +15,14 @@ function packWeight(avgWeightGrams, label) {
   return min === max ? `~${minKg} kgs` : `~${minKg}–${maxKg} kgs`;
 }
 
+function strikePrice(packPrices, selectedPack) {
+  const sixPack = packPrices.find(p => p.label === '6 pcs');
+  if (!sixPack) return selectedPack.price + 101;
+  const sixOriginal = sixPack.price + 101;
+  const qty = parseInt(selectedPack.label);
+  return sixOriginal * (qty / 6);
+}
+
 function VarietyTile({ product }) {
   const [selectedPack, setSelectedPack] = useState(product.packPrices[0]);
   const { addToCart } = useCart();
@@ -96,7 +104,7 @@ function VarietyTile({ product }) {
           <div>
             <span className="variety-tile-price">
               <span style={{ textDecoration: 'line-through', color: '#aaa', fontWeight: 400, fontSize: '0.95rem', marginRight: '0.3rem' }}>
-                ₹{(selectedPack.price + 101).toLocaleString('en-IN')}
+                ₹{strikePrice(product.packPrices, selectedPack).toLocaleString('en-IN')}
               </span>
               ₹{selectedPack.price.toLocaleString('en-IN')}
             </span>
