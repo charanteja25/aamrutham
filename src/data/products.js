@@ -23,7 +23,7 @@ export const products = [
     id: 'mettavalasa-peechu',
     name: 'Mettavalasa Peechu',
     telugu: 'మెట్టవలస పీచు',
-    meaning: 'The Fibrous King from the Hills',
+    meaning: 'The Pride of Bobbili',
     shortTag: 'Signature Variety · Bobbili Farms',
     heroTag: 'Signature Variety · Heritage',
     description:
