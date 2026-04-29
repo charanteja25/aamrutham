@@ -110,7 +110,12 @@ export default function ProductCard({ product, showDetails = true }) {
 
       <div className="product-card-footer">
         <div>
-          <div className="price">₹{selectedPack.price.toLocaleString('en-IN')}</div>
+          <div className="price">
+            <span style={{ textDecoration: 'line-through', color: '#aaa', fontWeight: 400, fontSize: '0.9rem', marginRight: '0.3rem' }}>
+              ₹{(selectedPack.price + 101).toLocaleString('en-IN')}
+            </span>
+            ₹{selectedPack.price.toLocaleString('en-IN')}
+          </div>
           <div className="price-note">
             {selectedPack.price < 500
               ? 'Delivery fee applicable for orders below ₹500'
