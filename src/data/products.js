@@ -124,7 +124,7 @@ export const products = [
     id: 'panduri-mavidi',
     name: 'Panduri Mavidi',
     telugu: 'పాండురి మావిడి',
-    meaning: 'The Village Heirloom',
+    meaning: 'The mango kings shared only with those they trusted.',
     shortTag: 'Signature Variety · Pithapuram',
     heroTag: 'Signature Variety · Heirloom · Aromatic',
     description:
