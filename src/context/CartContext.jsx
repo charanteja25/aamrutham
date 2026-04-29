@@ -209,6 +209,9 @@ export function CartProvider({ children }) {
     [items]
   );
 
+  const deliveryFee = total > 0 && total < 499 ? 100 : 0;
+  const grandTotal  = total + deliveryFee;
+
   const checkoutUrl = useMemo(() => {
     const summary = items
       .map((item) => `${item.name} x${item.qty} (${item.packLabel})`)
@@ -225,6 +228,8 @@ export function CartProvider({ children }) {
     items,
     count,
     total,
+    deliveryFee,
+    grandTotal,
     isOpen,
     setIsOpen,
     showAnimation,

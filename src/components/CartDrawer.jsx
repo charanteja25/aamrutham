@@ -47,7 +47,7 @@ function loadRazorpayScript() {
 
 export default function CartDrawer() {
   const navigate = useNavigate();
-  const { items, total, isOpen, setIsOpen, changeQty, removeItem, count } = useCart();
+  const { items, total, deliveryFee, grandTotal, isOpen, setIsOpen, changeQty, removeItem, count } = useCart();
   const { refreshInventory } = useInventory();
 
   // State for the active Razorpay order (set once we lock inventory)
@@ -133,7 +133,7 @@ export default function CartDrawer() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          amount: total,
+          amount: grandTotal,
           cartItems: items.map((i) => ({
             productId: i.id,
             packLabel: i.packLabel,
@@ -439,9 +439,27 @@ export default function CartDrawer() {
               </div>
             )}
 
+            {deliveryFee > 0 && (
+              <div className="basket-total-row" style={{ fontSize: '0.88rem', opacity: 0.75 }}>
+                <span>Subtotal</span>
+                <span>₹{total.toLocaleString("en-IN")}</span>
+              </div>
+            )}
+            {deliveryFee > 0 && (
+              <div className="basket-total-row" style={{ fontSize: '0.88rem', color: '#c0392b' }}>
+                <span>Delivery fee <span style={{ fontSize: '0.75rem', fontWeight: 400 }}>(orders below ₹499)</span></span>
+                <span>₹{deliveryFee}</span>
+              </div>
+            )}
+            {deliveryFee === 0 && (
+              <div className="basket-total-row" style={{ fontSize: '0.8rem', color: '#2d7a3a', opacity: 0.8 }}>
+                <span>Delivery</span>
+                <span>Free ✓</span>
+              </div>
+            )}
             <div className="basket-total-row">
               <span>Total</span>
-              <strong>₹{total.toLocaleString("en-IN")}</strong>
+              <strong>₹{grandTotal.toLocaleString("en-IN")}</strong>
             </div>
 
             {step === 'cart' ? (
@@ -460,7 +478,7 @@ export default function CartDrawer() {
                 >
                   {checkoutLoading
                     ? "Reserving…"
-                    : `Pay Now · ₹${total.toLocaleString("en-IN")}`}
+                    : `Pay Now · ₹${grandTotal.toLocaleString("en-IN")}`}
                 </button>
                 <button
                   type="button"
