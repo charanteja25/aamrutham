@@ -16,7 +16,7 @@ function packWeight(avgWeightGrams, label) {
 }
 
 function VarietyTile({ product }) {
-  const [selectedPack, setSelectedPack] = useState(product.packPrices.find(p => p.label === '12 pcs') ?? product.packPrices[0]);
+  const [selectedPack, setSelectedPack] = useState(product.packPrices[0]);
   const { addToCart } = useCart();
   const { getAvailable } = useInventory();
 
@@ -75,10 +75,11 @@ function VarietyTile({ product }) {
             return (
               <button
                 key={p.label}
-                className={`variety-tile-pack-btn${selectedPack.label === p.label ? ' active' : ''}${packOut ? ' out' : ''}`}
+                className={`variety-tile-pack-btn${selectedPack.label === p.label ? ' active' : ''}${packOut ? ' out' : ''}${p.label === '12 pcs' ? ' most-bought' : ''}`}
                 onClick={() => !packOut && setSelectedPack(p)}
                 title={packOut ? 'Out of stock' : undefined}
               >
+                {p.label === '12 pcs' && <span className="pack-most-bought-badge">Most Bought</span>}
                 {p.label}
                 {packWeight(product.avgWeightGrams, p.label) && (
                   <span style={{ color: 'var(--mango-dark)', fontWeight: 700, fontSize: '0.78rem' }}>
