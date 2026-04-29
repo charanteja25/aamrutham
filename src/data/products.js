@@ -24,6 +24,7 @@ export const products = [
     name: 'Mettavalasa Peechu',
     telugu: 'మెట్టవలస పీచు',
     meaning: 'The Pride of Bobbili',
+    eatType: ['Juicy', 'High Fibre'],
     shortTag: 'Signature Variety · Bobbili Farms',
     heroTag: 'Signature Variety · Heritage',
     description:
@@ -74,6 +75,7 @@ export const products = [
     name: 'Bobbili Peechu',
     telugu: 'బొబ్బిలి పీచు',
     meaning: 'The Pride of Bobbili',
+    eatType: ['Juicy', 'High Fibre'],
     shortTag: 'Heritage Variety · Same Land, Generations',
     heroTag: 'Heritage Variety · Fine-Fibrous',
     description:
@@ -125,6 +127,7 @@ export const products = [
     name: 'Panduri Mavidi',
     telugu: 'పాండురి మావిడి',
     meaning: 'The mango kings shared only with those they trusted.',
+    eatType: ['Juicy', 'Sweetest'],
     shortTag: 'Signature Variety · Pithapuram',
     heroTag: 'Signature Variety · Heirloom · Aromatic',
     description:
@@ -174,6 +177,7 @@ export const products = [
     name: 'Kothapalli Kobbari',
     telugu: 'కొత్తపల్లి కొబ్బరి',
     meaning: 'The Coconut Mango',
+    eatType: ['Juicy', 'High Fibre'],
     shortTag: 'Exotic · Nearly Unknown Outside Vizianagaram',
     heroTag: 'Exotic · Full of Fibre · Rare',
     description:
@@ -225,6 +229,7 @@ export const products = [
     name: 'Imam Pasand',
     telugu: 'ఇమామ్ పసంద్',
     meaning: 'Favourite of the Imam · Also known as Himayat',
+    eatType: ['Cut Variety'],
     shortTag: "Royal · The Deccan's Finest",
     heroTag: 'Royal · Dessert Mango · Cut Variety',
     description:
@@ -276,6 +281,7 @@ export const products = [
     name: 'Suvarnarekha',
     telugu: 'సువర్ణరేఖ',
     meaning: 'The Golden Streak',
+    eatType: ['Cut & Juicy'],
     shortTag: 'Visakhapatnam',
     heroTag: 'Heritage · Fiberless · Aromatic',
     description:
@@ -325,6 +331,7 @@ export const products = [
     name: 'Banganapalli',
     telugu: 'బంగినపల్లి',
     meaning: 'The People\'s Mango',
+    eatType: ['Cut Variety', 'GI Tagged'],
     shortTag: 'Kurnool, Andhra Pradesh',
     heroTag: 'GI-Tagged · The People\'s Mango',
     description:
@@ -374,6 +381,7 @@ export const products = [
     name: 'Chinna Rasalu',
     telugu: 'చిన్న రసాలు',
     meaning: 'The Little Nectar',
+    eatType: ['Juicy'],
     shortTag: 'Nuzvid',
     heroTag: 'Heritage · Small · Intensely Sweet',
     description:
@@ -423,6 +431,7 @@ export const products = [
     name: 'Pedda Rasalu',
     telugu: 'పెద్ద రసాలు',
     meaning: 'The Grand Nectar',
+    eatType: ['Juicy'],
     shortTag: 'Nuzvid',
     heroTag: 'Heritage · Full-Bodied · Rich',
     description:
