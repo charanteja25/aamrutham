@@ -86,7 +86,7 @@ export default function BulkEnquiryPage() {
       <section className="bulk-hero">
         <div className="bulk-hero-dots" aria-hidden="true" />
         <div className="container bulk-hero-inner">
-          <span className="bulk-eyebrow">✦ For Offices · Events · Gifting · Resellers</span>
+          <span className="bulk-eyebrow">✦ For Offices · Events · Gifting</span>
           <h1 className="bulk-title">Bulk <em>Mango Enquiry</em></h1>
           <p className="bulk-sub">
             Ordering for a large family, corporate gifting, or an event?
