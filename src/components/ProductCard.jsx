@@ -11,6 +11,15 @@ function stockBadge(available) {
   return null;                                      // plenty — no badge needed
 }
 
+function packWeight(avgWeightGrams, label) {
+  const qty = parseInt(label);
+  if (!avgWeightGrams || !qty) return null;
+  const [min, max] = avgWeightGrams;
+  const minKg = (qty * min / 1000).toFixed(1);
+  const maxKg = (qty * max / 1000).toFixed(1);
+  return min === max ? `~${minKg} kg` : `~${minKg}–${maxKg} kg`;
+}
+
 export default function ProductCard({ product, showDetails = true }) {
   const [selectedPack, setSelectedPack] = useState(product.packPrices[0]);
   const [imgFailed, setImgFailed] = useState(false);
@@ -84,12 +93,25 @@ export default function ProductCard({ product, showDetails = true }) {
                   className={`pack-btn ${selectedPack.label === pack.label ? 'selected' : ''} ${packOut ? 'pack-btn--out' : ''}`}
                   onClick={() => !packOut && setSelectedPack(pack)}
                   title={packOut ? 'Out of stock' : undefined}
+                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}
                 >
-                  {pack.label}
-                  {packOut && ' ✕'}
+                  <span>{pack.label}{packOut ? ' ✕' : ''}</span>
+                  {packWeight(product.avgWeightGrams, pack.label) && (
+                    <span style={{ fontSize: '0.68rem', fontWeight: 400, opacity: 0.65 }}>
+                      {packWeight(product.avgWeightGrams, pack.label)}
+                    </span>
+                  )}
                 </button>
               );
             })}
+          </div>
+        )}
+
+        {product.avgWeightGrams && (
+          <div style={{ fontSize: '0.78rem', opacity: 0.5, marginTop: '0.25rem' }}>
+            {product.avgWeightGrams[0] === product.avgWeightGrams[1]
+              ? `Each mango: ~${product.avgWeightGrams[0]}g`
+              : `Each mango: ~${product.avgWeightGrams[0]}–${product.avgWeightGrams[1]}g`}
           </div>
         )}
       </div>
@@ -97,6 +119,11 @@ export default function ProductCard({ product, showDetails = true }) {
       <div className="product-card-footer">
         <div>
           <div className="price">₹{selectedPack.price.toLocaleString('en-IN')}</div>
+          {packWeight(product.avgWeightGrams, selectedPack.label) && (
+            <div style={{ fontSize: '0.78rem', opacity: 0.55, marginBottom: '0.15rem' }}>
+              {packWeight(product.avgWeightGrams, selectedPack.label)} total weight
+            </div>
+          )}
           <div className="price-note">
             {selectedPack.price < 500
               ? 'Delivery fee applicable for orders below ₹500'
