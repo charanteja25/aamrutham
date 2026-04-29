@@ -34,8 +34,8 @@ export const products = [
     badges: ['Brix 20-24', 'Fibrous Pulp', 'May - June', 'Pesticide-Free', 'Bobbili Origin'],
     packPrices: [
       { label: '6 pcs', price: 599 },
-      { label: '12 pcs', price: 1199 },
-      { label: '18 pcs', price: 1799 }
+      { label: '12 pcs', price: 1100 },
+      { label: '18 pcs', price: 1600 }
     ],
     avgWeightGrams: [300, 350],
     category: 'premium',
@@ -86,8 +86,8 @@ export const products = [
     badges: ['Brix 22-25', 'Fine-Fibrous', 'May - June', 'Pesticide-Free', 'Bobbili Origin'],
     packPrices: [
       { label: '6 pcs', price: 499 },
-      { label: '12 pcs', price: 999 },
-      { label: '18 pcs', price: 1499 }
+      { label: '12 pcs', price: 950 },
+      { label: '18 pcs', price: 1400 }
     ],
     avgWeightGrams: [200, 250],
     category: 'premium',
@@ -137,8 +137,8 @@ export const products = [
     badges: ['Brix 23-28', 'Aromatic', 'Intensely Sweet', 'May - June', 'Pesticide-Free'],
     packPrices: [
       { label: '6 pcs', price: 599 },
-      { label: '12 pcs', price: 1149 },
-      { label: '18 pcs', price: 1699 }
+      { label: '12 pcs', price: 1100 },
+      { label: '18 pcs', price: 1600 }
     ],
     avgWeightGrams: [200, 200],
     category: 'premium',
@@ -190,8 +190,8 @@ export const products = [
     badges: ['Brix 21-25', 'Full of Fibre', 'June - July', 'Pesticide-Free'],
     packPrices: [
       { label: '6 pcs', price: 499 },
-      { label: '12 pcs', price: 949 },
-      { label: '18 pcs', price: 1399 }
+      { label: '12 pcs', price: 950 },
+      { label: '18 pcs', price: 1300 }
     ],
     avgWeightGrams: [200, 250],
     category: 'premium',
@@ -243,8 +243,8 @@ export const products = [
     badges: ['Brix 18-22', 'Fiberless · Creamy', 'June - July', 'Royal Variety'],
     packPrices: [
       { label: '6 pcs', price: 599 },
-      { label: '12 pcs', price: 1199 },
-      { label: '18 pcs', price: 1799 }
+      { label: '12 pcs', price: 1100 },
+      { label: '18 pcs', price: 1600 }
     ],
     avgWeightGrams: [350, 350],
     category: 'premium',
