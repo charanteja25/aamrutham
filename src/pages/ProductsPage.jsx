@@ -16,7 +16,7 @@ function packWeight(avgWeightGrams, label) {
 }
 
 function VarietyTile({ product }) {
-  const [selectedPack, setSelectedPack] = useState(product.packPrices[0]);
+  const [selectedPack, setSelectedPack] = useState(product.packPrices.find(p => p.label === '12 pcs') ?? product.packPrices[0]);
   const { addToCart } = useCart();
   const { getAvailable } = useInventory();
 

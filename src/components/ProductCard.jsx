@@ -22,7 +22,7 @@ function stockBadge(available) {
 }
 
 export default function ProductCard({ product, showDetails = true }) {
-  const [selectedPack, setSelectedPack] = useState(product.packPrices[0]);
+  const [selectedPack, setSelectedPack] = useState(product.packPrices.find(p => p.label === '12 pcs') ?? product.packPrices[0]);
   const [imgFailed, setImgFailed] = useState(false);
   const { addToCart } = useCart();
   const { getAvailable } = useInventory();
