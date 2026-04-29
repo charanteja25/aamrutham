@@ -66,12 +66,14 @@ export default function HomePage() {
               <span className="home-offer-icon">🥭</span>
               <h3>Single Varieties</h3>
               <p>Pick a specific variety by the box. Banganapalli, Imam Pasand, Kothapalli Kobbari and more.</p>
+              <span className="home-offer-from">From ₹349</span>
               <span className="home-offer-cta">Browse Mangoes →</span>
             </Link>
             <Link to="/signature-box" className="home-offer-card featured">
               <span className="home-offer-icon">✦</span>
               <h3>Signature Box</h3>
               <p>Four prized heritage varieties in one curated gift-worthy box. Perfect as a gift or an introduction.</p>
+              <span className="home-offer-from" style={{ color: 'rgba(255,255,255,0.75)' }}>From ₹1,999</span>
               <span className="home-offer-cta">View Signature Box →</span>
             </Link>
             {isSeasonPassActive() ? (
@@ -80,6 +82,7 @@ export default function HomePage() {
                 <span className="home-offer-icon">⚡</span>
                 <h3>Mango as a Service</h3>
                 <p>A fresh drop of rare varieties delivered every week for four weeks. One payment. Four drops.</p>
+                <span className="home-offer-from" style={{ color: 'rgba(245,210,150,0.8)' }}>From ₹3,000</span>
                 <span className="home-offer-cta">Get Season Pass →</span>
               </Link>
             ) : (
