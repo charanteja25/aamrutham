@@ -16,7 +16,7 @@ export default function HomePage() {
             </h1>
             <p className="hero-pronounce">ఆమృతం (aam·rutham) — Crafted by Nature, Reserved for You</p>
             <p className="hero-text">
-              Aam + Amrutham. The finest mango varieties, handpicked fresh from our farm in Bobbili and brought to Hyderabad with care.
+              <em>Aam</em> means mango. <em>Amrutham</em> means nectar. We believe that eating the right mango — naturally farmed, tree-ripened, picked at its peak — should feel exactly like that. The finest heritage varieties, handpicked fresh from our farm in Bobbili and brought to Hyderabad with care.
             </p>
             <div className="hero-actions">
               <Link className="btn btn-gold" to="/products">Order Now →</Link>
