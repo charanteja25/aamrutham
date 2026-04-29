@@ -57,6 +57,7 @@ export default function SignatureBoxPage() {
       {/* What's Inside */}
       <section className="sigbox-contents container">
         <span className="sigbox-contents-label">✦ What's Inside the Box</span>
+        <p className="sigbox-contents-tagline">Our top 5 varieties — the finest fruits growing on our farm in Bobbili, brought together in one box.</p>
         <div className="sigbox-variety-grid">
           {VARIETIES.map(v => (
             <div className="sigbox-variety" key={v.name}>
