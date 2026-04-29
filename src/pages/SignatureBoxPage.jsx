@@ -8,10 +8,11 @@ const PACKS = [
 ];
 
 const VARIETIES = [
-  { name: 'Kothapalli Kobbari', note: 'The Coconut Mango — fiberless, with a faint coconut undertone' },
-  { name: 'Panduri Teepi Mamidi', note: 'The Village Heirloom — buttery, aromatic, nearly unknown outside Panduri' },
-  { name: 'Bobbili Peechu', note: 'The Pride of Bobbili — fibrous, intensely sweet, best squeezed whole' },
-  { name: 'Imam Pasand', note: 'The Royal Mango — saffron-hued, zero-fibre, creamy, Deccan royalty' },
+  { name: 'Mettavalasa Peechu', note: 'The Pride of Bobbili — silky fibrous, floral sweetness, a childhood ritual', img: '/assets/varieties/mettavalasa-peechu.jpg' },
+  { name: 'Kothapalli Kobbari',  note: 'The Coconut Mango — fiberless, with a faint coconut undertone',           img: '/assets/varieties/kothapalli-kobbari.jpg' },
+  { name: 'Panduri Teepi Mamidi',note: 'The Royal Heirloom — buttery, aromatic, nearly unknown outside Panduri',  img: '/assets/varieties/panduri-mavidi.jpg' },
+  { name: 'Bobbili Peechu',      note: 'The Pride of Bobbili — fibrous, intensely sweet, best squeezed whole',    img: '/assets/varieties/bobbili-peechu.jpg' },
+  { name: 'Imam Pasand',         note: 'The Royal Mango — saffron-hued, zero-fibre, creamy, Deccan royalty',      img: '/assets/varieties/imam-pasand.jpg' },
 ];
 
 const SIGBOX_PRODUCT = {
@@ -47,7 +48,7 @@ export default function SignatureBoxPage() {
           <span className="sigbox-eyebrow">✦ Gift Edition · Summer 2026 · Limited Availability</span>
           <h1 className="sigbox-title">Aamrutham<br /><em>Signature Box</em></h1>
           <p className="sigbox-sub">
-            Four of our most prized heritage varieties, curated into one gift-worthy box.
+            Five of our most prized heritage varieties, curated into one gift-worthy box.
             Each mango tells a story centuries in the making. The perfect introduction to Bobbili's finest.
           </p>
         </div>
@@ -59,7 +60,10 @@ export default function SignatureBoxPage() {
         <div className="sigbox-variety-grid">
           {VARIETIES.map(v => (
             <div className="sigbox-variety" key={v.name}>
-              <span className="sigbox-variety-icon">🥭</span>
+              <div className="sigbox-variety-img-wrap">
+                <img src={v.img} alt={v.name} className="sigbox-variety-img" onError={e => { e.currentTarget.style.display = 'none'; }} />
+                <div className="sigbox-variety-img-overlay" />
+              </div>
               <div className="sigbox-variety-name">{v.name}</div>
               <div className="sigbox-variety-note">{v.note}</div>
             </div>
