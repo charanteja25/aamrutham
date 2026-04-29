@@ -71,7 +71,7 @@ function VarietyTile({ product }) {
               >
                 {p.label}
                 {packWeight(product.avgWeightGrams, p.label) && (
-                  <span style={{ opacity: 0.65, fontWeight: 400 }}>
+                  <span style={{ color: 'var(--mango-dark)', fontWeight: 700, fontSize: '0.78rem' }}>
                     {' '}({packWeight(product.avgWeightGrams, p.label)})
                   </span>
                 )}
