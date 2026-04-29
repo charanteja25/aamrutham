@@ -3817,6 +3817,7 @@ h1, h2, h3 { font-weight: 400; }
   text-transform: uppercase; padding: 0.22rem 0.65rem;
   border-radius: 50px; border: 1px solid transparent;
 }
+.variety-eat-tag--brix          { background: #fef9e7; color: #7a5a00; border-color: #f5d97a; font-weight: 800; }
 .variety-eat-tag--juicy         { background: #e8f4fd; color: #1565a8; border-color: #b3d4f0; }
 .variety-eat-tag--high-fibre    { background: #eaf3de; color: #1F3A1D; border-color: #b8d9a8; }
 .variety-eat-tag--cut-variety   { background: #fff3e0; color: #8a4a00; border-color: #f5c97a; }

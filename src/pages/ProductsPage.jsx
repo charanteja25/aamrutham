@@ -54,13 +54,16 @@ function VarietyTile({ product }) {
       <div className="variety-tile-body">
         <Link to={`/products/${product.id}`} className="variety-tile-name">{product.name}</Link>
         <div className="variety-tile-telugu">{product.telugu} · {product.meaning}</div>
-        {product.eatType && (
-          <div className="variety-tile-eat-tags">
-            {product.eatType.map(tag => (
-              <span key={tag} className={`variety-eat-tag variety-eat-tag--${tag.toLowerCase().replace(/[^a-z]/g, '-')}`}>{tag}</span>
-            ))}
-          </div>
-        )}
+        <div className="variety-tile-eat-tags">
+          {product.badges?.find(b => b.startsWith('Brix')) && (
+            <span className="variety-eat-tag variety-eat-tag--brix">
+              🍬 {product.badges.find(b => b.startsWith('Brix'))}
+            </span>
+          )}
+          {product.eatType?.map(tag => (
+            <span key={tag} className={`variety-eat-tag variety-eat-tag--${tag.toLowerCase().replace(/[^a-z]/g, '-')}`}>{tag}</span>
+          ))}
+        </div>
         <p className="variety-tile-intro">{product.description}</p>
         <Link to={`/products/${product.id}`} className="variety-tile-more">View more for details →</Link>
       </div>
