@@ -3392,6 +3392,78 @@ input {
   .vals-wide-right { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
 }
 
+/* ── Values page — mobile accordion layout ── */
+.vals-mobile-list  { display: none; padding: 2rem 0 1rem; }
+.vals-desktop-layout { display: block; }
+
+@media (max-width: 900px) {
+  .vals-mobile-list    { display: block; }
+  .vals-desktop-layout { display: none; }
+  .vals-hero { padding: 4rem 1.25rem 2.5rem; }
+  .vals-sub  { font-size: 0.95rem; }
+  .vals-closing { padding: 2.5rem 1.25rem 1.5rem; }
+  .vals-cta { padding: 3rem 1.25rem; }
+}
+
+.vals-accordion {
+  border: 1px solid #e8d9c4; border-radius: 14px;
+  background: white; margin-bottom: 0.65rem; overflow: hidden;
+}
+.vals-accordion--featured {
+  background: linear-gradient(135deg, #f1fdf4 0%, #eaf3de 100%);
+  border-color: #b8d9a8;
+}
+.vals-accordion-header {
+  width: 100%; background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.9rem 1rem; text-align: left; flex-wrap: wrap;
+}
+.vals-accordion-header:hover { background: rgba(0,0,0,0.02); }
+.vals-accordion-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; font-weight: 300; color: var(--leaf); opacity: 0.45;
+  flex-shrink: 0; width: 1.6rem;
+}
+.vals-accordion-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; color: #1C1208; font-style: italic; flex: 1;
+  line-height: 1.3;
+}
+.vals-accordion-tag {
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--leaf);
+  background: #eaf3de; padding: 0.2rem 0.55rem; border-radius: 50px;
+  flex-basis: 100%; margin-left: 2.2rem;
+}
+.vals-accordion-chevron {
+  font-size: 1.2rem; color: var(--mango-dark); font-weight: 700;
+  transition: transform 0.2s; display: inline-block;
+  transform: rotate(90deg); flex-shrink: 0;
+}
+.vals-accordion-chevron.open { transform: rotate(270deg); }
+.vals-accordion-body {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.2s ease;
+  padding: 0 1rem;
+}
+.vals-accordion-body.open { max-height: 600px; padding: 0 1rem 1rem; }
+.vals-accordion-desc {
+  font-size: 0.88rem; color: #5a3e2b; line-height: 1.8; margin: 0 0 0.85rem;
+}
+.vals-accordion-bullets {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 0.4rem;
+  border-top: 1px dashed #e6d4a8; padding-top: 0.75rem;
+}
+.vals-accordion-bullets li {
+  font-size: 0.85rem; color: #5a3e2b;
+  padding-left: 1.1rem; position: relative; line-height: 1.5;
+}
+.vals-accordion-bullets li::before {
+  content: '✦'; position: absolute; left: 0; top: 1px;
+  color: var(--mango); font-size: 0.65rem;
+}
+
 /* ── Variety tiles — no image, gradient bg ── */
 .variety-tile {
   position: relative;
