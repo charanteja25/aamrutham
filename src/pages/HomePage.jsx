@@ -75,7 +75,8 @@ export default function HomePage() {
               <span className="home-offer-cta">View Signature Box →</span>
             </Link>
             {isSeasonPassActive() ? (
-              <Link to="/maas" className="home-offer-card seasonpass">
+              <Link to="/maas" className="home-offer-card seasonpass seasonpass--best-value">
+                <span className="home-offer-best-value-tag">⚡ Best Value</span>
                 <span className="home-offer-icon">⚡</span>
                 <h3>Mango as a Service</h3>
                 <p>A fresh drop of rare varieties delivered every week for four weeks. One payment. Four drops.</p>
