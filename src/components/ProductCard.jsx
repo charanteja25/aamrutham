@@ -10,7 +10,7 @@ function packWeight(avgWeightGrams, label) {
   const [min, max] = avgWeightGrams;
   const minKg = (qty * min / 1000).toFixed(1);
   const maxKg = (qty * max / 1000).toFixed(1);
-  return min === max ? `${minKg} kgs` : `${minKg}–${maxKg} kgs`;
+  return min === max ? `~${minKg} kgs` : `~${minKg}–${maxKg} kgs`;
 }
 
 /** Returns { label, className } for the availability indicator */

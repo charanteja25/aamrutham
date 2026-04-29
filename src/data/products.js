@@ -67,7 +67,8 @@ export const products = [
       ['Refrigerate after ripening', 'Once ripe, store at 8-12°C and consume within 3-4 days for best flavour.'],
       ['Room temperature ripening', 'If unripe on arrival, keep at room temperature for 1-2 days until fragrant.'],
       ['Avoid direct sunlight', 'Do not leave in direct sun or extreme heat because it accelerates over-ripening.'],
-      ['Handle with care', 'Keep in the box until ready to eat so the fruit does not bruise.']
+      ['Handle with care', 'Keep in the box until ready to eat so the fruit does not bruise.'],
+      ['Do not refrigerate before ripening', 'To enjoy the full flavour and texture, do not refrigerate until mangoes have ripened. Once ripe, store in the refrigerator to prolong shelf life.']
     ]
   },
   {
@@ -119,7 +120,8 @@ export const products = [
       ['Refrigerate after ripening', 'Once ripe, store at 8-12°C and consume within 3-5 days.'],
       ['Room temperature ripening', 'If unripe on arrival, keep at room temperature for 1-2 days until fragrant.'],
       ['Avoid direct sunlight', 'Direct heat speeds up ripening too aggressively and softens the fruit.'],
-      ['Handle with care', 'Keep in the provided box to prevent bruising.']
+      ['Handle with care', 'Keep in the provided box to prevent bruising.'],
+      ['Do not refrigerate before ripening', 'To enjoy the full flavour and texture, do not refrigerate until mangoes have ripened. Once ripe, store in the refrigerator to prolong shelf life.']
     ]
   },
   {
@@ -169,7 +171,8 @@ export const products = [
       ['Refrigerate after ripening', 'Store at 8-12°C once ripe and consume within 3-4 days.'],
       ['Room temperature ripening', 'Ripen at room temperature 1-2 days if firm on arrival.'],
       ['Avoid direct sunlight', 'High sugar content means it over-ripens quickly in heat.'],
-      ['Handle with care', 'Butter-soft flesh bruises easily — leave in box until ready.']
+      ['Handle with care', 'Butter-soft flesh bruises easily — leave in box until ready.'],
+      ['Do not refrigerate before ripening', 'To enjoy the full flavour and texture, do not refrigerate until mangoes have ripened. Once ripe, store in the refrigerator to prolong shelf life.']
     ]
   },
   {
@@ -221,7 +224,8 @@ export const products = [
       ['Refrigerate after ripening', 'Store at 8-12°C after ripening and consume within 3-5 days.'],
       ['Room temperature ripening', 'Let the fruit ripen naturally for 1-2 days if it reaches you firm.'],
       ['Avoid direct sunlight', 'Avoid harsh heat during ripening because it spoils texture.'],
-      ['Handle with care', 'The creamy flesh bruises easily, so keep it nested in the box.']
+      ['Handle with care', 'The creamy flesh bruises easily, so keep it nested in the box.'],
+      ['Do not refrigerate before ripening', 'To enjoy the full flavour and texture, do not refrigerate until mangoes have ripened. Once ripe, store in the refrigerator to prolong shelf life.']
     ]
   },
   {
@@ -273,7 +277,8 @@ export const products = [
       ['Refrigerate after ripening', 'Once ripe, store at 8-12°C and consume within 4-6 days.'],
       ['Room temperature ripening', 'Keep at room temperature for 2-3 days if the fruit arrives firm.'],
       ['Avoid direct sunlight', 'Heat affects the creamy texture quickly, so store in a shaded cool area.'],
-      ['Handle with care', 'Large fruit bruises easily and should stay cushioned in the box.']
+      ['Handle with care', 'Large fruit bruises easily and should stay cushioned in the box.'],
+      ['Do not refrigerate before ripening', 'To enjoy the full flavour and texture, do not refrigerate until mangoes have ripened. Once ripe, store in the refrigerator to prolong shelf life.']
     ]
   },
   {
@@ -323,7 +328,8 @@ export const products = [
       ['Refrigerate after ripening', 'Store at 8-12°C once ripe and consume within 3-4 days.'],
       ['Room temperature ripening', 'If firm on arrival, keep at room temperature for 1-2 days.'],
       ['Avoid direct sunlight', 'Heat accelerates over-ripening and dulls the citrus aroma.'],
-      ['Handle with care', 'Keep in the box until ready to eat to prevent bruising.']
+      ['Handle with care', 'Keep in the box until ready to eat to prevent bruising.'],
+      ['Do not refrigerate before ripening', 'To enjoy the full flavour and texture, do not refrigerate until mangoes have ripened. Once ripe, store in the refrigerator to prolong shelf life.']
     ]
   },
   {
@@ -373,7 +379,8 @@ export const products = [
       ['Refrigerate after ripening', 'Store at 8-12°C once ripe and consume within 4-5 days.'],
       ['Room temperature ripening', 'Keep at room temperature 1-2 days if firm on arrival.'],
       ['Avoid direct sunlight', 'Avoid heat to prevent over-ripening.'],
-      ['Handle with care', 'Large fruit bruises easily — keep in the box until ready.']
+      ['Handle with care', 'Large fruit bruises easily — keep in the box until ready.'],
+      ['Do not refrigerate before ripening', 'To enjoy the full flavour and texture, do not refrigerate until mangoes have ripened. Once ripe, store in the refrigerator to prolong shelf life.']
     ]
   },
   {
@@ -423,7 +430,8 @@ export const products = [
       ['Refrigerate after ripening', 'Store at 8-12°C once ripe and consume within 2-3 days.'],
       ['Room temperature ripening', 'Let ripen 1 day at room temperature if firm on arrival.'],
       ['Avoid direct sunlight', 'Small fruit ripens fast — keep cool and shaded.'],
-      ['Handle with care', 'Soft flesh bruises easily; keep in the box until ready.']
+      ['Handle with care', 'Soft flesh bruises easily; keep in the box until ready.'],
+      ['Do not refrigerate before ripening', 'To enjoy the full flavour and texture, do not refrigerate until mangoes have ripened. Once ripe, store in the refrigerator to prolong shelf life.']
     ]
   },
   {
@@ -472,7 +480,8 @@ export const products = [
       ['Refrigerate after ripening', 'Store at 8-12°C once ripe and consume within 3-4 days.'],
       ['Room temperature ripening', 'Ripen at room temperature 1-2 days if firm on arrival.'],
       ['Avoid direct sunlight', 'Keep shaded — direct heat degrades the flavour quickly.'],
-      ['Handle with care', 'Medium flesh — keep in box until ready to eat.']
+      ['Handle with care', 'Medium flesh — keep in box until ready to eat.'],
+      ['Do not refrigerate before ripening', 'To enjoy the full flavour and texture, do not refrigerate until mangoes have ripened. Once ripe, store in the refrigerator to prolong shelf life.']
     ]
   },
   {
@@ -514,7 +523,8 @@ export const products = [
       ['Refrigerate after ripening', 'Store at 8-12°C once ripe and consume within 3-4 days.'],
       ['Room temperature ripening', 'Keep at room temperature for 1-2 days until fragrant.'],
       ['Serve chilled', 'Serving slightly chilled makes it extra refreshing for kids!'],
-      ['Handle with care', 'Keep in the box until ready to eat to prevent bruising.']
+      ['Handle with care', 'Keep in the box until ready to eat to prevent bruising.'],
+      ['Do not refrigerate before ripening', 'To enjoy the full flavour and texture, do not refrigerate until mangoes have ripened. Once ripe, store in the refrigerator to prolong shelf life.']
     ]
   }
 ];
