@@ -6,6 +6,15 @@ import VarietyCarousel from '../components/VarietyCarousel';
 import { useCart } from '../context/CartContext';
 import { useInventory } from '../context/InventoryContext';
 
+function packWeight(avgWeightGrams, label) {
+  const qty = parseInt(label);
+  if (!avgWeightGrams || !qty) return null;
+  const [min, max] = avgWeightGrams;
+  const minKg = (qty * min / 1000).toFixed(1);
+  const maxKg = (qty * max / 1000).toFixed(1);
+  return min === max ? `${minKg} kgs` : `${minKg}–${maxKg} kgs`;
+}
+
 function VarietyTile({ product }) {
   const [selectedPack, setSelectedPack] = useState(product.packPrices[0]);
   const { addToCart } = useCart();
@@ -59,7 +68,15 @@ function VarietyTile({ product }) {
                 className={`variety-tile-pack-btn${selectedPack.label === p.label ? ' active' : ''}${packOut ? ' out' : ''}`}
                 onClick={() => !packOut && setSelectedPack(p)}
                 title={packOut ? 'Out of stock' : undefined}
-              >{p.label}{packOut && ' ✕'}</button>
+              >
+                {p.label}
+                {packWeight(product.avgWeightGrams, p.label) && (
+                  <span style={{ opacity: 0.65, fontWeight: 400 }}>
+                    {' '}({packWeight(product.avgWeightGrams, p.label)})
+                  </span>
+                )}
+                {packOut && ' ✕'}
+              </button>
             );
           })}
         </div>
