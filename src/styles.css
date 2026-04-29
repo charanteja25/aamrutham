@@ -328,6 +328,21 @@ input {
 }
 
 /* ── Mangoes Per Day Chart ── */
+/* ── Mangoes per day — chart + cards ── */
+.mpd-chart-scroll {
+  width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  margin-bottom: 1.25rem;
+}
+.mpd-figure2 {
+  margin: 0;
+  padding: 1.25rem 1rem 0.5rem;
+  background: linear-gradient(180deg, #fffdf7 0%, #fbf4e3 100%);
+  border: 1px solid #f0e4cc; border-radius: 18px;
+  box-shadow: 0 8px 28px rgba(44,24,16,0.08);
+  min-width: 520px;
+}
+.mpd-svg2 { width: 100%; height: auto; display: block; }
+
 /* ── Mangoes per day — card-based redesign ── */
 .mpd-wrap2 { width: 100%; }
 .mpd-head2 { text-align: center; margin-bottom: 1.5rem; }
@@ -341,8 +356,8 @@ input {
 
 .mpd-grid2 {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.75rem;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 0.6rem;
 }
 .mpd-card2 {
   border: 2px solid transparent;
@@ -394,14 +409,15 @@ input {
   text-align: center; margin-top: 1rem; line-height: 1.6;
 }
 
-@media (max-width: 700px) {
-  .mpd-grid2 { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
-  .mpd-card2 { padding: 0.85rem 0.65rem; }
-  .mpd-card2-num { font-size: 1.6rem; }
-  .mpd-mango { font-size: 0.95rem; }
+@media (max-width: 900px) {
+  .mpd-grid2 { grid-template-columns: repeat(4, 1fr); }
 }
-@media (max-width: 380px) {
-  .mpd-grid2 { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 600px) {
+  .mpd-grid2 { grid-template-columns: repeat(4, 1fr); gap: 0.45rem; }
+  .mpd-card2 { padding: 0.6rem 0.4rem; }
+  .mpd-card2-num { font-size: 1.3rem; }
+  .mpd-bar { gap: 1px; }
+  .mpd-bar span { font-size: 0.8rem !important; }
 }
 .story-farm-photo {
   width: 100%; height: 420px;
