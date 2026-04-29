@@ -23,7 +23,8 @@ export const products = [
     id: 'mettavalasa-peechu',
     name: 'Mettavalasa Peechu',
     telugu: 'మెట్టవలస పీచు',
-    meaning: 'The Fibrous King from the Hills',
+    meaning: 'The Pride of Bobbili',
+    eatType: ['Juicy', 'High Fibre'],
     shortTag: 'Signature Variety · Bobbili Farms',
     heroTag: 'Signature Variety · Heritage',
     description:
@@ -32,10 +33,11 @@ export const products = [
       'A mango meant to be sucked, not sliced — a true childhood ritual you never forget. Grown through natural farming and ripened without carbide or chemical shortcuts. Mettavalasa Peechu is exceptionally rich in dietary fibre — far more than most fruits — making it as nourishing as it is delicious. Its natural fibre supports digestion, sustains energy, and makes every bite genuinely good for you.',
     badges: ['Brix 20-24', 'Fibrous Pulp', 'May - June', 'Pesticide-Free', 'Bobbili Origin'],
     packPrices: [
-      { label: '6 pcs', price: 600 },
-      { label: '12 pcs', price: 1200 },
-      { label: '18 pcs', price: 1800 }
+      { label: '6 pcs', price: 599 },
+      { label: '12 pcs', price: 1199 },
+      { label: '18 pcs', price: 1799 }
     ],
+    avgWeightGrams: [300, 350],
     category: 'premium',
     accent: 'gold',
     gradient: 'linear-gradient(160deg, #fff3cd 0%, #ffd166 45%, #f4a835 100%)',
@@ -73,6 +75,7 @@ export const products = [
     name: 'Bobbili Peechu',
     telugu: 'బొబ్బిలి పీచు',
     meaning: 'The Pride of Bobbili',
+    eatType: ['Juicy', 'High Fibre'],
     shortTag: 'Heritage Variety · Same Land, Generations',
     heroTag: 'Heritage Variety · Fine-Fibrous',
     description:
@@ -81,10 +84,11 @@ export const products = [
       'Farmers call it the mango that tastes like memory. Best squeezed and sipped straight from the skin. Bobbili Peechu is one of the richest natural sources of dietary fibre among all fruits — its fine, thread-like fibres are not just texture, they are nourishment. Regular consumption supports healthy digestion and sustained energy in a way that most commercial fruit simply cannot match.',
     badges: ['Brix 19-23', 'Fine-Fibrous', 'May - June', 'Pesticide-Free', 'Bobbili Origin'],
     packPrices: [
-      { label: '6 pcs', price: 500 },
-      { label: '12 pcs', price: 1000 },
-      { label: '18 pcs', price: 1500 }
+      { label: '6 pcs', price: 499 },
+      { label: '12 pcs', price: 999 },
+      { label: '18 pcs', price: 1499 }
     ],
+    avgWeightGrams: [200, 250],
     category: 'premium',
     accent: 'leaf',
     gradient: 'linear-gradient(160deg, #fff8e1 0%, #ffcc80 50%, #ff8f00 100%)',
@@ -122,17 +126,19 @@ export const products = [
     id: 'panduri-mavidi',
     name: 'Panduri Mavidi',
     telugu: 'పాండురి మావిడి',
-    meaning: 'The Village Heirloom',
+    meaning: 'The mango kings shared only with those they trusted.',
+    eatType: ['Juicy', 'Sweetest'],
     shortTag: 'Signature Variety · Pithapuram',
     heroTag: 'Signature Variety · Heirloom · Aromatic',
     description:
       'Buttery, aromatic flesh with floral sweetness and a deep heirloom character.',
     badges: ['Brix 23-28', 'Aromatic', 'Intensely Sweet', 'May - June', 'Pesticide-Free'],
     packPrices: [
-      { label: '6 pcs', price: 600 },
-      { label: '12 pcs', price: 1150 },
-      { label: '18 pcs', price: 1700 }
+      { label: '6 pcs', price: 599 },
+      { label: '12 pcs', price: 1149 },
+      { label: '18 pcs', price: 1699 }
     ],
+    avgWeightGrams: [200, 200],
     category: 'premium',
     accent: 'gold',
     gradient: 'linear-gradient(160deg, #fff8e0 0%, #ffd979 55%, #eeaa2a 100%)',
@@ -171,6 +177,7 @@ export const products = [
     name: 'Kothapalli Kobbari',
     telugu: 'కొత్తపల్లి కొబ్బరి',
     meaning: 'The Coconut Mango',
+    eatType: ['Juicy', 'High Fibre'],
     shortTag: 'Exotic · Nearly Unknown Outside Vizianagaram',
     heroTag: 'Exotic · Full of Fibre · Rare',
     description:
@@ -179,10 +186,11 @@ export const products = [
       'Originating from Kothapalli village, this is one of the most unusual mangoes in the collection — an experience, not just a fruit. Kothapalli Kobbari is remarkably high in dietary fibre, setting it apart from most fruits. Its fibre-dense flesh supports digestion, aids gut health, and makes it one of the healthiest mangoes you can eat — a rare combination of extraordinary flavour and genuine nutritional benefit.',
     badges: ['Brix 21-25', 'Full of Fibre', 'June - July', 'Pesticide-Free'],
     packPrices: [
-      { label: '6 pcs', price: 500 },
-      { label: '12 pcs', price: 950 },
-      { label: '18 pcs', price: 1400 }
+      { label: '6 pcs', price: 499 },
+      { label: '12 pcs', price: 949 },
+      { label: '18 pcs', price: 1399 }
     ],
+    avgWeightGrams: [200, 250],
     category: 'premium',
     accent: 'gold',
     gradient: 'linear-gradient(160deg, #fff9e5 0%, #ffe082 50%, #ffc107 100%)',
@@ -221,6 +229,7 @@ export const products = [
     name: 'Imam Pasand',
     telugu: 'ఇమామ్ పసంద్',
     meaning: 'Favourite of the Imam · Also known as Himayat',
+    eatType: ['Cut Variety'],
     shortTag: "Royal · The Deccan's Finest",
     heroTag: 'Royal · Dessert Mango · Cut Variety',
     description:
@@ -229,10 +238,11 @@ export const products = [
       'Available for only a brief peak-season window, Imam Pasand is one of the most sought-after fruits in the collection.',
     badges: ['Brix 18-22', 'Fiberless · Creamy', 'June - July', 'Royal Variety'],
     packPrices: [
-      { label: '6 pcs', price: 600 },
-      { label: '12 pcs', price: 1200 },
-      { label: '18 pcs', price: 1800 }
+      { label: '6 pcs', price: 599 },
+      { label: '12 pcs', price: 1199 },
+      { label: '18 pcs', price: 1799 }
     ],
+    avgWeightGrams: [350, 350],
     category: 'premium',
     accent: 'leaf',
     gradient: 'linear-gradient(160deg, #fff0e0 0%, #ffab76 45%, #e07b39 100%)',
@@ -271,16 +281,18 @@ export const products = [
     name: 'Suvarnarekha',
     telugu: 'సువర్ణరేఖ',
     meaning: 'The Golden Streak',
+    eatType: ['Cut & Juicy'],
     shortTag: 'Visakhapatnam',
     heroTag: 'Heritage · Fiberless · Aromatic',
     description:
       'Fiberless, aromatic pulp with bright citrusy sweetness and a golden streak across the skin.',
     badges: ['Brix 18-21', 'Fiberless', 'May - June', 'Pesticide-Free'],
     packPrices: [
-      { label: '6 pcs', price: 350 },
-      { label: '12 pcs', price: 600 },
-      { label: '18 pcs', price: 900 }
+      { label: '6 pcs', price: 349 },
+      { label: '12 pcs', price: 599 },
+      { label: '18 pcs', price: 899 }
     ],
+    avgWeightGrams: [250, 280],
     category: 'more',
     accent: 'gold',
     gradient: 'linear-gradient(160deg, #fff4c7 0%, #ffd760 55%, #f0a82b 100%)',
@@ -319,16 +331,18 @@ export const products = [
     name: 'Banganapalli',
     telugu: 'బంగినపల్లి',
     meaning: 'The People\'s Mango',
+    eatType: ['Cut Variety', 'GI Tagged'],
     shortTag: 'Kurnool, Andhra Pradesh',
     heroTag: 'GI-Tagged · The People\'s Mango',
     description:
       'Large, smooth golden skin and fiberless flesh with mild honey sweetness and universal appeal.',
     badges: ['Brix 16-20', 'Fiberless', 'April - June', 'GI-Tagged'],
     packPrices: [
-      { label: '6 pcs', price: 500 },
-      { label: '12 pcs', price: 900 },
-      { label: '18 pcs', price: 1300 }
+      { label: '6 pcs', price: 499 },
+      { label: '12 pcs', price: 899 },
+      { label: '18 pcs', price: 1299 }
     ],
+    avgWeightGrams: [350, 350],
     category: 'more',
     accent: 'leaf',
     gradient: 'linear-gradient(160deg, #fff1cf 0%, #ffdd87 55%, #f5a623 100%)',
@@ -367,16 +381,18 @@ export const products = [
     name: 'Chinna Rasalu',
     telugu: 'చిన్న రసాలు',
     meaning: 'The Little Nectar',
+    eatType: ['Juicy'],
     shortTag: 'Nuzvid',
     heroTag: 'Heritage · Small · Intensely Sweet',
     description:
       'Small but intensely sweet with syrup-like pulp. A childhood favourite in many Telugu homes.',
     badges: ['Brix 22-26', 'Juicy', 'May - July', 'Pesticide-Free'],
     packPrices: [
-      { label: '6 pcs', price: 350 },
-      { label: '12 pcs', price: 600 },
-      { label: '18 pcs', price: 900 }
+      { label: '6 pcs', price: 349 },
+      { label: '12 pcs', price: 599 },
+      { label: '18 pcs', price: 899 }
     ],
+    avgWeightGrams: [200, 200],
     category: 'more',
     accent: 'gold',
     gradient: 'linear-gradient(160deg, #fff3db 0%, #ffc86d 55%, #eb8d23 100%)',
@@ -415,16 +431,18 @@ export const products = [
     name: 'Pedda Rasalu',
     telugu: 'పెద్ద రసాలు',
     meaning: 'The Grand Nectar',
+    eatType: ['Juicy'],
     shortTag: 'Nuzvid',
     heroTag: 'Heritage · Full-Bodied · Rich',
     description:
       'A larger, richer sibling to Chinna Rasalu with deeper amber pulp and lingering sweetness.',
     badges: ['Brix 20-24', 'Full-bodied', 'May - July', 'Pesticide-Free'],
     packPrices: [
-      { label: '6 pcs', price: 400 },
-      { label: '12 pcs', price: 750 },
-      { label: '18 pcs', price: 1150 }
+      { label: '6 pcs', price: 399 },
+      { label: '12 pcs', price: 749 },
+      { label: '18 pcs', price: 1149 }
     ],
+    avgWeightGrams: [300, 300],
     category: 'more',
     accent: 'leaf',
     gradient: 'linear-gradient(160deg, #fff0d2 0%, #ffbe62 55%, #de7e16 100%)',
@@ -470,9 +488,9 @@ export const products = [
       'We have handpicked the sweetest, most kid-friendly mangoes for your little ones. These are smaller in size, completely fiberless, and have just the right amount of sweetness for children ages 2-10. Perfect for lunchboxes, summer snacks, and happy little faces!',
     badges: ['Pack of 6', 'Ages 2-10', 'Fiberless', 'Kid-Friendly'],
     packPrices: [
-      { label: '6 pcs', price: 400 },
-      { label: '12 pcs', price: 750 },
-      { label: '18 pcs', price: 1100 }
+      { label: '6 pcs', price: 399 },
+      { label: '12 pcs', price: 749 },
+      { label: '18 pcs', price: 1099 }
     ],
     category: 'premium',
     accent: 'gold',

@@ -6,6 +6,15 @@ import VarietyCarousel from '../components/VarietyCarousel';
 import { useCart } from '../context/CartContext';
 import { useInventory } from '../context/InventoryContext';
 
+function packWeight(avgWeightGrams, label) {
+  const qty = parseInt(label);
+  if (!avgWeightGrams || !qty) return null;
+  const [min, max] = avgWeightGrams;
+  const minKg = (qty * min / 1000).toFixed(1);
+  const maxKg = (qty * max / 1000).toFixed(1);
+  return min === max ? `${minKg} kgs` : `${minKg}–${maxKg} kgs`;
+}
+
 function VarietyTile({ product }) {
   const [selectedPack, setSelectedPack] = useState(product.packPrices[0]);
   const { addToCart } = useCart();
@@ -45,6 +54,13 @@ function VarietyTile({ product }) {
       <div className="variety-tile-body">
         <Link to={`/products/${product.id}`} className="variety-tile-name">{product.name}</Link>
         <div className="variety-tile-telugu">{product.telugu} · {product.meaning}</div>
+        {product.eatType && (
+          <div className="variety-tile-eat-tags">
+            {product.eatType.map(tag => (
+              <span key={tag} className={`variety-eat-tag variety-eat-tag--${tag.toLowerCase().replace(/[^a-z]/g, '-')}`}>{tag}</span>
+            ))}
+          </div>
+        )}
         <p className="variety-tile-intro">{product.description}</p>
         <Link to={`/products/${product.id}`} className="variety-tile-more">View more for details →</Link>
       </div>
@@ -59,12 +75,28 @@ function VarietyTile({ product }) {
                 className={`variety-tile-pack-btn${selectedPack.label === p.label ? ' active' : ''}${packOut ? ' out' : ''}`}
                 onClick={() => !packOut && setSelectedPack(p)}
                 title={packOut ? 'Out of stock' : undefined}
-              >{p.label}{packOut && ' ✕'}</button>
+              >
+                {p.label}
+                {packWeight(product.avgWeightGrams, p.label) && (
+                  <span style={{ color: 'var(--mango-dark)', fontWeight: 700, fontSize: '0.78rem' }}>
+                    {' '}({packWeight(product.avgWeightGrams, p.label)})
+                  </span>
+                )}
+                {packOut && ' ✕'}
+              </button>
             );
           })}
         </div>
         <div className="variety-tile-footer-row">
-          <span className="variety-tile-price">₹{selectedPack.price.toLocaleString('en-IN')}</span>
+          <div>
+            <span className="variety-tile-price">
+              <span style={{ textDecoration: 'line-through', color: '#aaa', fontWeight: 400, fontSize: '0.95rem', marginRight: '0.3rem' }}>
+                ₹{(selectedPack.price + 101).toLocaleString('en-IN')}
+              </span>
+              ₹{selectedPack.price.toLocaleString('en-IN')}
+            </span>
+            <Link to="/pricing" className="pricing-link">ℹ️ Why this price?</Link>
+          </div>
           {isSoldOut ? (
             <span className="sold-out-chip">Coming Soon</span>
           ) : (
@@ -130,7 +162,7 @@ export default function ProductsPage() {
           <div data-aos="fade-up">
             <span className="section-eyebrow">✦ Farm to Doorstep</span>
             <h2 className="section-title">Our <em>Varieties</em></h2>
-            <p className="section-subtitle">Heritage varieties from Bobbili's finest estates. Tap any variety to explore and order.</p>
+            <p className="section-subtitle">Heritage varieties from our farm in Bobbili.</p>
           </div>
 
           <div className="variety-tiles-grid">

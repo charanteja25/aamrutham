@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+
 import { useCart } from '../context/CartContext';
 import { useInventory } from '../context/InventoryContext';
+
+function packWeight(avgWeightGrams, label) {
+  const qty = parseInt(label);
+  if (!avgWeightGrams || !qty) return null;
+  const [min, max] = avgWeightGrams;
+  const minKg = (qty * min / 1000).toFixed(1);
+  const maxKg = (qty * max / 1000).toFixed(1);
+  return min === max ? `${minKg} kgs` : `${minKg}–${maxKg} kgs`;
+}
 
 /** Returns { label, className } for the availability indicator */
 function stockBadge(available) {
@@ -86,6 +96,11 @@ export default function ProductCard({ product, showDetails = true }) {
                   title={packOut ? 'Out of stock' : undefined}
                 >
                   {pack.label}
+                  {packWeight(product.avgWeightGrams, pack.label) && (
+                    <span style={{ color: 'var(--mango-dark)', fontWeight: 700, fontSize: '0.78rem' }}>
+                      {' '}({packWeight(product.avgWeightGrams, pack.label)})
+                    </span>
+                  )}
                   {packOut && ' ✕'}
                 </button>
               );
@@ -96,7 +111,13 @@ export default function ProductCard({ product, showDetails = true }) {
 
       <div className="product-card-footer">
         <div>
-          <div className="price">₹{selectedPack.price.toLocaleString('en-IN')}</div>
+          <div className="price">
+            <span style={{ textDecoration: 'line-through', color: '#aaa', fontWeight: 400, fontSize: '0.9rem', marginRight: '0.3rem' }}>
+              ₹{(selectedPack.price + 101).toLocaleString('en-IN')}
+            </span>
+            ₹{selectedPack.price.toLocaleString('en-IN')}
+          </div>
+          <Link to="/pricing" className="pricing-link">ℹ️ Why this price?</Link>
           <div className="price-note">
             {selectedPack.price < 500
               ? 'Delivery fee applicable for orders below ₹500'

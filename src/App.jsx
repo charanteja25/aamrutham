@@ -18,6 +18,7 @@ import TeamPage from './pages/TeamPage';
 import MaasPage from './pages/MaasPage';
 import SignatureBoxPage from './pages/SignatureBoxPage';
 import ValuesPage from './pages/ValuesPage';
+import PricingPage from './pages/PricingPage';
 
 function ScrollManager() {
   const location = useLocation();
@@ -70,6 +71,7 @@ export default function App() {
           <Route path="/maas" element={<MaasPage />} />
           <Route path="/signature-box" element={<SignatureBoxPage />} />
           <Route path="/values" element={<ValuesPage />} />
+          <Route path="/pricing" element={<PricingPage />} />
         </Routes>
         <Footer />
         <WhatsAppFloat />

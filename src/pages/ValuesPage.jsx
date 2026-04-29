@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const VALUES = [
+  {
+    num: '01',
+    title: 'Truth over trends',
+    tag: 'Our founding belief',
+    body: 'We don\'t engineer our mangoes for appearance, size, or shelf life. They grow at their own pace — shaped by soil, season, and sunlight. What you receive is not a "product." It is food in its most honest form.',
+    bullets: ['No artificial ripening', 'No chemical shortcuts', 'No visual manipulation', 'One harvest a year'],
+    featured: true,
+  },
   {
     num: '02',
     title: 'Transparency you can see',
@@ -11,7 +19,7 @@ const VALUES = [
   {
     num: '03',
     title: 'Nature is our partner',
-    body: 'Desi cows, healthy soil, biodiversity — not add-ons. The foundation of everything we grow. Subhash Palekar Natural Farming is not a certification we chase. It\'s how we\'ve worked since 2014.',
+    body: 'Desi cows, healthy soil, biodiversity — not add-ons. The foundation of everything we grow. Subhash Palekar Natural Farming is not a certification we chase. It\'s how we\'ve worked since 2013.',
     bullets: ['Soil alive, not chemical-dependent', 'Trees nourished, not forced', 'Farms as ecosystems, not factories'],
   },
   {
@@ -20,13 +28,34 @@ const VALUES = [
     body: 'We grow varieties the world has nearly forgotten — not because they\'re exotic, but because they\'re extraordinary. GI-tagged, flavour-first, irreplaceable.',
     bullets: ['Panduri Mamidi & Imam Pasand', 'Kothapalli Kobbari & Bobbili Peechu', 'Mettavalasa Peechu'],
   },
+  {
+    num: '05',
+    title: 'Responsibility beyond the harvest',
+    body: 'Every choice we make impacts more than today\'s yield. We farm with the future in mind — regenerating the earth, preserving wisdom, and contributing to a greener world.',
+    bullets: ['🌱 Regenerating the earth through compost & mulch', '🌍 Zero chemicals, zero plastic, lower carbon footprint', '🤲 Preserving Bobbili\'s farming wisdom for future generations'],
+    tag: 'Eco-conscious farming',
+  },
 ];
 
-const RESPONSIBILITY = [
-  { icon: '🌱', title: 'Regenerating the earth', desc: 'We return organic matter back to the soil through compost, mulch, and natural inputs — building fertility season after season, not depleting it.' },
-  { icon: '🌍', title: 'Greener practices', desc: 'Zero synthetic chemicals, zero plastic in our process, and a farming footprint that actively reduces carbon rather than adding to it.' },
-  { icon: '🤲', title: 'Giving back to the community', desc: 'Rooted in Bobbili, Andhra Pradesh — we preserve local farming wisdom and support a system that future generations can rely on and be proud of.' },
-];
+function ValuesAccordion({ value, defaultOpen }) {
+  const [open, setOpen] = useState(defaultOpen || false);
+  return (
+    <div className={`vals-accordion${value.featured ? ' vals-accordion--featured' : ''}`}>
+      <button className="vals-accordion-header" onClick={() => setOpen(o => !o)} aria-expanded={open}>
+        <span className="vals-accordion-num">{value.num}</span>
+        <span className="vals-accordion-title">{value.title}</span>
+        {value.tag && <span className="vals-accordion-tag">{value.tag}</span>}
+        <span className={`vals-accordion-chevron${open ? ' open' : ''}`}>›</span>
+      </button>
+      <div className={`vals-accordion-body${open ? ' open' : ''}`}>
+        <p className="vals-accordion-desc">{value.body}</p>
+        <ul className="vals-accordion-bullets">
+          {value.bullets.map(b => <li key={b}>{b}</li>)}
+        </ul>
+      </div>
+    </div>
+  );
+}
 
 export default function ValuesPage() {
   return (
@@ -39,7 +68,14 @@ export default function ValuesPage() {
         </div>
       </section>
 
-      <section className="vals-wrap container">
+      {/* Mobile: accordion list. Desktop: original rich layout */}
+      <section className="vals-mobile-list container">
+        {VALUES.map((v, i) => (
+          <ValuesAccordion key={v.num} value={v} defaultOpen={i === 0} />
+        ))}
+      </section>
+
+      <section className="vals-desktop-layout vals-wrap container">
         {/* Featured value */}
         <div className="vals-featured">
           <div className="vals-feat-left">
@@ -60,7 +96,11 @@ export default function ValuesPage() {
 
         {/* Values grid */}
         <div className="vals-grid">
-          {VALUES.map(v => (
+          {[
+            { num: '02', title: 'Transparency you can see', body: 'Trust is built when nothing is hidden. We openly share our process — from what goes into the soil, to when and why we harvest.', bullets: ['Jeevamrutham & Panchagavyam — our only inputs', 'Desi cow-based living soil care', 'No claims we cannot show you'] },
+            { num: '03', title: 'Nature is our partner', body: 'Desi cows, healthy soil, biodiversity — not add-ons. The foundation of everything we grow. Subhash Palekar Natural Farming is not a certification we chase. It\'s how we\'ve worked since 2013.', bullets: ['Soil alive, not chemical-dependent', 'Trees nourished, not forced', 'Farms as ecosystems, not factories'] },
+            { num: '04', title: 'Heritage over hype', body: 'We grow varieties the world has nearly forgotten — not because they\'re exotic, but because they\'re extraordinary. GI-tagged, flavour-first, irreplaceable.', bullets: ['Panduri Mamidi & Imam Pasand', 'Kothapalli Kobbari & Bobbili Peechu', 'Mettavalasa Peechu'] },
+          ].map(v => (
             <div className="vals-card" key={v.num}>
               <span className="vals-card-num">{v.num}</span>
               <p className="vals-card-title">{v.title}</p>
@@ -80,7 +120,11 @@ export default function ValuesPage() {
               <span className="vals-green-tag">Eco-conscious farming</span>
             </div>
             <div className="vals-wide-right">
-              {RESPONSIBILITY.map(r => (
+              {[
+                { icon: '🌱', title: 'Regenerating the earth', desc: 'We return organic matter back to the soil through compost, mulch, and natural inputs — building fertility season after season, not depleting it.' },
+                { icon: '🌍', title: 'Greener practices', desc: 'Zero synthetic chemicals, zero plastic in our process, and a farming footprint that actively reduces carbon rather than adding to it.' },
+                { icon: '🤲', title: 'Giving back to the community', desc: 'Rooted in Bobbili, Andhra Pradesh — we preserve local farming wisdom and support a system that future generations can rely on and be proud of.' },
+              ].map(r => (
                 <div className="vals-resp-pillar" key={r.title}>
                   <span className="vals-resp-icon">{r.icon}</span>
                   <p className="vals-resp-title">{r.title}</p>
@@ -90,16 +134,16 @@ export default function ValuesPage() {
             </div>
           </div>
         </div>
-
-        {/* Closing */}
-        <div className="vals-closing">
-          <p className="vals-closing-text">Aamrutham is not just about mangoes.<br />It's about bringing back <em>food you can trust.</em></p>
-          <div className="vals-stamp">
-            <span className="vals-stamp-year">2014</span>
-            <span className="vals-stamp-label">Natural Farming</span>
-          </div>
-        </div>
       </section>
+
+      {/* Closing — shared */}
+      <div className="vals-closing container">
+        <p className="vals-closing-text">Aamrutham is not just about mangoes.<br />It's about bringing back <em>food you can trust.</em></p>
+        <div className="vals-stamp">
+          <span className="vals-stamp-year">2013</span>
+          <span className="vals-stamp-label">Natural Farming</span>
+        </div>
+      </div>
 
       <section className="vals-cta">
         <div className="container center narrow">

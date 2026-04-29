@@ -289,6 +289,7 @@ export default function MaasPage() {
                   <span style={{ textDecoration: 'line-through', opacity: 0.5, fontSize: '0.85em', marginRight: 8 }}>₹{strike.toLocaleString('en-IN')}</span>
                   ₹{price.toLocaleString('en-IN')}
                 </div>
+                <Link to="/pricing" className="pricing-link" style={{ marginBottom: '0.5rem', display: 'inline-flex' }}>ℹ️ Why this price?</Link>
                 <div className="maas-card-per">one-time · 4 weeks · free delivery</div>
                 <ul className="maas-features">
                   {pass.features.map(f => <li key={f}><span className="maas-check">✓</span> {f}</li>)}
@@ -333,6 +334,7 @@ export default function MaasPage() {
               <span style={{ textDecoration: 'line-through', opacity: 0.5, fontSize: '0.85em', marginRight: 8 }}>₹{PASS_PRICES.custom[customPack].strike.toLocaleString('en-IN')}</span>
               ₹{PASS_PRICES.custom[customPack].price.toLocaleString('en-IN')}
             </div>
+            <Link to="/pricing" className="pricing-link" style={{ marginBottom: '0.5rem', display: 'inline-flex' }}>ℹ️ Why this price?</Link>
             <div className="maas-card-per">one-time · 4 weeks · free delivery</div>
             {customSelected.length >= 1 ? (
               <a

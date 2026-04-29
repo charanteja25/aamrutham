@@ -86,6 +86,7 @@ export default function SignatureBoxPage() {
             </button>
           ))}
         </div>
+        <Link to="/pricing" className="pricing-link" style={{ marginTop: '0.5rem', display: 'inline-flex' }}>ℹ️ Why this price?</Link>
 
         {/* Gift Toggle */}
         <div className="sigbox-gift-row">
