@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import usePageMeta from '../hooks/usePageMeta';
 
 const ACCENTS = {
   ochre: { fill: '#C58A3E', soft: '#E9C98B', ink: '#5B3A15' },
@@ -297,6 +298,8 @@ function BioModal({ member, pillar, onClose, compact = false }) {
   useEffect(() => {
     const esc = (e) => e.key === 'Escape' && onClose();
     window.addEventListener('keydown', esc);
+  usePageMeta({ title: 'Our Circle — Aamrutham', description: 'Meet the full ecosystem behind Aamrutham — nature, architects, farmers, and founders who bring Bobbili finest mangoes to your table.' });
+
     return () => window.removeEventListener('keydown', esc);
   }, [onClose]);
 

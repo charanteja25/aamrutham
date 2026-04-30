@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import usePageMeta from '../hooks/usePageMeta';
 import { Link } from 'react-router-dom';
 
 const VALUES = [
@@ -39,6 +40,8 @@ const VALUES = [
 
 function ValuesAccordion({ value, defaultOpen }) {
   const [open, setOpen] = useState(defaultOpen || false);
+  usePageMeta({ title: 'Our Values — Aamrutham', description: 'The principles that guide how we grow, harvest, and deliver mangoes. Truth, transparency, and deep respect for nature.' });
+
   return (
     <div className={`vals-accordion${value.featured ? ' vals-accordion--featured' : ''}`}>
       <button className="vals-accordion-header" onClick={() => setOpen(o => !o)} aria-expanded={open}>

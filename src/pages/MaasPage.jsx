@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import usePageMeta from '../hooks/usePageMeta';
 import { Link } from 'react-router-dom';
 import { buildWhatsAppUrl } from '../data/products';
 import { API_BASE } from '../config.js';
@@ -156,6 +157,8 @@ export default function MaasPage() {
     e.preventDefault();
     setPopup({ pass, url: buildOrderUrl(pass.name, pack, varieties, price) });
   }
+  usePageMeta({ title: 'Mango as a Service — Aamrutham', description: 'A 4-week mango subscription delivering rare heritage varieties to your door every week. Summer 2026, Hyderabad only.' });
+
 
   return (
     <main style={{ background: '#050f02', color: 'white', minHeight: '100vh' }}>

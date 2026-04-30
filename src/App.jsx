@@ -21,6 +21,8 @@ import ValuesPage from './pages/ValuesPage';
 import PricingPage from './pages/PricingPage';
 import BulkEnquiryPage from './pages/BulkEnquiryPage';
 import MangoCalculatorPage from './pages/MangoCalculatorPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import TermsPage from './pages/TermsPage';
 
 function ScrollManager() {
   const location = useLocation();
@@ -76,6 +78,8 @@ export default function App() {
           <Route path="/pricing" element={<PricingPage />} />
           <Route path="/bulk-enquiry" element={<BulkEnquiryPage />} />
           <Route path="/mango-calculator" element={<MangoCalculatorPage />} />
+          <Route path="/privacy" element={<PrivacyPolicyPage />} />
+          <Route path="/terms" element={<TermsPage />} />
         </Routes>
         <Footer />
         <WhatsAppFloat />

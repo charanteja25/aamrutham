@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import usePageMeta from '../hooks/usePageMeta';
 import { Link } from 'react-router-dom';
 
 const COSTS = [
@@ -42,6 +43,8 @@ export default function PricingPage() {
   const [hardshipOpen, setHardshipOpen] = useState(false);
   const [heritageOpen, setHeritageOpen] = useState(false);
   const [convictionOpen, setConvictionOpen] = useState(false);
+  usePageMeta({ title: 'Why This Price — Aamrutham', description: 'Understanding what goes into the cost of naturally farmed, tree-ripened mangoes from our heritage groves in Bobbili.' });
+
 
   return (
     <main>

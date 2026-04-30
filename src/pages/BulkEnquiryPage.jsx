@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { products } from '../data/products';
+import usePageMeta from '../hooks/usePageMeta';
+import { products, buildWhatsAppUrl } from '../data/products';
 
 const VARIETIES = products
   .filter(p => p.category === 'premium' || p.category === 'more')
@@ -9,8 +10,6 @@ const VARIETIES = products
     telugu: p.telugu,
     tag: p.category === 'premium' ? 'Signature' : 'Exotic',
   }));
-
-const WA_NUMBER = '919177266273';
 
 export default function BulkEnquiryPage() {
   const [name,    setName]    = useState('');
@@ -69,11 +68,13 @@ export default function BulkEnquiryPage() {
       `Please get in touch with me. Thank you!`,
     ].filter(l => l !== null).join('\n');
 
-    const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+    const url = buildWhatsAppUrl(msg);
     window.open(url, '_blank', 'noopener,noreferrer');
   }
 
   const selectedCount = Object.keys(selected).length;
+  usePageMeta({ title: 'Bulk Mango Enquiry — Aamrutham', description: 'Ordering mangoes for your office, event, or large family? Send us a bulk enquiry and we will get back with pricing and availability.' });
+
 
   return (
     <main>

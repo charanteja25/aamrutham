@@ -147,7 +147,7 @@ export default function PaymentFailurePage() {
             Try Again
           </Link>
           <a
-            href="https://wa.me/919177266273?text=Hi%20Aamrutham!%20I%20tried%20to%20place%20an%20order%20but%20payment%20failed.%20Can%20you%20help%20me%20complete%20it%3F"
+            href="https://wa.me/917670826759?text=Hi%20Aamrutham!%20I%20tried%20to%20place%20an%20order%20but%20payment%20failed.%20Can%20you%20help%20me%20complete%20it%3F"
             className="btn btn-whatsapp-large"
             target="_blank"
             rel="noopener noreferrer"

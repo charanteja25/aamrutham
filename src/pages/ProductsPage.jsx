@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import usePageMeta from '../hooks/usePageMeta';
 import { Link } from 'react-router-dom';
 import { products, buildWhatsAppUrl } from '../data/products';
 import { isSeasonPassActive } from '../data/season';
@@ -159,6 +160,8 @@ function CalcStrip() {
   const [perDay, setPerDay]  = useState(1);
   const [days,   setDays]    = useState(3);
   const total = useMemo(() => Math.ceil(people * perDay * days), [people, perDay, days]);
+  usePageMeta({ title: 'Our Mangoes — Aamrutham', description: 'Browse our heritage mango varieties — Mettavalasa Peechu, Imam Pasand, Banganapalli and more. Naturally ripened, pesticide-free, from Bobbili.' });
+
 
   return (
     <div className="calc-strip">
