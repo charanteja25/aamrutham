@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import usePageMeta from '../hooks/usePageMeta';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
@@ -37,6 +38,8 @@ export default function SignatureBoxPage() {
     addToCart(SIGBOX_PRODUCT, pack.label, pack.price, null, false, meta);
     setIsOpen(true);
   }
+  usePageMeta({ title: 'Signature Box — Aamrutham', description: 'Five of our most prized heritage mango varieties in one curated gift-worthy box. The perfect introduction to Bobbili finest.' });
+
 
   return (
     <main style={{ background: '#0f0500', color: 'white', minHeight: '100vh' }}>

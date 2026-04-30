@@ -306,8 +306,8 @@ export default function CartDrawer() {
         {step === 'cart' && count >= 2 && isSeasonPassActive() &&
          !items.some((i) => (i.id || '').toLowerCase().includes('season-pass')) && (() => {
           // Personalised comparison — pick the Season Pass tier closest to the user's cart.
-          const PASS_12 = 2499;
-          const PASS_24 = 4499;
+          const PASS_12 = 3000;
+          const PASS_24 = 5600;
           const totalPieces = items.reduce((sum, it) => {
             const pcs = parseInt(it.packLabel, 10) || 0;
             return sum + pcs * it.qty;

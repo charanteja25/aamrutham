@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import usePageMeta from '../hooks/usePageMeta';
 import { Link, useParams } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import { HYD_PINCODES, getProductById, products } from '../data/products';
@@ -18,6 +19,10 @@ export default function ProductDetailPage() {
   const [factsTab, setFactsTab] = useState('profile');
   const [calcOpen, setCalcOpen] = useState(false);
   const { addToCart } = useCart();
+  usePageMeta({
+    title: product.name + ' — Aamrutham',
+    description: product.description,
+  });
   const { getAvailable } = useInventory();
 
   // Auto-select the first in-stock pack once inventory loads.

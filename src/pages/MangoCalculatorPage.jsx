@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import usePageMeta from '../hooks/usePageMeta';
 import { Link } from 'react-router-dom';
 
 const PACK_OPTIONS = [
@@ -43,6 +44,8 @@ export default function MangoCalculatorPage() {
     const packs18 = Math.ceil(total / 18);
     return { bulk: true, packs18, total };
   }, [total]);
+  usePageMeta({ title: 'Mango Calculator — Aamrutham', description: 'Not sure how many mangoes to order? Use our calculator to find the right pack size for your family.' });
+
 
   return (
     <main>

@@ -23,7 +23,12 @@ export default function Footer() {
           </Link>
         </div>
       </div>
-      <p className="footer-copy">© 2026 Aamrutham. Made with ❤️ for 🥭</p>
+      <div className="footer-legal-links">
+        <Link to="/privacy">Privacy Policy</Link>
+        <span className="footer-utility-divider">·</span>
+        <Link to="/terms">Terms of Service</Link>
+      </div>
+      <p className="footer-copy">© {new Date().getFullYear()} Aamrutham. Made with ❤️ for 🥭</p>
     </footer>
   );
 }

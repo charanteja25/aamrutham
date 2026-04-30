@@ -1,10 +1,13 @@
 import React from 'react';
+import usePageMeta from '../hooks/usePageMeta';
 import { Link } from 'react-router-dom';
 import { homeProcessSteps } from '../data/products';
 import { isSeasonPassActive, SEASON_OVER_YEAR } from '../data/season';
 import ProcessShowcase from '../components/ProcessShowcase';
 
 export default function HomePage() {
+  usePageMeta({ title: 'Aamrutham — Tree-Ripened Heritage Mangoes from Bobbili', description: 'Premium heritage mango varieties naturally grown in Bobbili, delivered fresh to Hyderabad. Pesticide-free, tree-ripened, handpicked.' });
+
   return (
     <main>
       <section className="hero-section">
