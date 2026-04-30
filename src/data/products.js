@@ -34,8 +34,8 @@ export const products = [
     badges: ['Brix 20-24', 'Fibrous Pulp', 'May - June', 'Pesticide-Free', 'Bobbili Origin'],
     packPrices: [
       { label: '6 pcs', price: 599 },
-      { label: '12 pcs', price: 1199 },
-      { label: '18 pcs', price: 1799 }
+      { label: '12 pcs', price: 1100 },
+      { label: '18 pcs', price: 1600 }
     ],
     avgWeightGrams: [300, 350],
     category: 'premium',
@@ -67,7 +67,8 @@ export const products = [
       ['Refrigerate after ripening', 'Once ripe, store at 8-12°C and consume within 3-4 days for best flavour.'],
       ['Room temperature ripening', 'If unripe on arrival, keep at room temperature for 1-2 days until fragrant.'],
       ['Avoid direct sunlight', 'Do not leave in direct sun or extreme heat because it accelerates over-ripening.'],
-      ['Handle with care', 'Keep in the box until ready to eat so the fruit does not bruise.']
+      ['Handle with care', 'Keep in the box until ready to eat so the fruit does not bruise.'],
+      ['Do not refrigerate before ripening', 'To enjoy the full flavour and texture, do not refrigerate until mangoes have ripened. Once ripe, store in the refrigerator to prolong shelf life.']
     ]
   },
   {
@@ -82,11 +83,11 @@ export const products = [
       'Born from the red laterite soil of Bobbili, grown on the same land for generations. Rich amber pulp and fine fibres — almost silk threads of flavour.',
     fullDescription:
       'Farmers call it the mango that tastes like memory. Best squeezed and sipped straight from the skin. Bobbili Peechu is one of the richest natural sources of dietary fibre among all fruits — its fine, thread-like fibres are not just texture, they are nourishment. Regular consumption supports healthy digestion and sustained energy in a way that most commercial fruit simply cannot match.',
-    badges: ['Brix 19-23', 'Fine-Fibrous', 'May - June', 'Pesticide-Free', 'Bobbili Origin'],
+    badges: ['Brix 22-25', 'Fine-Fibrous', 'May - June', 'Pesticide-Free', 'Bobbili Origin'],
     packPrices: [
       { label: '6 pcs', price: 499 },
-      { label: '12 pcs', price: 999 },
-      { label: '18 pcs', price: 1499 }
+      { label: '12 pcs', price: 950 },
+      { label: '18 pcs', price: 1400 }
     ],
     avgWeightGrams: [200, 250],
     category: 'premium',
@@ -119,7 +120,8 @@ export const products = [
       ['Refrigerate after ripening', 'Once ripe, store at 8-12°C and consume within 3-5 days.'],
       ['Room temperature ripening', 'If unripe on arrival, keep at room temperature for 1-2 days until fragrant.'],
       ['Avoid direct sunlight', 'Direct heat speeds up ripening too aggressively and softens the fruit.'],
-      ['Handle with care', 'Keep in the provided box to prevent bruising.']
+      ['Handle with care', 'Keep in the provided box to prevent bruising.'],
+      ['Do not refrigerate before ripening', 'To enjoy the full flavour and texture, do not refrigerate until mangoes have ripened. Once ripe, store in the refrigerator to prolong shelf life.']
     ]
   },
   {
@@ -135,8 +137,8 @@ export const products = [
     badges: ['Brix 23-28', 'Aromatic', 'Intensely Sweet', 'May - June', 'Pesticide-Free'],
     packPrices: [
       { label: '6 pcs', price: 599 },
-      { label: '12 pcs', price: 1149 },
-      { label: '18 pcs', price: 1699 }
+      { label: '12 pcs', price: 1100 },
+      { label: '18 pcs', price: 1600 }
     ],
     avgWeightGrams: [200, 200],
     category: 'premium',
@@ -169,7 +171,8 @@ export const products = [
       ['Refrigerate after ripening', 'Store at 8-12°C once ripe and consume within 3-4 days.'],
       ['Room temperature ripening', 'Ripen at room temperature 1-2 days if firm on arrival.'],
       ['Avoid direct sunlight', 'High sugar content means it over-ripens quickly in heat.'],
-      ['Handle with care', 'Butter-soft flesh bruises easily — leave in box until ready.']
+      ['Handle with care', 'Butter-soft flesh bruises easily — leave in box until ready.'],
+      ['Do not refrigerate before ripening', 'To enjoy the full flavour and texture, do not refrigerate until mangoes have ripened. Once ripe, store in the refrigerator to prolong shelf life.']
     ]
   },
   {
@@ -187,8 +190,8 @@ export const products = [
     badges: ['Brix 21-25', 'Full of Fibre', 'June - July', 'Pesticide-Free'],
     packPrices: [
       { label: '6 pcs', price: 499 },
-      { label: '12 pcs', price: 949 },
-      { label: '18 pcs', price: 1399 }
+      { label: '12 pcs', price: 950 },
+      { label: '18 pcs', price: 1300 }
     ],
     avgWeightGrams: [200, 250],
     category: 'premium',
@@ -221,7 +224,8 @@ export const products = [
       ['Refrigerate after ripening', 'Store at 8-12°C after ripening and consume within 3-5 days.'],
       ['Room temperature ripening', 'Let the fruit ripen naturally for 1-2 days if it reaches you firm.'],
       ['Avoid direct sunlight', 'Avoid harsh heat during ripening because it spoils texture.'],
-      ['Handle with care', 'The creamy flesh bruises easily, so keep it nested in the box.']
+      ['Handle with care', 'The creamy flesh bruises easily, so keep it nested in the box.'],
+      ['Do not refrigerate before ripening', 'To enjoy the full flavour and texture, do not refrigerate until mangoes have ripened. Once ripe, store in the refrigerator to prolong shelf life.']
     ]
   },
   {
@@ -239,8 +243,8 @@ export const products = [
     badges: ['Brix 18-22', 'Fiberless · Creamy', 'June - July', 'Royal Variety'],
     packPrices: [
       { label: '6 pcs', price: 599 },
-      { label: '12 pcs', price: 1199 },
-      { label: '18 pcs', price: 1799 }
+      { label: '12 pcs', price: 1100 },
+      { label: '18 pcs', price: 1600 }
     ],
     avgWeightGrams: [350, 350],
     category: 'premium',
@@ -273,7 +277,8 @@ export const products = [
       ['Refrigerate after ripening', 'Once ripe, store at 8-12°C and consume within 4-6 days.'],
       ['Room temperature ripening', 'Keep at room temperature for 2-3 days if the fruit arrives firm.'],
       ['Avoid direct sunlight', 'Heat affects the creamy texture quickly, so store in a shaded cool area.'],
-      ['Handle with care', 'Large fruit bruises easily and should stay cushioned in the box.']
+      ['Handle with care', 'Large fruit bruises easily and should stay cushioned in the box.'],
+      ['Do not refrigerate before ripening', 'To enjoy the full flavour and texture, do not refrigerate until mangoes have ripened. Once ripe, store in the refrigerator to prolong shelf life.']
     ]
   },
   {
@@ -323,7 +328,8 @@ export const products = [
       ['Refrigerate after ripening', 'Store at 8-12°C once ripe and consume within 3-4 days.'],
       ['Room temperature ripening', 'If firm on arrival, keep at room temperature for 1-2 days.'],
       ['Avoid direct sunlight', 'Heat accelerates over-ripening and dulls the citrus aroma.'],
-      ['Handle with care', 'Keep in the box until ready to eat to prevent bruising.']
+      ['Handle with care', 'Keep in the box until ready to eat to prevent bruising.'],
+      ['Do not refrigerate before ripening', 'To enjoy the full flavour and texture, do not refrigerate until mangoes have ripened. Once ripe, store in the refrigerator to prolong shelf life.']
     ]
   },
   {
@@ -373,7 +379,8 @@ export const products = [
       ['Refrigerate after ripening', 'Store at 8-12°C once ripe and consume within 4-5 days.'],
       ['Room temperature ripening', 'Keep at room temperature 1-2 days if firm on arrival.'],
       ['Avoid direct sunlight', 'Avoid heat to prevent over-ripening.'],
-      ['Handle with care', 'Large fruit bruises easily — keep in the box until ready.']
+      ['Handle with care', 'Large fruit bruises easily — keep in the box until ready.'],
+      ['Do not refrigerate before ripening', 'To enjoy the full flavour and texture, do not refrigerate until mangoes have ripened. Once ripe, store in the refrigerator to prolong shelf life.']
     ]
   },
   {
@@ -423,7 +430,8 @@ export const products = [
       ['Refrigerate after ripening', 'Store at 8-12°C once ripe and consume within 2-3 days.'],
       ['Room temperature ripening', 'Let ripen 1 day at room temperature if firm on arrival.'],
       ['Avoid direct sunlight', 'Small fruit ripens fast — keep cool and shaded.'],
-      ['Handle with care', 'Soft flesh bruises easily; keep in the box until ready.']
+      ['Handle with care', 'Soft flesh bruises easily; keep in the box until ready.'],
+      ['Do not refrigerate before ripening', 'To enjoy the full flavour and texture, do not refrigerate until mangoes have ripened. Once ripe, store in the refrigerator to prolong shelf life.']
     ]
   },
   {
@@ -472,7 +480,8 @@ export const products = [
       ['Refrigerate after ripening', 'Store at 8-12°C once ripe and consume within 3-4 days.'],
       ['Room temperature ripening', 'Ripen at room temperature 1-2 days if firm on arrival.'],
       ['Avoid direct sunlight', 'Keep shaded — direct heat degrades the flavour quickly.'],
-      ['Handle with care', 'Medium flesh — keep in box until ready to eat.']
+      ['Handle with care', 'Medium flesh — keep in box until ready to eat.'],
+      ['Do not refrigerate before ripening', 'To enjoy the full flavour and texture, do not refrigerate until mangoes have ripened. Once ripe, store in the refrigerator to prolong shelf life.']
     ]
   },
   {
@@ -514,7 +523,8 @@ export const products = [
       ['Refrigerate after ripening', 'Store at 8-12°C once ripe and consume within 3-4 days.'],
       ['Room temperature ripening', 'Keep at room temperature for 1-2 days until fragrant.'],
       ['Serve chilled', 'Serving slightly chilled makes it extra refreshing for kids!'],
-      ['Handle with care', 'Keep in the box until ready to eat to prevent bruising.']
+      ['Handle with care', 'Keep in the box until ready to eat to prevent bruising.'],
+      ['Do not refrigerate before ripening', 'To enjoy the full flavour and texture, do not refrigerate until mangoes have ripened. Once ripe, store in the refrigerator to prolong shelf life.']
     ]
   }
 ];

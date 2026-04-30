@@ -10,7 +10,25 @@ function packWeight(avgWeightGrams, label) {
   const [min, max] = avgWeightGrams;
   const minKg = (qty * min / 1000).toFixed(1);
   const maxKg = (qty * max / 1000).toFixed(1);
-  return min === max ? `${minKg} kgs` : `${minKg}–${maxKg} kgs`;
+  return min === max ? `~${minKg} kgs` : `~${minKg}–${maxKg} kgs`;
+}
+
+function strikePrice(packPrices, selectedPack) {
+  const sixPack = packPrices.find(p => p.label === '6 pcs');
+  if (!sixPack) return selectedPack.price + 101;
+  const sixOriginal = sixPack.price + 101;
+  const qty = parseInt(selectedPack.label);
+  return sixOriginal * (qty / 6);
+}
+
+function savePercent(packPrices, pack) {
+  const sixPack = packPrices.find(p => p.label === '6 pcs');
+  if (!sixPack || pack.label === '6 pcs') return null;
+  const basePerUnit = sixPack.price / 6;
+  const qty = parseInt(pack.label);
+  const packPerUnit = pack.price / qty;
+  const pct = Math.round((basePerUnit - packPerUnit) / basePerUnit * 100);
+  return pct > 0 ? pct : null;
 }
 
 /** Returns { label, className } for the availability indicator */
@@ -47,7 +65,7 @@ export default function ProductCard({ product, showDetails = true }) {
   const isSoldOut = available === 0;
 
   return (
-    <article className="product-card" data-accent={product.accent}>
+    <article className="product-card" data-accent={product.accent} data-product={product.id}>
       <div className="product-card-visual" style={{ background: product.gradient }}>
         {!imgFailed && (
           <img
@@ -58,7 +76,7 @@ export default function ProductCard({ product, showDetails = true }) {
           />
         )}
 
-        <div className="product-card-badge">{product.category === 'premium' ? 'Signature' : 'Variety'}</div>
+        <div className="product-card-badge">{product.category === 'premium' ? 'Signature' : 'Exotic'}</div>
 
         {badge && (
           <div className={`stock-badge ${badge.cls}`}>{badge.label}</div>
@@ -91,10 +109,12 @@ export default function ProductCard({ product, showDetails = true }) {
                 <button
                   key={pack.label}
                   type="button"
-                  className={`pack-btn ${selectedPack.label === pack.label ? 'selected' : ''} ${packOut ? 'pack-btn--out' : ''}`}
+                  className={`pack-btn ${selectedPack.label === pack.label ? 'selected' : ''} ${packOut ? 'pack-btn--out' : ''}${pack.label === '12 pcs' ? ' most-bought' : ''}`}
                   onClick={() => !packOut && setSelectedPack(pack)}
                   title={packOut ? 'Out of stock' : undefined}
                 >
+                  {pack.label === '12 pcs' && <span className="pack-most-bought-badge">Our Pick</span>}
+                  {pack.label === '18 pcs' && <span className="pack-most-bought-badge pack-best-value-badge">Best Value</span>}
                   {pack.label}
                   {packWeight(product.avgWeightGrams, pack.label) && (
                     <span style={{ color: 'var(--mango-dark)', fontWeight: 700, fontSize: '0.78rem' }}>
@@ -113,7 +133,7 @@ export default function ProductCard({ product, showDetails = true }) {
         <div>
           <div className="price">
             <span style={{ textDecoration: 'line-through', color: '#aaa', fontWeight: 400, fontSize: '0.9rem', marginRight: '0.3rem' }}>
-              ₹{(selectedPack.price + 101).toLocaleString('en-IN')}
+              ₹{strikePrice(product.packPrices, selectedPack).toLocaleString('en-IN')}
             </span>
             ₹{selectedPack.price.toLocaleString('en-IN')}
           </div>

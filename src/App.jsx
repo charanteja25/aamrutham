@@ -19,6 +19,7 @@ import MaasPage from './pages/MaasPage';
 import SignatureBoxPage from './pages/SignatureBoxPage';
 import ValuesPage from './pages/ValuesPage';
 import PricingPage from './pages/PricingPage';
+import BulkEnquiryPage from './pages/BulkEnquiryPage';
 
 function ScrollManager() {
   const location = useLocation();
@@ -72,6 +73,7 @@ export default function App() {
           <Route path="/signature-box" element={<SignatureBoxPage />} />
           <Route path="/values" element={<ValuesPage />} />
           <Route path="/pricing" element={<PricingPage />} />
+          <Route path="/bulk-enquiry" element={<BulkEnquiryPage />} />
         </Routes>
         <Footer />
         <WhatsAppFloat />

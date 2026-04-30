@@ -12,7 +12,25 @@ function packWeight(avgWeightGrams, label) {
   const [min, max] = avgWeightGrams;
   const minKg = (qty * min / 1000).toFixed(1);
   const maxKg = (qty * max / 1000).toFixed(1);
-  return min === max ? `${minKg} kgs` : `${minKg}–${maxKg} kgs`;
+  return min === max ? `~${minKg} kgs` : `~${minKg}–${maxKg} kgs`;
+}
+
+function strikePrice(packPrices, selectedPack) {
+  const sixPack = packPrices.find(p => p.label === '6 pcs');
+  if (!sixPack) return selectedPack.price + 101;
+  const sixOriginal = sixPack.price + 101;
+  const qty = parseInt(selectedPack.label);
+  return sixOriginal * (qty / 6);
+}
+
+function savePercent(packPrices, pack) {
+  const sixPack = packPrices.find(p => p.label === '6 pcs');
+  if (!sixPack || pack.label === '6 pcs') return null;
+  const basePerUnit = sixPack.price / 6;
+  const qty = parseInt(pack.label);
+  const packPerUnit = pack.price / qty;
+  const pct = Math.round((basePerUnit - packPerUnit) / basePerUnit * 100);
+  return pct > 0 ? pct : null;
 }
 
 function VarietyTile({ product }) {
@@ -40,27 +58,30 @@ function VarietyTile({ product }) {
   const isSignature = product.category === 'premium';
   return (
     <div className="variety-tile">
-      <Link to={`/products/${product.id}`} className="variety-tile-img" style={{ background: product.gradient }}>
+      <Link to={`/products/${product.id}`} className="variety-tile-img" data-product={product.id} style={{ background: product.gradient }}>
         <img
           src={`/assets/varieties/${product.id}.jpg`}
           alt={product.name}
           onError={e => { e.currentTarget.style.display = 'none'; }}
         />
         <span className={`variety-tile-badge ${isSignature ? 'badge-signature' : 'badge-heritage'}`}>
-          {isSignature ? 'Signature' : 'Heritage'}
+          {isSignature ? 'Signature' : 'Exotic'}
         </span>
         {isSoldOut && <span className="variety-tile-soldout">Coming Soon</span>}
       </Link>
       <div className="variety-tile-body">
         <Link to={`/products/${product.id}`} className="variety-tile-name">{product.name}</Link>
         <div className="variety-tile-telugu">{product.telugu} · {product.meaning}</div>
-        {product.eatType && (
-          <div className="variety-tile-eat-tags">
-            {product.eatType.map(tag => (
-              <span key={tag} className={`variety-eat-tag variety-eat-tag--${tag.toLowerCase().replace(/[^a-z]/g, '-')}`}>{tag}</span>
-            ))}
-          </div>
-        )}
+        <div className="variety-tile-eat-tags">
+          {product.badges?.find(b => b.startsWith('Brix')) && (
+            <span className="variety-eat-tag variety-eat-tag--brix">
+              🍬 {product.badges.find(b => b.startsWith('Brix'))}
+            </span>
+          )}
+          {product.eatType?.map(tag => (
+            <span key={tag} className={`variety-eat-tag variety-eat-tag--${tag.toLowerCase().replace(/[^a-z]/g, '-')}`}>{tag}</span>
+          ))}
+        </div>
         <p className="variety-tile-intro">{product.description}</p>
         <Link to={`/products/${product.id}`} className="variety-tile-more">View more for details →</Link>
       </div>
@@ -72,10 +93,12 @@ function VarietyTile({ product }) {
             return (
               <button
                 key={p.label}
-                className={`variety-tile-pack-btn${selectedPack.label === p.label ? ' active' : ''}${packOut ? ' out' : ''}`}
+                className={`variety-tile-pack-btn${selectedPack.label === p.label ? ' active' : ''}${packOut ? ' out' : ''}${p.label === '12 pcs' ? ' most-bought' : ''}`}
                 onClick={() => !packOut && setSelectedPack(p)}
                 title={packOut ? 'Out of stock' : undefined}
               >
+                {p.label === '12 pcs' && <span className="pack-most-bought-badge">Our Pick</span>}
+                {p.label === '18 pcs' && <span className="pack-most-bought-badge pack-best-value-badge">Best Value</span>}
                 {p.label}
                 {packWeight(product.avgWeightGrams, p.label) && (
                   <span style={{ color: 'var(--mango-dark)', fontWeight: 700, fontSize: '0.78rem' }}>
@@ -91,7 +114,7 @@ function VarietyTile({ product }) {
           <div>
             <span className="variety-tile-price">
               <span style={{ textDecoration: 'line-through', color: '#aaa', fontWeight: 400, fontSize: '0.95rem', marginRight: '0.3rem' }}>
-                ₹{(selectedPack.price + 101).toLocaleString('en-IN')}
+                ₹{strikePrice(product.packPrices, selectedPack).toLocaleString('en-IN')}
               </span>
               ₹{selectedPack.price.toLocaleString('en-IN')}
             </span>

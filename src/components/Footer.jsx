@@ -11,7 +11,7 @@ export default function Footer() {
         <a href="/#varieties">Varieties</a>
         <a href="/products">Our Mangoes</a>
       </div>
-      <p className="footer-copy">© 2026 Aamrutham. Made with 🥭 in Hyderabad, India.</p>
+      <p className="footer-copy">© 2026 Aamrutham. Made with ❤️ for 🥭</p>
     </footer>
   );
 }
