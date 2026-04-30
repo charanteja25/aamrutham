@@ -36,14 +36,14 @@ export function InventoryProvider({ children }) {
    * Returns available qty, or null only while still loading.
    *
    *   null          → inventory hasn't loaded yet (spinner state)
-   *   0             → explicit zero stock OR no row exists for this pack
-   *                   (treated the same way — no sellable unit → "Coming Soon")
-   *   positive int  → actual live availability
+   *   0             → explicit zero set in admin dashboard → "Coming Soon"
+   *   999           → no row exists for this pack → treated as available
+   *   positive int  → actual live availability from the database
    */
   function getAvailable(productId, packLabel) {
     if (inventoryMap === null) return null;
     const key = `${productId}|${packLabel}`;
-    return inventoryMap[key] ?? 0;
+    return inventoryMap[key] ?? 999;
   }
 
   return (
