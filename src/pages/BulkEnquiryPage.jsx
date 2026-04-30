@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
+import { products } from '../data/products';
 
-const VARIETIES = [
-  { id: 'mettavalasa-peechu', name: 'Mettavalasa Peechu', telugu: 'మెట్టవలస పీచు' },
-  { id: 'bobbili-peechu',     name: 'Bobbili Peechu',     telugu: 'బొబ్బిలి పీచు' },
-  { id: 'panduri-mavidi',     name: 'Panduri Mavidi',     telugu: 'పాండురి మావిడి' },
-  { id: 'kothapalli-kobbari', name: 'Kothapalli Kobbari', telugu: 'కొత్తపల్లి కొబ్బరి' },
-  { id: 'imam-pasand',        name: 'Imam Pasand',        telugu: 'ఇమామ్ పసంద్' },
-  { id: 'suvarnarekha',       name: 'Suvarnarekha',       telugu: 'సువర్ణరేఖ' },
-  { id: 'banganapalli',       name: 'Banganapalli',       telugu: 'బంగినపల్లి' },
-  { id: 'chinna-rasalu',      name: 'Chinna Rasalu',      telugu: 'చిన్న రసాలు' },
-  { id: 'pedda-rasalu',       name: 'Pedda Rasalu',       telugu: 'పెద్ద రసాలు' },
-];
+const VARIETIES = products
+  .filter(p => p.category === 'premium' || p.category === 'more')
+  .map(p => ({
+    id: p.id,
+    name: p.name,
+    telugu: p.telugu,
+    tag: p.category === 'premium' ? 'Signature' : 'Exotic',
+  }));
 
 const WA_NUMBER = '919177266273';
 
 export default function BulkEnquiryPage() {
   const [name,    setName]    = useState('');
-  const [mobile,  setMobile]  = useState('');
   const [email,   setEmail]   = useState('');
   const [selected, setSelected] = useState({});  // { varietyId: qty }
   const [errors,  setErrors]  = useState({});
@@ -40,7 +37,6 @@ export default function BulkEnquiryPage() {
   function validate() {
     const e = {};
     if (!name.trim())                          e.name   = 'Please enter your name.';
-    if (!/^\d{10}$/.test(mobile))             e.mobile = 'Please enter a valid 10-digit mobile number.';
     if (email && !/\S+@\S+\.\S+/.test(email)) e.email  = 'Please enter a valid email address.';
     if (Object.keys(selected).length === 0)   e.variety = 'Please select at least one variety.';
     Object.entries(selected).forEach(([id, qty]) => {
@@ -65,7 +61,6 @@ export default function BulkEnquiryPage() {
       `Hi Aamrutham! I'd like to place a *bulk enquiry* 🥭`,
       ``,
       `*Name:* ${name.trim()}`,
-      `*Mobile:* +91 ${mobile}`,
       email ? `*Email:* ${email}` : null,
       ``,
       `*Varieties required:*`,
@@ -112,19 +107,7 @@ export default function BulkEnquiryPage() {
                 />
                 {errors.name && <span className="bulk-error">{errors.name}</span>}
               </div>
-              <div className="bulk-field">
-                <label className="bulk-label">Mobile Number *</label>
-                <div className="bulk-phone-wrap">
-                  <span className="bulk-prefix">🇮🇳 +91</span>
-                  <input
-                    className={`bulk-input bulk-input--phone${errors.mobile ? ' bulk-input--error' : ''}`}
-                    type="tel" placeholder="9876543210" maxLength={10}
-                    value={mobile} onChange={e => setMobile(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                  />
-                </div>
-                {errors.mobile && <span className="bulk-error">{errors.mobile}</span>}
-              </div>
-              <div className="bulk-field">
+<div className="bulk-field">
                 <label className="bulk-label">Email <span className="bulk-optional">(optional)</span></label>
                 <input
                   className={`bulk-input${errors.email ? ' bulk-input--error' : ''}`}
@@ -153,7 +136,10 @@ export default function BulkEnquiryPage() {
                       onClick={() => toggleVariety(v.id)}
                     >
                       <span className="bulk-variety-check">{isSelected ? '✓' : '+'}</span>
-                      <span className="bulk-variety-name">{v.name}</span>
+                      <span className="bulk-variety-name">
+                        {v.name}
+                        <span className={`bulk-variety-tag bulk-variety-tag--${v.tag.toLowerCase()}`}>{v.tag}</span>
+                      </span>
                       <span className="bulk-variety-telugu">{v.telugu}</span>
                     </button>
                     {isSelected && (

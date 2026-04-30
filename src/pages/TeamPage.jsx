@@ -145,16 +145,16 @@ const PILLARS = [
       'A small team holding an old idea carefully: that a mango grown the way nature intended can still reach a city. Based between Bobbili and Hyderabad.',
     members: [
       {
-        name: 'Akarsh',
-        telugu: 'ఆకర్ష్',
+        name: 'Akarsh Inuganti',
+        telugu: 'ఇనుగంటి ఆకర్ష్',
         role: 'Founder',
         bio: 'Third-generation on this land. Founded Aamrutham in 2026 to bring heritage, tree-ripened varieties out of the grove and onto the table.',
         tag: 'Founder',
         image: '/assets/team/akarsh.jpg',
       },
       {
-        name: 'Charan Teja',
-        telugu: 'చరణ్ తేజ',
+        name: 'Gunisetty Charan Teja',
+        telugu: 'గునిశెట్టి చరణ్ తేజ',
         role: 'Co-founder',
         bio: 'Keeps the operations honest — from cold chain to customer hand-off.',
         tag: 'Operations',
@@ -162,8 +162,8 @@ const PILLARS = [
         facePos: 'center 35%',
       },
       {
-        name: 'Srikanth',
-        telugu: 'శ్రీకాంత్',
+        name: 'Srikanth Varanasi',
+        telugu: 'వారణాసి శ్రీకాంత్',
         role: 'Co-founder',
         bio: 'Builds the channels that take the orchard to the city, one pre-order at a time.',
         tag: 'Growth',
@@ -171,17 +171,8 @@ const PILLARS = [
         facePos: 'center 35%',
       },
       {
-        name: 'Ganesh',
-        telugu: 'గణేష్',
-        role: 'Co-founder',
-        bio: "The storyteller. Threads the farm's philosophy through every touchpoint.",
-        tag: 'Brand',
-        image: null,
-        fallback: '🎨',
-      },
-      {
-        name: 'R. S. Sai',
-        telugu: 'ఆర్. ఎస్. సాయి',
+        name: 'Rao Sesha Sai',
+        telugu: 'రావు శేష సాయి',
         role: 'Co-founder',
         bio: 'Steward of the craft — relationships with farmers, buyers, and the long-view vision of Mangoes as a Service.',
         tag: 'Partnerships',
@@ -195,9 +186,9 @@ const CENTER_LOGO = '/assets/aam-final.png';
 
 const RING_SPEEDS = [0.28, -0.22, 0.16, -0.12];
 const DESKTOP_RADII = [108, 200, 292, 378];
-const MOBILE_RADII = [92, 150, 208, 262];
+const MOBILE_RADII = [148, 215, 278, 335];
 const DESKTOP_FOCUS_RADII = [108, 200, 292, 378];
-const MOBILE_FOCUS_RADII = [92, 150, 208, 262];
+const MOBILE_FOCUS_RADII = [148, 215, 278, 335];
 
 const CX_DESKTOP = 540;
 const CX_MOBILE = 500;
@@ -741,10 +732,10 @@ function OrbitalSVG({
                 aria-label={member.name}
                 opacity={nodeOpacity}
               >
-                <circle r={compact ? 34 : 30} fill={a.soft} opacity={haloOpacity} />
-                <circle r={compact ? 25 : 22} fill={a.soft} opacity={haloOpacity * 0.9} />
+                <circle r={compact ? 50 : 30} fill={a.soft} opacity={haloOpacity} />
+                <circle r={compact ? 36 : 22} fill={a.soft} opacity={haloOpacity * 0.9} />
                 <circle
-                  r={compact ? 18 : 16}
+                  r={compact ? 24 : 16}
                   fill={a.fill}
                   stroke={isHovered ? '#3B2507' : a.ink}
                   strokeWidth={isHovered ? 2.1 : 1.5}
@@ -752,14 +743,14 @@ function OrbitalSVG({
                 />
 
                 <text
-                  y={compact ? -30 : -34}
+                  y={compact ? -44 : -34}
                   textAnchor="middle"
                   fontFamily="'Caveat', cursive"
                   fontWeight="700"
-                  fontSize={compact ? 16 : 19}
+                  fontSize={compact ? 22 : 19}
                   fill={isHovered ? '#3B2507' : a.ink}
                 >
-                  {member.name}
+                  {compact ? member.name.split(' ')[0] : member.name}
                 </text>
 
                 {!compact && (
@@ -937,7 +928,7 @@ export default function TeamPage() {
       <div
         ref={sectionRef}
         style={{
-          height: '200vh',
+          height: '400vh',
           position: 'relative',
           background: 'radial-gradient(circle at top, #fbf2df 0%, #F4EBD4 55%, #efe2c5 100%)',
           fontFamily: 'sans-serif',

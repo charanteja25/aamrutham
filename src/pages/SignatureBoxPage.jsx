@@ -51,6 +51,9 @@ export default function SignatureBoxPage() {
             Five of our most prized heritage varieties, curated into one gift-worthy box.
             Each mango tells a story centuries in the making. The perfect introduction to Bobbili's finest.
           </p>
+          <p className="sigbox-sub" style={{ marginTop: '0.75rem', fontSize: '0.82em', opacity: 0.6, display: 'flex', alignItems: 'flex-start', gap: '0.4rem', lineHeight: 1.55 }}>
+            🌳 <span><strong>Deliveries start May 10th</strong> — the moment our mangoes are ready. We give each fruit the time it needs to ripen fully on the tree, never harvesting early or using artificial ripening agents.</span>
+          </p>
         </div>
       </section>
 

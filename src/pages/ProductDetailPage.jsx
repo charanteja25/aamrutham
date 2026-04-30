@@ -2,10 +2,10 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import { HYD_PINCODES, getProductById, products } from '../data/products';
-import { isSeasonPassActive } from '../data/season';
 import { useCart } from '../context/CartContext';
 import { useInventory } from '../context/InventoryContext';
 import MangoesPerDayChart from '../components/MangoesPerDayChart';
+import MangoCalculatorDrawer from '../components/MangoCalculatorDrawer';
 
 export default function ProductDetailPage() {
   const { id } = useParams();
@@ -16,6 +16,7 @@ export default function ProductDetailPage() {
   const [isValid, setIsValid] = useState(null);
   const [activeImg, setActiveImg] = useState(`/assets/varieties/${product.id}.jpg`);
   const [factsTab, setFactsTab] = useState('profile');
+  const [calcOpen, setCalcOpen] = useState(false);
   const { addToCart } = useCart();
   const { getAvailable } = useInventory();
 
@@ -55,6 +56,12 @@ export default function ProductDetailPage() {
 
   return (
     <main>
+      <MangoCalculatorDrawer
+        open={calcOpen}
+        onClose={() => setCalcOpen(false)}
+        packPrices={product.packPrices}
+        onSelectPack={(pack) => setSelectedPack(pack)}
+      />
       <section className="section section-cream detail-top">
         <div className="container breadcrumb-row">
           <Link to="/">Home</Link>
@@ -106,18 +113,35 @@ export default function ProductDetailPage() {
 
             <div className="detail-price-box">
               <div className="detail-pack-row">
-                {product.packPrices.map((pack) => (
-                  <button
-                    key={pack.label}
-                    className={`pack-btn ${selectedPack.label === pack.label ? 'selected' : ''}`}
-                    onClick={() => setSelectedPack(pack)}
-                  >
-                    {pack.label}
-                  </button>
-                ))}
+                {product.packPrices.map((pack) => {
+                  const sixPack = product.packPrices.find(p => p.label === '6 pcs');
+                  const qty = parseInt(pack.label);
+                  const sixQty = 6;
+                  const savePct = sixPack && qty > sixQty
+                    ? Math.round(((sixPack.price / sixQty) - (pack.price / qty)) / (sixPack.price / sixQty) * 100)
+                    : null;
+                  return (
+                    <button
+                      key={pack.label}
+                      className={`pack-btn ${selectedPack.label === pack.label ? 'selected' : ''}`}
+                      onClick={() => setSelectedPack(pack)}
+                    >
+                      {pack.label}
+                      {savePct > 0 && (
+                        <span className="pack-save-badge">Save {savePct}%</span>
+                      )}
+                    </button>
+                  );
+                })}
               </div>
+              <button className="calc-nudge" onClick={() => setCalcOpen(true)}>
+                🥭 Not sure how many? Use the calculator →
+              </button>
               <div className="detail-price">₹{selectedPack.price.toLocaleString('en-IN')}</div>
               <div className="price-note">incl. free delivery</div>
+              <p style={{ fontSize: '0.8rem', color: '#3a6b10', background: '#f2f9e8', border: '1px solid #c5e89a', borderRadius: '8px', padding: '0.5rem 0.75rem', marginTop: '0.6rem', lineHeight: 1.55, display: 'flex', gap: '0.4rem', alignItems: 'flex-start' }}>
+                🌳 <span><strong>Deliveries start May 10th</strong> — the moment our mangoes are ready. We give each fruit the time it needs to ripen fully on the tree, never harvesting early or using artificial ripening agents.</span>
+              </p>
 
               <div className="pincode-row">
                 <input
@@ -139,35 +163,6 @@ export default function ProductDetailPage() {
                 )}
               </div>
 
-              {isSeasonPassActive() && (() => {
-                // Season Pass prices: 12 pcs/wk → ₹2,499; 24 pcs/wk → ₹4,499.
-                // Pick the closer tier based on the selected pack size.
-                const packPcs = parseInt(selectedPack.label, 10) || 12;
-                const passPrice = packPcs >= 18 ? 4499 : 2499;
-                const passLabel = packPcs >= 18 ? '24 pcs/week' : '12 pcs/week';
-                const fourWeekTotal = selectedPack.price * 4;
-                const savings = fourWeekTotal - passPrice;
-                if (savings > 200) {
-                  return (
-                    <Link to="/maas" className="detail-pass-nudge">
-                      <span className="detail-pass-nudge-label">⚡ Going heavy on {product.name}?</span>
-                      <span className="detail-pass-nudge-body">
-                        4 weeks of {selectedPack.label} = ₹{fourWeekTotal.toLocaleString('en-IN')}.
-                        {' '}Season Pass ({passLabel}) = ₹{passPrice.toLocaleString('en-IN')}.
-                        {' '}<strong>You save ₹{savings.toLocaleString('en-IN')}.</strong>
-                      </span>
-                    </Link>
-                  );
-                }
-                return (
-                  <Link to="/maas" className="detail-pass-nudge">
-                    <span className="detail-pass-nudge-label">⚡ Love {product.name}?</span>
-                    <span className="detail-pass-nudge-body">
-                      Our <strong>Season Pass</strong> sends you this and other rare varieties every week for 4 weeks. →
-                    </span>
-                  </Link>
-                );
-              })()}
             </div>
           </div>
         </div>

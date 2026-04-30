@@ -66,18 +66,18 @@ export default function MangoCalculatorPage() {
             <div className="mcalc-inputs-label">Your Details</div>
 
             <Slider
-              emoji="👨‍👩‍👧‍👦" label="People eating mangoes"
+              emoji="👨‍👩‍👧‍👦" label="Mango lovers in your family"
               value={people} min={1} max={20} unit="people"
               onChange={setPeople}
             />
             <Slider
               emoji="🥭" label="Mangoes per person per day"
-              value={perDay} min={0.5} max={4} step={0.5} unit="mangoes/day"
+              value={perDay} min={1} max={8} step={1} unit="mangoes/day"
               onChange={setPerDay}
             />
             <Slider
-              emoji="📅" label="Number of days"
-              value={days} min={1} max={30} unit="days"
+              emoji="📅" label="How many days do you want your mangoes to last?"
+              value={days} min={1} max={7} unit="days"
               onChange={setDays}
             />
 
