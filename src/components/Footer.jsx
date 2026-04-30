@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
@@ -10,6 +11,17 @@ export default function Footer() {
         <a href="/#process">Farm to You</a>
         <a href="/#varieties">Varieties</a>
         <a href="/products">Our Mangoes</a>
+      </div>
+      <div className="footer-tools">
+        <span className="footer-tools-label">Handy Tools</span>
+        <div className="footer-tools-pills">
+          <Link to="/bulk-enquiry" className="footer-tool-pill footer-tool-pill--bulk">
+            🚚 Bulk Enquiry
+          </Link>
+          <Link to="/mango-calculator" className="footer-tool-pill footer-tool-pill--calc">
+            🥭 Mango Calculator
+          </Link>
+        </div>
       </div>
       <p className="footer-copy">© 2026 Aamrutham. Made with ❤️ for 🥭</p>
     </footer>

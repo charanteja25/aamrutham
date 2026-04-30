@@ -20,6 +20,7 @@ import SignatureBoxPage from './pages/SignatureBoxPage';
 import ValuesPage from './pages/ValuesPage';
 import PricingPage from './pages/PricingPage';
 import BulkEnquiryPage from './pages/BulkEnquiryPage';
+import MangoCalculatorPage from './pages/MangoCalculatorPage';
 
 function ScrollManager() {
   const location = useLocation();
@@ -74,6 +75,7 @@ export default function App() {
           <Route path="/values" element={<ValuesPage />} />
           <Route path="/pricing" element={<PricingPage />} />
           <Route path="/bulk-enquiry" element={<BulkEnquiryPage />} />
+          <Route path="/mango-calculator" element={<MangoCalculatorPage />} />
         </Routes>
         <Footer />
         <WhatsAppFloat />

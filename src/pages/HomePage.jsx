@@ -22,6 +22,9 @@ export default function HomePage() {
               <Link className="btn btn-gold" to="/products">Order Now →</Link>
               <a className="btn btn-outline" href="#story">Our Story</a>
             </div>
+            <p style={{ marginTop: '1rem', fontSize: '0.82rem', opacity: 0.65, display: 'flex', alignItems: 'flex-start', gap: '0.4rem', lineHeight: 1.55 }}>
+              🌳 <span><strong>Deliveries start May 10th</strong> — the moment our mangoes are ready. We give each fruit the time it needs to ripen fully on the tree, never harvesting early or using artificial ripening agents.</span>
+            </p>
           </div>
           <div className="hero-artwork-wrap">
             <div className="hero-art-bg" />
@@ -96,6 +99,39 @@ export default function HomePage() {
                 <span className="home-offer-cta" style={{ opacity: 0.65 }}>Season closed</span>
               </div>
             )}
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-cream mcalc-home-section">
+        <div className="container mcalc-home-card">
+          <div className="mcalc-home-left">
+            <span className="mcalc-home-eyebrow">🥭 Smart Mango Planning</span>
+            <h2 className="mcalc-home-title">Not sure how much to order?</h2>
+            <p className="mcalc-home-body">
+              Tell us about your family — how many mango lovers, how many per day, how many days — and we'll tell you exactly which pack to get.
+            </p>
+            <Link className="btn btn-leaf" to="/mango-calculator">Use the Mango Calculator →</Link>
+            <p className="mcalc-home-share">
+              Buying for someone else? <Link to="/mango-calculator" className="mcalc-home-share-link">Share this link</Link> and let them plan their own order.
+            </p>
+          </div>
+          <div className="mcalc-home-right" aria-hidden="true">
+            <div className="mcalc-home-preview">
+              <div className="mcalc-home-preview-row">
+                <span>👨‍👩‍👧‍👦 Mango lovers</span><strong>4</strong>
+              </div>
+              <div className="mcalc-home-preview-row">
+                <span>🥭 Per day</span><strong>2</strong>
+              </div>
+              <div className="mcalc-home-preview-row">
+                <span>📅 Days</span><strong>3</strong>
+              </div>
+              <div className="mcalc-home-preview-result">
+                <span>You need</span>
+                <strong>24 mangoes</strong>
+              </div>
+            </div>
           </div>
         </div>
       </section>

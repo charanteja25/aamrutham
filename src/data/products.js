@@ -35,7 +35,7 @@ export const products = [
     packPrices: [
       { label: '6 pcs', price: 599 },
       { label: '12 pcs', price: 1100 },
-      { label: '18 pcs', price: 1600 }
+      { label: '18 pcs', price: 1500 }
     ],
     avgWeightGrams: [300, 350],
     category: 'premium',
@@ -64,7 +64,6 @@ export const products = [
       ['Rich in', 'Vitamins C + A']
     ],
     storage: [
-      ['Refrigerate after ripening', 'Once ripe, store at 8-12°C and consume within 3-4 days for best flavour.'],
       ['Room temperature ripening', 'If unripe on arrival, keep at room temperature for 1-2 days until fragrant.'],
       ['Avoid direct sunlight', 'Do not leave in direct sun or extreme heat because it accelerates over-ripening.'],
       ['Handle with care', 'Keep in the box until ready to eat so the fruit does not bruise.'],
@@ -87,7 +86,7 @@ export const products = [
     packPrices: [
       { label: '6 pcs', price: 499 },
       { label: '12 pcs', price: 950 },
-      { label: '18 pcs', price: 1400 }
+      { label: '18 pcs', price: 1300 }
     ],
     avgWeightGrams: [200, 250],
     category: 'premium',
@@ -117,7 +116,6 @@ export const products = [
       ['Rich in', 'Vitamins C + A']
     ],
     storage: [
-      ['Refrigerate after ripening', 'Once ripe, store at 8-12°C and consume within 3-5 days.'],
       ['Room temperature ripening', 'If unripe on arrival, keep at room temperature for 1-2 days until fragrant.'],
       ['Avoid direct sunlight', 'Direct heat speeds up ripening too aggressively and softens the fruit.'],
       ['Handle with care', 'Keep in the provided box to prevent bruising.'],
@@ -138,7 +136,7 @@ export const products = [
     packPrices: [
       { label: '6 pcs', price: 599 },
       { label: '12 pcs', price: 1100 },
-      { label: '18 pcs', price: 1600 }
+      { label: '18 pcs', price: 1500 }
     ],
     avgWeightGrams: [200, 200],
     category: 'premium',
@@ -168,7 +166,6 @@ export const products = [
       ['Rich in', 'Vitamins A + C']
     ],
     storage: [
-      ['Refrigerate after ripening', 'Store at 8-12°C once ripe and consume within 3-4 days.'],
       ['Room temperature ripening', 'Ripen at room temperature 1-2 days if firm on arrival.'],
       ['Avoid direct sunlight', 'High sugar content means it over-ripens quickly in heat.'],
       ['Handle with care', 'Butter-soft flesh bruises easily — leave in box until ready.'],
@@ -221,7 +218,6 @@ export const products = [
       ['Rich in', 'Vitamins C + B6']
     ],
     storage: [
-      ['Refrigerate after ripening', 'Store at 8-12°C after ripening and consume within 3-5 days.'],
       ['Room temperature ripening', 'Let the fruit ripen naturally for 1-2 days if it reaches you firm.'],
       ['Avoid direct sunlight', 'Avoid harsh heat during ripening because it spoils texture.'],
       ['Handle with care', 'The creamy flesh bruises easily, so keep it nested in the box.'],
@@ -274,7 +270,6 @@ export const products = [
       ['Rich in', 'Vitamins C + A']
     ],
     storage: [
-      ['Refrigerate after ripening', 'Once ripe, store at 8-12°C and consume within 4-6 days.'],
       ['Room temperature ripening', 'Keep at room temperature for 2-3 days if the fruit arrives firm.'],
       ['Avoid direct sunlight', 'Heat affects the creamy texture quickly, so store in a shaded cool area.'],
       ['Handle with care', 'Large fruit bruises easily and should stay cushioned in the box.'],
@@ -325,7 +320,6 @@ export const products = [
       ['Rich in', 'Vitamins C + A']
     ],
     storage: [
-      ['Refrigerate after ripening', 'Store at 8-12°C once ripe and consume within 3-4 days.'],
       ['Room temperature ripening', 'If firm on arrival, keep at room temperature for 1-2 days.'],
       ['Avoid direct sunlight', 'Heat accelerates over-ripening and dulls the citrus aroma.'],
       ['Handle with care', 'Keep in the box until ready to eat to prevent bruising.'],
@@ -376,7 +370,6 @@ export const products = [
       ['Rich in', 'Vitamins A + C']
     ],
     storage: [
-      ['Refrigerate after ripening', 'Store at 8-12°C once ripe and consume within 4-5 days.'],
       ['Room temperature ripening', 'Keep at room temperature 1-2 days if firm on arrival.'],
       ['Avoid direct sunlight', 'Avoid heat to prevent over-ripening.'],
       ['Handle with care', 'Large fruit bruises easily — keep in the box until ready.'],
@@ -427,7 +420,6 @@ export const products = [
       ['Rich in', 'Vitamins C + B6']
     ],
     storage: [
-      ['Refrigerate after ripening', 'Store at 8-12°C once ripe and consume within 2-3 days.'],
       ['Room temperature ripening', 'Let ripen 1 day at room temperature if firm on arrival.'],
       ['Avoid direct sunlight', 'Small fruit ripens fast — keep cool and shaded.'],
       ['Handle with care', 'Soft flesh bruises easily; keep in the box until ready.'],
@@ -477,10 +469,111 @@ export const products = [
       ['Rich in', 'Vitamins C + A']
     ],
     storage: [
-      ['Refrigerate after ripening', 'Store at 8-12°C once ripe and consume within 3-4 days.'],
       ['Room temperature ripening', 'Ripen at room temperature 1-2 days if firm on arrival.'],
       ['Avoid direct sunlight', 'Keep shaded — direct heat degrades the flavour quickly.'],
       ['Handle with care', 'Medium flesh — keep in box until ready to eat.'],
+      ['Do not refrigerate before ripening', 'To enjoy the full flavour and texture, do not refrigerate until mangoes have ripened. Once ripe, store in the refrigerator to prolong shelf life.']
+    ]
+  },
+  {
+    id: 'rajula-mamidi',
+    name: 'Rajula Mamidi',
+    telugu: 'రాజుల మామిడి',
+    meaning: 'The Mango of Rajam',
+    eatType: ['Juicy', 'High Fibre'],
+    shortTag: 'Desi Variety · Akulakatta, Bobbili',
+    heroTag: 'Desi Variety · High Fibre · Long Shelf Life',
+    description:
+      'A true desi variety from Akulakatta near Bobbili — high in fibre, naturally long-lasting, and carrying the honest sweetness of a mango grown close to home.',
+    fullDescription:
+      'Rajula Mamidi is a desi variety rooted in Akulakatta, a village near Bobbili, where it has been grown for generations without fanfare or commercial ambition. What makes it stand apart is its exceptionally high fibre content — dense, satisfying strands that nourish as much as they flavour — and a shelf life that outlasts most other varieties, making it ideal for those who want their mangoes to last through the week without losing taste or texture.',
+    badges: ['High Fibre', 'Long Shelf Life', 'Desi Variety', 'May - June', 'Pesticide-Free', 'Bobbili Origin'],
+    packPrices: [
+      { label: '6 pcs', price: 399 },
+      { label: '12 pcs', price: 700 },
+      { label: '18 pcs', price: 1000 }
+    ],
+    avgWeightGrams: [220, 280],
+    category: 'more',
+    accent: 'gold',
+    gradient: 'linear-gradient(160deg, #fff6e0 0%, #ffd97d 55%, #f0a030 100%)',
+    story: {
+      heading: 'The Story of Rajula Mamidi',
+      p1: 'In Akulakatta, a quiet village on the outskirts of Bobbili, Rajula Mamidi has been part of everyday life for as long as the older farmers can remember. It is a desi variety — not grafted for commercial yield or optimised for appearance, but grown the way mangoes were always grown here: patiently, naturally, and without shortcuts.\n\nWhat the locals have always known is that Rajula Mamidi is built to last. Its high fibre content gives the fruit a density and structure that means it holds well for days after ripening — a quality rare among mangoes and deeply practical for families who want to order once and eat well all week.',
+      quote: '"Not every great mango announces itself — some just quietly outlast everything else."',
+      p2: 'At Aamrutham, Rajula Mamidi comes from the same farms around Bobbili that we have cultivated for over a decade — grown without pesticides or chemical fertilizers, and delivered only when the fruit is truly ready.'
+    },
+    profile: [
+      ['Texture', 'Juicy · Fibrous'],
+      ['Aroma', 'Fruity & Sweet'],
+      ['Taste', 'Deep Lingering Sweetness'],
+      ['Best Eaten', 'Hand Peeled · Squeezed'],
+      ['Season', 'May - June'],
+      ['Size', 'Medium · 220-280g']
+    ],
+    nutrition: [
+      ['Calories', '64 kcal'],
+      ['Carbohydrates', '16g'],
+      ['Natural Sugar', '14g'],
+      ['Protein', '0.8g'],
+      ['Dietary Fibre', '1.6g'],
+      ['Rich in', 'Vitamins C + A']
+    ],
+    storage: [
+      ['Room temperature ripening', 'If firm on arrival, keep at room temperature for 1-2 days until fragrant.'],
+      ['Avoid direct sunlight', 'Avoid direct heat — it rushes ripening and dulls the flavour.'],
+      ['Handle with care', 'Keep in the box until ready to eat to prevent bruising.'],
+      ['Do not refrigerate before ripening', 'To enjoy the full flavour and texture, do not refrigerate until mangoes have ripened. Once ripe, store in the refrigerator to prolong shelf life.']
+    ]
+  },
+  {
+    id: 'cheruku-rasalu',
+    name: 'Cheruku Rasalu',
+    telugu: 'చెరుకు రసాలు',
+    meaning: 'Sugarcane Nectar',
+    eatType: ['Juicy'],
+    shortTag: 'Nuzvid · Sugarcane Sweet',
+    heroTag: 'Heritage · Intensely Sweet · Juicy',
+    description:
+      '"Cheruku" means sugarcane in Telugu — and this mango earns that name. Syrup-dense juice with a sweetness that hits like raw sugarcane, clean and pure.',
+    fullDescription:
+      'Cheruku Rasalu is the sweeter, more intense cousin of Chinna Rasalu. Named for the sugarcane-like rush of its juice, this variety is best eaten the traditional way — squeezed whole and drunk straight from the skin. Grown in the Nuzvid belt where the alluvial soil concentrates sugars to extraordinary levels, it delivers one of the highest natural sweetness readings of any variety we carry.',
+    badges: ['Brix 23-27', 'Syrup-Sweet', 'May - July', 'Pesticide-Free'],
+    packPrices: [
+      { label: '6 pcs', price: 399 },
+      { label: '12 pcs', price: 700 },
+      { label: '18 pcs', price: 1000 }
+    ],
+    avgWeightGrams: [150, 200],
+    category: 'more',
+    accent: 'gold',
+    gradient: 'linear-gradient(160deg, #fffbe6 0%, #ffe566 55%, #f0b429 100%)',
+    story: {
+      heading: 'The Story of Cheruku Rasalu',
+      p1: 'In the mango heartland of Nuzvid, Cheruku Rasalu has been a summer ritual for as long as anyone can remember. The name says everything — "cheruku" for sugarcane, "rasalu" for nectar. Together, they describe a mango whose juice is so pure and concentrated it almost needs no explanation.\n\nSmall in size, these mangoes punch far above their weight. The alluvial plains of Krishna district give them a sweetness that peaks late in the season, making June and July the months to seek them out.',
+      quote: '"Drink it, don\'t slice it — that is the only way to understand Cheruku Rasalu."',
+      p2: 'At Aamrutham, we source Cheruku Rasalu from the same natural farms that supply our other heritage varieties — grown without pesticides, ripened without chemicals, and delivered when they are truly ready.'
+    },
+    profile: [
+      ['Texture', 'Juicy · Soft'],
+      ['Aroma', 'Sweet & Intense'],
+      ['Taste', 'Sugarcane-like Sweetness'],
+      ['Best Eaten', 'Squeezed · Sucked'],
+      ['Season', 'May - July'],
+      ['Size', 'Small · 150-200g']
+    ],
+    nutrition: [
+      ['Calories', '72 kcal'],
+      ['Carbohydrates', '18g'],
+      ['Natural Sugar', '17g'],
+      ['Protein', '0.9g'],
+      ['Dietary Fibre', '1.4g'],
+      ['Rich in', 'Vitamins C + B6']
+    ],
+    storage: [
+      ['Room temperature ripening', 'Ripen 1-2 days at room temperature if firm on arrival.'],
+      ['Avoid direct sunlight', 'Small fruit ripens fast — keep shaded and cool.'],
+      ['Handle with care', 'Soft flesh bruises easily; keep in the box until ready.'],
       ['Do not refrigerate before ripening', 'To enjoy the full flavour and texture, do not refrigerate until mangoes have ripened. Once ripe, store in the refrigerator to prolong shelf life.']
     ]
   },
@@ -520,7 +613,6 @@ export const products = [
       ['Perfect For', 'Ages 2-10']
     ],
     storage: [
-      ['Refrigerate after ripening', 'Store at 8-12°C once ripe and consume within 3-4 days.'],
       ['Room temperature ripening', 'Keep at room temperature for 1-2 days until fragrant.'],
       ['Serve chilled', 'Serving slightly chilled makes it extra refreshing for kids!'],
       ['Handle with care', 'Keep in the box until ready to eat to prevent bruising.'],

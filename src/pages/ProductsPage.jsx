@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { products, buildWhatsAppUrl } from '../data/products';
 import { isSeasonPassActive } from '../data/season';
@@ -117,6 +117,9 @@ function VarietyTile({ product }) {
                 ₹{strikePrice(product.packPrices, selectedPack).toLocaleString('en-IN')}
               </span>
               ₹{selectedPack.price.toLocaleString('en-IN')}
+              {savePercent(product.packPrices, selectedPack) > 0 && (
+                <span className="tile-save-pct">Save {savePercent(product.packPrices, selectedPack)}%</span>
+              )}
             </span>
             <Link to="/pricing" className="pricing-link">ℹ️ Why this price?</Link>
           </div>
@@ -147,6 +150,49 @@ function SeasonPassTile() {
         <span className="season-pass-tile-cta">Explore Season Pass →</span>
       </div>
     </Link>
+  );
+}
+
+function CalcStrip() {
+  const [open, setOpen] = useState(false);
+  const [people, setPeople] = useState(2);
+  const [perDay, setPerDay]  = useState(1);
+  const [days,   setDays]    = useState(3);
+  const total = useMemo(() => Math.ceil(people * perDay * days), [people, perDay, days]);
+
+  return (
+    <div className="calc-strip">
+      <button className="calc-strip-toggle" onClick={() => setOpen(o => !o)}>
+        <span>🥭 Not sure how many mangoes to order?</span>
+        <span className="calc-strip-cta">{open ? 'Close ▲' : 'Use the calculator ▼'}</span>
+      </button>
+      {open && (
+        <div className="calc-strip-body">
+          <div className="calc-strip-sliders">
+            {[
+              { emoji: '👨‍👩‍👧‍👦', label: 'Mango lovers in your family', value: people, min: 1, max: 20, step: 1, unit: 'people', set: setPeople },
+              { emoji: '🥭', label: 'Mangoes per person per day', value: perDay, min: 1, max: 8, step: 1, unit: '/day', set: setPerDay },
+              { emoji: '📅', label: 'Days to last', value: days, min: 1, max: 7, step: 1, unit: 'days', set: setDays },
+            ].map(s => (
+              <div key={s.label} className="mcalc-slider-wrap">
+                <div className="mcalc-slider-header">
+                  <span className="mcalc-slider-emoji">{s.emoji}</span>
+                  <span className="mcalc-slider-label" style={{ fontSize: '0.82rem' }}>{s.label}</span>
+                  <span className="mcalc-slider-value" style={{ fontSize: '0.9rem', minWidth: 'unset' }}>{s.value} {s.unit}</span>
+                </div>
+                <input type="range" min={s.min} max={s.max} step={s.step} value={s.value}
+                  className="mcalc-slider" onChange={e => s.set(Number(e.target.value))} />
+                <div className="mcalc-slider-ticks"><span>{s.min}</span><span>{s.max}</span></div>
+              </div>
+            ))}
+          </div>
+          <div className="calc-strip-result">
+            <span className="calc-strip-result-num">{total}</span>
+            <span className="calc-strip-result-label">mangoes — scroll down to find your pack</span>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -188,9 +234,19 @@ export default function ProductsPage() {
             <p className="section-subtitle">Heritage varieties from our farm in Bobbili.</p>
           </div>
 
+          <CalcStrip />
+
           <div className="variety-tiles-grid">
             {varieties.map(product => <VarietyTile key={product.id} product={product} />)}
             {isSeasonPassActive() && <SeasonPassTile />}
+          </div>
+
+          <div className="bulk-contextual-strip">
+            <div className="bulk-contextual-left">
+              <span className="bulk-contextual-title">Ordering for an office, event, or large family?</span>
+              <span className="bulk-contextual-sub">Our standard packs go up to 18 — for anything more, let's plan it together.</span>
+            </div>
+            <Link to="/bulk-enquiry" className="bulk-contextual-cta">Send a Bulk Enquiry →</Link>
           </div>
         </div>
       </section>

@@ -173,6 +173,9 @@ export default function MaasPage() {
           <p className="maas-sub" style={{ marginTop: '0.5rem', opacity: 0.7, fontSize: '0.9em' }}>
             🚚 Currently available in Hyderabad only · Summer 2026
           </p>
+          <p className="maas-sub" style={{ marginTop: '0.75rem', fontSize: '0.82em', opacity: 0.6, display: 'flex', alignItems: 'flex-start', gap: '0.4rem', lineHeight: 1.55 }}>
+            🌳 <span><strong>Deliveries start May 10th</strong> — the moment our mangoes are ready. We give each fruit the time it needs to ripen fully on the tree, never harvesting early or using artificial ripening agents.</span>
+          </p>
           <a
             href="#passes"
             style={{ display: 'inline-block', marginTop: '1.75rem', background: 'var(--mango)', color: '#1a0a00', fontWeight: 700, fontSize: '0.95rem', padding: '0.75rem 2rem', borderRadius: '100px', textDecoration: 'none', letterSpacing: '0.02em' }}
