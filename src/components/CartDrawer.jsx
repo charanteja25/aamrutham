@@ -61,6 +61,10 @@ export default function CartDrawer() {
   const [customer, setCustomer]  = useState(loadSavedCustomer);
   const [formErrors, setFormErrors] = useState({});
 
+  // Clear stale stock errors whenever the cart contents change
+  // (item added, removed, or qty changed) so old messages don't linger.
+  React.useEffect(() => { setStockError(null); }, [items]);
+
   function updateCustomer(field, value) {
     setCustomer((c) => ({ ...c, [field]: value }));
     if (formErrors[field]) {
@@ -491,7 +495,7 @@ export default function CartDrawer() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setStep('cart')}
+                  onClick={() => { setStep('cart'); setStockError(null); }}
                   disabled={checkoutLoading}
                   style={{
                     marginTop: 8,
