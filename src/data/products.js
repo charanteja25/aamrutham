@@ -92,7 +92,7 @@ export const products = [
     category: 'premium',
     accent: 'leaf',
     gradient: 'linear-gradient(160deg, #fff8e1 0%, #ffcc80 50%, #ff8f00 100%)',
-    extraImages: ['/assets/varieties/bobbili-peechu-2.jpg'],
+    extraImages: [],
     story: {
       heading: 'The Story of Bobbili Peechu',
       p1: 'Bobbili Peechu is known for its rich, juicy flavour and distinctive texture — a mango that carries both taste and tradition in every bite.\n\nBobbili Peechu is more than a mango — it is a story rooted in the legacy of the Bobbili Samsthanam.\n\nIt is said that Raja Ravu Swetachalapathi Ramakrishna Ranga Rao was once gifted two mango saplings of a variety known as Kallem Lo Mamidi by the Timmapuram Zamindar. Struck by its exceptional taste, he later named this variety "Bobbili Peechumanu."',
@@ -142,7 +142,7 @@ export const products = [
     category: 'premium',
     accent: 'gold',
     gradient: 'linear-gradient(160deg, #fff8e0 0%, #ffd979 55%, #eeaa2a 100%)',
-    extraImages: ['/assets/varieties/panduri-mavidi-2.jpg'],
+    extraImages: [],
     story: {
       heading: 'The Story of Panduri Mavidi',
       p1: 'Pandurivari mango is a rare, ancient variety once grown in the royal gardens of Andhra. Kings not only enjoyed its unique taste but also carefully preserved these trees, sharing the fruit with close circles and allied kingdoms as a symbol of pride and lineage.\n\nThese trees grow up to 100 feet tall and live for hundreds of years, with some still standing today in the Godavari regions. The fruit is small in size, but rich in flavour — and unlike most mangoes, it does not change colour when it ripens.\n\nThere are many stories about its origin. One says a mango was stolen from a royal orchard and planted in the Velagathuru region, from where it spread through grafting. Even today, families in the Godavari belt continue the tradition of sharing this mango as a mark of heritage.',
@@ -194,7 +194,7 @@ export const products = [
     category: 'premium',
     accent: 'gold',
     gradient: 'linear-gradient(160deg, #fff9e5 0%, #ffe082 50%, #ffc107 100%)',
-    extraImages: ['/assets/varieties/kothapalli-kobbari-2.jpg', '/assets/varieties/kothapalli-kobbari-3.jpg'],
+    extraImages: ['/assets/varieties/kothapalli-kobbari-2.jpg'],
     story: {
       heading: 'The Story of Kothapalli Kobbari',
       p1: 'From the coastal belt of Kakinada, in a small village called Kothapalli, comes a mango unlike any other. Centuries ago, the entire Kothapalli region of East Godavari district had only a single tree of this variety — and from that one tree, a legacy was born.\n\nKnown as Kothapalli Kobbari, this rare regional cultivar carries a signature that surprises everyone who tastes it — a gentle, natural aroma reminiscent of tender coconut. In Telugu, "Kobbari" means coconut, and this mango lives up to its name with every bite.',
@@ -246,7 +246,7 @@ export const products = [
     category: 'premium',
     accent: 'leaf',
     gradient: 'linear-gradient(160deg, #fff0e0 0%, #ffab76 45%, #e07b39 100%)',
-    extraImages: ['/assets/varieties/imam-pasand-2.jpg', '/assets/varieties/imam-pasand-3.jpg'],
+    extraImages: ['/assets/varieties/imam-pasand-2.jpg'],
     story: {
       heading: 'The Story of Imam Pasand',
       p1: 'Imam Pasand — also known as Himayat in Andhra Pradesh and Telangana — is one of the most celebrated mango varieties in India. Its name translates to "The Favourite of the Imam," a title that speaks to centuries of royal reverence.\n\nSome accounts trace this variety to the courts of Mughal Emperor Humayun, where it was called "Humayun Pasand." Others say it was the Nawabs of Hyderabad who embraced and cultivated it most devotedly, making it a prized delicacy of the Deccan. Whether Mughal or Nizam, this mango has always belonged to royalty.',
@@ -296,7 +296,7 @@ export const products = [
     category: 'more',
     accent: 'gold',
     gradient: 'linear-gradient(160deg, #fff4c7 0%, #ffd760 55%, #f0a82b 100%)',
-    extraImages: ['/assets/varieties/suvarnarekha-2.jpg', '/assets/varieties/suvarnarekha-3.jpg', '/assets/varieties/suvarnarekha-4.jpg'],
+    extraImages: ['/assets/varieties/suvarnarekha-2.jpg', '/assets/varieties/suvarnarekha-3.jpg'],
     story: {
       heading: 'The Story of Suvarnarekha',
       p1: 'Named for the golden streak that runs across its skin when ripe, Suvarnarekha is one of the most aromatic varieties from the Visakhapatnam region. Its bright citrusy sweetness stands apart from the richer, heavier premium varieties.',
