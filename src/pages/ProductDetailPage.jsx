@@ -15,7 +15,8 @@ export default function ProductDetailPage() {
   const [pincode, setPincode] = useState('');
   const [message, setMessage] = useState('');
   const [isValid, setIsValid] = useState(null);
-  const [activeImg, setActiveImg] = useState(`/assets/varieties/${product.id}.jpg`);
+  const [activeIdx, setActiveIdx] = useState(0);
+  const touchStartX = React.useRef(null);
   const [factsTab, setFactsTab] = useState('profile');
   const [calcOpen, setCalcOpen] = useState(false);
   const [added, setAdded] = useState(false);
@@ -47,7 +48,19 @@ export default function ProductDetailPage() {
 
   const isSoldOut = getAvailable(product.id, selectedPack.label) === 0;
 
-  const allImages = [`/assets/varieties/${product.id}.jpg`, ...(product.extraImages || [])];
+  // Deduplicate images
+  const allImages = [...new Set([`/assets/varieties/${product.id}.jpg`, ...(product.extraImages || [])])];
+
+  function prev() { setActiveIdx(i => (i - 1 + allImages.length) % allImages.length); }
+  function next() { setActiveIdx(i => (i + 1) % allImages.length); }
+
+  function handleTouchStart(e) { touchStartX.current = e.touches[0].clientX; }
+  function handleTouchEnd(e) {
+    if (touchStartX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(dx) > 40) dx < 0 ? next() : prev();
+    touchStartX.current = null;
+  }
 
   const related = useMemo(() => products.filter((item) => item.category === 'premium' && item.id !== product.id).slice(0, 3), [product.id]);
 
@@ -85,10 +98,15 @@ export default function ProductDetailPage() {
 
         <div className="container detail-grid">
           <div className="detail-visual-col">
-            <div className="detail-visual" style={{ background: product.gradient }}>
+            <div
+              className="detail-visual"
+              style={{ background: product.gradient, position: 'relative', userSelect: 'none' }}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+            >
               <img
-                src={activeImg}
-                alt={product.name}
+                src={allImages[activeIdx]}
+                alt={`${product.name} ${activeIdx + 1}`}
                 className="detail-variety-photo"
                 onError={e => {
                   e.currentTarget.style.display = 'none';
@@ -97,18 +115,29 @@ export default function ProductDetailPage() {
               />
               <img src="/assets/Subject.png" alt="Aamrutham" className="detail-brand-art" style={{ display: 'none' }} />
               <div className="detail-fruit-mark">{product.name}</div>
+
+              {allImages.length > 1 && (
+                <>
+                  <button onClick={prev} aria-label="Previous image" style={arrowBtn('left')}>‹</button>
+                  <button onClick={next} aria-label="Next image" style={arrowBtn('right')}>›</button>
+                </>
+              )}
             </div>
+
             {allImages.length > 1 && (
-              <div className="detail-thumbs">
-                {allImages.map((img, i) => (
+              <div style={{ display: 'flex', justifyContent: 'center', gap: 6, marginTop: 10 }}>
+                {allImages.map((_, i) => (
                   <button
                     key={i}
-                    className={`detail-thumb${activeImg === img ? ' active' : ''}`}
-                    onClick={() => setActiveImg(img)}
-                    style={{ background: product.gradient }}
-                  >
-                    <img src={img} alt={`${product.name} ${i + 1}`} />
-                  </button>
+                    onClick={() => setActiveIdx(i)}
+                    aria-label={`Image ${i + 1}`}
+                    style={{
+                      width: i === activeIdx ? 20 : 8, height: 8,
+                      borderRadius: 4, border: 'none', cursor: 'pointer', padding: 0,
+                      background: i === activeIdx ? '#2d5016' : '#c8bba8',
+                      transition: 'all 0.2s',
+                    }}
+                  />
                 ))}
               </div>
             )}
@@ -305,4 +334,16 @@ export default function ProductDetailPage() {
       </section>
     </main>
   );
+}
+
+function arrowBtn(side) {
+  return {
+    position: 'absolute', top: '50%', [side]: 10,
+    transform: 'translateY(-50%)',
+    background: 'rgba(255,255,255,0.75)', border: 'none',
+    borderRadius: '50%', width: 36, height: 36,
+    fontSize: '1.4rem', lineHeight: '1', cursor: 'pointer',
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.12)', zIndex: 2,
+  };
 }
