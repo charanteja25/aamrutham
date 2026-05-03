@@ -187,11 +187,9 @@ export function CartProvider({ children }) {
 
   const changeQty = (key, delta) => {
     setItems((current) =>
-      current.map((item) =>
-        item.key === key
-          ? { ...item, qty: Math.max(1, item.qty + delta) }
-          : item
-      )
+      current
+        .map((item) => item.key === key ? { ...item, qty: item.qty + delta } : item)
+        .filter((item) => item.qty > 0)
     );
   };
 
