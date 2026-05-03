@@ -87,6 +87,15 @@ export default function CartDrawer() {
       errs.pincode = 'We currently deliver within Hyderabad only.';
     }
     setFormErrors(errs);
+    if (Object.keys(errs).length > 0) {
+      const fieldOrder = ['name', 'contact', 'email', 'address_line1', 'city', 'state', 'pincode'];
+      const first = fieldOrder.find((f) => errs[f]);
+      if (first) {
+        setTimeout(() => {
+          document.getElementById(`checkout-${first}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 30);
+      }
+    }
     return Object.keys(errs).length === 0;
   }
 
@@ -555,6 +564,7 @@ function AddressForm({ customer, errors, onChange }) {
 
       <Field label="Full Name *" error={errors.name}>
         <input
+          id="checkout-name"
           style={inp('name', errors.name)}
           value={customer.name}
           onChange={(e) => onChange('name', e.target.value)}
@@ -566,6 +576,7 @@ function AddressForm({ customer, errors, onChange }) {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
         <Field label="Mobile *" error={errors.contact}>
           <input
+            id="checkout-contact"
             style={inp('contact', errors.contact)}
             value={customer.contact}
             onChange={(e) => onChange('contact', e.target.value.replace(/[^0-9+ ]/g, ''))}
@@ -576,6 +587,7 @@ function AddressForm({ customer, errors, onChange }) {
         </Field>
         <Field label="Email (optional)" error={errors.email}>
           <input
+            id="checkout-email"
             style={inp('email', errors.email)}
             value={customer.email}
             onChange={(e) => onChange('email', e.target.value)}
@@ -588,6 +600,7 @@ function AddressForm({ customer, errors, onChange }) {
 
       <Field label="Address Line 1 *" error={errors.address_line1}>
         <input
+          id="checkout-address_line1"
           style={inp('address_line1', errors.address_line1)}
           value={customer.address_line1}
           onChange={(e) => onChange('address_line1', e.target.value)}
@@ -598,6 +611,7 @@ function AddressForm({ customer, errors, onChange }) {
 
       <Field label="Address Line 2" error={errors.address_line2}>
         <input
+          id="checkout-address_line2"
           style={fieldInput}
           value={customer.address_line2}
           onChange={(e) => onChange('address_line2', e.target.value)}
@@ -609,6 +623,7 @@ function AddressForm({ customer, errors, onChange }) {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
         <Field label="City *" error={errors.city}>
           <input
+            id="checkout-city"
             style={inp('city', errors.city)}
             value={customer.city}
             onChange={(e) => onChange('city', e.target.value)}
@@ -618,6 +633,7 @@ function AddressForm({ customer, errors, onChange }) {
         </Field>
         <Field label="State *" error={errors.state}>
           <input
+            id="checkout-state"
             style={inp('state', errors.state)}
             value={customer.state}
             onChange={(e) => onChange('state', e.target.value)}
@@ -630,6 +646,7 @@ function AddressForm({ customer, errors, onChange }) {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
         <Field label="Pincode *" error={errors.pincode}>
           <input
+            id="checkout-pincode"
             style={inp('pincode', errors.pincode)}
             value={customer.pincode}
             onChange={(e) => onChange('pincode', e.target.value.replace(/\D/g, '').slice(0, 6))}
