@@ -172,11 +172,13 @@ export default function CartDrawer() {
       if (res.status === 409) {
         const err = await res.json();
         setCheckoutLoading(false);
-        const lines = (err.items || [{ packLabel: err.packLabel, available: err.available }])
-          .map((e) => e.available === 0
-            ? `"${e.packLabel}" is out of stock.`
-            : `Only ${e.available} pack(s) of "${e.packLabel}" available.`
-          );
+        const lines = (err.items || [{ productId: err.productId, packLabel: err.packLabel, available: err.available }])
+          .map((e) => {
+            const name = items.find((i) => i.id === e.productId)?.name || e.productId;
+            return e.available === 0
+              ? `${name} (${e.packLabel}) is out of stock.`
+              : `${name} (${e.packLabel}) — only ${e.available} pack(s) available.`;
+          });
         setStockError(lines);
         refreshInventory();
         return;
