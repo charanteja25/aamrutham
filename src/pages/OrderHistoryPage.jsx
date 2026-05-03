@@ -61,17 +61,22 @@ function OrderCard({ order }) {
   );
 }
 
+function isEmail(val) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim());
+}
+
 export default function OrderHistoryPage() {
-  // steps: 'phone' → 'channel' → 'otp' → 'orders'
-  const [step, setStep]             = useState('phone');
-  const [phone, setPhone]           = useState('');
-  const [channel, setChannel]       = useState(null);   // 'whatsapp' | 'email'
+  const [step, setStep]               = useState('identifier'); // 'identifier' | 'otp' | 'orders'
+  const [identifier, setIdentifier]   = useState('');
+  const [channel, setChannel]         = useState('');     // 'whatsapp' | 'email'
   const [maskedEmail, setMaskedEmail] = useState('');
-  const [otp, setOtp]               = useState('');
-  const [orders, setOrders]         = useState([]);
-  const [loading, setLoading]       = useState(false);
-  const [error, setError]           = useState('');
+  const [otp, setOtp]                 = useState('');
+  const [orders, setOrders]           = useState([]);
+  const [loading, setLoading]         = useState(false);
+  const [error, setError]             = useState('');
   const [resendTimer, setResendTimer] = useState(0);
+
+  const byEmail = isEmail(identifier);
 
   function startResendTimer() {
     setResendTimer(60);
@@ -80,31 +85,29 @@ export default function OrderHistoryPage() {
     }, 1000);
   }
 
-  function goToPhone() {
-    setStep('phone'); setPhone(''); setOtp('');
-    setOrders([]); setError(''); setChannel(null); setMaskedEmail('');
+  function reset() {
+    setStep('identifier'); setIdentifier(''); setOtp('');
+    setOrders([]); setError(''); setChannel(''); setMaskedEmail('');
   }
 
-  async function handlePhoneSubmit(e) {
-    e.preventDefault();
-    const digits = phone.replace(/\D/g, '').slice(-10);
-    if (digits.length !== 10) { setError('Enter a valid 10-digit mobile number'); return; }
-    setError('');
-    setStep('channel');
-  }
-
-  async function sendOtp(ch) {
-    setChannel(ch);
-    setError('');
-    setLoading(true);
+  async function handleSend(e) {
+    e?.preventDefault();
+    const val = identifier.trim();
+    if (!val) { setError('Enter your mobile number or email.'); return; }
+    if (!byEmail && val.replace(/\D/g, '').slice(-10).length !== 10) {
+      setError('Enter a valid 10-digit mobile number or email address.');
+      return;
+    }
+    setError(''); setLoading(true);
     try {
       const res = await fetch(API_BASE + '/api/order-history/send-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contact: phone.replace(/\D/g, '').slice(-10), channel: ch }),
+        body: JSON.stringify({ identifier: val }),
       });
       const data = await res.json();
-      if (!res.ok) { setError(data.error || 'Failed to send code'); return; }
+      if (!res.ok) { setError(data.error || 'Failed to send code.'); return; }
+      setChannel(data.channel);
       if (data.maskedEmail) setMaskedEmail(data.maskedEmail);
       setStep('otp');
       startResendTimer();
@@ -115,18 +118,18 @@ export default function OrderHistoryPage() {
     }
   }
 
-  async function handleVerifyOtp(e) {
+  async function handleVerify(e) {
     e.preventDefault();
-    if (otp.trim().length !== 6) { setError('Enter the 6-digit code'); return; }
+    if (otp.trim().length !== 6) { setError('Enter the 6-digit code.'); return; }
     setError(''); setLoading(true);
     try {
       const res = await fetch(API_BASE + '/api/order-history/verify-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contact: phone.replace(/\D/g, '').slice(-10), otp: otp.trim() }),
+        body: JSON.stringify({ identifier: identifier.trim(), otp: otp.trim() }),
       });
       const data = await res.json();
-      if (!res.ok) { setError(data.error || 'Invalid code'); return; }
+      if (!res.ok) { setError(data.error || 'Invalid code.'); return; }
       setOrders(data.orders);
       setStep('orders');
     } catch {
@@ -137,8 +140,8 @@ export default function OrderHistoryPage() {
   }
 
   const sentTo = channel === 'email'
-    ? `email to ${maskedEmail}`
-    : `WhatsApp to +91 ${phone.replace(/\D/g, '').slice(-10)}`;
+    ? `email · ${maskedEmail}`
+    : `WhatsApp · +91 ${identifier.replace(/\D/g, '').slice(-10)}`;
 
   return (
     <main style={{ minHeight: '100vh', background: '#faf7f2', padding: '2rem 0 4rem' }}>
@@ -147,88 +150,56 @@ export default function OrderHistoryPage() {
         <Link to="/" style={{ fontSize: '0.85rem', color: '#8a7560', textDecoration: 'none' }}>← Back to Home</Link>
 
         <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: '2rem', margin: '1.25rem 0 0.25rem', color: '#1a1a1a' }}>
-          Your Orders
+          My Orders
         </h1>
         <p style={{ color: '#8a7560', fontSize: '0.92rem', marginBottom: '2rem' }}>
-          Enter your mobile number to see your Aamrutham order history.
+          Enter your mobile number or email to view your order history.
         </p>
 
-        {/* ── Step 1: Phone ── */}
-        {step === 'phone' && (
-          <form onSubmit={handlePhoneSubmit}>
-            <label style={labelStyle}>Mobile Number</label>
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <span style={prefixStyle}>🇮🇳 +91</span>
-              <input
-                style={{ ...inputStyle, flex: 1 }}
-                type="tel" inputMode="numeric"
-                placeholder="9876543210" maxLength={10}
-                value={phone}
-                onChange={e => { setPhone(e.target.value.replace(/\D/g, '')); setError(''); }}
-              />
-            </div>
+        {/* ── Step 1: Identifier ── */}
+        {step === 'identifier' && (
+          <form onSubmit={handleSend}>
+            <label style={labelStyle}>Mobile Number or Email</label>
+            <input
+              style={inputStyle}
+              type="text"
+              inputMode="email"
+              placeholder="9876543210  or  you@email.com"
+              value={identifier}
+              autoComplete="email"
+              onChange={e => { setIdentifier(e.target.value); setError(''); }}
+            />
+
+            {/* hint updates as they type */}
+            {identifier.length > 2 && (
+              <p style={{ margin: '6px 0 0', fontSize: '0.78rem', color: '#8a7560' }}>
+                {byEmail
+                  ? '✉️ Code will be sent to this email'
+                  : identifier.replace(/\D/g, '').length >= 10
+                    ? '💬 Code will be sent via WhatsApp'
+                    : ''}
+              </p>
+            )}
+
             {error && <p style={errorStyle}>{error}</p>}
-            <button style={btnStyle} type="submit">Continue →</button>
+            <button style={btnStyle} type="submit" disabled={loading}>
+              {loading ? 'Sending…' : 'Send Code →'}
+            </button>
           </form>
         )}
 
-        {/* ── Step 2: Channel ── */}
-        {step === 'channel' && (
-          <div>
-            <div style={{
-              background: '#fff', border: '1px solid #e8dfc8', borderRadius: 12,
-              padding: '1rem 1.1rem', marginBottom: '1.5rem', fontSize: '0.88rem', color: '#5B3A15',
-            }}>
-              📱 +91 {phone.replace(/\D/g, '').slice(-10)}
-              <button onClick={goToPhone} style={{ float: 'right', background: 'none', border: 'none', color: '#2d5016', fontWeight: 600, cursor: 'pointer', fontSize: '0.82rem' }}>Change</button>
-            </div>
-
-            <p style={{ fontWeight: 600, color: '#3a2a14', marginBottom: '0.75rem', fontSize: '0.95rem' }}>
-              How should we send your verification code?
-            </p>
-
-            {error && <p style={errorStyle}>{error}</p>}
-
-            <button
-              style={{ ...channelBtnStyle, marginBottom: '0.75rem' }}
-              onClick={() => sendOtp('whatsapp')}
-              disabled={loading}
-            >
-              <span style={{ fontSize: '1.4rem' }}>💬</span>
-              <div style={{ textAlign: 'left' }}>
-                <div style={{ fontWeight: 700 }}>Send via WhatsApp</div>
-                <div style={{ fontSize: '0.78rem', opacity: 0.7 }}>Code sent to your WhatsApp</div>
-              </div>
-            </button>
-
-            <button
-              style={channelBtnStyle}
-              onClick={() => sendOtp('email')}
-              disabled={loading}
-            >
-              <span style={{ fontSize: '1.4rem' }}>✉️</span>
-              <div style={{ textAlign: 'left' }}>
-                <div style={{ fontWeight: 700 }}>Send via Email</div>
-                <div style={{ fontSize: '0.78rem', opacity: 0.7 }}>Code sent to email used at checkout</div>
-              </div>
-            </button>
-
-            {loading && <p style={{ textAlign: 'center', color: '#8a7560', marginTop: '1rem', fontSize: '0.85rem' }}>Sending code…</p>}
-          </div>
-        )}
-
-        {/* ── Step 3: OTP ── */}
+        {/* ── Step 2: OTP ── */}
         {step === 'otp' && (
-          <form onSubmit={handleVerifyOtp}>
+          <form onSubmit={handleVerify}>
             <div style={{
-              background: '#e8f5e9', border: '1px solid #c8e6c9',
-              borderRadius: 10, padding: '0.75rem 1rem', marginBottom: '1.25rem',
+              background: '#e8f5e9', border: '1px solid #c8e6c9', borderRadius: 10,
+              padding: '0.75rem 1rem', marginBottom: '1.25rem',
               fontSize: '0.85rem', color: '#2e7d32',
             }}>
               ✅ Code sent via {sentTo}
             </div>
 
-            <label style={labelStyle}>Enter 6-digit Code</label>
+            <label style={labelStyle}>6-digit Code</label>
             <input
               style={{ ...inputStyle, letterSpacing: '0.2em', fontSize: '1.4rem', textAlign: 'center' }}
               type="tel" inputMode="numeric"
@@ -238,34 +209,35 @@ export default function OrderHistoryPage() {
               autoFocus
             />
             {error && <p style={errorStyle}>{error}</p>}
+
             <button style={btnStyle} type="submit" disabled={loading}>
               {loading ? 'Verifying…' : 'View My Orders →'}
             </button>
 
             <div style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.82rem', color: '#8a7560' }}>
               Didn't get it?{' '}
-              <button type="button" onClick={() => resendTimer === 0 && sendOtp(channel)}
+              <button type="button" onClick={() => resendTimer === 0 && handleSend()}
                 disabled={resendTimer > 0 || loading}
                 style={{ background: 'none', border: 'none', cursor: resendTimer > 0 ? 'default' : 'pointer', color: resendTimer > 0 ? '#aaa' : '#2d5016', fontWeight: 600, fontSize: '0.82rem', padding: 0 }}>
-                {resendTimer > 0 ? `Resend in ${resendTimer}s` : 'Resend code'}
+                {resendTimer > 0 ? `Resend in ${resendTimer}s` : 'Resend'}
               </button>
               {' · '}
-              <button type="button" onClick={() => { setStep('channel'); setOtp(''); setError(''); }}
+              <button type="button" onClick={reset}
                 style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#2d5016', fontWeight: 600, fontSize: '0.82rem', padding: 0 }}>
-                Try other method
+                Change
               </button>
             </div>
           </form>
         )}
 
-        {/* ── Step 4: Orders ── */}
+        {/* ── Step 3: Orders ── */}
         {step === 'orders' && (
           <div>
             {orders.length === 0 ? (
               <div style={{ textAlign: 'center', padding: '3rem 0', color: '#8a7560' }}>
                 <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>🧺</div>
-                <p style={{ fontWeight: 600, color: '#3a2a14' }}>No orders yet</p>
-                <p style={{ fontSize: '0.85rem' }}>Looks like +91 {phone} hasn't placed an order.</p>
+                <p style={{ fontWeight: 600, color: '#3a2a14' }}>No orders found</p>
+                <p style={{ fontSize: '0.85rem' }}>No orders linked to <strong>{identifier}</strong>.</p>
                 <Link to="/products" style={{ display: 'inline-block', marginTop: '1rem', color: '#2d5016', fontWeight: 700 }}>
                   Browse Mangoes →
                 </Link>
@@ -273,14 +245,14 @@ export default function OrderHistoryPage() {
             ) : (
               <>
                 <p style={{ fontSize: '0.82rem', color: '#8a7560', marginBottom: '1rem' }}>
-                  {orders.length} order{orders.length !== 1 ? 's' : ''} for +91 {phone.replace(/\D/g, '').slice(-10)}
+                  {orders.length} order{orders.length !== 1 ? 's' : ''} for <strong>{identifier}</strong>
                 </p>
                 {orders.map(o => <OrderCard key={o.id} order={o} />)}
               </>
             )}
-            <button onClick={goToPhone}
+            <button onClick={reset}
               style={{ ...btnStyle, background: 'transparent', color: '#2d5016', border: '1.5px solid #2d5016', marginTop: '0.5rem' }}>
-              Look up another number
+              Look up another account
             </button>
           </div>
         )}
@@ -295,27 +267,15 @@ const labelStyle = {
   color: '#6b5535', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 6,
 };
 const inputStyle = {
-  width: '100%', padding: '0.7rem 0.9rem',
+  width: '100%', padding: '0.75rem 0.9rem',
   border: '1.5px solid #e3d9c2', borderRadius: 10,
   fontSize: '1rem', background: '#fff', color: '#1a1a1a',
   fontFamily: 'inherit', boxSizing: 'border-box', outline: 'none',
-};
-const prefixStyle = {
-  display: 'flex', alignItems: 'center', padding: '0 0.75rem',
-  background: '#f5ede0', border: '1.5px solid #e3d9c2',
-  borderRadius: 10, fontSize: '0.9rem', color: '#5B3A15', whiteSpace: 'nowrap',
 };
 const btnStyle = {
   display: 'block', width: '100%', marginTop: '1rem',
   padding: '0.85rem', borderRadius: 50,
   background: '#2d5016', color: '#fff', border: 'none',
   fontWeight: 700, fontSize: '1rem', cursor: 'pointer', fontFamily: 'inherit',
-};
-const channelBtnStyle = {
-  display: 'flex', alignItems: 'center', gap: '0.9rem',
-  width: '100%', padding: '0.9rem 1.1rem',
-  background: '#fff', border: '1.5px solid #e3d9c2', borderRadius: 12,
-  cursor: 'pointer', fontFamily: 'inherit', color: '#1a1a1a',
-  transition: 'border-color 0.15s', textAlign: 'left',
 };
 const errorStyle = { margin: '6px 0 0', fontSize: '0.78rem', color: '#b91c1c' };
