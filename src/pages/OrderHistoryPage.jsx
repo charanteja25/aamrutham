@@ -105,14 +105,14 @@ export default function OrderHistoryPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ identifier: val }),
       });
-      const data = await res.json();
-      if (!res.ok) { setError(data.error || 'Failed to send code.'); return; }
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) { setError(data.error || 'Something went wrong. Please try again.'); return; }
       setChannel(data.channel);
       if (data.maskedEmail) setMaskedEmail(data.maskedEmail);
       setStep('otp');
       startResendTimer();
     } catch {
-      setError('Network error. Please try again.');
+      setError('Could not reach the server. Please check your connection and try again.');
     } finally {
       setLoading(false);
     }

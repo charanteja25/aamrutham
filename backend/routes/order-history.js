@@ -44,6 +44,20 @@ router.post("/send-otp", async (req, res) => {
     return res.status(400).json({ error: "Enter a valid 10-digit mobile number or email." });
   }
 
+  // Check orders exist before doing anything else
+  const field = byEmail ? "customer_email" : "customer_contact";
+  const { rows: orderCheck } = await pool.query(
+    `SELECT 1 FROM orders WHERE ${field} = $1 LIMIT 1`,
+    [identifier]
+  );
+  if (orderCheck.length === 0) {
+    return res.status(404).json({
+      error: byEmail
+        ? "No orders found for this email address. Try the mobile number you used at checkout."
+        : "No orders found for this mobile number. Try the email you used at checkout.",
+    });
+  }
+
   // Rate limit: 1 OTP per identifier per 60 seconds
   const { rows: recent } = await pool.query(
     `SELECT id FROM otp_requests
