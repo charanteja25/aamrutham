@@ -17,6 +17,8 @@ const VARIETY_CODES = {
   'chinna-rasalu': 'CR',
   'pedda-rasalu': 'PR',
   'panduri-mavidi': 'PM',
+  'rajula-mamidi': 'RM',
+  'cheruku-rasalu': 'CH',
   'children-mango-pack': 'KP',
   'signature-box': 'SB',
   'season-pass-12': 'SP12',
