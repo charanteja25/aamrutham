@@ -170,12 +170,14 @@ export default function CartDrawer() {
       });
 
       if (res.status === 409) {
-        // Insufficient stock
         const err = await res.json();
         setCheckoutLoading(false);
-        setStockError(
-          `Sorry, only ${err.available} pack(s) of "${err.packLabel}" are available right now.`
-        );
+        const lines = (err.items || [{ packLabel: err.packLabel, available: err.available }])
+          .map((e) => e.available === 0
+            ? `"${e.packLabel}" is out of stock.`
+            : `Only ${e.available} pack(s) of "${e.packLabel}" available.`
+          );
+        setStockError(lines);
         refreshInventory();
         return;
       }
@@ -445,10 +447,12 @@ export default function CartDrawer() {
                   border: "1px solid rgba(220,38,38,0.25)",
                   color: "#b91c1c",
                   fontSize: "0.82rem",
-                  lineHeight: 1.4,
+                  lineHeight: 1.6,
                 }}
               >
-                ⚠️ {stockError}
+                {(Array.isArray(stockError) ? stockError : [stockError]).map((line, i) => (
+                  <div key={i}>⚠️ {line}</div>
+                ))}
               </div>
             )}
 
