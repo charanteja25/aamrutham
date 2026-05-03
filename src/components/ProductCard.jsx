@@ -155,7 +155,7 @@ export default function ProductCard({ product, showDetails = true }) {
               ref={addToCartBtnRef}
               className="btn btn-leaf"
               onClick={() =>
-                addToCart(product, selectedPack.label, selectedPack.price, fruitRef.current, addToCartBtnRef.current, true)
+                addToCart(product, selectedPack.label, selectedPack.price, addToCartBtnRef.current, false)
               }
             >
               Add to cart

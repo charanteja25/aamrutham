@@ -129,7 +129,7 @@ function VarietyTile({ product }) {
           ) : (
             <button
               className="variety-tile-cart-btn"
-              onClick={() => addToCart(product, selectedPack.label, selectedPack.price, null, null, true)}
+              onClick={() => addToCart(product, selectedPack.label, selectedPack.price)}
             >Add to cart</button>
           )}
         </div>

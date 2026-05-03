@@ -63,26 +63,15 @@ router.post("/verify", async (req, res) => {
   try {
     await client.query("BEGIN");
 
-    const firstName = (customer.name || 'Guest').split(' ')[0];
-
-    // Fetch cart data and mark paid in one query
+    // Mark paid — preserve customer fields already written at order-create time.
     const orderResult = await client.query(
       `UPDATE orders
        SET status              = 'paid',
            razorpay_payment_id = $1,
-           customer_name       = $2,
-           customer_email      = $3,
-           customer_contact    = $4,
            updated_at          = NOW()
-       WHERE razorpay_order_id = $5
-       RETURNING id, cart_items, amount`,
-      [
-        razorpay_payment_id,
-        customer.name    || null,
-        customer.email   || null,
-        customer.contact || null,
-        razorpay_order_id,
-      ]
+       WHERE razorpay_order_id = $2
+       RETURNING id, cart_items, amount, customer_name, customer_email, customer_contact`,
+      [razorpay_payment_id, razorpay_order_id]
     );
 
     if (orderResult.rowCount === 0) {
@@ -91,8 +80,10 @@ router.post("/verify", async (req, res) => {
     }
 
     const cartItems = orderResult.rows[0].cart_items || [];
-    const amount = orderResult.rows[0].amount || 0;
-    const aamOrderId = generateAamOrderId(cartItems, firstName);
+    const amount    = orderResult.rows[0].amount     || 0;
+    const dbName    = orderResult.rows[0].customer_name  || 'Customer';
+    const dbEmail   = orderResult.rows[0].customer_email || null;
+    const aamOrderId = generateAamOrderId(cartItems, dbName.split(' ')[0]);
 
     await client.query(
       `UPDATE orders SET aam_order_id = $1 WHERE razorpay_order_id = $2`,
@@ -122,11 +113,11 @@ router.post("/verify", async (req, res) => {
     await client.query("COMMIT");
     res.json({ success: true, orderId: orderResult.rows[0].id, aamOrderId });
 
-    // Send confirmation email (non-blocking)
-    if (customer.email) {
+    // Send confirmation email (non-blocking) — use DB-stored customer data
+    if (dbEmail) {
       sendOrderConfirmation({
-        to: customer.email,
-        name: customer.name || 'Customer',
+        to: dbEmail,
+        name: dbName,
         aamOrderId,
         cartItems,
         amount,
