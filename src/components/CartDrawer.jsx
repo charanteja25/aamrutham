@@ -18,7 +18,7 @@ const EMPTY_CUSTOMER = {
   contact: '',
   address_line1: '',
   address_line2: '',
-  city: '',
+  city: 'Hyderabad',
   state: 'Telangana',
   pincode: '',
   landmark: '',
@@ -82,8 +82,6 @@ export default function CartDrawer() {
       errs.email = 'Enter a valid email';
     }
     if (!customer.address_line1.trim()) errs.address_line1 = 'Required';
-    if (!customer.city.trim()) errs.city = 'Required';
-    if (!customer.state.trim()) errs.state = 'Required';
     const pin = customer.pincode.trim();
     if (!/^[0-9]{6}$/.test(pin)) {
       errs.pincode = '6-digit pincode';
@@ -641,23 +639,21 @@ function AddressForm({ customer, errors, onChange }) {
       </Field>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
-        <Field label="City *" error={errors.city}>
+        <Field label="City">
           <input
             id="checkout-city"
-            style={inp('city', errors.city)}
-            value={customer.city}
-            onChange={(e) => onChange('city', e.target.value)}
-            placeholder="Hyderabad"
+            style={{ ...fieldInput, background: '#f5f0e8', color: '#6b5535', cursor: 'default' }}
+            value="Hyderabad"
+            readOnly
             autoComplete="address-level2"
           />
         </Field>
-        <Field label="State *" error={errors.state}>
+        <Field label="State">
           <input
             id="checkout-state"
-            style={inp('state', errors.state)}
-            value={customer.state}
-            onChange={(e) => onChange('state', e.target.value)}
-            placeholder="Telangana"
+            style={{ ...fieldInput, background: '#f5f0e8', color: '#6b5535', cursor: 'default' }}
+            value="Telangana"
+            readOnly
             autoComplete="address-level1"
           />
         </Field>
