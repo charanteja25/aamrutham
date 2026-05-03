@@ -346,7 +346,7 @@ export const products = [
     category: 'more',
     accent: 'leaf',
     gradient: 'linear-gradient(160deg, #fff1cf 0%, #ffdd87 55%, #f5a623 100%)',
-    extraImages: ['/assets/varieties/banganapalli-2.jpg', '/assets/varieties/banganapalli-3.jpg', '/assets/varieties/banganapalli-4.jpg'],
+    extraImages: ['/assets/varieties/banganapalli-2.jpg', '/assets/varieties/banganapalli-3.jpg'],
     story: {
       heading: 'The Story of Banganapalli',
       p1: 'GI-tagged and beloved across Telugu households, Banganapalli — also called Benishan — has been the everyday mango of Andhra Pradesh for generations. Its large size, smooth golden skin, and mild honey sweetness make it universally loved.',
@@ -396,7 +396,7 @@ export const products = [
     category: 'more',
     accent: 'gold',
     gradient: 'linear-gradient(160deg, #fff3db 0%, #ffc86d 55%, #eb8d23 100%)',
-    extraImages: ['/assets/varieties/chinna-rasalu-2.jpg', '/assets/varieties/chinna-rasalu-3.jpg'],
+    extraImages: ['/assets/varieties/chinna-rasalu-2.jpg'],
     story: {
       heading: 'The Story of Chinna Rasalu',
       p1: 'Small in size but enormous in flavour, Chinna Rasalu has been a staple of Telugu summer childhoods for generations. "Rasalu" means nectar, and the name is earned — the syrup-like pulp is among the sweetest of any mango variety.',
@@ -548,6 +548,7 @@ export const products = [
     category: 'more',
     accent: 'gold',
     gradient: 'linear-gradient(160deg, #fffbe6 0%, #ffe566 55%, #f0b429 100%)',
+    extraImages: ['/assets/varieties/cheruku-rasalu-2.jpg'],
     story: {
       heading: 'The Story of Cheruku Rasalu',
       p1: 'In the mango heartland of Nuzvid, Cheruku Rasalu has been a summer ritual for as long as anyone can remember. The name says everything — "cheruku" for sugarcane, "rasalu" for nectar. Together, they describe a mango whose juice is so pure and concentrated it almost needs no explanation.\n\nSmall in size, these mangoes punch far above their weight. The alluvial plains of Krishna district give them a sweetness that peaks late in the season, making June and July the months to seek them out.',
