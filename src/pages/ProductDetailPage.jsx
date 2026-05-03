@@ -18,7 +18,14 @@ export default function ProductDetailPage() {
   const [activeImg, setActiveImg] = useState(`/assets/varieties/${product.id}.jpg`);
   const [factsTab, setFactsTab] = useState('profile');
   const [calcOpen, setCalcOpen] = useState(false);
+  const [added, setAdded] = useState(false);
   const { addToCart } = useCart();
+
+  function handleAddToCart() {
+    addToCart(product, selectedPack.label, selectedPack.price, null, true);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1000);
+  }
   usePageMeta({
     title: product.name + ' — Aamrutham',
     description: product.description,
@@ -162,8 +169,12 @@ export default function ProductDetailPage() {
                 {isSoldOut ? (
                   <span className="sold-out-chip sold-out-chip--large">Coming Soon</span>
                 ) : (
-                  <button className="btn btn-soft" onClick={() => addToCart(product, selectedPack.label, selectedPack.price, null, true)}>
-                    Add to cart
+                  <button
+                    className={`btn btn-soft${added ? ' btn--added' : ''}`}
+                    onClick={handleAddToCart}
+                    disabled={added}
+                  >
+                    {added ? '✓ Added' : 'Add to cart'}
                   </button>
                 )}
               </div>

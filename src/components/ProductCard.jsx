@@ -42,10 +42,17 @@ function stockBadge(available) {
 export default function ProductCard({ product, showDetails = true }) {
   const [selectedPack, setSelectedPack] = useState(product.packPrices[0]);
   const [imgFailed, setImgFailed] = useState(false);
+  const [added, setAdded] = useState(false);
   const { addToCart } = useCart();
   const { getAvailable } = useInventory();
   const addToCartBtnRef = React.useRef(null);
   const fruitRef = React.useRef(null);
+
+  function handleAddToCart() {
+    addToCart(product, selectedPack.label, selectedPack.price, addToCartBtnRef.current, false);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1000);
+  }
 
   // Auto-select the first in-stock pack once inventory loads.
   useEffect(() => {
@@ -153,12 +160,11 @@ export default function ProductCard({ product, showDetails = true }) {
           ) : (
             <button
               ref={addToCartBtnRef}
-              className="btn btn-leaf"
-              onClick={() =>
-                addToCart(product, selectedPack.label, selectedPack.price, addToCartBtnRef.current, false)
-              }
+              className={`btn btn-leaf${added ? ' btn--added' : ''}`}
+              onClick={handleAddToCart}
+              disabled={added}
             >
-              Add to cart
+              {added ? '✓ Added' : 'Add to cart'}
             </button>
           )}
         </div>
