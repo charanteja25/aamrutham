@@ -28,6 +28,7 @@ export default function Navbar() {
           <a href="/#process" onClick={closeMenu}>Farm to You</a>
           <Link to="/team" onClick={closeMenu} className={location.pathname === '/team' ? 'active' : ''}>Our Team</Link>
           <Link to="/values" onClick={closeMenu} className={location.pathname === '/values' ? 'active' : ''}>Our Values</Link>
+          <Link to="/my-orders" onClick={closeMenu} className={location.pathname === '/my-orders' ? 'active' : ''}>My Orders</Link>
         </div>
       </nav>
     </header>

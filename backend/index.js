@@ -6,6 +6,8 @@ import paymentsRouter from "./routes/payments.js";
 import inventoryRouter from "./routes/inventory.js";
 import adminRouter from "./routes/admin.js";
 import seasonPassRouter from "./routes/season-pass.js";
+import orderHistoryRouter from "./routes/order-history.js";
+
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -30,6 +32,7 @@ app.use("/api/payments", paymentsRouter);
 app.use("/api/inventory", inventoryRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/season-pass", seasonPassRouter);
+app.use("/api/order-history", orderHistoryRouter);
 
 app.get("/api/health", (_req, res) => res.json({ ok: true }));
 

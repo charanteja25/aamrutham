@@ -30,7 +30,9 @@ export default function BulkEnquiryPage() {
   }
 
   function setQty(id, val) {
-    setSelected(prev => ({ ...prev, [id]: val.replace(/\D/g, '') }));
+    const digits = val.replace(/\D/g, '');
+    const capped = digits && Number(digits) > 999 ? '999' : digits;
+    setSelected(prev => ({ ...prev, [id]: capped }));
   }
 
   function validate() {
@@ -39,7 +41,8 @@ export default function BulkEnquiryPage() {
     if (email && !/\S+@\S+\.\S+/.test(email)) e.email  = 'Please enter a valid email address.';
     if (Object.keys(selected).length === 0)   e.variety = 'Please select at least one variety.';
     Object.entries(selected).forEach(([id, qty]) => {
-      if (!qty || Number(qty) < 1) e[`qty_${id}`] = 'Enter quantity.';
+      if (!qty || Number(qty) < 1)    e[`qty_${id}`] = 'Enter quantity.';
+      else if (Number(qty) > 999)     e[`qty_${id}`] = 'Maximum 999 pcs per variety.';
     });
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -148,7 +151,7 @@ export default function BulkEnquiryPage() {
                         <label className="bulk-qty-label">Qty (pcs)</label>
                         <input
                           className={`bulk-qty-input${errors[`qty_${v.id}`] ? ' bulk-input--error' : ''}`}
-                          type="number" min="1" placeholder="e.g. 50"
+                          type="number" min="1" max="999" placeholder="e.g. 50"
                           value={selected[v.id]}
                           onChange={e => setQty(v.id, e.target.value)}
                         />

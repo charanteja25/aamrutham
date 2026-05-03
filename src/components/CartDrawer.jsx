@@ -18,7 +18,7 @@ const EMPTY_CUSTOMER = {
   contact: '',
   address_line1: '',
   address_line2: '',
-  city: '',
+  city: 'Hyderabad',
   state: 'Telangana',
   pincode: '',
   landmark: '',
@@ -48,7 +48,7 @@ function loadRazorpayScript() {
 export default function CartDrawer() {
   const navigate = useNavigate();
   const { items, total, deliveryFee, grandTotal, isOpen, setIsOpen, changeQty, removeItem, count } = useCart();
-  const { refreshInventory } = useInventory();
+  const { refreshInventory, getAvailable } = useInventory();
 
   // State for the active Razorpay order (set once we lock inventory)
   const [activeOrderId, setActiveOrderId]       = useState(null);
@@ -60,6 +60,10 @@ export default function CartDrawer() {
   const [step, setStep]          = useState('cart');
   const [customer, setCustomer]  = useState(loadSavedCustomer);
   const [formErrors, setFormErrors] = useState({});
+
+  // Clear stale stock errors whenever the cart contents change
+  // (item added, removed, or qty changed) so old messages don't linger.
+  React.useEffect(() => { setStockError(null); }, [items]);
 
   function updateCustomer(field, value) {
     setCustomer((c) => ({ ...c, [field]: value }));
@@ -78,8 +82,6 @@ export default function CartDrawer() {
       errs.email = 'Enter a valid email';
     }
     if (!customer.address_line1.trim()) errs.address_line1 = 'Required';
-    if (!customer.city.trim()) errs.city = 'Required';
-    if (!customer.state.trim()) errs.state = 'Required';
     const pin = customer.pincode.trim();
     if (!/^[0-9]{6}$/.test(pin)) {
       errs.pincode = '6-digit pincode';
@@ -87,6 +89,15 @@ export default function CartDrawer() {
       errs.pincode = 'We currently deliver within Hyderabad only.';
     }
     setFormErrors(errs);
+    if (Object.keys(errs).length > 0) {
+      const fieldOrder = ['name', 'contact', 'email', 'address_line1', 'city', 'state', 'pincode'];
+      const first = fieldOrder.find((f) => errs[f]);
+      if (first) {
+        setTimeout(() => {
+          document.getElementById(`checkout-${first}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 30);
+      }
+    }
     return Object.keys(errs).length === 0;
   }
 
@@ -157,12 +168,16 @@ export default function CartDrawer() {
       });
 
       if (res.status === 409) {
-        // Insufficient stock
         const err = await res.json();
         setCheckoutLoading(false);
-        setStockError(
-          `Sorry, only ${err.available} pack(s) of "${err.packLabel}" are available right now.`
-        );
+        const lines = (err.items || [{ productId: err.productId, packLabel: err.packLabel, available: err.available }])
+          .map((e) => {
+            const name = items.find((i) => i.id === e.productId)?.name || e.productId;
+            return e.available === 0
+              ? `${name} (${e.packLabel}) is out of stock.`
+              : `${name} (${e.packLabel}) — only ${e.available} pack(s) available.`;
+          });
+        setStockError(lines);
         refreshInventory();
         return;
       }
@@ -273,8 +288,18 @@ export default function CartDrawer() {
   }
 
   function handleContinueToAddress() {
-    setStockError(null);
     if (items.length === 0) return;
+    const errors = items
+      .map((item) => {
+        const avail = getAvailable(item.id, item.packLabel);
+        if (avail === null) return null; // inventory still loading — let it through
+        if (avail === 0) return `${item.name} (${item.packLabel}) is out of stock.`;
+        if (avail < item.qty) return `${item.name} (${item.packLabel}) — only ${avail} pack(s) available.`;
+        return null;
+      })
+      .filter(Boolean);
+    if (errors.length > 0) { setStockError(errors); return; }
+    setStockError(null);
     setStep('address');
   }
 
@@ -432,10 +457,12 @@ export default function CartDrawer() {
                   border: "1px solid rgba(220,38,38,0.25)",
                   color: "#b91c1c",
                   fontSize: "0.82rem",
-                  lineHeight: 1.4,
+                  lineHeight: 1.6,
                 }}
               >
-                ⚠️ {stockError}
+                {(Array.isArray(stockError) ? stockError : [stockError]).map((line, i) => (
+                  <div key={i}>⚠️ {line}</div>
+                ))}
               </div>
             )}
 
@@ -482,7 +509,7 @@ export default function CartDrawer() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setStep('cart')}
+                  onClick={() => { setStep('cart'); setStockError(null); }}
                   disabled={checkoutLoading}
                   style={{
                     marginTop: 8,
@@ -555,6 +582,7 @@ function AddressForm({ customer, errors, onChange }) {
 
       <Field label="Full Name *" error={errors.name}>
         <input
+          id="checkout-name"
           style={inp('name', errors.name)}
           value={customer.name}
           onChange={(e) => onChange('name', e.target.value)}
@@ -566,6 +594,7 @@ function AddressForm({ customer, errors, onChange }) {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
         <Field label="Mobile *" error={errors.contact}>
           <input
+            id="checkout-contact"
             style={inp('contact', errors.contact)}
             value={customer.contact}
             onChange={(e) => onChange('contact', e.target.value.replace(/[^0-9+ ]/g, ''))}
@@ -576,6 +605,7 @@ function AddressForm({ customer, errors, onChange }) {
         </Field>
         <Field label="Email (optional)" error={errors.email}>
           <input
+            id="checkout-email"
             style={inp('email', errors.email)}
             value={customer.email}
             onChange={(e) => onChange('email', e.target.value)}
@@ -588,6 +618,7 @@ function AddressForm({ customer, errors, onChange }) {
 
       <Field label="Address Line 1 *" error={errors.address_line1}>
         <input
+          id="checkout-address_line1"
           style={inp('address_line1', errors.address_line1)}
           value={customer.address_line1}
           onChange={(e) => onChange('address_line1', e.target.value)}
@@ -598,6 +629,7 @@ function AddressForm({ customer, errors, onChange }) {
 
       <Field label="Address Line 2" error={errors.address_line2}>
         <input
+          id="checkout-address_line2"
           style={fieldInput}
           value={customer.address_line2}
           onChange={(e) => onChange('address_line2', e.target.value)}
@@ -607,21 +639,21 @@ function AddressForm({ customer, errors, onChange }) {
       </Field>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
-        <Field label="City *" error={errors.city}>
+        <Field label="City">
           <input
-            style={inp('city', errors.city)}
-            value={customer.city}
-            onChange={(e) => onChange('city', e.target.value)}
-            placeholder="Hyderabad"
+            id="checkout-city"
+            style={{ ...fieldInput, background: '#f5f0e8', color: '#6b5535', cursor: 'default' }}
+            value="Hyderabad"
+            readOnly
             autoComplete="address-level2"
           />
         </Field>
-        <Field label="State *" error={errors.state}>
+        <Field label="State">
           <input
-            style={inp('state', errors.state)}
-            value={customer.state}
-            onChange={(e) => onChange('state', e.target.value)}
-            placeholder="Telangana"
+            id="checkout-state"
+            style={{ ...fieldInput, background: '#f5f0e8', color: '#6b5535', cursor: 'default' }}
+            value="Telangana"
+            readOnly
             autoComplete="address-level1"
           />
         </Field>
@@ -630,6 +662,7 @@ function AddressForm({ customer, errors, onChange }) {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
         <Field label="Pincode *" error={errors.pincode}>
           <input
+            id="checkout-pincode"
             style={inp('pincode', errors.pincode)}
             value={customer.pincode}
             onChange={(e) => onChange('pincode', e.target.value.replace(/\D/g, '').slice(0, 6))}

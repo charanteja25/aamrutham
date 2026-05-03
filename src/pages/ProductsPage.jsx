@@ -36,8 +36,15 @@ function savePercent(packPrices, pack) {
 
 function VarietyTile({ product }) {
   const [selectedPack, setSelectedPack] = useState(product.packPrices[0]);
+  const [added, setAdded] = useState(false);
   const { addToCart } = useCart();
   const { getAvailable } = useInventory();
+
+  function handleAddToCart() {
+    addToCart(product, selectedPack.label, selectedPack.price);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1000);
+  }
 
   // Once inventory loads, if the default-selected pack has 0 stock, switch to
   // the first pack that's actually in stock so the UI doesn't misleadingly
@@ -128,9 +135,10 @@ function VarietyTile({ product }) {
             <span className="sold-out-chip">Coming Soon</span>
           ) : (
             <button
-              className="variety-tile-cart-btn"
-              onClick={() => addToCart(product, selectedPack.label, selectedPack.price, null, null, true)}
-            >Add to cart</button>
+              className={`variety-tile-cart-btn${added ? ' btn--added' : ''}`}
+              onClick={handleAddToCart}
+              disabled={added}
+            >{added ? '✓ Added' : 'Add to cart'}</button>
           )}
         </div>
       </div>

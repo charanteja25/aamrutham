@@ -74,6 +74,19 @@ CREATE TABLE IF NOT EXISTS season_pass_slots (
   claimed     INTEGER NOT NULL DEFAULT 0 CHECK (claimed >= 0),
   updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+-- OTP requests for order history lookup (phone via WhatsApp or email)
+CREATE TABLE IF NOT EXISTS otp_requests (
+  id         SERIAL PRIMARY KEY,
+  contact    VARCHAR(10) NOT NULL,
+  otp        VARCHAR(6)  NOT NULL,
+  expires_at TIMESTAMPTZ NOT NULL,
+  used       BOOLEAN     NOT NULL DEFAULT FALSE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_otp_contact ON otp_requests (contact, expires_at);
+-- Widen contact to hold emails as well as phone numbers
+ALTER TABLE otp_requests ALTER COLUMN contact TYPE VARCHAR(255);
 `;
 
 // Quote a Postgres identifier (role, database, schema, table name).

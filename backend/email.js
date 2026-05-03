@@ -11,6 +11,34 @@ function getResend() {
   return _resend;
 }
 
+export async function sendOtpEmail({ to, otp }) {
+  await getResend().emails.send({
+    from: 'Aamrutham <support@aamrutham.com>',
+    to,
+    subject: 'Your Aamrutham order history code',
+    html: `
+<!DOCTYPE html>
+<html>
+<body style="margin:0;padding:0;background:#fffdf8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <div style="max-width:480px;margin:40px auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 24px rgba(0,0,0,0.07);">
+    <div style="background:#2d5016;padding:28px 40px;text-align:center;">
+      <div style="font-size:32px;">🥭</div>
+      <h1 style="color:#fff;margin:10px 0 0;font-size:20px;font-weight:700;">Order History Code</h1>
+    </div>
+    <div style="padding:32px 40px;text-align:center;">
+      <p style="color:#555;font-size:15px;margin:0 0 24px;">Use this code to view your Aamrutham orders.</p>
+      <div style="background:#f9f5ef;border-radius:12px;padding:20px;display:inline-block;margin:0 auto;">
+        <p style="margin:0;font-size:36px;font-weight:800;letter-spacing:0.18em;color:#2d5016;">${otp}</p>
+      </div>
+      <p style="color:#aaa;font-size:13px;margin:20px 0 0;">Valid for 10 minutes. Do not share this code.</p>
+      <p style="color:#ccc;font-size:11px;margin:24px 0 0;border-top:1px solid #f0e8dc;padding-top:16px;">Aamrutham · Pure Farm Mangoes · Bobbili, Andhra Pradesh</p>
+    </div>
+  </div>
+</body>
+</html>`,
+  });
+}
+
 export async function sendOrderConfirmation({ to, name, aamOrderId, cartItems, amount }) {
   const itemRows = cartItems.map(i =>
     `<tr>

@@ -68,7 +68,8 @@ router.post("/create", async (req, res) => {
   try {
     await client.query("BEGIN");
 
-    // ── 1. Check stock for every line ──────────────────────────────────────
+    // ── 1. Check stock for every line — collect ALL failures before rejecting
+    const stockErrors = [];
     for (const item of cartItems) {
       const { productId, packLabel, qty = 1 } = item;
 
@@ -99,17 +100,14 @@ router.post("/create", async (req, res) => {
       }
 
       const available = Number(rows[0].stock) - Number(rows[0].reserved);
-
       if (available < qty) {
-        await client.query("ROLLBACK");
-        return res.status(409).json({
-          error: "insufficient_stock",
-          productId,
-          packLabel,
-          available,
-          requested: qty,
-        });
+        stockErrors.push({ productId, packLabel, available, requested: qty });
       }
+    }
+
+    if (stockErrors.length > 0) {
+      await client.query("ROLLBACK");
+      return res.status(409).json({ error: "insufficient_stock", items: stockErrors });
     }
 
     // ── 2. Create Razorpay order ────────────────────────────────────────────
