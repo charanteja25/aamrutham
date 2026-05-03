@@ -48,7 +48,7 @@ function loadRazorpayScript() {
 export default function CartDrawer() {
   const navigate = useNavigate();
   const { items, total, deliveryFee, grandTotal, isOpen, setIsOpen, changeQty, removeItem, count } = useCart();
-  const { refreshInventory } = useInventory();
+  const { refreshInventory, getAvailable } = useInventory();
 
   // State for the active Razorpay order (set once we lock inventory)
   const [activeOrderId, setActiveOrderId]       = useState(null);
@@ -290,8 +290,18 @@ export default function CartDrawer() {
   }
 
   function handleContinueToAddress() {
-    setStockError(null);
     if (items.length === 0) return;
+    const errors = items
+      .map((item) => {
+        const avail = getAvailable(item.id, item.packLabel);
+        if (avail === null) return null; // inventory still loading — let it through
+        if (avail === 0) return `${item.name} (${item.packLabel}) is out of stock.`;
+        if (avail < item.qty) return `${item.name} (${item.packLabel}) — only ${avail} pack(s) available.`;
+        return null;
+      })
+      .filter(Boolean);
+    if (errors.length > 0) { setStockError(errors); return; }
+    setStockError(null);
     setStep('address');
   }
 
