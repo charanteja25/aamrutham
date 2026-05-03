@@ -6,6 +6,7 @@ import { Router } from "express";
 import crypto from "crypto";
 import pool from "../db.js";
 import twilio from "twilio";
+import { sendOtpEmail } from "../email.js";
 
 const router = Router();
 
@@ -17,14 +18,35 @@ function cleanContact(raw) {
   return String(raw).replace(/\D/g, "").slice(-10);
 }
 
+function maskEmail(email) {
+  const [user, domain] = email.split('@');
+  return user.slice(0, 2) + '***@' + domain;
+}
+
 // ── Send OTP ────────────────────────────────────────────────────────────────
+// Body: { contact, channel: 'whatsapp' | 'email' }
 router.post("/send-otp", async (req, res) => {
-  const { contact } = req.body;
+  const { contact, channel = 'whatsapp' } = req.body;
   if (!contact) return res.status(400).json({ error: "contact is required" });
 
   const digits = cleanContact(contact);
   if (digits.length !== 10) {
     return res.status(400).json({ error: "Enter a valid 10-digit mobile number" });
+  }
+
+  // For email channel, look up the address on file
+  let emailAddress = null;
+  if (channel === 'email') {
+    const { rows } = await pool.query(
+      `SELECT customer_email FROM orders
+       WHERE customer_contact = $1 AND customer_email IS NOT NULL
+       ORDER BY created_at DESC LIMIT 1`,
+      [digits]
+    );
+    if (rows.length === 0 || !rows[0].customer_email) {
+      return res.status(404).json({ error: "No email address found for this number. Try WhatsApp instead." });
+    }
+    emailAddress = rows[0].customer_email;
   }
 
   // Rate limit: 1 OTP per number per 60 seconds
@@ -39,17 +61,27 @@ router.post("/send-otp", async (req, res) => {
   }
 
   const otp = crypto.randomInt(100000, 999999).toString();
-  const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+  const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
 
   await pool.query(
     `INSERT INTO otp_requests (contact, otp, expires_at) VALUES ($1, $2, $3)`,
     [digits, otp, expiresAt]
   );
 
-  // Send via Twilio WhatsApp
+  if (channel === 'email') {
+    try {
+      await sendOtpEmail({ to: emailAddress, otp });
+    } catch (err) {
+      console.error("Email OTP send failed:", err.message);
+      return res.status(500).json({ error: "Failed to send email. Please try WhatsApp instead." });
+    }
+    return res.json({ sent: true, channel: 'email', maskedEmail: maskEmail(emailAddress) });
+  }
+
+  // WhatsApp
   try {
     await getTwilio().messages.create({
-      from: process.env.TWILIO_WHATSAPP_FROM, // e.g. "whatsapp:+14155238886"
+      from: process.env.TWILIO_WHATSAPP_FROM,
       to:   `whatsapp:+91${digits}`,
       body: `Your Aamrutham order history code is: *${otp}*\n\nValid for 10 minutes. Do not share this code.`,
     });
@@ -58,7 +90,7 @@ router.post("/send-otp", async (req, res) => {
     return res.status(500).json({ error: "Failed to send WhatsApp message. Please try again." });
   }
 
-  res.json({ sent: true });
+  res.json({ sent: true, channel: 'whatsapp' });
 });
 
 // ── Verify OTP + return orders ──────────────────────────────────────────────

@@ -62,37 +62,50 @@ function OrderCard({ order }) {
 }
 
 export default function OrderHistoryPage() {
-  const [step, setStep]         = useState('phone'); // 'phone' | 'otp' | 'orders'
-  const [phone, setPhone]       = useState('');
-  const [otp, setOtp]           = useState('');
-  const [orders, setOrders]     = useState([]);
-  const [loading, setLoading]   = useState(false);
-  const [error, setError]       = useState('');
+  // steps: 'phone' → 'channel' → 'otp' → 'orders'
+  const [step, setStep]             = useState('phone');
+  const [phone, setPhone]           = useState('');
+  const [channel, setChannel]       = useState(null);   // 'whatsapp' | 'email'
+  const [maskedEmail, setMaskedEmail] = useState('');
+  const [otp, setOtp]               = useState('');
+  const [orders, setOrders]         = useState([]);
+  const [loading, setLoading]       = useState(false);
+  const [error, setError]           = useState('');
   const [resendTimer, setResendTimer] = useState(0);
 
   function startResendTimer() {
     setResendTimer(60);
     const iv = setInterval(() => {
-      setResendTimer(t => {
-        if (t <= 1) { clearInterval(iv); return 0; }
-        return t - 1;
-      });
+      setResendTimer(t => { if (t <= 1) { clearInterval(iv); return 0; } return t - 1; });
     }, 1000);
   }
 
-  async function handleSendOtp(e) {
+  function goToPhone() {
+    setStep('phone'); setPhone(''); setOtp('');
+    setOrders([]); setError(''); setChannel(null); setMaskedEmail('');
+  }
+
+  async function handlePhoneSubmit(e) {
     e.preventDefault();
     const digits = phone.replace(/\D/g, '').slice(-10);
     if (digits.length !== 10) { setError('Enter a valid 10-digit mobile number'); return; }
-    setError(''); setLoading(true);
+    setError('');
+    setStep('channel');
+  }
+
+  async function sendOtp(ch) {
+    setChannel(ch);
+    setError('');
+    setLoading(true);
     try {
       const res = await fetch(API_BASE + '/api/order-history/send-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contact: digits }),
+        body: JSON.stringify({ contact: phone.replace(/\D/g, '').slice(-10), channel: ch }),
       });
       const data = await res.json();
-      if (!res.ok) { setError(data.error || 'Failed to send OTP'); return; }
+      if (!res.ok) { setError(data.error || 'Failed to send code'); return; }
+      if (data.maskedEmail) setMaskedEmail(data.maskedEmail);
       setStep('otp');
       startResendTimer();
     } catch {
@@ -123,24 +136,9 @@ export default function OrderHistoryPage() {
     }
   }
 
-  async function handleResend() {
-    if (resendTimer > 0) return;
-    setError(''); setLoading(true);
-    try {
-      const res = await fetch(API_BASE + '/api/order-history/send-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contact: phone.replace(/\D/g, '').slice(-10) }),
-      });
-      const data = await res.json();
-      if (!res.ok) { setError(data.error || 'Failed to resend'); return; }
-      startResendTimer();
-    } catch {
-      setError('Network error.');
-    } finally {
-      setLoading(false);
-    }
-  }
+  const sentTo = channel === 'email'
+    ? `email to ${maskedEmail}`
+    : `WhatsApp to +91 ${phone.replace(/\D/g, '').slice(-10)}`;
 
   return (
     <main style={{ minHeight: '100vh', background: '#faf7f2', padding: '2rem 0 4rem' }}>
@@ -155,29 +153,71 @@ export default function OrderHistoryPage() {
           Enter your mobile number to see your Aamrutham order history.
         </p>
 
-        {/* ── Phone step ── */}
+        {/* ── Step 1: Phone ── */}
         {step === 'phone' && (
-          <form onSubmit={handleSendOtp}>
+          <form onSubmit={handlePhoneSubmit}>
             <label style={labelStyle}>Mobile Number</label>
             <div style={{ display: 'flex', gap: '0.5rem' }}>
               <span style={prefixStyle}>🇮🇳 +91</span>
               <input
                 style={{ ...inputStyle, flex: 1 }}
                 type="tel" inputMode="numeric"
-                placeholder="9876543210"
-                maxLength={10}
+                placeholder="9876543210" maxLength={10}
                 value={phone}
                 onChange={e => { setPhone(e.target.value.replace(/\D/g, '')); setError(''); }}
               />
             </div>
             {error && <p style={errorStyle}>{error}</p>}
-            <button style={btnStyle} type="submit" disabled={loading}>
-              {loading ? 'Sending…' : 'Send WhatsApp Code →'}
-            </button>
+            <button style={btnStyle} type="submit">Continue →</button>
           </form>
         )}
 
-        {/* ── OTP step ── */}
+        {/* ── Step 2: Channel ── */}
+        {step === 'channel' && (
+          <div>
+            <div style={{
+              background: '#fff', border: '1px solid #e8dfc8', borderRadius: 12,
+              padding: '1rem 1.1rem', marginBottom: '1.5rem', fontSize: '0.88rem', color: '#5B3A15',
+            }}>
+              📱 +91 {phone.replace(/\D/g, '').slice(-10)}
+              <button onClick={goToPhone} style={{ float: 'right', background: 'none', border: 'none', color: '#2d5016', fontWeight: 600, cursor: 'pointer', fontSize: '0.82rem' }}>Change</button>
+            </div>
+
+            <p style={{ fontWeight: 600, color: '#3a2a14', marginBottom: '0.75rem', fontSize: '0.95rem' }}>
+              How should we send your verification code?
+            </p>
+
+            {error && <p style={errorStyle}>{error}</p>}
+
+            <button
+              style={{ ...channelBtnStyle, marginBottom: '0.75rem' }}
+              onClick={() => sendOtp('whatsapp')}
+              disabled={loading}
+            >
+              <span style={{ fontSize: '1.4rem' }}>💬</span>
+              <div style={{ textAlign: 'left' }}>
+                <div style={{ fontWeight: 700 }}>Send via WhatsApp</div>
+                <div style={{ fontSize: '0.78rem', opacity: 0.7 }}>Code sent to your WhatsApp</div>
+              </div>
+            </button>
+
+            <button
+              style={channelBtnStyle}
+              onClick={() => sendOtp('email')}
+              disabled={loading}
+            >
+              <span style={{ fontSize: '1.4rem' }}>✉️</span>
+              <div style={{ textAlign: 'left' }}>
+                <div style={{ fontWeight: 700 }}>Send via Email</div>
+                <div style={{ fontSize: '0.78rem', opacity: 0.7 }}>Code sent to email used at checkout</div>
+              </div>
+            </button>
+
+            {loading && <p style={{ textAlign: 'center', color: '#8a7560', marginTop: '1rem', fontSize: '0.85rem' }}>Sending code…</p>}
+          </div>
+        )}
+
+        {/* ── Step 3: OTP ── */}
         {step === 'otp' && (
           <form onSubmit={handleVerifyOtp}>
             <div style={{
@@ -185,15 +225,14 @@ export default function OrderHistoryPage() {
               borderRadius: 10, padding: '0.75rem 1rem', marginBottom: '1.25rem',
               fontSize: '0.85rem', color: '#2e7d32',
             }}>
-              ✅ WhatsApp code sent to +91 {phone}
+              ✅ Code sent via {sentTo}
             </div>
 
             <label style={labelStyle}>Enter 6-digit Code</label>
             <input
               style={{ ...inputStyle, letterSpacing: '0.2em', fontSize: '1.4rem', textAlign: 'center' }}
               type="tel" inputMode="numeric"
-              placeholder="• • • • • •"
-              maxLength={6}
+              placeholder="• • • • • •" maxLength={6}
               value={otp}
               onChange={e => { setOtp(e.target.value.replace(/\D/g, '')); setError(''); }}
               autoFocus
@@ -205,27 +244,21 @@ export default function OrderHistoryPage() {
 
             <div style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.82rem', color: '#8a7560' }}>
               Didn't get it?{' '}
-              <button
-                type="button"
-                onClick={handleResend}
+              <button type="button" onClick={() => resendTimer === 0 && sendOtp(channel)}
                 disabled={resendTimer > 0 || loading}
-                style={{
-                  background: 'none', border: 'none', cursor: resendTimer > 0 ? 'default' : 'pointer',
-                  color: resendTimer > 0 ? '#aaa' : '#2d5016', fontWeight: 600, fontSize: '0.82rem', padding: 0,
-                }}
-              >
+                style={{ background: 'none', border: 'none', cursor: resendTimer > 0 ? 'default' : 'pointer', color: resendTimer > 0 ? '#aaa' : '#2d5016', fontWeight: 600, fontSize: '0.82rem', padding: 0 }}>
                 {resendTimer > 0 ? `Resend in ${resendTimer}s` : 'Resend code'}
               </button>
               {' · '}
-              <button type="button" onClick={() => { setStep('phone'); setOtp(''); setError(''); }}
+              <button type="button" onClick={() => { setStep('channel'); setOtp(''); setError(''); }}
                 style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#2d5016', fontWeight: 600, fontSize: '0.82rem', padding: 0 }}>
-                Change number
+                Try other method
               </button>
             </div>
           </form>
         )}
 
-        {/* ── Orders step ── */}
+        {/* ── Step 4: Orders ── */}
         {step === 'orders' && (
           <div>
             {orders.length === 0 ? (
@@ -240,15 +273,13 @@ export default function OrderHistoryPage() {
             ) : (
               <>
                 <p style={{ fontSize: '0.82rem', color: '#8a7560', marginBottom: '1rem' }}>
-                  {orders.length} order{orders.length !== 1 ? 's' : ''} for +91 {phone}
+                  {orders.length} order{orders.length !== 1 ? 's' : ''} for +91 {phone.replace(/\D/g, '').slice(-10)}
                 </p>
                 {orders.map(o => <OrderCard key={o.id} order={o} />)}
               </>
             )}
-            <button
-              onClick={() => { setStep('phone'); setPhone(''); setOtp(''); setOrders([]); setError(''); }}
-              style={{ ...btnStyle, background: 'transparent', color: '#2d5016', border: '1.5px solid #2d5016', marginTop: '0.5rem' }}
-            >
+            <button onClick={goToPhone}
+              style={{ ...btnStyle, background: 'transparent', color: '#2d5016', border: '1.5px solid #2d5016', marginTop: '0.5rem' }}>
               Look up another number
             </button>
           </div>
@@ -279,5 +310,12 @@ const btnStyle = {
   padding: '0.85rem', borderRadius: 50,
   background: '#2d5016', color: '#fff', border: 'none',
   fontWeight: 700, fontSize: '1rem', cursor: 'pointer', fontFamily: 'inherit',
+};
+const channelBtnStyle = {
+  display: 'flex', alignItems: 'center', gap: '0.9rem',
+  width: '100%', padding: '0.9rem 1.1rem',
+  background: '#fff', border: '1.5px solid #e3d9c2', borderRadius: 12,
+  cursor: 'pointer', fontFamily: 'inherit', color: '#1a1a1a',
+  transition: 'border-color 0.15s', textAlign: 'left',
 };
 const errorStyle = { margin: '6px 0 0', fontSize: '0.78rem', color: '#b91c1c' };
