@@ -3203,14 +3203,15 @@ input {
   .tm2-hero { padding: clamp(2rem, 8vw, 3.5rem) 5vw clamp(1.5rem, 5vw, 2.5rem); }
   .tm2-subtitle { font-size: clamp(0.82rem, 3.5vw, 1rem); }
 
-  /* Sticky stacking — dvh adjusts as mobile browser chrome shows/hides */
+  /* Sticky stacking — full-coverage, no transparent edges */
   .tm2-pillar-wrap { position: sticky; top: 60px; }
   .tm2-pillar {
+    height: calc(100vh - 60px);
     height: calc(100dvh - 60px);
     overflow-y: auto;
+    overflow-x: hidden;
     padding: clamp(0.75rem, 3vw, 1.25rem) 4vw clamp(1rem, 4vw, 1.75rem);
-    border-radius: 20px 20px 0 0;
-    box-shadow: 0 -6px 24px rgba(44,24,16,0.18);
+    box-shadow: 0 -4px 16px rgba(44,24,16,0.22);
   }
 
   /* Sheet drag handle — visible on mobile only */
