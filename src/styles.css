@@ -3198,39 +3198,45 @@ input {
 }
 
 @media (max-width: 640px) {
-  .tm2-tabs { top: 60px; }
-  .tm2-tab { padding: 0.7rem 0.4rem; min-width: 72px; }
-  .tm2-tab-name { font-size: 0.62rem; }
+  /* Hero */
+  .tm2-hero { padding: 3rem 1.25rem 2rem; }
+  .tm2-subtitle { font-size: 0.92rem; }
 
-  .tm2-panel { padding: 1.25rem 1rem 2rem; }
+  /* Remove sticky stacking — let sections flow naturally */
+  .tm2-pillar-wrap { position: static; }
+  .tm2-pillar {
+    height: auto;
+    overflow-y: visible;
+    padding: 1.5rem 1rem 2rem;
+  }
 
-  /* 2-column compact grid */
-  .tm2-members-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  /* Pillar header */
+  .tm2-pillar-head { gap: 0.6rem; }
+  .tm2-pillar-numeral { font-size: 1.8rem; }
+  .tm2-pillar-en { font-size: 1.25rem; }
+  .tm2-pillar-blurb { font-size: 0.82rem; margin-bottom: 1rem; }
 
-  /* Card: stacked, tappable */
-  .tm2-card { flex-direction: column; cursor: pointer; }
+  /* Single-column cards on mobile */
+  .tm2-members-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+
+  /* Card: horizontal row, photo left */
+  .tm2-card { flex-direction: row; }
   .tm2-card-photo {
-    width: 100%; height: 160px; min-height: unset;
-    background: #f5ede0;
+    width: 88px; min-height: 100px; flex-shrink: 0;
   }
   .tm2-card-photo img {
-    object-fit: contain;
-    object-position: center bottom;
+    object-fit: cover;
+    object-position: center 20%;
   }
-  .tm2-card-body { padding: 0.65rem 0.75rem 0.85rem; }
+  .tm2-card-body { padding: 0.65rem 0.85rem; }
 
-  /* Hide bio on mobile — shown in popup instead */
-  .tm2-card-bio { display: none; }
-  .tm2-card-telugu { display: none; }
-  .tm2-card-tap-hint {
-    display: block; margin-top: 0.4rem;
-    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.06em;
-    text-transform: uppercase; color: #a07850; opacity: 0.8;
-  }
+  /* Show bio on mobile */
+  .tm2-card-bio { display: block; font-size: 0.72rem; }
+  .tm2-card-telugu { display: block; }
+  .tm2-card-name { font-size: 0.83rem; }
 
-  .tm2-pillar-head { gap: 0.75rem; }
-  .tm2-pillar-numeral { font-size: 2rem; }
-  .tm2-pillar-en { font-size: 1.4rem; }
+  /* Closing */
+  .tm2-closing { padding: 2.5rem 1.25rem; }
 }
 
 /* ── Our Promise Bar ── */
