@@ -3202,38 +3202,39 @@ input {
   .tm2-hero { padding: 3rem 1.25rem 2rem; }
   .tm2-subtitle { font-size: 0.92rem; }
 
-  /* Remove sticky stacking — let sections flow naturally */
-  .tm2-pillar-wrap { position: static; }
+  /* Sticky stacking — same effect as desktop, adjusted for 60px mobile nav */
+  .tm2-pillar-wrap { position: sticky; top: 60px; }
   .tm2-pillar {
-    height: auto;
-    overflow-y: visible;
-    padding: 1.5rem 1rem 2rem;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    padding: 1rem 1rem 1.5rem;
   }
 
-  /* Pillar header */
-  .tm2-pillar-head { gap: 0.6rem; }
-  .tm2-pillar-numeral { font-size: 1.8rem; }
-  .tm2-pillar-en { font-size: 1.25rem; }
-  .tm2-pillar-blurb { font-size: 0.82rem; margin-bottom: 1rem; }
+  /* Pillar header — compact */
+  .tm2-pillar-head { gap: 0.5rem; margin-bottom: 0.6rem; }
+  .tm2-pillar-numeral { font-size: 1.6rem; }
+  .tm2-pillar-en { font-size: 1.1rem; }
+  .tm2-pillar-blurb { font-size: 0.78rem; margin-bottom: 0.85rem; padding-left: 0.75rem; }
 
-  /* Single-column cards on mobile */
-  .tm2-members-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+  /* 2-column grid fits well in one screen */
+  .tm2-members-grid { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
 
-  /* Card: horizontal row, photo left */
-  .tm2-card { flex-direction: row; }
+  /* Card: stacked, photo on top */
+  .tm2-card { flex-direction: column; }
   .tm2-card-photo {
-    width: 88px; min-height: 100px; flex-shrink: 0;
+    width: 100%; height: 110px; min-height: unset;
   }
   .tm2-card-photo img {
     object-fit: cover;
     object-position: center 20%;
   }
-  .tm2-card-body { padding: 0.65rem 0.85rem; }
+  .tm2-card-body { padding: 0.5rem 0.65rem 0.65rem; }
 
-  /* Show bio on mobile */
-  .tm2-card-bio { display: block; font-size: 0.72rem; }
-  .tm2-card-telugu { display: block; }
-  .tm2-card-name { font-size: 0.83rem; }
+  /* Trim text to keep cards compact in one screen */
+  .tm2-card-bio { font-size: 0.68rem; line-height: 1.5; }
+  .tm2-card-telugu { font-size: 0.62rem; }
+  .tm2-card-name { font-size: 0.78rem; margin-bottom: 0.1rem; }
+  .tm2-card-role { font-size: 0.6rem; margin-bottom: 0.25rem; }
 
   /* Closing */
   .tm2-closing { padding: 2.5rem 1.25rem; }
