@@ -7,7 +7,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useInventory } from "../context/InventoryContext";
 import { HYD_PINCODES } from "../data/products";
-import { isSeasonPassActive } from "../data/season";
 import LockTimer from "./LockTimer";
 
 const API = import.meta.env.VITE_API_URL || "";
@@ -328,53 +327,6 @@ export default function CartDrawer() {
           </button>
         </div>
 
-        {step === 'cart' && count >= 2 && isSeasonPassActive() &&
-         !items.some((i) => (i.id || '').toLowerCase().includes('season-pass')) && (() => {
-          // Personalised comparison — pick the Season Pass tier closest to the user's cart.
-          const PASS_12 = 3000;
-          const PASS_24 = 5600;
-          const totalPieces = items.reduce((sum, it) => {
-            const pcs = parseInt(it.packLabel, 10) || 0;
-            return sum + pcs * it.qty;
-          }, 0);
-          const passPrice = totalPieces >= 18 ? PASS_24 : PASS_12;
-          const passLabel = totalPieces >= 18 ? '24 pcs/week × 4 weeks' : '12 pcs/week × 4 weeks';
-          const savings = total - passPrice;
-
-          return (
-            <Link
-              to="/maas"
-              onClick={() => setIsOpen(false)}
-              style={{
-                display: 'block',
-                margin: '0.75rem 1rem 0',
-                padding: '0.85rem 1rem',
-                background: 'linear-gradient(135deg, #fff7e0 0%, #fde9b8 100%)',
-                border: '1px solid #f0d28c',
-                borderLeft: '3px solid #e8a020',
-                borderRadius: 10,
-                textDecoration: 'none',
-                color: '#5B3A15',
-              }}
-            >
-              <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#b67014', letterSpacing: '0.04em' }}>
-                ⚡ SAVE WITH SEASON PASS
-              </div>
-              {savings > 200 ? (
-                <div style={{ fontSize: '0.85rem', marginTop: 4, lineHeight: 1.5 }}>
-                  Your cart is <strong>₹{total.toLocaleString('en-IN')}</strong>. A Season Pass
-                  ({passLabel}) is <strong>₹{passPrice.toLocaleString('en-IN')}</strong> —
-                  {' '}you'd save <strong style={{ color: '#2d5016' }}>₹{savings.toLocaleString('en-IN')}</strong>. →
-                </div>
-              ) : (
-                <div style={{ fontSize: '0.85rem', marginTop: 4, lineHeight: 1.5 }}>
-                  Prefer variety every week? Our Season Pass delivers rare heritage mangoes for 4 weeks —
-                  {' '}<strong>₹{passPrice.toLocaleString('en-IN')}</strong>, one payment. →
-                </div>
-              )}
-            </Link>
-          );
-        })()}
 
         {step === 'cart' && (
         <div className="basket-items">
