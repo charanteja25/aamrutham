@@ -1,14 +1,13 @@
 import React, { useMemo, useState } from "react";
 import { API_BASE } from "../config.js";
-import { buildWhatsAppUrl } from "../data/products";
-
-export const LAST_ORDER_KEY = 'aam_last_order';
-const CUSTOMER_KEY = 'aam_last_customer';
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useInventory } from "../context/InventoryContext";
-import { HYD_PINCODES } from "../data/products";
+import { HYD_PINCODES, buildWhatsAppUrl } from "../data/products";
 import LockTimer from "./LockTimer";
+
+export const LAST_ORDER_KEY = 'aam_last_order';
+const CUSTOMER_KEY = 'aam_last_customer';
 
 const API = import.meta.env.VITE_API_URL || "";
 
