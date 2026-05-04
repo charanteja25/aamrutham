@@ -296,7 +296,7 @@ export default function MaasPage() {
                   ₹{price.toLocaleString('en-IN')}
                 </div>
                 <Link to="/pricing" className="pricing-link" style={{ marginBottom: '0.5rem', display: 'inline-flex' }}>ℹ️ Why this price?</Link>
-                <div className="maas-card-per">one-time · 4 weeks · free delivery</div>
+                <div className="maas-card-per">4 weekly drops · one payment · free delivery</div>
                 <ul className="maas-features">
                   {pass.features.map(f => <li key={f}><span className="maas-check">✓</span> {f}</li>)}
                 </ul>
@@ -341,7 +341,7 @@ export default function MaasPage() {
               ₹{PASS_PRICES.custom[customPack].price.toLocaleString('en-IN')}
             </div>
             <Link to="/pricing" className="pricing-link" style={{ marginBottom: '0.5rem', display: 'inline-flex' }}>ℹ️ Why this price?</Link>
-            <div className="maas-card-per">one-time · 4 weeks · free delivery</div>
+            <div className="maas-card-per">4 weekly drops · one payment · free delivery</div>
             {customSelected.length >= 1 ? (
               <a
                 href="#"
