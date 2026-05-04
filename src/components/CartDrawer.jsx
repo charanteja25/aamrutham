@@ -64,6 +64,19 @@ export default function CartDrawer() {
   // (item added, removed, or qty changed) so old messages don't linger.
   React.useEffect(() => { setStockError(null); }, [items]);
 
+  // ── Bulk order detection ──────────────────────────────────────────────────
+  const bulkWhatsAppUrl = useMemo(() => {
+    const isBulk = items.some((item) => {
+      const label = item.packLabel.toLowerCase();
+      if (label.includes('12') || label.includes('18')) return item.qty >= 5;
+      if (label.includes('6')) return item.qty >= 10;
+      return false;
+    });
+    if (!isBulk) return null;
+    const summary = items.map((i) => `${i.name} x${i.qty} (${i.packLabel})`).join(', ');
+    return buildWhatsAppUrl(`Hi Aamrutham! I'd like to place a bulk order: ${summary} 🥭`);
+  }, [items]);
+
   function updateCustomer(field, value) {
     setCustomer((c) => ({ ...c, [field]: value }));
     if (formErrors[field]) {
@@ -306,19 +319,6 @@ export default function CartDrawer() {
     if (!validateCustomer()) return;
     await handleRazorpayCheckout();
   }
-
-  // ── Bulk order detection ──────────────────────────────────────────────────
-  const bulkWhatsAppUrl = useMemo(() => {
-    const isBulk = items.some((item) => {
-      const label = item.packLabel.toLowerCase();
-      if (label.includes('12') || label.includes('18')) return item.qty >= 5;
-      if (label.includes('6')) return item.qty >= 10;
-      return false;
-    });
-    if (!isBulk) return null;
-    const summary = items.map((i) => `${i.name} x${i.qty} (${i.packLabel})`).join(', ');
-    return buildWhatsAppUrl(`Hi Aamrutham! I'd like to place a bulk order: ${summary} 🥭`);
-  }, [items]);
 
   // ── Open drawer ───────────────────────────────────────────────────────────
   return (
