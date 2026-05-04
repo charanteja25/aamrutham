@@ -1776,8 +1776,8 @@ input {
 /* ── Help Bot ────────────────────────────────────────────────────────────── */
 .helpbot-pill {
   position: fixed;
-  right: 1.4rem;
-  bottom: 9.4rem; /* above basket-float (5.6rem + 60px button + gap) */
+  left: 1.4rem;
+  bottom: 1.4rem;
   height: 34px;
   padding: 0 1rem;
   border-radius: 999px;
@@ -1789,7 +1789,7 @@ input {
   letter-spacing: 0.03em;
   cursor: pointer;
   box-shadow: 0 4px 16px rgba(91,58,21,0.30);
-  z-index: 56;
+  z-index: 45;
   white-space: nowrap;
   transition: background 0.15s, box-shadow 0.15s;
   font-family: inherit;
@@ -1801,8 +1801,8 @@ input {
 
 .helpbot-widget {
   position: fixed;
-  right: 1.4rem;
-  bottom: 12.5rem;
+  left: 1.4rem;
+  bottom: 4.5rem;
   width: min(320px, calc(100vw - 2.8rem));
   background: #fff;
   border-radius: 18px;
