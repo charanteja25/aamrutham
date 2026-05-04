@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { API_BASE } from "../config.js";
-
-export const LAST_ORDER_KEY = 'aam_last_order';
-const CUSTOMER_KEY = 'aam_last_customer';
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useInventory } from "../context/InventoryContext";
-import { HYD_PINCODES } from "../data/products";
-import { isSeasonPassActive } from "../data/season";
+import { HYD_PINCODES, buildWhatsAppUrl } from "../data/products";
 import LockTimer from "./LockTimer";
+
+export const LAST_ORDER_KEY = 'aam_last_order';
+const CUSTOMER_KEY = 'aam_last_customer';
 
 const API = import.meta.env.VITE_API_URL || "";
 
@@ -64,6 +63,19 @@ export default function CartDrawer() {
   // Clear stale stock errors whenever the cart contents change
   // (item added, removed, or qty changed) so old messages don't linger.
   React.useEffect(() => { setStockError(null); }, [items]);
+
+  // ── Bulk order detection ──────────────────────────────────────────────────
+  const bulkWhatsAppUrl = useMemo(() => {
+    const isBulk = items.some((item) => {
+      const label = item.packLabel.toLowerCase();
+      if (label.includes('12') || label.includes('18')) return item.qty >= 5;
+      if (label.includes('6')) return item.qty >= 10;
+      return false;
+    });
+    if (!isBulk) return null;
+    const summary = items.map((i) => `${i.name} x${i.qty} (${i.packLabel})`).join(', ');
+    return buildWhatsAppUrl(`Hi Aamrutham! I'd like to place a bulk order: ${summary} 🥭`);
+  }, [items]);
 
   function updateCustomer(field, value) {
     setCustomer((c) => ({ ...c, [field]: value }));
@@ -328,53 +340,6 @@ export default function CartDrawer() {
           </button>
         </div>
 
-        {step === 'cart' && count >= 2 && isSeasonPassActive() &&
-         !items.some((i) => (i.id || '').toLowerCase().includes('season-pass')) && (() => {
-          // Personalised comparison — pick the Season Pass tier closest to the user's cart.
-          const PASS_12 = 3000;
-          const PASS_24 = 5600;
-          const totalPieces = items.reduce((sum, it) => {
-            const pcs = parseInt(it.packLabel, 10) || 0;
-            return sum + pcs * it.qty;
-          }, 0);
-          const passPrice = totalPieces >= 18 ? PASS_24 : PASS_12;
-          const passLabel = totalPieces >= 18 ? '24 pcs/week × 4 weeks' : '12 pcs/week × 4 weeks';
-          const savings = total - passPrice;
-
-          return (
-            <Link
-              to="/maas"
-              onClick={() => setIsOpen(false)}
-              style={{
-                display: 'block',
-                margin: '0.75rem 1rem 0',
-                padding: '0.85rem 1rem',
-                background: 'linear-gradient(135deg, #fff7e0 0%, #fde9b8 100%)',
-                border: '1px solid #f0d28c',
-                borderLeft: '3px solid #e8a020',
-                borderRadius: 10,
-                textDecoration: 'none',
-                color: '#5B3A15',
-              }}
-            >
-              <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#b67014', letterSpacing: '0.04em' }}>
-                ⚡ SAVE WITH SEASON PASS
-              </div>
-              {savings > 200 ? (
-                <div style={{ fontSize: '0.85rem', marginTop: 4, lineHeight: 1.5 }}>
-                  Your cart is <strong>₹{total.toLocaleString('en-IN')}</strong>. A Season Pass
-                  ({passLabel}) is <strong>₹{passPrice.toLocaleString('en-IN')}</strong> —
-                  {' '}you'd save <strong style={{ color: '#2d5016' }}>₹{savings.toLocaleString('en-IN')}</strong>. →
-                </div>
-              ) : (
-                <div style={{ fontSize: '0.85rem', marginTop: 4, lineHeight: 1.5 }}>
-                  Prefer variety every week? Our Season Pass delivers rare heritage mangoes for 4 weeks —
-                  {' '}<strong>₹{passPrice.toLocaleString('en-IN')}</strong>, one payment. →
-                </div>
-              )}
-            </Link>
-          );
-        })()}
 
         {step === 'cart' && (
         <div className="basket-items">
@@ -442,6 +407,38 @@ export default function CartDrawer() {
 
         {items.length > 0 && (
           <div className="basket-footer">
+            {/* Bulk order WhatsApp banner */}
+            {bulkWhatsAppUrl && step === 'cart' && (
+              <a
+                href={bulkWhatsAppUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  padding: '0.6rem 0.8rem',
+                  borderRadius: '8px',
+                  background: 'rgba(37,211,102,0.10)',
+                  border: '1px solid rgba(37,211,102,0.35)',
+                  color: '#1a7a3c',
+                  fontSize: '0.83rem',
+                  fontWeight: 600,
+                  textDecoration: 'none',
+                  lineHeight: 1.45,
+                }}
+              >
+                <span style={{ fontSize: '1.1rem' }}>📦</span>
+                <span>
+                  Looks like a bulk order!{' '}
+                  <span style={{ textDecoration: 'underline' }}>
+                    Order via WhatsApp
+                  </span>{' '}
+                  for better pricing &amp; assistance.
+                </span>
+              </a>
+            )}
+
             {/* Lock countdown — only visible while Razorpay is open */}
             {lockExpiresAt && (
               <LockTimer expiresAt={lockExpiresAt} onExpired={handleLockExpired} />

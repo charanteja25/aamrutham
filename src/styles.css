@@ -1773,6 +1773,129 @@ input {
   z-index: 40;
 }
 
+/* ── Help Bot ────────────────────────────────────────────────────────────── */
+.helpbot-pill {
+  position: fixed;
+  left: 1.4rem;
+  bottom: 1.4rem;
+  height: 34px;
+  padding: 0 1rem;
+  border-radius: 999px;
+  border: none;
+  background: #5B3A15;
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(91,58,21,0.30);
+  z-index: 45;
+  white-space: nowrap;
+  transition: background 0.15s, box-shadow 0.15s;
+  font-family: inherit;
+}
+.helpbot-pill:hover {
+  background: #3d2510;
+  box-shadow: 0 6px 20px rgba(91,58,21,0.40);
+}
+
+.helpbot-widget {
+  position: fixed;
+  left: 1.4rem;
+  bottom: 4.5rem;
+  width: min(320px, calc(100vw - 2.8rem));
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 20px 50px rgba(44,24,16,0.20);
+  z-index: 45;
+  overflow: hidden;
+  animation: helpbotSlideUp 0.22s ease;
+}
+@keyframes helpbotSlideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.helpbot-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  background: #5B3A15;
+  color: white;
+}
+.helpbot-avatar { font-size: 1.5rem; }
+.helpbot-name { font-weight: 700; font-size: 0.88rem; }
+.helpbot-status { font-size: 0.7rem; opacity: 0.75; }
+
+.helpbot-body { padding: 0.85rem 1rem 1rem; display: flex; flex-direction: column; gap: 0.6rem; }
+
+.helpbot-bubble {
+  padding: 0.6rem 0.85rem;
+  border-radius: 12px;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  max-width: 88%;
+}
+.helpbot-bubble-bot {
+  background: #f5ede0;
+  color: #3B2507;
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+}
+.helpbot-bubble-user {
+  background: #5B3A15;
+  color: white;
+  border-bottom-right-radius: 4px;
+  align-self: flex-end;
+}
+
+.helpbot-options { display: flex; flex-direction: column; gap: 0.4rem; }
+.helpbot-option {
+  background: #fff;
+  border: 1.5px solid #e3d5c0;
+  border-radius: 10px;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: #5B3A15;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, border-color 0.15s;
+  font-family: inherit;
+}
+.helpbot-option:hover { background: #fdf5eb; border-color: #C58A3E; }
+
+.helpbot-actions { display: flex; gap: 0.5rem; }
+.helpbot-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.6rem 0.5rem;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.helpbot-btn:hover { opacity: 0.88; }
+.helpbot-btn-wa { background: #25d366; color: white; }
+.helpbot-btn-mail { background: #f5ede0; color: #5B3A15; border: 1.5px solid #e3d5c0; }
+
+.helpbot-back {
+  background: none;
+  border: none;
+  color: #a07850;
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+  text-align: left;
+}
+.helpbot-back:hover { color: #5B3A15; }
+
 /* Bottom-right floating basket — sits above the WhatsApp button */
 .basket-float {
   position: fixed;
@@ -3130,6 +3253,7 @@ input {
 }
 .tm2-card-bio { font-size: 0.75rem; color: #5a3e2b; line-height: 1.6; }
 .tm2-card-tap-hint { display: none; }
+.tm2-sheet-handle { display: none; }
 
 .tm2-closing {
   background: #2D5016; padding: 4rem 2rem; text-align: center;
@@ -3198,39 +3322,62 @@ input {
 }
 
 @media (max-width: 640px) {
-  .tm2-tabs { top: 60px; }
-  .tm2-tab { padding: 0.7rem 0.4rem; min-width: 72px; }
-  .tm2-tab-name { font-size: 0.62rem; }
+  /* Hero */
+  .tm2-hero { padding: clamp(2rem, 8vw, 3.5rem) 5vw clamp(1.5rem, 5vw, 2.5rem); }
+  .tm2-subtitle { font-size: clamp(0.82rem, 3.5vw, 1rem); }
 
-  .tm2-panel { padding: 1.25rem 1rem 2rem; }
+  /* Simple flow on mobile — no sticky tricks */
+  .tm2-pillar-wrap { position: static; }
+  .tm2-pillar {
+    height: auto;
+    overflow-y: visible;
+    padding: clamp(0.75rem, 3vw, 1.25rem) 4vw clamp(1rem, 4vw, 1.75rem);
+    border-top: 4px solid transparent;
+  }
 
-  /* 2-column compact grid */
-  .tm2-members-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  /* Sheet drag handle — visible on mobile only */
+  .tm2-sheet-handle {
+    width: 36px; height: 4px;
+    background: rgba(91,58,21,0.18);
+    border-radius: 99px;
+    margin: 0.55rem auto 0.5rem;
+  }
 
-  /* Card: stacked, tappable */
-  .tm2-card { flex-direction: column; cursor: pointer; }
+  /* Pillar header — compact */
+  .tm2-pillar-head { gap: 0.5rem; margin-bottom: 0.5rem; }
+  .tm2-pillar-numeral { font-size: clamp(1.4rem, 5vw, 2rem); }
+  .tm2-pillar-en { font-size: clamp(1rem, 4.5vw, 1.4rem); }
+  .tm2-pillar-blurb {
+    font-size: clamp(0.72rem, 2.8vw, 0.85rem);
+    margin-bottom: clamp(0.6rem, 2.5vw, 1rem);
+    padding-left: 0.65rem;
+  }
+
+  /* 2-column grid */
+  .tm2-members-grid { grid-template-columns: repeat(2, 1fr); gap: 2vw; }
+
+  /* Card: photo on top via aspect-ratio — scales with card width */
+  .tm2-card { flex-direction: column; }
   .tm2-card-photo {
-    width: 100%; height: 160px; min-height: unset;
-    background: #f5ede0;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    min-height: unset;
   }
   .tm2-card-photo img {
-    object-fit: contain;
-    object-position: center bottom;
+    object-fit: cover;
+    object-position: center 20%;
   }
-  .tm2-card-body { padding: 0.65rem 0.75rem 0.85rem; }
+  .tm2-card-body { padding: clamp(0.4rem, 2vw, 0.7rem) clamp(0.5rem, 2.5vw, 0.85rem); }
 
-  /* Hide bio on mobile — shown in popup instead */
-  .tm2-card-bio { display: none; }
-  .tm2-card-telugu { display: none; }
-  .tm2-card-tap-hint {
-    display: block; margin-top: 0.4rem;
-    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.06em;
-    text-transform: uppercase; color: #a07850; opacity: 0.8;
-  }
+  /* Fluid text inside cards */
+  .tm2-card-bio { font-size: clamp(0.62rem, 2.4vw, 0.75rem); line-height: 1.5; }
+  .tm2-card-telugu { font-size: clamp(0.58rem, 2vw, 0.7rem); }
+  .tm2-card-name { font-size: clamp(0.72rem, 2.8vw, 0.88rem); margin-bottom: 0.1rem; }
+  .tm2-card-role { font-size: clamp(0.56rem, 2vw, 0.68rem); margin-bottom: 0.2rem; }
 
-  .tm2-pillar-head { gap: 0.75rem; }
-  .tm2-pillar-numeral { font-size: 2rem; }
-  .tm2-pillar-en { font-size: 1.4rem; }
+  /* Closing */
+  .tm2-closing { padding: clamp(2rem, 8vw, 3rem) 5vw; }
 }
 
 /* ── Our Promise Bar ── */

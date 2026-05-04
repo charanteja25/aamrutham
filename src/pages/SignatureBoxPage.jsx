@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
 const PACKS = [
-  { label: '12 pcs', price: 1999 },
-  { label: '24 pcs', price: 3499 },
+  { label: '12 pcs', price: 1000 },
+  { label: '24 pcs', price: 2000 },
 ];
 
 const VARIETIES = [
@@ -75,6 +75,25 @@ export default function SignatureBoxPage() {
               <div className="sigbox-variety-note">{v.note}</div>
             </div>
           ))}
+        </div>
+        <div style={{
+          marginTop: '2rem',
+          padding: '1rem 1.25rem',
+          borderRadius: '12px',
+          background: 'rgba(255,255,255,0.05)',
+          border: '1px solid rgba(255,255,255,0.10)',
+          display: 'flex',
+          gap: '0.75rem',
+          alignItems: 'flex-start',
+        }}>
+          <span style={{ fontSize: '1.2rem', flexShrink: 0 }}>🌳</span>
+          <p style={{ margin: 0, fontSize: '0.85rem', color: 'rgba(255,255,255,0.65)', lineHeight: 1.7 }}>
+            <strong style={{ color: 'rgba(255,255,255,0.9)', display: 'block', marginBottom: '0.2rem' }}>
+              Curated by what's ripening that week
+            </strong>
+            Every box carries our 5 signature varieties — but the exact mix depends on what's ready on the tree at the time of your delivery.
+            We only pick when fully ripe, never early. So your box reflects the orchard as it is, not as we'd plan it.
+          </p>
         </div>
       </section>
 
