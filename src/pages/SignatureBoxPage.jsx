@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
 const PACKS = [
-  { label: '12 pcs', price: 1999 },
-  { label: '24 pcs', price: 3499 },
+  { label: '12 pcs', price: 1000 },
+  { label: '24 pcs', price: 2000 },
 ];
 
 const VARIETIES = [
