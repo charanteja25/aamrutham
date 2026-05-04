@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { API_BASE } from "../config.js";
+import { buildWhatsAppUrl } from "../data/products";
 
 export const LAST_ORDER_KEY = 'aam_last_order';
 const CUSTOMER_KEY = 'aam_last_customer';
@@ -307,6 +308,19 @@ export default function CartDrawer() {
     await handleRazorpayCheckout();
   }
 
+  // ── Bulk order detection ──────────────────────────────────────────────────
+  const bulkWhatsAppUrl = useMemo(() => {
+    const isBulk = items.some((item) => {
+      const label = item.packLabel.toLowerCase();
+      if (label.includes('12') || label.includes('18')) return item.qty >= 5;
+      if (label.includes('6')) return item.qty >= 10;
+      return false;
+    });
+    if (!isBulk) return null;
+    const summary = items.map((i) => `${i.name} x${i.qty} (${i.packLabel})`).join(', ');
+    return buildWhatsAppUrl(`Hi Aamrutham! I'd like to place a bulk order: ${summary} 🥭`);
+  }, [items]);
+
   // ── Open drawer ───────────────────────────────────────────────────────────
   return (
     <>
@@ -394,6 +408,38 @@ export default function CartDrawer() {
 
         {items.length > 0 && (
           <div className="basket-footer">
+            {/* Bulk order WhatsApp banner */}
+            {bulkWhatsAppUrl && step === 'cart' && (
+              <a
+                href={bulkWhatsAppUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  padding: '0.6rem 0.8rem',
+                  borderRadius: '8px',
+                  background: 'rgba(37,211,102,0.10)',
+                  border: '1px solid rgba(37,211,102,0.35)',
+                  color: '#1a7a3c',
+                  fontSize: '0.83rem',
+                  fontWeight: 600,
+                  textDecoration: 'none',
+                  lineHeight: 1.45,
+                }}
+              >
+                <span style={{ fontSize: '1.1rem' }}>📦</span>
+                <span>
+                  Looks like a bulk order!{' '}
+                  <span style={{ textDecoration: 'underline' }}>
+                    Order via WhatsApp
+                  </span>{' '}
+                  for better pricing &amp; assistance.
+                </span>
+              </a>
+            )}
+
             {/* Lock countdown — only visible while Razorpay is open */}
             {lockExpiresAt && (
               <LockTimer expiresAt={lockExpiresAt} onExpired={handleLockExpired} />
