@@ -3130,6 +3130,7 @@ input {
 }
 .tm2-card-bio { font-size: 0.75rem; color: #5a3e2b; line-height: 1.6; }
 .tm2-card-tap-hint { display: none; }
+.tm2-sheet-handle { display: none; }
 
 .tm2-closing {
   background: #2D5016; padding: 4rem 2rem; text-align: center;
@@ -3208,6 +3209,16 @@ input {
     height: calc(100dvh - 60px);
     overflow-y: auto;
     padding: clamp(0.75rem, 3vw, 1.25rem) 4vw clamp(1rem, 4vw, 1.75rem);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -6px 24px rgba(44,24,16,0.18);
+  }
+
+  /* Sheet drag handle — visible on mobile only */
+  .tm2-sheet-handle {
+    width: 36px; height: 4px;
+    background: rgba(91,58,21,0.18);
+    border-radius: 99px;
+    margin: 0.55rem auto 0.5rem;
   }
 
   /* Pillar header — compact */

@@ -100,7 +100,8 @@ function Pillar({ pillar, index }) {
   return (
     <div className="tm2-pillar-wrap" style={{ zIndex: 10 + index }}>
       <section className="tm2-pillar" style={{ background: index % 2 === 1 ? '#F7F0E6' : '#F4EBD4' }}>
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: t.main }} />
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: t.main, borderRadius: '20px 20px 0 0' }} />
+        <div className="tm2-sheet-handle" />
         <div className="tm2-pillar-inner">
           <div className="tm2-pillar-head">
             <span className="tm2-pillar-numeral" style={{ color: t.main }}>{pillar.numeral}</span>
