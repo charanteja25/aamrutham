@@ -1773,6 +1773,127 @@ input {
   z-index: 40;
 }
 
+/* ── Help Bot ────────────────────────────────────────────────────────────── */
+.helpbot-float {
+  position: fixed;
+  left: 1.4rem;
+  bottom: 1.4rem;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  background: #5B3A15;
+  color: white;
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(91,58,21,0.35);
+  z-index: 45;
+  display: grid;
+  place-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.helpbot-float:hover {
+  transform: scale(1.08);
+  box-shadow: 0 12px 30px rgba(91,58,21,0.45);
+}
+
+.helpbot-widget {
+  position: fixed;
+  left: 1.4rem;
+  bottom: 5.2rem;
+  width: min(320px, calc(100vw - 2.8rem));
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 20px 50px rgba(44,24,16,0.20);
+  z-index: 45;
+  overflow: hidden;
+  animation: helpbotSlideUp 0.22s ease;
+}
+@keyframes helpbotSlideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.helpbot-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  background: #5B3A15;
+  color: white;
+}
+.helpbot-avatar { font-size: 1.5rem; }
+.helpbot-name { font-weight: 700; font-size: 0.88rem; }
+.helpbot-status { font-size: 0.7rem; opacity: 0.75; }
+
+.helpbot-body { padding: 0.85rem 1rem 1rem; display: flex; flex-direction: column; gap: 0.6rem; }
+
+.helpbot-bubble {
+  padding: 0.6rem 0.85rem;
+  border-radius: 12px;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  max-width: 88%;
+}
+.helpbot-bubble-bot {
+  background: #f5ede0;
+  color: #3B2507;
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+}
+.helpbot-bubble-user {
+  background: #5B3A15;
+  color: white;
+  border-bottom-right-radius: 4px;
+  align-self: flex-end;
+}
+
+.helpbot-options { display: flex; flex-direction: column; gap: 0.4rem; }
+.helpbot-option {
+  background: #fff;
+  border: 1.5px solid #e3d5c0;
+  border-radius: 10px;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: #5B3A15;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, border-color 0.15s;
+  font-family: inherit;
+}
+.helpbot-option:hover { background: #fdf5eb; border-color: #C58A3E; }
+
+.helpbot-actions { display: flex; gap: 0.5rem; }
+.helpbot-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.6rem 0.5rem;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.helpbot-btn:hover { opacity: 0.88; }
+.helpbot-btn-wa { background: #25d366; color: white; }
+.helpbot-btn-mail { background: #f5ede0; color: #5B3A15; border: 1.5px solid #e3d5c0; }
+
+.helpbot-back {
+  background: none;
+  border: none;
+  color: #a07850;
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+  text-align: left;
+}
+.helpbot-back:hover { color: #5B3A15; }
+
 /* Bottom-right floating basket — sits above the WhatsApp button */
 .basket-float {
   position: fixed;
