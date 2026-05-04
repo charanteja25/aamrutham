@@ -125,6 +125,21 @@ router.post("/verify", async (req, res) => {
         amount,
       }).catch(e => console.error('Email failed:', e.message));
     }
+
+    // Send WhatsApp confirmation (non-blocking) — only if Twilio is configured
+    const dbContact = orderResult.rows[0].customer_contact;
+    if (dbContact && process.env.TWILIO_ACCOUNT_SID) {
+      const { default: twilio } = await import('twilio');
+      const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+      const itemLines = cartItems
+        .map(i => `• ${i.name} × ${i.qty} (${i.packLabel})`)
+        .join('\n');
+      twilioClient.messages.create({
+        from: process.env.TWILIO_WHATSAPP_FROM,
+        to:   `whatsapp:+91${dbContact}`,
+        body: `Hi ${dbName.split(' ')[0]}! 🥭 Your Aamrutham order is confirmed!\n\n*Order ID:* ${aamOrderId}\n${itemLines}\n*Amount paid:* ₹${(amount / 100).toLocaleString('en-IN')}\n\nWe'll reach out once your mangoes are ready to ship. Track your order at aamrutham.com/my-orders 🌿`,
+      }).catch(e => console.error('WhatsApp confirmation failed:', e.message));
+    }
   } catch (err) {
     await client.query("ROLLBACK");
     console.error("Payment verification failed:", err);
