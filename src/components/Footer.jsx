@@ -1,38 +1,35 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 export default function Footer() {
   return (
     <footer className="site-footer">
-      <img src="/assets/Subject.png" alt="Aamrutham" className="footer-logo" />
-      <p className="footer-tagline">Aam + Amrutham — Pure Mango Bliss</p>
-      <div className="footer-links">
-        <a href="/#story">Our Story</a>
-        <a href="/#process">Farm to You</a>
-        <a href="/#varieties">Varieties</a>
-        <a href="/products">Our Mangoes</a>
-      </div>
-      <div className="footer-tools">
-        <span className="footer-tools-label">Handy Tools</span>
-        <div className="footer-tools-pills">
-          <Link to="/bulk-enquiry" className="footer-tool-pill footer-tool-pill--bulk">
-            🚚 Bulk Enquiry
-          </Link>
-          <Link to="/mango-calculator" className="footer-tool-pill footer-tool-pill--calc">
-            🥭 Mango Calculator
-          </Link>
+      <div className="footer-grid">
+
+        {/* Left — walk with us */}
+        <div className="footer-col footer-col-left">
+          <Link to="/hello" className="footer-walk-btn">🥭 Walk with us →</Link>
         </div>
+
+        {/* Centre — logo + tagline + legal */}
+        <div className="footer-col footer-col-center">
+          <img src="/assets/Subject.png" alt="Aamrutham" className="footer-logo" />
+          <p className="footer-tagline">Aam + Amrutham — Pure Mango Bliss</p>
+          <div className="footer-legal-links">
+            <Link to="/privacy">Privacy</Link>
+            <span>·</span>
+            <Link to="/terms">Terms</Link>
+            <span>·</span>
+            <span>© {new Date().getFullYear()} Aamrutham</span>
+          </div>
+        </div>
+
+        {/* Right — tools stacked */}
+        <div className="footer-col footer-col-right">
+          <Link to="/bulk-enquiry" className="footer-tool-pill footer-tool-pill--bulk">🚚 Bulk Enquiry</Link>
+          <Link to="/mango-calculator" className="footer-tool-pill footer-tool-pill--calc">🥭 Mango Calculator</Link>
+        </div>
+
       </div>
-      <div className="footer-legal-links">
-        <Link to="/hello">Walk with us</Link>
-        <span className="footer-utility-divider">·</span>
-      </div>
-      <div className="footer-legal-links">
-        <Link to="/privacy">Privacy Policy</Link>
-        <span className="footer-utility-divider">·</span>
-        <Link to="/terms">Terms of Service</Link>
-      </div>
-      <p className="footer-copy">© {new Date().getFullYear()} Aamrutham. Made with ❤️ for 🥭</p>
     </footer>
   );
 }
