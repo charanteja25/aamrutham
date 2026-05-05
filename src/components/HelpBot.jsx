@@ -10,7 +10,7 @@ const TOPICS = [
 const waUrl   = (msg) => `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(msg)}`;
 const mailUrl = (sub) => `mailto:support@aamrutham.com?subject=${encodeURIComponent(sub)}`;
 
-export default function HelpBot() {
+export default function HelpBot({ triggerClassName }) {
   const [open, setOpen]   = useState(false);
   const [topic, setTopic] = useState(null);
 
@@ -19,8 +19,7 @@ export default function HelpBot() {
 
   return (
     <>
-      {/* Pill button — sits above basket-float on the right */}
-      <button className="helpbot-pill" onClick={toggle} aria-label="Need help?">
+      <button className={triggerClassName || 'helpbot-pill'} onClick={toggle} aria-label="Need help?">
         {open ? '✕ Close' : '? Need help'}
       </button>
 
@@ -33,12 +32,10 @@ export default function HelpBot() {
               <div className="helpbot-status">● Online</div>
             </div>
           </div>
-
           <div className="helpbot-body">
             <div className="helpbot-bubble helpbot-bubble-bot">
-              {topic ? topic.reply || 'Reach us on:' : 'Hi! 👋 How can we help you today?'}
+              {topic ? 'Reach us on:' : 'Hi! 👋 How can we help you today?'}
             </div>
-
             {!topic ? (
               <div className="helpbot-options">
                 {TOPICS.map(t => (
@@ -52,12 +49,8 @@ export default function HelpBot() {
                 <div className="helpbot-bubble helpbot-bubble-user">{topic.label}</div>
                 <div className="helpbot-bubble helpbot-bubble-bot">We're here! Reach us on:</div>
                 <div className="helpbot-actions">
-                  <a href={waUrl(topic.wa)} target="_blank" rel="noopener noreferrer" className="helpbot-btn helpbot-btn-wa">
-                    💬 WhatsApp
-                  </a>
-                  <a href={mailUrl(topic.subject)} className="helpbot-btn helpbot-btn-mail">
-                    ✉️ Email
-                  </a>
+                  <a href={waUrl(topic.wa)} target="_blank" rel="noopener noreferrer" className="helpbot-btn helpbot-btn-wa">💬 WhatsApp</a>
+                  <a href={mailUrl(topic.subject)} className="helpbot-btn helpbot-btn-mail">✉️ Email</a>
                 </div>
                 <button className="helpbot-back" onClick={() => setTopic(null)}>← Back</button>
               </>

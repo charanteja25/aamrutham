@@ -6,7 +6,6 @@ import CartAnimation from './components/CartAnimation';
 import SeasonPassPrompt from './components/SeasonPassPrompt';
 import Footer from './components/Footer';
 import WhatsAppFloat from './components/WhatsAppFloat';
-import HelpBot from './components/HelpBot';
 import HomePage from './pages/HomePage';
 import ProductsPage from './pages/ProductsPage';
 import ProductDetailPage from './pages/ProductDetailPage';
@@ -88,7 +87,6 @@ export default function App() {
         </Routes>
         <Footer />
         <WhatsAppFloat />
-        <HelpBot />
       </div>
     </InventoryProvider>
   );
