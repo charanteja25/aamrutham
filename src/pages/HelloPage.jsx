@@ -9,16 +9,37 @@ const MOODS = [
   { emoji: '😕', label: 'Disappointed' },
 ];
 
+const VARIETIES = [
+  'Mettavalasa Peechu', 'Bobbili Peechu', 'Kothapalli Kobbari',
+  'Imam Pasand', 'Panduri Mavidi', 'Suvarnarekha',
+  'Banganapalli', 'Chinna Rasalu', 'Pedda Rasalu',
+  'Rajula Mamidi', 'Cheruku Rasalu',
+];
+
+const SOURCES = [
+  { icon: '📦', label: 'Packaging' },
+  { icon: '🏪', label: 'At a stall' },
+  { icon: '👥', label: 'Friend' },
+  { icon: '📱', label: 'Instagram' },
+  { icon: '🌐', label: 'Online' },
+];
+
 export default function HelloPage() {
   usePageMeta({ title: 'Hello — Aamrutham', description: 'Our story. Walk with us.' });
 
-  const [mood, setMood]         = useState(null);
-  const [comment, setComment]   = useState('');
-  const [name, setName]         = useState('');
-  const [whatsapp, setWhatsapp] = useState('');
+  const [mood, setMood]           = useState(null);
+  const [comment, setComment]     = useState('');
+  const [picked, setPicked]       = useState([]);
+  const [foundUs, setFoundUs]     = useState(null);
+  const [name, setName]           = useState('');
+  const [whatsapp, setWhatsapp]   = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading]   = useState(false);
-  const [error, setError]       = useState('');
+  const [loading, setLoading]     = useState(false);
+  const [error, setError]         = useState('');
+
+  function toggleVariety(v) {
+    setPicked(prev => prev.includes(v) ? prev.filter(x => x !== v) : [...prev, v]);
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -36,7 +57,11 @@ export default function HelloPage() {
         body: JSON.stringify({
           name: name.trim(),
           whatsapp,
-          source: mood ? `${mood.emoji} ${mood.label}${comment.trim() ? ` — ${comment.trim()}` : ''}` : null,
+          source: [
+            mood ? `${mood.emoji} ${mood.label}${comment.trim() ? ` — ${comment.trim()}` : ''}` : null,
+            picked.length ? `Tried: ${picked.join(', ')}` : null,
+            foundUs ? `Found via: ${foundUs.icon} ${foundUs.label}` : null,
+          ].filter(Boolean).join(' | ') || null,
         }),
       });
       const data = await res.json();
@@ -95,6 +120,29 @@ export default function HelloPage() {
             <textarea style={s.textarea} placeholder="Tell us more… (optional)"
               value={comment} onChange={e => setComment(e.target.value)} maxLength={300} rows={2} />
           )}
+
+          {/* What did you try */}
+          <p style={s.chipLabel}>What did you try? <span style={s.optional}>(optional)</span></p>
+          <div style={s.chipRow}>
+            {VARIETIES.map(v => (
+              <button key={v} type="button" onClick={() => toggleVariety(v)}
+                style={{ ...s.chip, ...(picked.includes(v) ? s.chipActive : {}) }}>
+                {v}
+              </button>
+            ))}
+          </div>
+
+          {/* How did you find us */}
+          <p style={s.chipLabel}>How did you find us? <span style={s.optional}>(optional)</span></p>
+          <div style={s.chipRow}>
+            {SOURCES.map(src => (
+              <button key={src.label} type="button"
+                onClick={() => setFoundUs(foundUs?.label === src.label ? null : src)}
+                style={{ ...s.chip, ...(foundUs?.label === src.label ? s.chipActive : {}) }}>
+                {src.icon} {src.label}
+              </button>
+            ))}
+          </div>
 
           {/* Form */}
           <form onSubmit={handleSubmit} style={s.form}>
@@ -219,6 +267,15 @@ const s = {
     fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
   },
   noSpam: { fontSize: '0.72rem', color: '#a07850', lineHeight: 1.5, margin: 0 },
+  chipLabel: { fontSize: '0.78rem', fontWeight: 600, color: '#5B3A15', margin: '0.75rem 0 0.35rem', textAlign: 'left' },
+  optional: { fontWeight: 400, opacity: 0.55 },
+  chipRow: { display: 'flex', flexWrap: 'wrap', gap: '0.4rem', justifyContent: 'flex-start', marginBottom: '0.25rem' },
+  chip: {
+    padding: '0.3rem 0.75rem', borderRadius: 50, border: '1.5px solid #e3d5c0',
+    background: '#fff', fontSize: '0.75rem', fontWeight: 600, color: '#5B3A15',
+    cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.15s',
+  },
+  chipActive: { border: '1.5px solid #C58A3E', background: '#fdf5eb', color: '#C58A3E' },
   error: { color: '#b91c1c', fontSize: '0.82rem', margin: 0 },
   thankYou: { padding: '2rem 0' },
   thankTitle: {
