@@ -523,6 +523,67 @@ function InventoryTab() {
   );
 }
 
+// ─── Waitlist Tab ─────────────────────────────────────────────────────────────
+function WaitlistTab() {
+  const [rows, setRows] = useState(null);
+
+  useEffect(() => {
+    fetch(API_BASE + '/api/waitlist', { headers: authHeaders() })
+      .then(r => r.json())
+      .then(setRows)
+      .catch(() => setRows([]));
+  }, []);
+
+  if (!rows) return <p style={{ color: '#888' }}>Loading…</p>;
+  if (rows.length === 0) return <p style={{ color: '#888' }}>No signups yet.</p>;
+
+  const moodCounts = rows.reduce((acc, r) => {
+    const emoji = r.source?.split(' ')[0] || '—';
+    acc[emoji] = (acc[emoji] || 0) + 1;
+    return acc;
+  }, {});
+
+  return (
+    <div>
+      {/* Mood summary */}
+      <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
+        {Object.entries(moodCounts).map(([emoji, count]) => (
+          <div key={emoji} style={{ background: '#fff8ec', border: '1px solid #e8d9c4', borderRadius: 10, padding: '0.6rem 1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span style={{ fontSize: '1.4rem' }}>{emoji}</span>
+            <span style={{ fontWeight: 700, fontSize: '1.1rem' }}>{count}</span>
+          </div>
+        ))}
+        <div style={{ background: '#f0f9ff', border: '1px solid #bae6fd', borderRadius: 10, padding: '0.6rem 1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <span style={{ fontWeight: 700 }}>Total:</span>
+          <span style={{ fontWeight: 700, fontSize: '1.1rem' }}>{rows.length}</span>
+        </div>
+      </div>
+
+      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem' }}>
+        <thead>
+          <tr style={{ borderBottom: '2px solid #eee', textAlign: 'left' }}>
+            {['Name', 'WhatsApp', 'Mood / Comment', 'Date'].map(h => (
+              <th key={h} style={{ padding: '0.5rem 0.75rem', color: '#888', fontWeight: 600, fontSize: '0.75rem', textTransform: 'uppercase' }}>{h}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(r => (
+            <tr key={r.id} style={{ borderBottom: '1px solid #f0f0f0' }}>
+              <td style={{ padding: '0.65rem 0.75rem', fontWeight: 600 }}>{r.name}</td>
+              <td style={{ padding: '0.65rem 0.75rem', color: '#2e7d32', fontFamily: 'monospace' }}>+91{r.whatsapp}</td>
+              <td style={{ padding: '0.65rem 0.75rem', color: '#555', maxWidth: 280 }}>{r.source || '—'}</td>
+              <td style={{ padding: '0.65rem 0.75rem', color: '#aaa', whiteSpace: 'nowrap' }}>
+                {new Date(r.created_at).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 // ─── Season Pass Tab ──────────────────────────────────────────────────────────
 // Admin can set total slots + claimed count for any season_year. Upserts.
 function SeasonPassTab() {
@@ -754,6 +815,7 @@ export default function AdminDashboardPage() {
     { key: 'orders',      label: '📦 Orders' },
     { key: 'inventory',   label: '🥭 Inventory' },
     { key: 'seasonpass',  label: '⚡ Season Pass' },
+    { key: 'waitlist',    label: '🤝 Hello' },
   ];
 
   return (
@@ -798,6 +860,7 @@ export default function AdminDashboardPage() {
           {tab === 'orders'     && <OrdersTab />}
           {tab === 'inventory'  && <InventoryTab />}
           {tab === 'seasonpass' && <SeasonPassTab />}
+          {tab === 'waitlist'   && <WaitlistTab />}
         </div>
       </div>
     </div>
