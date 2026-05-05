@@ -1722,38 +1722,50 @@ input {
   background: #1a0f0a;
   color: rgba(255,255,255,0.75);
   text-align: center;
-  padding: 3rem 1rem;
+  padding: 1.75rem 1rem 1.25rem;
+}
+
+.footer-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
 }
 
 .footer-logo {
-  width: 80px;
-  margin: 0 auto 1rem;
+  width: 36px;
+  margin: 0;
 }
 
 .footer-tagline {
   margin: 0;
-  color: rgba(255,255,255,0.62);
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.5);
 }
 
 .footer-links {
   display: flex;
   justify-content: center;
-  gap: 1.2rem;
+  gap: 1rem;
   flex-wrap: wrap;
-  margin: 1.25rem 0;
+  margin: 0 0 1rem;
 }
 
 .footer-links a {
   text-decoration: none;
-  font-size: 0.85rem;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.5);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
+  transition: color 0.15s;
 }
+.footer-links a:hover { color: rgba(255,255,255,0.85); }
 
 .footer-copy {
   margin: 0;
   color: rgba(255,255,255,0.35);
-  font-size: 0.82rem;
+  font-size: 0.75rem;
 }
 
 .whatsapp-float {
@@ -5906,16 +5918,15 @@ h1, h2, h3 { font-weight: 400; }
 .footer-walk-strip-btn {
   display: inline-flex;
   align-items: center;
-  padding: 0.6rem 1.25rem;
+  padding: 0.5rem 1.25rem;
   background: #C58A3E;
   color: #fff;
   font-weight: 700;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   border-radius: 50px;
   text-decoration: none;
-  white-space: nowrap;
+  margin-bottom: 1rem;
   transition: opacity 0.15s;
-  flex-shrink: 0;
 }
 .footer-walk-strip-btn:hover { opacity: 0.88; }
 @media (max-width: 500px) {
