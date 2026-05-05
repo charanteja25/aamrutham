@@ -70,6 +70,11 @@ export default function HelloPage() {
 
   return (
     <main style={styles.page}>
+      {/* Botanical illustrations — decorative corners */}
+      <img src="/assets/botanical/mango-branch-bee.png" alt="" aria-hidden="true" style={styles.botanicalTL} />
+      <img src="/assets/botanical/mango-parrot-bee.png" alt="" aria-hidden="true" style={styles.botanicalBR} />
+      <img src="/assets/botanical/mango-tree-bees.png"  alt="" aria-hidden="true" style={styles.botanicalBL} />
+
       <div style={styles.card}>
 
         {/* Story */}
@@ -336,5 +341,38 @@ const styles = {
     fontSize: '0.9rem',
     color: '#a07850',
     lineHeight: 1.6,
+  },
+  botanicalTL: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: 'clamp(200px, 28vw, 380px)',
+    opacity: 0.08,
+    pointerEvents: 'none',
+    userSelect: 'none',
+    mixBlendMode: 'multiply',
+    transform: 'translate(-10%, -5%)',
+  },
+  botanicalBR: {
+    position: 'fixed',
+    bottom: 0,
+    right: 0,
+    width: 'clamp(180px, 24vw, 340px)',
+    opacity: 0.07,
+    pointerEvents: 'none',
+    userSelect: 'none',
+    mixBlendMode: 'multiply',
+    transform: 'translate(10%, 5%)',
+  },
+  botanicalBL: {
+    position: 'fixed',
+    bottom: 0,
+    left: 0,
+    width: 'clamp(160px, 22vw, 300px)',
+    opacity: 0.06,
+    pointerEvents: 'none',
+    userSelect: 'none',
+    mixBlendMode: 'multiply',
+    transform: 'translate(-5%, 8%)',
   },
 };
