@@ -1766,7 +1766,7 @@ input {
 .whatsapp-float {
   position: fixed;
   right: 1.4rem;
-  bottom: 1.4rem;
+  bottom: 3.5rem;
   width: 56px;
   height: 56px;
   display: grid;
@@ -1784,7 +1784,7 @@ input {
 .helpbot-pill {
   position: fixed;
   left: 1.4rem;
-  bottom: 1.4rem;
+  bottom: 3.5rem;
   height: 34px;
   padding: 0 1rem;
   border-radius: 999px;
@@ -1809,7 +1809,7 @@ input {
 .helpbot-widget {
   position: fixed;
   left: 1.4rem;
-  bottom: 4.5rem;
+  bottom: 6.5rem;
   width: min(320px, calc(100vw - 2.8rem));
   background: #fff;
   border-radius: 18px;
@@ -1907,7 +1907,7 @@ input {
 .basket-float {
   position: fixed;
   right: 1.4rem;
-  bottom: 5.6rem;   /* 56px WA button + 1.4rem gap + 1.4rem base = ~5.6rem */
+  bottom: 7.7rem;   /* 56px WA button + 1.4rem gap + 3.5rem base */
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -2131,7 +2131,7 @@ input {
 @media (max-width: 480px) {
   .basket-float {
     right: 1rem;
-    bottom: 5.2rem;  /* keep it above WhatsApp on mobile too */
+    bottom: 7.3rem;  /* keep it above WhatsApp on mobile too */
     width: 56px;
     height: 56px;
   }
