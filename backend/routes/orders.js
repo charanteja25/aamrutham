@@ -38,15 +38,20 @@ router.post("/create", async (req, res) => {
     return res.status(400).json({ error: "amount and cartItems are required" });
   }
 
-  // Address + contact are mandatory so we can ship the order. These are also
-  // prefilled into Razorpay so the customer doesn't retype them.
-  const required = ["name", "contact", "address_line1", "city", "state", "pincode"];
+  // Address mandatory; at least one of contact/email required for delivery comms.
+  const required = ["name", "address_line1", "city", "state", "pincode"];
   const missing = required.filter((k) => !customer[k] || String(customer[k]).trim() === "");
   if (missing.length) {
-    return res.status(400).json({
-      error: "Missing customer fields",
-      fields: missing,
-    });
+    return res.status(400).json({ error: "Missing customer fields", fields: missing });
+  }
+
+  const hasPhone = /^[0-9]{10}$/.test(String(customer.contact || "").replace(/\D/g, "").slice(-10));
+  const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(customer.email || "").trim());
+  if (!hasPhone && !hasEmail) {
+    return res.status(400).json({ error: "A mobile number or email address is required" });
+  }
+  if (customer.contact?.trim() && !hasPhone) {
+    return res.status(400).json({ error: "Contact must be a 10-digit mobile number" });
   }
 
   if (!/^[0-9]{6}$/.test(String(customer.pincode).trim())) {
@@ -57,9 +62,6 @@ router.post("/create", async (req, res) => {
       error: "Sorry, we currently deliver within Hyderabad only.",
       code: "pincode_not_serviceable",
     });
-  }
-  if (!/^[0-9]{10}$/.test(String(customer.contact).replace(/\D/g, "").slice(-10))) {
-    return res.status(400).json({ error: "Contact must be a 10-digit mobile number" });
   }
 
   const amountPaise = Math.round(amount * 100);

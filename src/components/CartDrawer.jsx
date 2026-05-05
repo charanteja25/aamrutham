@@ -12,7 +12,8 @@ const CUSTOMER_KEY = 'aam_last_customer';
 const API = import.meta.env.VITE_API_URL || "";
 
 const EMPTY_CUSTOMER = {
-  name: '',
+  firstName: '',
+  lastName: '',
   email: '',
   contact: '',
   address_line1: '',
@@ -64,6 +65,16 @@ export default function CartDrawer() {
   // (item added, removed, or qty changed) so old messages don't linger.
   React.useEffect(() => { setStockError(null); }, [items]);
 
+  // Lock body scroll when cart is open (prevents background scroll on mobile)
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [isOpen]);
+
   // ── Bulk order detection ──────────────────────────────────────────────────
   const bulkWhatsAppUrl = useMemo(() => {
     const isBulk = items.some((item) => {
@@ -86,12 +97,15 @@ export default function CartDrawer() {
 
   function validateCustomer() {
     const errs = {};
-    if (!customer.name.trim()) errs.name = 'Required';
-    if (!/^[0-9]{10}$/.test(customer.contact.replace(/\D/g, '').slice(-10))) {
-      errs.contact = 'Enter a 10-digit mobile number';
-    }
-    if (customer.email.trim() && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(customer.email.trim())) {
-      errs.email = 'Enter a valid email';
+    if (!customer.firstName.trim()) errs.firstName = 'Required';
+    if (!customer.lastName.trim()) errs.lastName = 'Required';
+    const hasPhone = /^[0-9]{10}$/.test(customer.contact.replace(/\D/g, '').slice(-10));
+    const hasEmail = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(customer.email.trim());
+    if (!hasPhone && !hasEmail) {
+      errs.contact = 'Enter a mobile number or email — at least one required';
+    } else {
+      if (customer.contact.trim() && !hasPhone) errs.contact = 'Enter a valid 10-digit mobile number';
+      if (customer.email.trim() && !hasEmail) errs.email = 'Enter a valid email';
     }
     if (!customer.address_line1.trim()) errs.address_line1 = 'Required';
     const pin = customer.pincode.trim();
@@ -102,7 +116,7 @@ export default function CartDrawer() {
     }
     setFormErrors(errs);
     if (Object.keys(errs).length > 0) {
-      const fieldOrder = ['name', 'contact', 'email', 'address_line1', 'city', 'state', 'pincode'];
+      const fieldOrder = ['firstName', 'lastName', 'contact', 'email', 'address_line1', 'city', 'state', 'pincode'];
       const first = fieldOrder.find((f) => errs[f]);
       if (first) {
         setTimeout(() => {
@@ -166,7 +180,7 @@ export default function CartDrawer() {
             ...(i.meta ? { meta: i.meta } : {}),
           })),
           customer: {
-            name: customer.name.trim(),
+            name: `${customer.firstName.trim()} ${customer.lastName.trim()}`.trim(),
             email: customer.email.trim() || null,
             contact: customer.contact.replace(/\D/g, '').slice(-10),
             address_line1: customer.address_line1.trim(),
@@ -265,7 +279,7 @@ export default function CartDrawer() {
         },
       },
       prefill: {
-        name: customer.name,
+        name: `${customer.firstName.trim()} ${customer.lastName.trim()}`.trim(),
         email: customer.email,
         contact: customer.contact.replace(/\D/g, '').slice(-10),
       },
@@ -577,19 +591,31 @@ function AddressForm({ customer, errors, onChange }) {
         Where should we deliver your mangoes?
       </p>
 
-      <Field label="Full Name *" error={errors.name}>
-        <input
-          id="checkout-name"
-          style={inp('name', errors.name)}
-          value={customer.name}
-          onChange={(e) => onChange('name', e.target.value)}
-          placeholder="Ravi Kumar"
-          autoComplete="name"
-        />
-      </Field>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
+        <Field label="First Name *" error={errors.firstName}>
+          <input
+            id="checkout-firstName"
+            style={inp('firstName', errors.firstName)}
+            value={customer.firstName}
+            onChange={(e) => onChange('firstName', e.target.value)}
+            placeholder="Ravi"
+            autoComplete="given-name"
+          />
+        </Field>
+        <Field label="Last Name *" error={errors.lastName}>
+          <input
+            id="checkout-lastName"
+            style={inp('lastName', errors.lastName)}
+            value={customer.lastName}
+            onChange={(e) => onChange('lastName', e.target.value)}
+            placeholder="Kumar"
+            autoComplete="family-name"
+          />
+        </Field>
+      </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
-        <Field label="Mobile *" error={errors.contact}>
+        <Field label="Mobile" error={errors.contact}>
           <input
             id="checkout-contact"
             style={inp('contact', errors.contact)}
@@ -600,7 +626,7 @@ function AddressForm({ customer, errors, onChange }) {
             autoComplete="tel"
           />
         </Field>
-        <Field label="Email (optional)" error={errors.email}>
+        <Field label="Email" error={errors.email}>
           <input
             id="checkout-email"
             style={inp('email', errors.email)}
