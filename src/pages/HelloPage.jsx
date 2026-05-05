@@ -9,16 +9,37 @@ const MOODS = [
   { emoji: '😕', label: 'Disappointed' },
 ];
 
+const VARIETIES = [
+  'Mettavalasa Peechu', 'Bobbili Peechu', 'Kothapalli Kobbari',
+  'Imam Pasand', 'Panduri Mavidi', 'Suvarnarekha',
+  'Banganapalli', 'Chinna Rasalu', 'Pedda Rasalu',
+  'Rajula Mamidi', 'Cheruku Rasalu',
+];
+
+const SOURCES = [
+  { icon: '📦', label: 'Packaging' },
+  { icon: '🏪', label: 'At a stall' },
+  { icon: '👥', label: 'Friend' },
+  { icon: '📱', label: 'Instagram' },
+  { icon: '🌐', label: 'Online' },
+];
+
 export default function HelloPage() {
   usePageMeta({ title: 'Hello — Aamrutham', description: 'Our story. Walk with us.' });
 
-  const [mood, setMood]         = useState(null);
-  const [comment, setComment]   = useState('');
-  const [name, setName]         = useState('');
-  const [whatsapp, setWhatsapp] = useState('');
+  const [mood, setMood]           = useState(null);
+  const [comment, setComment]     = useState('');
+  const [picked, setPicked]       = useState([]);
+  const [foundUs, setFoundUs]     = useState(null);
+  const [name, setName]           = useState('');
+  const [whatsapp, setWhatsapp]   = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading]   = useState(false);
-  const [error, setError]       = useState('');
+  const [loading, setLoading]     = useState(false);
+  const [error, setError]         = useState('');
+
+  function toggleVariety(v) {
+    setPicked(prev => prev.includes(v) ? prev.filter(x => x !== v) : [...prev, v]);
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -36,7 +57,11 @@ export default function HelloPage() {
         body: JSON.stringify({
           name: name.trim(),
           whatsapp,
-          source: mood ? `${mood.emoji} ${mood.label}${comment.trim() ? ` — ${comment.trim()}` : ''}` : null,
+          source: [
+            mood ? `${mood.emoji} ${mood.label}${comment.trim() ? ` — ${comment.trim()}` : ''}` : null,
+            picked.length ? `Tried: ${picked.join(', ')}` : null,
+            foundUs ? `Found via: ${foundUs.icon} ${foundUs.label}` : null,
+          ].filter(Boolean).join(' | ') || null,
         }),
       });
       const data = await res.json();
@@ -65,7 +90,23 @@ export default function HelloPage() {
             <p style={s.eyebrow}>Aamrutham · Year One</p>
             <h1 style={s.thankTitle}>Thank you.</h1>
             <p style={s.thankSub}>We'll reach out personally — not with a newsletter, just a conversation.</p>
-            <p style={{ ...s.thankSub, opacity: 0.55, marginTop: '0.5rem' }}>Until then, enjoy the mangoes.</p>
+            <div style={s.thankPerks}>
+              <div style={s.thankPerk}>
+                <span style={s.thankPerkIcon}>✍️</span>
+                <p style={s.thankPerkText}>
+                  <strong>Your next order gets a handwritten note from us.</strong>{' '}
+                  A small gesture for being kind enough to walk with us.
+                </p>
+              </div>
+              <div style={s.thankPerk}>
+                <span style={s.thankPerkIcon}>🌱</span>
+                <p style={s.thankPerkText}>
+                  <strong>You'll hear about next season before anyone else.</strong>{' '}
+                  No public announcement — just a message to you first.
+                </p>
+              </div>
+            </div>
+            <p style={{ ...s.thankSub, opacity: 0.5, marginTop: '1rem', fontSize: '0.82rem' }}>Until then, enjoy the mangoes.</p>
           </div>
         </div>
       ) : (
@@ -95,6 +136,29 @@ export default function HelloPage() {
             <textarea style={s.textarea} placeholder="Tell us more… (optional)"
               value={comment} onChange={e => setComment(e.target.value)} maxLength={300} rows={2} />
           )}
+
+          {/* What did you try */}
+          <p style={s.chipLabel}>What did you try? <span style={s.optional}>(optional)</span></p>
+          <div style={s.chipRow}>
+            {VARIETIES.map(v => (
+              <button key={v} type="button" onClick={() => toggleVariety(v)}
+                style={{ ...s.chip, ...(picked.includes(v) ? s.chipActive : {}) }}>
+                {v}
+              </button>
+            ))}
+          </div>
+
+          {/* How did you find us */}
+          <p style={s.chipLabel}>How did you find us? <span style={s.optional}>(optional)</span></p>
+          <div style={s.chipRow}>
+            {SOURCES.map(src => (
+              <button key={src.label} type="button"
+                onClick={() => setFoundUs(foundUs?.label === src.label ? null : src)}
+                style={{ ...s.chip, ...(foundUs?.label === src.label ? s.chipActive : {}) }}>
+                {src.icon} {src.label}
+              </button>
+            ))}
+          </div>
 
           {/* Form */}
           <form onSubmit={handleSubmit} style={s.form}>
@@ -129,14 +193,15 @@ const s = {
     padding: '2rem 1rem',
   },
   watermark: {
-    position: 'absolute',
+    position: 'fixed',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 'clamp(280px, 45vw, 560px)',
-    opacity: 0.04,
+    width: 'clamp(300px, 50vw, 600px)',
+    opacity: 0.07,
     pointerEvents: 'none',
     userSelect: 'none',
+    zIndex: 0,
   },
   botTL: {
     position: 'fixed', top: 0, left: 0,
@@ -218,6 +283,15 @@ const s = {
     fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
   },
   noSpam: { fontSize: '0.72rem', color: '#a07850', lineHeight: 1.5, margin: 0 },
+  chipLabel: { fontSize: '0.78rem', fontWeight: 600, color: '#5B3A15', margin: '0.75rem 0 0.35rem', textAlign: 'left' },
+  optional: { fontWeight: 400, opacity: 0.55 },
+  chipRow: { display: 'flex', flexWrap: 'wrap', gap: '0.4rem', justifyContent: 'flex-start', marginBottom: '0.25rem' },
+  chip: {
+    padding: '0.3rem 0.75rem', borderRadius: 50, border: '1.5px solid #e3d5c0',
+    background: '#fff', fontSize: '0.75rem', fontWeight: 600, color: '#5B3A15',
+    cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.15s',
+  },
+  chipActive: { border: '1.5px solid #C58A3E', background: '#fdf5eb', color: '#C58A3E' },
   error: { color: '#b91c1c', fontSize: '0.82rem', margin: 0 },
   thankYou: { padding: '2rem 0' },
   thankTitle: {
@@ -227,4 +301,8 @@ const s = {
     color: '#1C1208', marginBottom: '1rem',
   },
   thankSub: { fontSize: '1rem', color: '#5B3A15', lineHeight: 1.8 },
+  thankPerks: { display: 'flex', flexDirection: 'column', gap: '0.75rem', margin: '1.25rem 0 0', textAlign: 'left' },
+  thankPerk: { display: 'flex', gap: '0.75rem', alignItems: 'flex-start', background: 'rgba(197,138,62,0.08)', border: '1px solid rgba(197,138,62,0.2)', borderRadius: 12, padding: '0.85rem 1rem' },
+  thankPerkIcon: { fontSize: '1.25rem', flexShrink: 0, marginTop: '0.1rem' },
+  thankPerkText: { margin: 0, fontSize: '0.85rem', color: '#5B3A15', lineHeight: 1.6 },
 };
