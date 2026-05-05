@@ -65,6 +65,16 @@ export default function CartDrawer() {
   // (item added, removed, or qty changed) so old messages don't linger.
   React.useEffect(() => { setStockError(null); }, [items]);
 
+  // Lock body scroll when cart is open (prevents background scroll on mobile)
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [isOpen]);
+
   // ── Bulk order detection ──────────────────────────────────────────────────
   const bulkWhatsAppUrl = useMemo(() => {
     const isBulk = items.some((item) => {
