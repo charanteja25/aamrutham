@@ -87,6 +87,14 @@ CREATE TABLE IF NOT EXISTS otp_requests (
 CREATE INDEX IF NOT EXISTS idx_otp_contact ON otp_requests (contact, expires_at);
 -- Widen contact to hold emails as well as phone numbers
 ALTER TABLE otp_requests ALTER COLUMN contact TYPE VARCHAR(255);
+
+CREATE TABLE IF NOT EXISTS waitlist (
+  id         SERIAL PRIMARY KEY,
+  name       VARCHAR(255) NOT NULL,
+  whatsapp   VARCHAR(20)  NOT NULL,
+  source     VARCHAR(100),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
 `;
 
 // Quote a Postgres identifier (role, database, schema, table name).
