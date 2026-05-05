@@ -291,7 +291,7 @@ export default function MaasPage() {
                   <button className={`maas-pack-btn${pack === 12 ? ' active' : ''}`} onClick={() => setPack(12)}>12 mangoes / week</button>
                   <button className={`maas-pack-btn${pack === 24 ? ' active' : ''}`} onClick={() => setPack(24)}>24 mangoes / week</button>
                 </div>
-                <div className="maas-weight-note">≈ {pack === 12 ? '3–4 kg' : '6–8 kg'} per delivery · varies by variety</div>
+                <div className="maas-weight-note">≈ {pack === 12 ? '2.5 kg' : '5 kg'} per delivery · varies by variety</div>
                 <div className="maas-card-price">
                   <span style={{ textDecoration: 'line-through', opacity: 0.5, fontSize: '0.85em', marginRight: 8 }}>₹{strike.toLocaleString('en-IN')}</span>
                   ₹{price.toLocaleString('en-IN')}
@@ -341,7 +341,7 @@ export default function MaasPage() {
               <span style={{ textDecoration: 'line-through', opacity: 0.5, fontSize: '0.85em', marginRight: 8 }}>₹{PASS_PRICES.custom[customPack].strike.toLocaleString('en-IN')}</span>
               ₹{PASS_PRICES.custom[customPack].price.toLocaleString('en-IN')}
             </div>
-            <div className="maas-weight-note">≈ {customPack === 12 ? '3–4 kg' : '6–8 kg'} per delivery · varies by variety</div>
+            <div className="maas-weight-note">≈ {customPack === 12 ? '2.5 kg' : '5 kg'} per delivery · varies by variety</div>
             <Link to="/pricing" className="pricing-link" style={{ marginBottom: '0.5rem', display: 'inline-flex' }}>ℹ️ Why this price?</Link>
             <div className="maas-card-per">4 weekly drops · one payment · free delivery</div>
             {customSelected.length >= 1 ? (
