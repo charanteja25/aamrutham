@@ -1,5 +1,6 @@
 import { Router } from "express";
 import pool from "../db.js";
+import { requireAdmin } from "../middleware/auth.js";
 
 const router = Router();
 
@@ -21,6 +22,19 @@ router.post("/", async (req, res) => {
   } catch (err) {
     console.error("Waitlist insert failed:", err.message);
     res.status(500).json({ error: "Something went wrong. Please try again." });
+  }
+});
+
+// GET /api/waitlist — admin only
+router.get("/", requireAdmin, async (_req, res) => {
+  try {
+    const { rows } = await pool.query(
+      `SELECT id, name, whatsapp, source, created_at FROM waitlist ORDER BY created_at DESC`
+    );
+    res.json(rows);
+  } catch (err) {
+    console.error("Waitlist fetch failed:", err.message);
+    res.status(500).json({ error: "Server error" });
   }
 });
 
