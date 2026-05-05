@@ -129,14 +129,15 @@ const s = {
     padding: '2rem 1rem',
   },
   watermark: {
-    position: 'absolute',
+    position: 'fixed',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 'clamp(280px, 45vw, 560px)',
-    opacity: 0.04,
+    width: 'clamp(300px, 50vw, 600px)',
+    opacity: 0.07,
     pointerEvents: 'none',
     userSelect: 'none',
+    zIndex: 0,
   },
   botTL: {
     position: 'fixed', top: 0, left: 0,
