@@ -24,6 +24,10 @@ export default function Footer() {
         </div>
       </div>
       <div className="footer-legal-links">
+        <Link to="/hello">Walk with us</Link>
+        <span className="footer-utility-divider">·</span>
+      </div>
+      <div className="footer-legal-links">
         <Link to="/privacy">Privacy Policy</Link>
         <span className="footer-utility-divider">·</span>
         <Link to="/terms">Terms of Service</Link>
