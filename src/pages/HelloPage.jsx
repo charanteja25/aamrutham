@@ -90,7 +90,23 @@ export default function HelloPage() {
             <p style={s.eyebrow}>Aamrutham · Year One</p>
             <h1 style={s.thankTitle}>Thank you.</h1>
             <p style={s.thankSub}>We'll reach out personally — not with a newsletter, just a conversation.</p>
-            <p style={{ ...s.thankSub, opacity: 0.55, marginTop: '0.5rem' }}>Until then, enjoy the mangoes.</p>
+            <div style={s.thankPerks}>
+              <div style={s.thankPerk}>
+                <span style={s.thankPerkIcon}>✍️</span>
+                <p style={s.thankPerkText}>
+                  <strong>Your next order gets a handwritten note from us.</strong>{' '}
+                  A small gesture for being kind enough to walk with us.
+                </p>
+              </div>
+              <div style={s.thankPerk}>
+                <span style={s.thankPerkIcon}>🌱</span>
+                <p style={s.thankPerkText}>
+                  <strong>You'll hear about next season before anyone else.</strong>{' '}
+                  No public announcement — just a message to you first.
+                </p>
+              </div>
+            </div>
+            <p style={{ ...s.thankSub, opacity: 0.5, marginTop: '1rem', fontSize: '0.82rem' }}>Until then, enjoy the mangoes.</p>
           </div>
         </div>
       ) : (
@@ -285,4 +301,8 @@ const s = {
     color: '#1C1208', marginBottom: '1rem',
   },
   thankSub: { fontSize: '1rem', color: '#5B3A15', lineHeight: 1.8 },
+  thankPerks: { display: 'flex', flexDirection: 'column', gap: '0.75rem', margin: '1.25rem 0 0', textAlign: 'left' },
+  thankPerk: { display: 'flex', gap: '0.75rem', alignItems: 'flex-start', background: 'rgba(197,138,62,0.08)', border: '1px solid rgba(197,138,62,0.2)', borderRadius: 12, padding: '0.85rem 1rem' },
+  thankPerkIcon: { fontSize: '1.25rem', flexShrink: 0, marginTop: '0.1rem' },
+  thankPerkText: { margin: 0, fontSize: '0.85rem', color: '#5B3A15', lineHeight: 1.6 },
 };
