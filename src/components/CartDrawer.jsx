@@ -87,11 +87,13 @@ export default function CartDrawer() {
   function validateCustomer() {
     const errs = {};
     if (!customer.name.trim()) errs.name = 'Required';
-    if (!/^[0-9]{10}$/.test(customer.contact.replace(/\D/g, '').slice(-10))) {
-      errs.contact = 'Enter a 10-digit mobile number';
-    }
-    if (customer.email.trim() && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(customer.email.trim())) {
-      errs.email = 'Enter a valid email';
+    const hasPhone = /^[0-9]{10}$/.test(customer.contact.replace(/\D/g, '').slice(-10));
+    const hasEmail = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(customer.email.trim());
+    if (!hasPhone && !hasEmail) {
+      errs.contact = 'Enter a mobile number or email — at least one required';
+    } else {
+      if (customer.contact.trim() && !hasPhone) errs.contact = 'Enter a valid 10-digit mobile number';
+      if (customer.email.trim() && !hasEmail) errs.email = 'Enter a valid email';
     }
     if (!customer.address_line1.trim()) errs.address_line1 = 'Required';
     const pin = customer.pincode.trim();
@@ -589,7 +591,7 @@ function AddressForm({ customer, errors, onChange }) {
       </Field>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
-        <Field label="Mobile *" error={errors.contact}>
+        <Field label="Mobile" error={errors.contact}>
           <input
             id="checkout-contact"
             style={inp('contact', errors.contact)}
@@ -600,7 +602,7 @@ function AddressForm({ customer, errors, onChange }) {
             autoComplete="tel"
           />
         </Field>
-        <Field label="Email (optional)" error={errors.email}>
+        <Field label="Email" error={errors.email}>
           <input
             id="checkout-email"
             style={inp('email', errors.email)}
