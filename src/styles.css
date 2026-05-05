@@ -4606,6 +4606,7 @@ h1, h2, h3 { font-weight: 400; }
   letter-spacing: -0.02em;
 }
 .maas-card-per { font-size: 0.75rem; color: rgba(255,255,255,0.35); }
+.maas-weight-note { font-size: 0.72rem; color: rgba(255,255,255,0.45); margin-bottom: 0.5rem; font-style: italic; }
 .maas-features { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.45rem; }
 .maas-features li { font-size: 0.82rem; color: rgba(255,255,255,0.6); display: flex; align-items: flex-start; gap: 0.5rem; }
 .maas-check { color: var(--mango); flex-shrink: 0; }
