@@ -87,22 +87,22 @@ router.post("/send-otp", async (req, res) => {
     return res.json({ sent: true, channel: "email", maskedEmail: maskEmail(identifier) });
   }
 
-  // WhatsApp via Twilio
+  // SMS via Twilio
   if (!process.env.TWILIO_ACCOUNT_SID) {
-    return res.status(503).json({ error: "WhatsApp OTP is not configured yet. Please use your email instead." });
+    return res.status(503).json({ error: "SMS OTP is not configured yet. Please use your email instead." });
   }
   try {
     await getTwilio().messages.create({
-      from: process.env.TWILIO_WHATSAPP_FROM,
-      to:   `whatsapp:+91${identifier}`,
-      body: `Your Aamrutham order history code is: *${otp}*\n\nValid for 10 minutes. Do not share this code.`,
+      from: process.env.TWILIO_PHONE_FROM,
+      to:   `+91${identifier}`,
+      body: `Your Aamrutham order history code is: ${otp}\n\nValid for 10 minutes. Do not share this code.`,
     });
   } catch (err) {
-    console.error("WhatsApp OTP failed:", err.message);
-    return res.status(500).json({ error: "Failed to send WhatsApp message. Please try again." });
+    console.error("SMS OTP failed:", err.message);
+    return res.status(500).json({ error: "Failed to send SMS. Please try again." });
   }
 
-  res.json({ sent: true, channel: "whatsapp" });
+  res.json({ sent: true, channel: "sms" });
 });
 
 // ── Verify OTP ──────────────────────────────────────────────────────────────
