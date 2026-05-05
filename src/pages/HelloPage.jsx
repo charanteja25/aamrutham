@@ -193,7 +193,7 @@ const s = {
     padding: '2rem 1rem',
   },
   watermark: {
-    position: 'fixed',
+    position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
