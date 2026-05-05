@@ -107,6 +107,17 @@ export default function PaymentSuccessPage() {
             Back to Home
           </Link>
         </div>
+
+        {/* Walk with us */}
+        <Link to="/hello" style={{
+          display: 'block', marginTop: '1rem', textAlign: 'center',
+          padding: '0.85rem', borderRadius: 10,
+          background: '#FFF8EC', border: '1.5px solid #e8d9c4',
+          color: '#5B3A15', fontWeight: 600, textDecoration: 'none',
+          fontSize: '0.92rem',
+        }}>
+          🥭 Loved the mangoes? Walk with us →
+        </Link>
       </div>
     </div>
   );
