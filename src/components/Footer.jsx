@@ -1,15 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import HelpBot from './HelpBot';
-
 export default function Footer() {
   return (
     <footer className="site-footer">
       <div className="footer-grid">
 
-        {/* Left — help + walk with us stacked */}
+        {/* Left — walk with us */}
         <div className="footer-col footer-col-left">
-          <HelpBot triggerClassName="footer-help-btn" />
           <Link to="/hello" className="footer-walk-btn">🥭 Walk with us →</Link>
         </div>
 
