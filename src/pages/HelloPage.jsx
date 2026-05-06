@@ -75,14 +75,8 @@ export default function HelloPage() {
   }
 
   return (
-    <div style={s.root}>
-      {/* Botanical corners */}
-      <img src="/assets/botanical/mango-branch-bee.png"  alt="" aria-hidden style={s.botTL} />
-      <img src="/assets/botanical/mango-tree-bees.png"   alt="" aria-hidden style={s.botTR} />
-      <img src="/assets/botanical/mango-parrot-bee.png"  alt="" aria-hidden style={s.botBR} />
+    <div style={s.root} className="hello-root">
 
-      {/* Logo watermark */}
-      <img src="/assets/aam-final.png" alt="" aria-hidden style={s.watermark} />
 
       {submitted ? (
         <div style={s.center}>
@@ -115,7 +109,7 @@ export default function HelloPage() {
           <p style={s.eyebrow}>Aamrutham · Year One</p>
           <h1 style={s.headline}>This started with a<br />love for mangoes.</h1>
           <p style={s.sub}>
-            We grew up eating them. We couldn't find them anymore.<br />
+            We grew up eating them. Then one day, we realised we'd been missing them.<br />
             So we went back to the source — farmers in Bobbili who never stopped<br />
             growing the old way. No chemicals, no shortcuts, no carbide.
           </p>
@@ -191,35 +185,6 @@ const s = {
     position: 'relative',
     overflow: 'hidden',
     padding: '2rem 1rem',
-  },
-  watermark: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 'clamp(300px, 50vw, 600px)',
-    opacity: 0.07,
-    pointerEvents: 'none',
-    userSelect: 'none',
-    zIndex: 0,
-  },
-  botTL: {
-    position: 'fixed', top: 0, left: 0,
-    width: 'clamp(180px, 26vw, 380px)',
-    opacity: 0.12, pointerEvents: 'none', userSelect: 'none',
-    mixBlendMode: 'multiply', transform: 'translate(-8%, -5%)',
-  },
-  botTR: {
-    position: 'fixed', top: 0, right: 0,
-    width: 'clamp(180px, 26vw, 380px)',
-    opacity: 0.10, pointerEvents: 'none', userSelect: 'none',
-    mixBlendMode: 'multiply', transform: 'translate(6%, -6%) scaleX(-1)',
-  },
-  botBR: {
-    position: 'fixed', bottom: 0, right: 0,
-    width: 'clamp(160px, 22vw, 340px)',
-    opacity: 0.10, pointerEvents: 'none', userSelect: 'none',
-    mixBlendMode: 'multiply', transform: 'translate(8%, 5%)',
   },
   center: {
     position: 'relative',

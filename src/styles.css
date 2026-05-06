@@ -1335,9 +1335,10 @@ input {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(254, 248, 240, 0.94);
+  background: rgba(255, 248, 236, 0.92);
   backdrop-filter: blur(10px);
-  box-shadow: 0 1px 0 rgba(44,24,16,0.05);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 1px 0 rgba(197, 138, 62, 0.12);
 }
 
 .navbar {
@@ -2272,6 +2273,216 @@ input {
   }
 }
 
+/* ── Botanical watermarks ── */
+
+.tm2-hero::after,
+.tm2-pillar::before,
+.vals-hero::after,
+.vals-desktop-layout::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+/* Team hero — no art */
+
+/* Team pillars — per-pillar botanical */
+.tm2-pillar {
+  position: relative;
+}
+
+/* Pillar I — Nature: buds */
+.tm2-pillar-wrap:nth-child(2) .tm2-pillar::before {
+  background-image: url('/assets/botanical/buds.jpg');
+  opacity: 0.15;
+}
+
+/* Pillar II — Architects: earlyfruit */
+.tm2-pillar-wrap:nth-child(3) .tm2-pillar::before {
+  background-image: url('/assets/botanical/earlyfruit.jpg');
+  opacity: 0.15;
+}
+
+/* Pillar III — Hands: full parrots panoramic */
+.tm2-pillar-wrap:nth-child(4) .tm2-pillar::before {
+  background-image: url('/assets/botanical/parrots.avif');
+  background-size: 100% auto;
+  background-position: center center;
+  opacity: 0.15;
+}
+
+/* Pillar IV — Founders: mangoesfinal */
+.tm2-pillar-wrap:nth-child(5) .tm2-pillar::before {
+  background-image: url('/assets/botanical/mangoesfinal.jpg');
+  opacity: 0.15;
+}
+
+.tm2-pillar-inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* Values hero — no botanical */
+
+/* Values desktop content — parrot, fixed parallax */
+.vals-desktop-layout {
+  position: relative;
+  overflow: hidden;
+}
+
+.vals-desktop-layout::before {
+  background-image: url('/assets/botanical/earlyfruit.jpg');
+  background-attachment: fixed;
+  opacity: 0.18;
+}
+
+/* Values CTA — mangoesfinal on dark bg: screen so lines read light */
+.vals-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/assets/botanical/mangoesfinal.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  mix-blend-mode: screen;
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.vals-wrap,
+.vals-featured,
+.vals-grid,
+.vals-card,
+.vals-card-wide,
+.vals-cta > .container {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .tm2-hero::after,
+  .vals-hero::after,
+  .vals-desktop-layout::before {
+    background-attachment: scroll;
+    opacity: 0.12;
+  }
+}
+
+/* ── Logo Reveal Section ── */
+.logo-reveal-section {
+  position: relative;
+  min-height: 280vh;
+  background: linear-gradient(180deg, #fdf4e8 0%, #fffaf3 100%);
+}
+
+.logo-reveal-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.logo-reveal-ambient {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(245, 166, 35, 0.13), transparent 70%);
+  pointer-events: none;
+}
+
+.logo-reveal-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 320px;
+  height: 320px;
+}
+
+.logo-reveal-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(180, 120, 30, 0.22);
+}
+
+.logo-reveal-ring--outer {
+  inset: -40px;
+}
+
+.logo-reveal-ring--inner {
+  inset: -16px;
+}
+
+.logo-reveal-img {
+  width: 240px;
+  height: auto;
+  will-change: transform, opacity, filter;
+}
+
+.logo-reveal-label {
+  margin-top: 2rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--mango-dark);
+  font-weight: 600;
+  will-change: transform, opacity;
+}
+
+.logo-reveal-scroll-hint {
+  position: absolute;
+  bottom: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mango-dark);
+  opacity: 0.5;
+  transition: opacity 0.4s;
+}
+
+.logo-reveal-scroll-arrow {
+  width: 1px;
+  height: 32px;
+  background: linear-gradient(to bottom, var(--mango-dark), transparent);
+  animation: scrollArrowDrop 1.6s ease-in-out infinite;
+}
+
+@keyframes scrollArrowDrop {
+  0%, 100% { transform: scaleY(1); opacity: 0.6; }
+  50% { transform: scaleY(0.5); opacity: 0.2; }
+}
+
+@media (max-width: 768px) {
+  .logo-reveal-section {
+    min-height: 220vh;
+  }
+
+  .logo-reveal-wrap {
+    width: 240px;
+    height: 240px;
+  }
+
+  .logo-reveal-img {
+    width: 180px;
+  }
+}
+
 .section-banner-lite {
   background: #2D5016;
   padding: 1.4rem 1rem;
@@ -3142,7 +3353,7 @@ input {
 
 /* ── Team Page ── */
 .tm2-hero {
-  background: #F4EBD4;
+  background: transparent;
   position: relative;
   text-align: center;
   padding: 5rem 1.5rem 3.5rem;
@@ -5980,3 +6191,21 @@ h1, h2, h3 { font-weight: 400; }
   text-decoration: none; transition: color 0.15s;
 }
 .footer-legal-links a:hover { color: rgba(255,255,255,0.65); }
+
+/* ── Hello page botanical background ── */
+.hello-root {
+  position: relative;
+}
+.hello-root::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  background-image: url('/assets/botanical/mangoesfinal.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.13;
+  z-index: 0;
+}
