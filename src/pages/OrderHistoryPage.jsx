@@ -141,7 +141,7 @@ export default function OrderHistoryPage() {
 
   const sentTo = channel === 'email'
     ? `email · ${maskedEmail}`
-    : `WhatsApp · +91 ${identifier.replace(/\D/g, '').slice(-10)}`;
+    : `SMS · +91 ${identifier.replace(/\D/g, '').slice(-10)}`;
 
   return (
     <main style={{ minHeight: '100vh', background: '#faf7f2', padding: '2rem 0 4rem' }}>
@@ -176,7 +176,7 @@ export default function OrderHistoryPage() {
                 {byEmail
                   ? '✉️ Code will be sent to this email'
                   : identifier.replace(/\D/g, '').length >= 10
-                    ? '💬 Code will be sent via WhatsApp'
+                    ? '💬 Code will be sent via SMS'
                     : ''}
               </p>
             )}
