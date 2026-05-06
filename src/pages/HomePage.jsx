@@ -40,12 +40,12 @@ export default function HomePage() {
         <div className="container story-grid">
           <div className="story-copy">
             <p className="section-eyebrow">The Beginning</p>
-            <h2 className="section-title">Born from a boy’s love for mangoes</h2>
+            <h2 className="section-title">Born from a boy's love for mangoes</h2>
             <p>
               Ever since childhood, mangoes were never just a fruit for us — they were a feeling we grew up with and a love that stayed with us.
             </p>
             <blockquote>
-              “Aam + Amrutham. We believe the perfect mango tastes like pure అమృతం.”
+              "Aam + Amrutham. We believe the perfect mango tastes like pure అమృతం."
             </blockquote>
             <p>
               For over 12 years, our family has cultivated mangoes through natural farming without chemical fertilizers or pesticides. We harvest only at full maturity and never use artificial ripening agents.
