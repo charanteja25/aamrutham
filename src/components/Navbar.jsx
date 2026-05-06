@@ -23,7 +23,7 @@ export default function Navbar() {
         </button>
 
         <div className={`nav-links ${open ? 'open' : ''}`}>
-          <Link to="/products" onClick={closeMenu} className={`nav-pill-mango nav-mangoes-first${isProducts ? ' active' : ''}`}>🥭 Our Mangoes</Link>
+          <Link to="/products" onClick={closeMenu} className={`nav-pill-mango nav-mangoes-first${isProducts ? ' active' : ''}`}>🥭 Shop Mangoes</Link>
           <a href="/#story" onClick={closeMenu}>Our Story</a>
           <a href="/#process" onClick={closeMenu}>Farm to You</a>
           <Link to="/team" onClick={closeMenu} className={location.pathname === '/team' ? 'active' : ''}>Our Team</Link>

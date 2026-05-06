@@ -1,45 +1,19 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import usePageMeta from '../hooks/usePageMeta';
 import { API_BASE } from '../config.js';
 
-const MOODS = [
-  { emoji: '😍', label: 'Loved them' },
-  { emoji: '😊', label: 'Really good' },
-  { emoji: '😐', label: 'They were okay' },
-  { emoji: '😕', label: 'Disappointed' },
-];
-
-const VARIETIES = [
-  'Mettavalasa Peechu', 'Bobbili Peechu', 'Kothapalli Kobbari',
-  'Imam Pasand', 'Panduri Mavidi', 'Suvarnarekha',
-  'Banganapalli', 'Chinna Rasalu', 'Pedda Rasalu',
-  'Rajula Mamidi', 'Cheruku Rasalu',
-];
-
-const SOURCES = [
-  { icon: '📦', label: 'Packaging' },
-  { icon: '🏪', label: 'At a stall' },
-  { icon: '👥', label: 'Friend' },
-  { icon: '📱', label: 'Instagram' },
-  { icon: '🌐', label: 'Online' },
-];
+const WHATSAPP_COMMUNITY = 'https://chat.whatsapp.com/Dg0H723BaYc4v0bkJELP9R';
+const INSTAGRAM = 'https://instagram.com/aamrutham_';
 
 export default function HelloPage() {
-  usePageMeta({ title: 'Hello — Aamrutham', description: 'Our story. Walk with us.' });
+  usePageMeta({ title: 'Walk with us — Aamrutham', description: 'We grew up eating real mangoes. We want to share that love with you.' });
 
-  const [mood, setMood]           = useState(null);
-  const [comment, setComment]     = useState('');
-  const [picked, setPicked]       = useState([]);
-  const [foundUs, setFoundUs]     = useState(null);
   const [name, setName]           = useState('');
   const [whatsapp, setWhatsapp]   = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading]     = useState(false);
   const [error, setError]         = useState('');
-
-  function toggleVariety(v) {
-    setPicked(prev => prev.includes(v) ? prev.filter(x => x !== v) : [...prev, v]);
-  }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -54,15 +28,7 @@ export default function HelloPage() {
       const res = await fetch(API_BASE + '/api/waitlist', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: name.trim(),
-          whatsapp,
-          source: [
-            mood ? `${mood.emoji} ${mood.label}${comment.trim() ? ` — ${comment.trim()}` : ''}` : null,
-            picked.length ? `Tried: ${picked.join(', ')}` : null,
-            foundUs ? `Found via: ${foundUs.icon} ${foundUs.label}` : null,
-          ].filter(Boolean).join(' | ') || null,
-        }),
+        body: JSON.stringify({ name: name.trim(), whatsapp, source: 'hello-page' }),
       });
       const data = await res.json();
       if (!res.ok) { setError(data.error || 'Something went wrong.'); return; }
@@ -76,85 +42,53 @@ export default function HelloPage() {
 
   return (
     <div style={s.root} className="hello-root">
-
-
       {submitted ? (
         <div style={s.center}>
-          <div style={s.thankYou}>
-            <p style={s.eyebrow}>Aamrutham · Year One</p>
-            <h1 style={s.thankTitle}>Thank you.</h1>
-            <p style={s.thankSub}>We'll reach out personally — not with a newsletter, just a conversation.</p>
-            <div style={s.thankPerks}>
-              <div style={s.thankPerk}>
-                <span style={s.thankPerkIcon}>✍️</span>
-                <p style={s.thankPerkText}>
-                  <strong>Your next order gets a handwritten note from us.</strong>{' '}
-                  A small gesture for being kind enough to walk with us.
-                </p>
-              </div>
-              <div style={s.thankPerk}>
-                <span style={s.thankPerkIcon}>🌱</span>
-                <p style={s.thankPerkText}>
-                  <strong>You'll hear about next season before anyone else.</strong>{' '}
-                  No public announcement — just a message to you first.
-                </p>
-              </div>
-            </div>
-            <p style={{ ...s.thankSub, opacity: 0.5, marginTop: '1rem', fontSize: '0.82rem' }}>Until then, enjoy the mangoes.</p>
-          </div>
+          <p style={s.eyebrow}>Aamrutham</p>
+          <h1 style={s.thankTitle}>Welcome to the family. 🥭</h1>
+          <p style={s.thankSub}>
+            You're now part of a small group of people who care about how their food is grown.
+            We'll reach out personally — not with a newsletter, just a real conversation.
+          </p>
+          <a href={WHATSAPP_COMMUNITY} target="_blank" rel="noreferrer" style={s.waBtn}>
+            Join our WhatsApp Community
+          </a>
+          <p style={s.thankFooter}>
+            Follow our journey on{' '}
+            <a href={INSTAGRAM} target="_blank" rel="noreferrer" style={s.instaLink}>@aamrutham_</a>
+          </p>
         </div>
       ) : (
         <div style={s.center}>
-          {/* Story */}
-          <p style={s.eyebrow}>Aamrutham · Year One</p>
-          <h1 style={s.headline}>This started with a<br />love for mangoes.</h1>
+
+          <p style={s.eyebrow}>Aamrutham</p>
+          <h1 style={s.headline}>We grew up eating<br />real mangoes.</h1>
+
           <p style={s.sub}>
-            We grew up eating them. Then one day, we realised we'd been missing them.<br />
-            So we went back to the source — farmers in Bobbili who never stopped<br />
-            growing the old way. No chemicals, no shortcuts, no carbide.
+            Somewhere along the way, the mangoes changed. Carbide ripening, chemical sprays,
+            varieties bred for shelf life — not taste. The mango we grew up eating slowly disappeared.
           </p>
-          <p style={s.bold}>We're not building a brand. We're trying to bring something real back.</p>
+          <p style={s.sub}>
+            So we went looking. We found farmers in Bobbili who never stopped growing the old way —
+            no chemicals, no shortcuts, tree-ripened and harvested by hand. We want to share that with everyone who loves mangoes the way we do.
+          </p>
 
-          {/* Mood */}
-          <div style={s.moodRow}>
-            {MOODS.map(m => (
-              <button key={m.emoji} onClick={() => setMood(mood?.emoji === m.emoji ? null : m)}
-                style={{ ...s.moodBtn, ...(mood?.emoji === m.emoji ? s.moodActive : {}) }}>
-                <span style={s.moodEmoji}>{m.emoji}</span>
-                <span style={s.moodLabel}>{m.label}</span>
-              </button>
-            ))}
-          </div>
+          <Link to="/team" style={s.storyLink}>Meet the people behind it →</Link>
 
-          {mood && (
-            <textarea style={s.textarea} placeholder="Tell us more… (optional)"
-              value={comment} onChange={e => setComment(e.target.value)} maxLength={300} rows={2} />
-          )}
+          {/* Primary CTA */}
+          <div style={s.divider} />
+          <p style={s.joinLabel}>Join our community. Stay close to the farm.</p>
+          <a href={WHATSAPP_COMMUNITY} target="_blank" rel="noreferrer" style={s.waBtn}>
+            Join our WhatsApp Community
+          </a>
+          <p style={s.instaRow}>
+            Or follow us on{' '}
+            <a href={INSTAGRAM} target="_blank" rel="noreferrer" style={s.instaLink}>@aamrutham_</a>
+          </p>
 
-          {/* What did you try */}
-          <p style={s.chipLabel}>What did you try? <span style={s.optional}>(optional)</span></p>
-          <div style={s.chipRow}>
-            {VARIETIES.map(v => (
-              <button key={v} type="button" onClick={() => toggleVariety(v)}
-                style={{ ...s.chip, ...(picked.includes(v) ? s.chipActive : {}) }}>
-                {v}
-              </button>
-            ))}
-          </div>
-
-          {/* How did you find us */}
-          <p style={s.chipLabel}>How did you find us? <span style={s.optional}>(optional)</span></p>
-          <div style={s.chipRow}>
-            {SOURCES.map(src => (
-              <button key={src.label} type="button"
-                onClick={() => setFoundUs(foundUs?.label === src.label ? null : src)}
-                style={{ ...s.chip, ...(foundUs?.label === src.label ? s.chipActive : {}) }}>
-                {src.icon} {src.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Form */}
+          {/* Secondary CTA */}
+          <div style={s.divider} />
+          <p style={s.orLabel}>Want us to reach out personally?</p>
           <form onSubmit={handleSubmit} style={s.form}>
             <div style={s.inputRow}>
               <input style={s.input} type="text" placeholder="Your name"
@@ -165,10 +99,10 @@ export default function HelloPage() {
             </div>
             {error && <p style={s.error}>{error}</p>}
             <button type="submit" disabled={loading} style={s.submit}>
-              {loading ? 'Sending…' : 'Count me in'}
+              {loading ? 'Sending…' : 'Stay in touch'}
             </button>
-            <p style={s.noSpam}>🤝 No spam. Ever. We'll only reach out when we have something worth sharing.</p>
           </form>
+
         </div>
       )}
     </div>
@@ -184,12 +118,12 @@ const s = {
     justifyContent: 'center',
     position: 'relative',
     overflow: 'hidden',
-    padding: '2rem 1rem',
+    padding: '4rem 1.5rem',
   },
   center: {
     position: 'relative',
     zIndex: 1,
-    maxWidth: 580,
+    maxWidth: 560,
     width: '100%',
     textAlign: 'center',
   },
@@ -201,40 +135,53 @@ const s = {
     fontFamily: "'Playfair Display', serif",
     fontSize: 'clamp(2rem, 5vw, 3rem)',
     fontWeight: 400, fontStyle: 'italic',
-    color: '#1C1208', lineHeight: 1.2, marginBottom: '1rem',
+    color: '#1C1208', lineHeight: 1.2, marginBottom: '1.25rem',
   },
   sub: {
-    fontSize: '0.92rem', color: '#5B3A15',
-    lineHeight: 1.8, marginBottom: '0.75rem',
+    fontSize: '0.95rem', color: '#5B3A15',
+    lineHeight: 1.85, marginBottom: '1rem',
   },
-  bold: {
-    fontSize: '0.95rem', color: '#1C1208',
-    fontWeight: 700, lineHeight: 1.7, marginBottom: '1.5rem',
+  storyLink: {
+    display: 'inline-block',
+    fontSize: '0.85rem', fontWeight: 700,
+    color: '#2D5016', textDecoration: 'none',
+    borderBottom: '1.5px solid #2D5016',
+    paddingBottom: '1px', marginBottom: '0.5rem',
   },
-  moodRow: {
-    display: 'flex', gap: '0.5rem', justifyContent: 'center',
-    flexWrap: 'wrap', marginBottom: '0.75rem',
+  divider: {
+    width: 40, height: 2,
+    background: 'rgba(197,138,62,0.3)',
+    margin: '1.75rem auto',
+    borderRadius: 2,
   },
-  moodBtn: {
-    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.2rem',
-    padding: '0.55rem 0.75rem', borderRadius: 12,
-    border: '1.5px solid #e3d5c0', background: '#fff',
-    cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.15s',
-    minWidth: 72,
+  joinLabel: {
+    fontSize: '0.82rem', color: '#5B3A15',
+    fontWeight: 600, marginBottom: '1rem',
+    letterSpacing: '0.01em',
   },
-  moodActive: {
-    border: '1.5px solid #C58A3E', background: '#fdf5eb', transform: 'scale(1.06)',
+  waBtn: {
+    display: 'block',
+    background: '#25D366',
+    color: '#fff',
+    fontWeight: 700,
+    fontSize: '1rem',
+    padding: '0.9rem 1.5rem',
+    borderRadius: 12,
+    textDecoration: 'none',
+    marginBottom: '0.75rem',
+    transition: 'opacity 0.15s',
   },
-  moodEmoji: { fontSize: '1.75rem', lineHeight: 1 },
-  moodLabel: { fontSize: '0.6rem', fontWeight: 600, color: '#5B3A15' },
-  textarea: {
-    width: '100%', padding: '0.65rem 0.85rem',
-    border: '1.5px solid #e3d5c0', borderRadius: 10,
-    fontSize: '0.88rem', fontFamily: 'inherit', color: '#1C1208',
-    background: '#fff', resize: 'none', boxSizing: 'border-box',
-    outline: 'none', marginBottom: '0.75rem',
+  instaRow: {
+    fontSize: '0.8rem', color: '#a07850', margin: 0,
   },
-  form: { display: 'flex', flexDirection: 'column', gap: '0.6rem', marginTop: '0.5rem' },
+  instaLink: {
+    color: '#C58A3E', fontWeight: 700, textDecoration: 'none',
+  },
+  orLabel: {
+    fontSize: '0.78rem', color: '#a07850',
+    marginBottom: '0.85rem',
+  },
+  form: { display: 'flex', flexDirection: 'column', gap: '0.6rem' },
   inputRow: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' },
   input: {
     width: '100%', padding: '0.7rem 0.85rem',
@@ -244,30 +191,22 @@ const s = {
   },
   submit: {
     padding: '0.85rem', background: '#2D5016', color: '#fff',
-    border: 'none', borderRadius: 10, fontSize: '1rem',
+    border: 'none', borderRadius: 12, fontSize: '1rem',
     fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
   },
-  noSpam: { fontSize: '0.72rem', color: '#a07850', lineHeight: 1.5, margin: 0 },
-  chipLabel: { fontSize: '0.78rem', fontWeight: 600, color: '#5B3A15', margin: '0.75rem 0 0.35rem', textAlign: 'left' },
-  optional: { fontWeight: 400, opacity: 0.55 },
-  chipRow: { display: 'flex', flexWrap: 'wrap', gap: '0.4rem', justifyContent: 'flex-start', marginBottom: '0.25rem' },
-  chip: {
-    padding: '0.3rem 0.75rem', borderRadius: 50, border: '1.5px solid #e3d5c0',
-    background: '#fff', fontSize: '0.75rem', fontWeight: 600, color: '#5B3A15',
-    cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.15s',
-  },
-  chipActive: { border: '1.5px solid #C58A3E', background: '#fdf5eb', color: '#C58A3E' },
   error: { color: '#b91c1c', fontSize: '0.82rem', margin: 0 },
-  thankYou: { padding: '2rem 0' },
   thankTitle: {
     fontFamily: "'Playfair Display', serif",
-    fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
+    fontSize: 'clamp(2rem, 5vw, 3rem)',
     fontWeight: 400, fontStyle: 'italic',
     color: '#1C1208', marginBottom: '1rem',
   },
-  thankSub: { fontSize: '1rem', color: '#5B3A15', lineHeight: 1.8 },
-  thankPerks: { display: 'flex', flexDirection: 'column', gap: '0.75rem', margin: '1.25rem 0 0', textAlign: 'left' },
-  thankPerk: { display: 'flex', gap: '0.75rem', alignItems: 'flex-start', background: 'rgba(197,138,62,0.08)', border: '1px solid rgba(197,138,62,0.2)', borderRadius: 12, padding: '0.85rem 1rem' },
-  thankPerkIcon: { fontSize: '1.25rem', flexShrink: 0, marginTop: '0.1rem' },
-  thankPerkText: { margin: 0, fontSize: '0.85rem', color: '#5B3A15', lineHeight: 1.6 },
+  thankSub: {
+    fontSize: '0.95rem', color: '#5B3A15',
+    lineHeight: 1.85, marginBottom: '1.5rem',
+  },
+  thankFooter: {
+    fontSize: '0.8rem', color: '#a07850',
+    marginTop: '1rem',
+  },
 };
