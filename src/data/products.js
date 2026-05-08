@@ -41,6 +41,7 @@ export const products = [
     category: 'premium',
     accent: 'gold',
     gradient: 'linear-gradient(160deg, #fff3cd 0%, #ffd166 45%, #f4a835 100%)',
+    extraImages: ['/assets/varieties/mettavalasa-peechu-new.jpg'],
     story: {
       heading: 'The Story of Mettavalasa Peechu',
       p1: 'In the quiet, fertile lands of Mettavalasa region from Bobbili, a rare mango variety has been cherished for generations. Grown on elevated terrain and shaped by time, this fruit carries the essence of its land in every bite.\n\nThis unique variety was brought from Mettavalasa region and grafted by Sala Sitarama Swamy, who first established it in his farm — laying the foundation for a legacy that continues to thrive.',
@@ -92,7 +93,7 @@ export const products = [
     category: 'premium',
     accent: 'leaf',
     gradient: 'linear-gradient(160deg, #fff8e1 0%, #ffcc80 50%, #ff8f00 100%)',
-    extraImages: [],
+    extraImages: ['/assets/varieties/bobbili-peechu-new.jpg'],
     story: {
       heading: 'The Story of Bobbili Peechu',
       p1: 'Bobbili Peechu is known for its rich, juicy flavour and distinctive texture — a mango that carries both taste and tradition in every bite.\n\nBobbili Peechu is more than a mango — it is a story rooted in the legacy of the Bobbili Samsthanam.\n\nIt is said that Raja Ravu Swetachalapathi Ramakrishna Ranga Rao was once gifted two mango saplings of a variety known as Kallem Lo Mamidi by the Timmapuram Zamindar. Struck by its exceptional taste, he later named this variety "Bobbili Peechumanu."',
@@ -142,7 +143,7 @@ export const products = [
     category: 'premium',
     accent: 'gold',
     gradient: 'linear-gradient(160deg, #fff8e0 0%, #ffd979 55%, #eeaa2a 100%)',
-    extraImages: [],
+    extraImages: ['/assets/varieties/panduri-mavidi-new.jpg'],
     story: {
       heading: 'The Story of Panduri Mavidi',
       p1: 'Pandurivari mango is a rare, ancient variety once grown in the royal gardens of Andhra. Kings not only enjoyed its unique taste but also carefully preserved these trees, sharing the fruit with close circles and allied kingdoms as a symbol of pride and lineage.\n\nThese trees grow up to 100 feet tall and live for hundreds of years, with some still standing today in the Godavari regions. The fruit is small in size, but rich in flavour — and unlike most mangoes, it does not change colour when it ripens.\n\nThere are many stories about its origin. One says a mango was stolen from a royal orchard and planted in the Velagathuru region, from where it spread through grafting. Even today, families in the Godavari belt continue the tradition of sharing this mango as a mark of heritage.',
@@ -194,7 +195,7 @@ export const products = [
     category: 'premium',
     accent: 'gold',
     gradient: 'linear-gradient(160deg, #fff9e5 0%, #ffe082 50%, #ffc107 100%)',
-    extraImages: ['/assets/varieties/kothapalli-kobbari-2.jpg'],
+    extraImages: ['/assets/varieties/kothapalli-kobbari-2.jpg', '/assets/varieties/kothapalli-kobbari-new.jpg'],
     story: {
       heading: 'The Story of Kothapalli Kobbari',
       p1: 'From the coastal belt of Kakinada, in a small village called Kothapalli, comes a mango unlike any other. Centuries ago, the entire Kothapalli region of East Godavari district had only a single tree of this variety — and from that one tree, a legacy was born.\n\nKnown as Kothapalli Kobbari, this rare regional cultivar carries a signature that surprises everyone who tastes it — a gentle, natural aroma reminiscent of tender coconut. In Telugu, "Kobbari" means coconut, and this mango lives up to its name with every bite.',
@@ -446,6 +447,7 @@ export const products = [
     category: 'more',
     accent: 'leaf',
     gradient: 'linear-gradient(160deg, #fff0d2 0%, #ffbe62 55%, #de7e16 100%)',
+    extraImages: ['/assets/varieties/pedda-rasalu-new.jpg'],
     story: {
       heading: 'The Story of Pedda Rasalu',
       p1: 'The older, larger sibling of Chinna Rasalu, Pedda Rasalu delivers all the nectar-sweetness but with a deeper amber pulp and fuller body. From Nuzvid — the heartland of Andhra\'s finest heritage mangoes.',
