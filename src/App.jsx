@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import CartDrawer from './components/CartDrawer';
@@ -89,6 +90,7 @@ export default function App() {
         <Footer />
         <WhatsAppFloat />
         <HelpBot />
+        <Analytics />
       </div>
     </InventoryProvider>
   );
