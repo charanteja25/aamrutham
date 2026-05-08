@@ -23,7 +23,6 @@ app.use(cors({
     const allowed = (process.env.FRONTEND_URL || '').split(',').map(s => s.trim());
     if (
       allowed.includes(origin) ||
-      origin.endsWith('.vercel.app') ||
       origin === 'http://localhost:5173'
     ) return cb(null, true);
     cb(new Error('CORS: ' + origin + ' not allowed'));
