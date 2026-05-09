@@ -602,6 +602,96 @@ function WaitlistTab() {
   );
 }
 
+// ─── SMS Blast Tab ────────────────────────────────────────────────────────────
+function SmsBlastTab() {
+  const [rows, setRows] = useState([{ name: '', phone: '' }]);
+  const [sending, setSending] = useState(false);
+  const [results, setResults] = useState(null);
+
+  function addRow() { setRows(prev => [...prev, { name: '', phone: '' }]); }
+  function removeRow(i) { setRows(prev => prev.filter((_, idx) => idx !== i)); }
+  function updateRow(i, field, val) {
+    setRows(prev => prev.map((r, idx) => idx === i ? { ...r, [field]: val } : r));
+  }
+
+  async function send() {
+    const contacts = rows.filter(r => r.phone.trim().length === 10);
+    if (contacts.length === 0) return alert('Add at least one valid 10-digit number.');
+    setSending(true);
+    setResults(null);
+    try {
+      const res = await fetch(API_BASE + '/api/admin/blast-sms', {
+        method: 'POST',
+        headers: authHeaders(),
+        body: JSON.stringify({ contacts }),
+      });
+      const data = await res.json();
+      setResults(data.results);
+    } catch {
+      alert('Failed to send. Check backend.');
+    } finally {
+      setSending(false);
+    }
+  }
+
+  return (
+    <div>
+      <h2 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem' }}>SMS Blast</h2>
+      <p style={{ fontSize: '0.82rem', color: '#888', marginBottom: '1.25rem' }}>Enter customer names and numbers. Message includes home delivery info + links.</p>
+
+      <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '1rem' }}>
+        <thead>
+          <tr style={{ background: '#f9f9f7' }}>
+            <th style={{ padding: '0.5rem', textAlign: 'left', fontSize: '0.78rem', color: '#888' }}>Name</th>
+            <th style={{ padding: '0.5rem', textAlign: 'left', fontSize: '0.78rem', color: '#888' }}>Phone (10 digits)</th>
+            <th style={{ padding: '0.5rem' }}></th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, i) => (
+            <tr key={i}>
+              <td style={{ padding: '0.35rem 0.5rem' }}>
+                <input value={row.name} onChange={e => updateRow(i, 'name', e.target.value)}
+                  placeholder="Name" style={{ width: '100%', padding: '0.4rem 0.6rem', border: '1.5px solid #e0e0e0', borderRadius: 6, fontSize: '0.88rem' }} />
+              </td>
+              <td style={{ padding: '0.35rem 0.5rem' }}>
+                <input value={row.phone} onChange={e => updateRow(i, 'phone', e.target.value.replace(/\D/g, '').slice(0, 10))}
+                  placeholder="10-digit number" inputMode="tel"
+                  style={{ width: '100%', padding: '0.4rem 0.6rem', border: '1.5px solid #e0e0e0', borderRadius: 6, fontSize: '0.88rem' }} />
+              </td>
+              <td style={{ padding: '0.35rem 0.5rem' }}>
+                <button onClick={() => removeRow(i)} style={{ background: 'none', border: 'none', color: '#d32f2f', cursor: 'pointer', fontSize: '1rem' }}>✕</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.5rem' }}>
+        <button onClick={addRow} style={{ padding: '0.45rem 1rem', border: '1.5px solid #e0e0e0', borderRadius: 6, background: '#fff', cursor: 'pointer', fontSize: '0.85rem' }}>
+          + Add Row
+        </button>
+        <button onClick={send} disabled={sending} style={{ padding: '0.45rem 1.25rem', background: '#e8a020', color: '#fff', border: 'none', borderRadius: 6, fontWeight: 700, cursor: sending ? 'not-allowed' : 'pointer', fontSize: '0.85rem', opacity: sending ? 0.7 : 1 }}>
+          {sending ? 'Sending…' : `Send to ${rows.filter(r => r.phone.length === 10).length} contacts`}
+        </button>
+      </div>
+
+      {results && (
+        <div>
+          <p style={{ fontWeight: 700, fontSize: '0.85rem', marginBottom: '0.5rem' }}>
+            Results: {results.filter(r => r.status === 'sent').length} sent, {results.filter(r => r.status === 'failed').length} failed
+          </p>
+          {results.map((r, i) => (
+            <div key={i} style={{ fontSize: '0.8rem', color: r.status === 'sent' ? '#2e7d32' : r.status === 'failed' ? '#d32f2f' : '#888', marginBottom: 2 }}>
+              {r.status === 'sent' ? '✅' : r.status === 'failed' ? '❌' : '⏭'} {r.name || r.phone} ({r.phone}) {r.error ? `— ${r.error}` : ''}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── Season Pass Tab ──────────────────────────────────────────────────────────
 // Admin can set total slots + claimed count for any season_year. Upserts.
 function SeasonPassTab() {
@@ -834,6 +924,7 @@ export default function AdminDashboardPage() {
     { key: 'inventory',   label: '🥭 Inventory' },
     { key: 'seasonpass',  label: '⚡ Season Pass' },
     { key: 'waitlist',    label: '🤝 Hello' },
+    { key: 'smsblast',   label: '📲 SMS Blast' },
   ];
 
   return (
@@ -879,6 +970,7 @@ export default function AdminDashboardPage() {
           {tab === 'inventory'  && <InventoryTab />}
           {tab === 'seasonpass' && <SeasonPassTab />}
           {tab === 'waitlist'   && <WaitlistTab />}
+          {tab === 'smsblast'   && <SmsBlastTab />}
         </div>
       </div>
     </div>
