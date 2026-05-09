@@ -416,7 +416,7 @@ function InventoryTab() {
 
   async function saveStock(item) {
     const key = invKey(item);
-    const stock = parseInt(edits[key], 10);
+    const stock = item._overrideStock !== undefined ? item._overrideStock : parseInt(edits[key], 10);
     if (isNaN(stock) || stock < 0) return;
     setSaving(key);
     const res = await fetch(API_BASE + '/api/admin/inventory', {
@@ -481,13 +481,31 @@ function InventoryTab() {
                     {item.stock > 0 && item.stock < 10 && <span style={{ marginLeft: 6, fontSize: '0.75rem', color: '#f57f17', fontWeight: 600 }}>LOW</span>}
                   </td>
                   <td style={{ padding: '0.75rem' }}>
-                    <input
-                      type="number"
-                      min={0}
-                      value={edit}
-                      onChange={e => setEdits(prev => ({ ...prev, [key]: e.target.value }))}
-                      style={{ width: 80, padding: '0.35rem 0.5rem', border: '1.5px solid #e0e0e0', borderRadius: 6, fontSize: '0.9rem', textAlign: 'center' }}
-                    />
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                      <input
+                        type="number"
+                        min={0}
+                        value={edit}
+                        onChange={e => setEdits(prev => ({ ...prev, [key]: e.target.value }))}
+                        style={{ width: 80, padding: '0.35rem 0.5rem', border: '1.5px solid #e0e0e0', borderRadius: 6, fontSize: '0.9rem', textAlign: 'center' }}
+                      />
+                      {item.stock !== 0 && (
+                        <button
+                          onClick={() => {
+                            setEdits(prev => ({ ...prev, [key]: '0' }));
+                            saveStock({ ...item, _overrideStock: 0 });
+                          }}
+                          title="Mark as sold out"
+                          style={{
+                            padding: '0.3rem 0.5rem', background: '#d32f2f', color: '#fff',
+                            border: 'none', borderRadius: 6, fontSize: '0.72rem',
+                            fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap',
+                          }}
+                        >
+                          Sold Out
+                        </button>
+                      )}
+                    </div>
                   </td>
                   <td style={{ padding: '0.75rem' }}>
                     {saved === key
