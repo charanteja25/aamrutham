@@ -15,6 +15,8 @@ export default function BulkEnquiryPage() {
   const [name,    setName]    = useState('');
   const [email,   setEmail]   = useState('');
   const [selected, setSelected] = useState({});  // { varietyId: qty }
+  const [customVariety, setCustomVariety] = useState('');
+  const [customQty, setCustomQty] = useState('');
   const [errors,  setErrors]  = useState({});
 
   function toggleVariety(id) {
@@ -30,8 +32,8 @@ export default function BulkEnquiryPage() {
   }
 
   function setQty(id, val) {
-    const digits = val.replace(/\D/g, '');
-    const capped = digits && Number(digits) > 999 ? '999' : digits;
+    const num = parseInt(val.replace(/\D/g, '') || '0', 10);
+    const capped = num > 999 ? '999' : num ? String(num) : '';
     setSelected(prev => ({ ...prev, [id]: capped }));
   }
 
@@ -39,11 +41,14 @@ export default function BulkEnquiryPage() {
     const e = {};
     if (!name.trim())                          e.name   = 'Please enter your name.';
     if (email && !/\S+@\S+\.\S+/.test(email)) e.email  = 'Please enter a valid email address.';
-    if (Object.keys(selected).length === 0)   e.variety = 'Please select at least one variety.';
+    const hasSelected = Object.keys(selected).length > 0;
+    const hasCustom = customVariety.trim() && customQty;
+    if (!hasSelected && !hasCustom)            e.variety = 'Please select at least one variety.';
     Object.entries(selected).forEach(([id, qty]) => {
       if (!qty || Number(qty) < 1)    e[`qty_${id}`] = 'Enter quantity.';
       else if (Number(qty) > 999)     e[`qty_${id}`] = 'Maximum 999 pcs per variety.';
     });
+    if (customVariety.trim() && (!customQty || Number(customQty) < 1)) e.customQty = 'Enter quantity.';
     setErrors(e);
     return Object.keys(e).length === 0;
   }
@@ -52,12 +57,13 @@ export default function BulkEnquiryPage() {
     e.preventDefault();
     if (!validate()) return;
 
-    const varietyLines = Object.entries(selected)
-      .map(([id, qty]) => {
+    const varietyLines = [
+      ...Object.entries(selected).map(([id, qty]) => {
         const v = VARIETIES.find(v => v.id === id);
         return `  • ${v.name}: ${qty} pcs`;
-      })
-      .join('\n');
+      }),
+      ...(customVariety.trim() && customQty ? [`  • ${customVariety.trim()}: ${customQty} pcs`] : []),
+    ].join('\n');
 
     const msg = [
       `Hi Aamrutham! I'd like to place a *bulk enquiry* 🥭`,
@@ -161,6 +167,31 @@ export default function BulkEnquiryPage() {
                   </div>
                 );
               })}
+            </div>
+
+            {/* Custom variety */}
+            <div className="bulk-custom-row">
+              <p className="bulk-custom-label">Looking for a different variety?</p>
+              <div className="bulk-custom-inputs">
+                <input
+                  className="bulk-custom-name"
+                  type="text"
+                  placeholder="Variety name"
+                  value={customVariety}
+                  onChange={e => setCustomVariety(e.target.value)}
+                  maxLength={60}
+                />
+                <input
+                  className={`bulk-qty-input${errors.customQty ? ' bulk-input--error' : ''}`}
+                  type="number"
+                  min="1"
+                  max="999"
+                  placeholder="Qty (pcs)"
+                  value={customQty}
+                  onChange={e => setCustomQty(String(parseInt(e.target.value.replace(/\D/g, '') || '0', 10) || '').slice(0, 3))}
+                />
+              </div>
+              {errors.customQty && <span className="bulk-error">{errors.customQty}</span>}
             </div>
 
             {/* Summary */}
