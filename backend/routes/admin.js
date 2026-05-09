@@ -276,4 +276,36 @@ router.put("/season-pass/slots", requireAdmin, async (req, res) => {
   }
 });
 
+// POST /api/admin/blast-sms — one-time stall contacts blast (admin only)
+router.post("/blast-sms", requireAdmin, async (req, res) => {
+  const { contacts } = req.body; // [{ phone, name }]
+  if (!Array.isArray(contacts) || contacts.length === 0) {
+    return res.status(400).json({ error: "contacts array required" });
+  }
+
+  const twilio = (await import("twilio")).default;
+  const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+  const FROM = process.env.TWILIO_PHONE_FROM;
+
+  const results = [];
+  for (const { phone, name } of contacts) {
+    if (!/^[0-9]{10}$/.test(String(phone).trim())) {
+      results.push({ phone, status: "skipped" });
+      continue;
+    }
+    const firstName = (name || "Friend").split(" ")[0];
+    const to = `+91${phone}`;
+    const body = `Hi ${firstName}! 🥭\n\nThank you so much for stopping by our stall — really means a lot to us!\n\nWe also deliver to your home across Hyderabad — order online anytime:\n\n🌐 aamrutham.com\n📸 instagram.com/aamrutham_\n💬 WhatsApp: https://chat.whatsapp.com/Dg0H723BaYc4v0bkJELP9R\n\nHope you're enjoying the mangoes!\n— Team Aamrutham`;
+    try {
+      await client.messages.create({ from: FROM, to, body });
+      results.push({ phone, name: firstName, status: "sent" });
+    } catch (err) {
+      results.push({ phone, name: firstName, status: "failed", error: err.message });
+    }
+    await new Promise(r => setTimeout(r, 300));
+  }
+
+  res.json({ total: contacts.length, results });
+});
+
 export default router;
