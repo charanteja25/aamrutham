@@ -3356,9 +3356,18 @@ input {
 
 /* Sold-out pack button styling */
 .pack-btn--out {
-  opacity: 0.45;
+  opacity: 0.5;
   cursor: not-allowed;
   text-decoration: line-through;
+}
+.pack-soldout-label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #d32f2f;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 /* Lock timer — spacing inside the cart drawer footer */

@@ -161,16 +161,20 @@ export default function ProductDetailPage() {
                   const savePct = sixPack && qty > sixQty
                     ? Math.round(((sixPack.price / sixQty) - (pack.price / qty)) / (sixPack.price / sixQty) * 100)
                     : null;
+                  const packAvail = getAvailable(product.id, pack.label);
+                  const packOut = packAvail === 0;
                   return (
                     <button
                       key={pack.label}
-                      className={`pack-btn ${selectedPack.label === pack.label ? 'selected' : ''}`}
-                      onClick={() => setSelectedPack(pack)}
+                      className={`pack-btn ${selectedPack.label === pack.label ? 'selected' : ''} ${packOut ? 'pack-btn--out' : ''}`}
+                      onClick={() => !packOut && setSelectedPack(pack)}
+                      title={packOut ? 'Sold out' : undefined}
                     >
                       {pack.label}
-                      {savePct > 0 && (
-                        <span className="pack-save-badge">Save {savePct}%</span>
-                      )}
+                      {packOut
+                        ? <span className="pack-soldout-label">Sold out</span>
+                        : savePct > 0 && <span className="pack-save-badge">Save {savePct}%</span>
+                      }
                     </button>
                   );
                 })}
