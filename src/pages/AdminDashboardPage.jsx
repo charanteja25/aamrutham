@@ -614,6 +614,22 @@ function SmsBlastTab() {
     setRows(prev => prev.map((r, idx) => idx === i ? { ...r, [field]: val } : r));
   }
 
+  function handleCSV(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const lines = ev.target.result.trim().split('\n').slice(1); // skip header
+      const parsed = lines.map(line => {
+        const [phone, name] = line.split(',');
+        return { phone: (phone || '').trim(), name: (name || '').trim() };
+      }).filter(r => /^[0-9]{10}$/.test(r.phone));
+      setRows(parsed.length ? parsed : [{ name: '', phone: '' }]);
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  }
+
   async function send() {
     const contacts = rows.filter(r => r.phone.trim().length === 10);
     if (contacts.length === 0) return alert('Add at least one valid 10-digit number.');
@@ -637,7 +653,11 @@ function SmsBlastTab() {
   return (
     <div>
       <h2 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem' }}>SMS Blast</h2>
-      <p style={{ fontSize: '0.82rem', color: '#888', marginBottom: '1.25rem' }}>Enter customer names and numbers. Message includes home delivery info + links.</p>
+      <p style={{ fontSize: '0.82rem', color: '#888', marginBottom: '0.75rem' }}>Enter names and numbers manually or upload a CSV (columns: Phone Number, Name).</p>
+      <label style={{ display: 'inline-block', padding: '0.4rem 1rem', background: '#f5f5f0', border: '1.5px solid #e0e0e0', borderRadius: 6, cursor: 'pointer', fontSize: '0.82rem', fontWeight: 600, marginBottom: '1rem' }}>
+        📂 Import CSV
+        <input type="file" accept=".csv" onChange={handleCSV} style={{ display: 'none' }} />
+      </label>
 
       <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '1rem' }}>
         <thead>
