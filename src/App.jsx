@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { Analytics } from '@vercel/analytics/react';
 import Navbar from './components/Navbar';
 import CartDrawer from './components/CartDrawer';
 import CartAnimation from './components/CartAnimation';
@@ -61,7 +60,6 @@ export default function App() {
           <Route path="/admin" element={<AdminLoginPage />} />
           <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
         </Routes>
-        <Analytics />
       </>
     );
   }
