@@ -18,6 +18,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -25,6 +26,8 @@ body {
   font-family: 'Lato', sans-serif;
   color: var(--text);
   background: var(--cream);
+  overflow-x: hidden;
+  width: 100%;
 }
 
 a {
@@ -6245,19 +6248,22 @@ h1, h2, h3 { font-weight: 400; }
 }
 
 /* ── Admin Dashboard Mobile ── */
-.adm-root { min-height: 100vh; background: #f7f7f4; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-.adm-header { background: #fff; border-bottom: 1px solid #eee; padding: 0 1rem; display: flex; align-items: center; justify-content: space-between; height: 56px; position: sticky; top: 0; z-index: 10; }
+.adm-root { min-height: 100vh; background: #f5f5f2; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; width: 100%; }
+.adm-header { background: #fff; border-bottom: 1px solid #eee; padding: 0 1rem; display: flex; align-items: center; justify-content: space-between; height: 56px; position: sticky; top: 0; z-index: 10; width: 100%; box-sizing: border-box; }
 .adm-username { font-size: 0.82rem; color: #888; }
-.adm-body { max-width: 1100px; margin: 0 auto; padding: 1.25rem 1rem; }
-.adm-tabs { display: flex; gap: 2px; margin-bottom: 1rem; border-bottom: 2px solid #eee; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.adm-body { max-width: 1100px; margin: 0 auto; padding: 1rem; box-sizing: border-box; width: 100%; }
+.adm-tabs { display: flex; gap: 2px; margin-bottom: 1rem; border-bottom: 2px solid #eee; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; width: 100%; }
 .adm-tabs::-webkit-scrollbar { display: none; }
-.adm-tab { padding: 0.55rem 0.9rem; border: none; border-bottom: 3px solid transparent; background: none; cursor: pointer; font-weight: 400; color: #666; font-size: 0.85rem; white-space: nowrap; margin-bottom: -2px; flex-shrink: 0; }
+.adm-tab { padding: 0.6rem 1rem; border: none; border-bottom: 3px solid transparent; background: none; cursor: pointer; font-weight: 400; color: #666; font-size: 0.85rem; white-space: nowrap; margin-bottom: -2px; flex-shrink: 0; transition: color 0.15s; }
 .adm-tab--active { border-bottom-color: #e8a020; font-weight: 700; color: #c17a00; }
-.adm-panel { background: #fff; border-radius: 12px; padding: 1rem; box-shadow: 0 2px 12px rgba(0,0,0,0.05); overflow-x: auto; }
+.adm-tab:hover:not(.adm-tab--active) { color: #333; }
+.adm-panel { background: #fff; border-radius: 12px; padding: 1.25rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); width: 100%; box-sizing: border-box; }
+.adm-tab-label { display: inline; }
 
 @media (max-width: 600px) {
   .adm-username { display: none; }
-  .adm-body { padding: 0.75rem 0.5rem; }
-  .adm-panel { padding: 0.75rem 0.5rem; border-radius: 8px; }
-  .adm-tab { padding: 0.5rem 0.65rem; font-size: 0.78rem; }
+  .adm-body { padding: 0.6rem 0.5rem; }
+  .adm-panel { padding: 0.75rem 0.6rem; border-radius: 10px; }
+  .adm-tab { padding: 0.5rem 0.6rem; font-size: 0.78rem; }
+  .adm-tab-label { display: none; }
 }

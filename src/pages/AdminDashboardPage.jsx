@@ -944,12 +944,12 @@ export default function AdminDashboardPage() {
   }
 
   const tabs = [
-    { key: 'overview',    label: '📊 Overview' },
-    { key: 'orders',      label: '📦 Orders' },
-    { key: 'inventory',   label: '🥭 Inventory' },
-    { key: 'seasonpass',  label: '⚡ Season Pass' },
-    { key: 'waitlist',    label: '🤝 Hello' },
-    { key: 'smsblast',   label: '📲 SMS Blast' },
+    { key: 'overview',   icon: '📊', label: 'Overview' },
+    { key: 'orders',     icon: '📦', label: 'Orders' },
+    { key: 'inventory',  icon: '🥭', label: 'Inventory' },
+    { key: 'seasonpass', icon: '⚡', label: 'Season Pass' },
+    { key: 'waitlist',   icon: '🤝', label: 'Hello' },
+    { key: 'smsblast',   icon: '📲', label: 'SMS Blast' },
   ];
 
   return (
@@ -972,8 +972,8 @@ export default function AdminDashboardPage() {
         {/* Tab bar */}
         <div className="adm-tabs">
           {tabs.map(t => (
-            <button key={t.key} onClick={() => setTab(t.key)} className={`adm-tab${tab === t.key ? ' adm-tab--active' : ''}`}>
-              {t.label}
+            <button key={t.key} onClick={() => setTab(t.key)} className={`adm-tab${tab === t.key ? ' adm-tab--active' : ''}`} title={t.label}>
+              {t.icon} <span className="adm-tab-label">{t.label}</span>
             </button>
           ))}
         </div>
