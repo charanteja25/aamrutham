@@ -577,6 +577,7 @@ function WaitlistTab() {
         </div>
       </div>
 
+      <div style={{ overflowX: 'auto' }}>
       <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem' }}>
         <thead>
           <tr style={{ borderBottom: '2px solid #eee', textAlign: 'left' }}>
@@ -598,6 +599,7 @@ function WaitlistTab() {
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }
@@ -660,6 +662,7 @@ function SmsBlastTab() {
         <input type="file" accept=".csv" onChange={handleCSV} style={{ display: 'none' }} />
       </label>
 
+      <div style={{ overflowX: 'auto' }}>
       <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '1rem' }}>
         <thead>
           <tr style={{ background: '#f9f9f7' }}>
@@ -687,8 +690,9 @@ function SmsBlastTab() {
           ))}
         </tbody>
       </table>
+      </div>
 
-      <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.5rem' }}>
+      <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
         <button onClick={addRow} style={{ padding: '0.45rem 1rem', border: '1.5px solid #e0e0e0', borderRadius: 6, background: '#fff', cursor: 'pointer', fontSize: '0.85rem' }}>
           + Add Row
         </button>
@@ -949,43 +953,33 @@ export default function AdminDashboardPage() {
   ];
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f7f7f4', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+    <div className="adm-root">
       {/* Header */}
-      <header style={{ background: '#fff', borderBottom: '1px solid #eee', padding: '0 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 60 }}>
+      <header className="adm-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <span style={{ fontSize: 24 }}>🥭</span>
           <span style={{ fontWeight: 700, fontSize: '1.05rem', color: '#1a1a1a' }}>Aamrutham Admin</span>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <span style={{ fontSize: '0.85rem', color: '#888' }}>Signed in as <strong>{username}</strong></span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <span className="adm-username">Signed in as <strong>{username}</strong></span>
           <button onClick={logout} style={{ padding: '0.35rem 0.85rem', border: '1.5px solid #e0e0e0', borderRadius: 6, background: '#fff', cursor: 'pointer', fontSize: '0.82rem', color: '#555' }}>
             Logout
           </button>
         </div>
       </header>
 
-      <div style={{ maxWidth: 1100, margin: '0 auto', padding: '2rem 1.5rem' }}>
+      <div className="adm-body">
         {/* Tab bar */}
-        <div style={{ display: 'flex', gap: 4, marginBottom: '1.5rem', borderBottom: '2px solid #eee' }}>
+        <div className="adm-tabs">
           {tabs.map(t => (
-            <button key={t.key} onClick={() => setTab(t.key)} style={{
-              padding: '0.6rem 1.25rem',
-              border: 'none',
-              borderBottom: tab === t.key ? '3px solid #e8a020' : '3px solid transparent',
-              background: 'none',
-              cursor: 'pointer',
-              fontWeight: tab === t.key ? 700 : 400,
-              color: tab === t.key ? '#c17a00' : '#666',
-              fontSize: '0.9rem',
-              marginBottom: -2,
-            }}>
+            <button key={t.key} onClick={() => setTab(t.key)} className={`adm-tab${tab === t.key ? ' adm-tab--active' : ''}`}>
               {t.label}
             </button>
           ))}
         </div>
 
         {/* Tab content */}
-        <div style={{ background: '#fff', borderRadius: 12, padding: '1.5rem', boxShadow: '0 2px 12px rgba(0,0,0,0.05)' }}>
+        <div className="adm-panel">
           {tab === 'overview'   && <OverviewTab stats={stats} />}
           {tab === 'orders'     && <OrdersTab />}
           {tab === 'inventory'  && <InventoryTab />}
