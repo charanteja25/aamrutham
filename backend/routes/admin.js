@@ -295,7 +295,7 @@ router.post("/blast-sms", requireAdmin, async (req, res) => {
     }
     const firstName = (name || "Friend").split(" ")[0];
     const to = `+91${phone}`;
-    const body = `Hi ${firstName}! 🥭\n\nThank you so much for stopping by our stall — really means a lot to us!\n\nWe also deliver to your home across Hyderabad — order online anytime:\n\n🌐 aamrutham.com\n📸 instagram.com/aamrutham_\n💬 WhatsApp: https://chat.whatsapp.com/Dg0H723BaYc4v0bkJELP9R\n\nHope you're enjoying the mangoes!\n— Team Aamrutham`;
+    const body = `Hi ${firstName}, thank you for stopping by our stall! We deliver Bobbili mangoes to your home across Hyderabad. Order at aamrutham.com - Team Aamrutham`;
     let status = "sent", error = null;
     try {
       await client.messages.create({ from: FROM, to, body });
