@@ -89,6 +89,10 @@ export default function ProductCard({ product, showDetails = true }) {
           <div className={`stock-badge ${badge.cls}`}>{badge.label}</div>
         )}
 
+        {isSoldOut && (
+          <div className="product-card-soldout-overlay">Sold Out</div>
+        )}
+
         {imgFailed && (
           <div className="product-card-fruit" ref={fruitRef}>🥭</div>
         )}
@@ -138,7 +142,7 @@ export default function ProductCard({ product, showDetails = true }) {
 
       <div className="product-card-footer">
         <div>
-          <div className="price">
+          <div className="price" style={isSoldOut ? { opacity: 0.4, textDecoration: 'line-through' } : {}}>
             <span style={{ textDecoration: 'line-through', color: '#aaa', fontWeight: 400, fontSize: '0.9rem', marginRight: '0.3rem' }}>
               ₹{strikePrice(product.packPrices, selectedPack).toLocaleString('en-IN')}
             </span>
