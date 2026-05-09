@@ -643,6 +643,7 @@ function SmsBlastTab() {
       });
       const data = await res.json();
       setResults(data.results);
+      setRows([{ name: '', phone: '' }]);
     } catch {
       alert('Failed to send. Check backend.');
     } finally {

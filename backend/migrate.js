@@ -95,6 +95,15 @@ CREATE TABLE IF NOT EXISTS waitlist (
   source     VARCHAR(100),
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+CREATE TABLE IF NOT EXISTS sms_blast_log (
+  id         SERIAL PRIMARY KEY,
+  name       VARCHAR(255),
+  phone      VARCHAR(20)  NOT NULL,
+  status     VARCHAR(20)  NOT NULL DEFAULT 'sent',
+  error      TEXT,
+  sent_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
 `;
 
 // Quote a Postgres identifier (role, database, schema, table name).

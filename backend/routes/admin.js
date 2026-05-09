@@ -296,12 +296,18 @@ router.post("/blast-sms", requireAdmin, async (req, res) => {
     const firstName = (name || "Friend").split(" ")[0];
     const to = `+91${phone}`;
     const body = `Hi ${firstName}! 🥭\n\nThank you so much for stopping by our stall — really means a lot to us!\n\nWe also deliver to your home across Hyderabad — order online anytime:\n\n🌐 aamrutham.com\n📸 instagram.com/aamrutham_\n💬 WhatsApp: https://chat.whatsapp.com/Dg0H723BaYc4v0bkJELP9R\n\nHope you're enjoying the mangoes!\n— Team Aamrutham`;
+    let status = "sent", error = null;
     try {
       await client.messages.create({ from: FROM, to, body });
-      results.push({ phone, name: firstName, status: "sent" });
     } catch (err) {
-      results.push({ phone, name: firstName, status: "failed", error: err.message });
+      status = "failed";
+      error = err.message;
     }
+    results.push({ phone, name: firstName, status, error });
+    await pool.query(
+      `INSERT INTO sms_blast_log (name, phone, status, error) VALUES ($1, $2, $3, $4)`,
+      [firstName, phone, status, error]
+    );
     await new Promise(r => setTimeout(r, 300));
   }
 
