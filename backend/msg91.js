@@ -2,34 +2,42 @@
  * MSG91 WhatsApp helper.
  * Env vars required:
  *   MSG91_AUTH_KEY          — API auth key from MSG91 dashboard
- *   MSG91_WHATSAPP_NUMBER   — sender number e.g. 917700000000
+ *   MSG91_WHATSAPP_NUMBER   — sender number e.g. 919966558132
+ *   MSG91_NAMESPACE         — WhatsApp business namespace from MSG91 template page
  *   MSG91_ORDER_TEMPLATE    — approved template name for order confirmation
  *   MSG91_BLAST_TEMPLATE    — approved template name for stall blast
  */
 
-const API_BASE = "https://api.msg91.com/api/v5/whatsapp/whatsapp-outbound-message/bulk/";
+const API_URL = "https://api.msg91.com/api/v5/whatsapp/whatsapp-outbound-message/bulk/";
 
 async function sendTemplate({ to, templateName, params = [] }) {
-  const url = `${API_BASE}?authkey=${process.env.MSG91_AUTH_KEY}`;
-  const res = await fetch(url, {
+  const components = {};
+  params.forEach((value, i) => {
+    components[`body_${i + 1}`] = { type: "text", value: String(value) };
+  });
+
+  const res = await fetch(API_URL, {
     method: "POST",
     headers: {
+      authkey: process.env.MSG91_AUTH_KEY,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
       integrated_number: process.env.MSG91_WHATSAPP_NUMBER,
       content_type: "template",
-      payload: [{
-        to,
+      payload: {
+        messaging_product: "whatsapp",
         type: "template",
         template: {
           name: templateName,
-          language: { code: "en" },
-          components: params.length
-            ? [{ type: "body", parameters: params.map(text => ({ type: "text", text: String(text) })) }]
-            : [],
+          language: { code: "en", policy: "deterministic" },
+          namespace: process.env.MSG91_NAMESPACE,
+          to_and_components: [{
+            to: [to],
+            components,
+          }],
         },
-      }],
+      },
     }),
   });
 
