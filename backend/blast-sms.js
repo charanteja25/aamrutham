@@ -1,41 +1,34 @@
 /**
- * One-time SMS blast to all paid orders.
- * Run: node blast-sms.js
+ * WhatsApp blast to stall contacts from CSV via MSG91.
+ * Run: node blast-sms.js /path/to/contacts.csv
+ * CSV format: Phone Number, Name, Time
  */
 import "dotenv/config";
-import pool from "./db.js";
-import twilio from "twilio";
+import fs from "fs";
+import { sendBlastWhatsApp } from "./msg91.js";
 
-const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
-const FROM = process.env.TWILIO_PHONE_FROM;
+const CSV = process.argv[2] || "/Users/charanteja/Downloads/Aamrutham_Contacts - Sheet1.csv";
 
-const { rows } = await pool.query(
-  `SELECT DISTINCT ON (customer_contact)
-     customer_name, customer_contact
-   FROM orders
-   WHERE status = 'paid'
-     AND customer_contact IS NOT NULL
-   ORDER BY customer_contact, created_at DESC`
-);
+const lines = fs.readFileSync(CSV, "utf8").trim().split("\n").slice(1);
 
-console.log(`Sending to ${rows.length} customers...`);
+const contacts = lines
+  .map(line => {
+    const [phone, name] = line.split(",");
+    return { phone: phone?.trim(), name: name?.trim() };
+  })
+  .filter(c => /^[0-9]{10}$/.test(c.phone));
 
-for (const row of rows) {
-  const firstName = (row.customer_name || 'Friend').split(' ')[0];
-  const to = `+91${row.customer_contact}`;
+console.log(`Sending to ${contacts.length} contacts...`);
 
-  const body = `Hi ${firstName}! 🥭 Your Aamrutham order is confirmed!\n\nOur mangoes are ripening on the trees in Bobbili — harvested only when fully ripe, never early.\n\nWe'll start delivering from 10th May. You'll hear from us before your delivery with the exact date.\n\nThank you for trusting us with your first box. We can't wait for you to taste the difference.\n\n— Team Aamrutham`;
-
+for (const { phone, name } of contacts) {
+  const firstName = (name || "Friend").split(" ")[0];
   try {
-    await client.messages.create({ from: FROM, to, body });
-    console.log(`✅ Sent to ${firstName} (${to})`);
+    await sendBlastWhatsApp({ phone, firstName });
+    console.log(`✅ ${firstName} (${phone})`);
   } catch (err) {
-    console.error(`❌ Failed for ${to}: ${err.message}`);
+    console.error(`❌ ${phone}: ${err.message}`);
   }
-
-  // Small delay to avoid Twilio rate limits
   await new Promise(r => setTimeout(r, 300));
 }
 
-console.log('Done.');
-await pool.end();
+console.log("Done.");

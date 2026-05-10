@@ -276,16 +276,14 @@ router.put("/season-pass/slots", requireAdmin, async (req, res) => {
   }
 });
 
-// POST /api/admin/blast-sms — one-time stall contacts blast (admin only)
+// POST /api/admin/blast-sms — one-time stall contacts blast via WhatsApp (admin only)
 router.post("/blast-sms", requireAdmin, async (req, res) => {
   const { contacts } = req.body; // [{ phone, name }]
   if (!Array.isArray(contacts) || contacts.length === 0) {
     return res.status(400).json({ error: "contacts array required" });
   }
 
-  const twilio = (await import("twilio")).default;
-  const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
-  const FROM = process.env.TWILIO_PHONE_FROM;
+  const { sendBlastWhatsApp } = await import("../msg91.js");
 
   const results = [];
   for (const { phone, name } of contacts) {
@@ -294,11 +292,9 @@ router.post("/blast-sms", requireAdmin, async (req, res) => {
       continue;
     }
     const firstName = (name || "Friend").split(" ")[0];
-    const to = `+91${phone}`;
-    const body = `Hi ${firstName}, thank you for stopping by our stall! We deliver Bobbili mangoes to your home across Hyderabad. Order at aamrutham.com - Team Aamrutham`;
     let status = "sent", error = null;
     try {
-      await client.messages.create({ from: FROM, to, body });
+      await sendBlastWhatsApp({ phone, firstName });
     } catch (err) {
       status = "failed";
       error = err.message;

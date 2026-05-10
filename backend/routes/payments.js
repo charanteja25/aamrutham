@@ -6,6 +6,7 @@ import { Router } from "express";
 import crypto from "crypto";
 import pool from "../db.js";
 import { sendOrderConfirmation } from "../email.js";
+import { sendOrderConfirmWhatsApp } from "../msg91.js";
 
 const VARIETY_CODES = {
   'mettavalasa-peechu': 'MP',
@@ -126,19 +127,19 @@ router.post("/verify", async (req, res) => {
       }).catch(e => console.error('Email failed:', e.message));
     }
 
-    // Send SMS confirmation (non-blocking) — only if Twilio is configured
+    // Send WhatsApp order confirmation (non-blocking) — only if MSG91 is configured
     const dbContact = orderResult.rows[0].customer_contact;
-    if (dbContact && process.env.TWILIO_ACCOUNT_SID) {
-      const { default: twilio } = await import('twilio');
-      const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+    if (dbContact && process.env.MSG91_AUTH_KEY) {
       const itemLines = cartItems
         .map(i => `${i.name} x${i.qty} (${i.packLabel})`)
         .join(', ');
-      twilioClient.messages.create({
-        from: process.env.TWILIO_PHONE_FROM,
-        to:   `+91${dbContact}`,
-        body: `Hi ${dbName.split(' ')[0]}! Your Aamrutham order is confirmed!\n\nOrder ID: ${aamOrderId}\n${itemLines}\nAmount paid: Rs.${(amount / 100).toLocaleString('en-IN')}\n\nTrack your order at aamrutham.com/my-orders`,
-      }).catch(e => console.error('SMS confirmation failed:', e.message));
+      sendOrderConfirmWhatsApp({
+        phone: dbContact,
+        firstName: dbName.split(' ')[0],
+        orderId: aamOrderId,
+        items: itemLines,
+        amount: `Rs.${(amount / 100).toLocaleString('en-IN')}`,
+      }).catch(e => console.error('WhatsApp confirmation failed:', e.message));
     }
   } catch (err) {
     await client.query("ROLLBACK");
