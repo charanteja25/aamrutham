@@ -19,7 +19,7 @@ async function sendTemplate({ to, templateName, params = [] }) {
     body: JSON.stringify({
       integrated_number: process.env.MSG91_WHATSAPP_NUMBER,
       content_type: "template",
-      payload: {
+      payload: [{
         to,
         type: "template",
         template: {
@@ -29,7 +29,7 @@ async function sendTemplate({ to, templateName, params = [] }) {
             ? [{ type: "body", parameters: params.map(text => ({ type: "text", text: String(text) })) }]
             : [],
         },
-      },
+      }],
     }),
   });
 
