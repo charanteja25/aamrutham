@@ -7,13 +7,13 @@
  *   MSG91_BLAST_TEMPLATE    — approved template name for stall blast
  */
 
-const API_URL = "https://api.msg91.com/api/v5/whatsapp/whatsapp-outbound-message/bulk/";
+const API_BASE = "https://api.msg91.com/api/v5/whatsapp/whatsapp-outbound-message/bulk/";
 
 async function sendTemplate({ to, templateName, params = [] }) {
-  const res = await fetch(API_URL, {
+  const url = `${API_BASE}?authkey=${process.env.MSG91_AUTH_KEY}`;
+  const res = await fetch(url, {
     method: "POST",
     headers: {
-      Authkey: process.env.MSG91_AUTH_KEY,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
