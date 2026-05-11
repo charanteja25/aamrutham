@@ -7,6 +7,7 @@ import CartAnimation from './components/CartAnimation';
 import SeasonPassPrompt from './components/SeasonPassPrompt';
 import Footer from './components/Footer';
 import WhatsAppFloat from './components/WhatsAppFloat';
+import CommunityFloat from './components/CommunityFloat';
 import HelpBot from './components/HelpBot';
 import HomePage from './pages/HomePage';
 import ProductsPage from './pages/ProductsPage';
@@ -91,6 +92,7 @@ export default function App() {
         </Routes>
         <Footer />
         <WhatsAppFloat />
+        <CommunityFloat />
         <HelpBot />
         <Analytics />
       </div>

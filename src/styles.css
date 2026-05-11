@@ -1740,7 +1740,7 @@ input {
 .site-footer {
   background: #1a0f0a;
   color: rgba(255,255,255,0.75);
-  padding: 1.5rem 2rem;
+  padding: 0.9rem 2rem;
   border-top: 1px solid rgba(255,255,255,0.06);
 }
 
@@ -1753,16 +1753,16 @@ input {
   margin: 0 auto;
 }
 
-.footer-col { display: flex; flex-direction: column; gap: 0.5rem; }
+.footer-col { display: flex; flex-direction: column; gap: 0.2rem; }
 .footer-col-left { align-items: flex-start; }
 .footer-col-center { align-items: center; text-align: center; }
 .footer-col-right { align-items: flex-end; }
 
-.footer-logo { width: 48px; margin: 0 0 0.25rem; }
+.footer-logo { width: 36px; margin: 0 0 0.1rem; }
 
 .footer-tagline {
   margin: 0;
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   color: rgba(255,255,255,0.45);
 }
 
@@ -1770,8 +1770,8 @@ input {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-top: 0.25rem;
-  font-size: 0.72rem;
+  margin-top: 0.1rem;
+  font-size: 0.68rem;
   color: rgba(255,255,255,0.3);
 }
 .footer-legal-links a {
@@ -1837,6 +1837,28 @@ input {
   text-decoration: none;
   box-shadow: 0 10px 24px rgba(37,211,102,0.34);
   z-index: 40;
+}
+
+/* ── Community Float ─────────────────────────────────────────────────────── */
+.community-float {
+  position: fixed;
+  left: 1.4rem;
+  bottom: 1rem;
+  height: 34px;
+  padding: 0 1rem;
+  border-radius: 999px;
+  background: #25d366;
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  box-shadow: 0 4px 16px rgba(37,211,102,0.30);
+  z-index: 44;
+  white-space: nowrap;
 }
 
 /* ── Help Bot ────────────────────────────────────────────────────────────── */

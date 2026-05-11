@@ -5,9 +5,9 @@ export default function Footer() {
     <footer className="site-footer">
       <div className="footer-grid">
 
-        {/* Left — walk with us */}
+        {/* Left — bulk enquiry */}
         <div className="footer-col footer-col-left">
-          <Link to="/hello" className="footer-walk-btn">🥭 Walk with us →</Link>
+          <Link to="/bulk-enquiry" className="footer-tool-pill footer-tool-pill--bulk">🚚 Bulk Enquiry</Link>
         </div>
 
         {/* Centre — logo + tagline + legal */}
@@ -23,9 +23,8 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Right — tools stacked */}
+        {/* Right — mango calculator */}
         <div className="footer-col footer-col-right">
-          <Link to="/bulk-enquiry" className="footer-tool-pill footer-tool-pill--bulk">🚚 Bulk Enquiry</Link>
           <Link to="/mango-calculator" className="footer-tool-pill footer-tool-pill--calc">🥭 Mango Calculator</Link>
         </div>
 
