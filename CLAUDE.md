@@ -29,9 +29,9 @@ cd backend && node migrate.js && node seed.js
 
 **Frontend** — React + Vite SPA deployed on Vercel. All styles live in `src/styles.css` (no Tailwind; brand tokens defined as CSS variables). No TypeScript.
 
-**Backend** — Express on Railway. Single `backend/index.js` entry point mounting six route files under `/api/*`. PostgreSQL via `pg` pool (`backend/db.js`). No ORM.
+**Backend** — Express on Railway. Single `backend/index.js` entry point mounting route files under `/api/*`. PostgreSQL via `pg` pool (`backend/db.js`). No ORM. `app.set("trust proxy", 1)` is required for `express-rate-limit` to work correctly behind Railway's proxy.
 
-**API base URL** — `src/config.js` exports `API_BASE = import.meta.env.VITE_API_URL || ""`. On Vercel, `VITE_API_URL` must be set to the Railway backend URL (e.g. `https://aamrutham-backend-production.up.railway.app`). Without it, API calls are relative and fail in production.
+**API base URL** — `src/config.js` exports `API_BASE = import.meta.env.VITE_API_URL || ""`. On Vercel, `VITE_API_URL` must be set to the Railway backend URL. Without it, API calls are relative and fail in production.
 
 ### Key data flows
 
@@ -43,11 +43,15 @@ cd backend && node migrate.js && node seed.js
 
 **Admin** — `/admin` routes are outside `InventoryProvider` and render without Navbar/Footer. JWT token stored in `localStorage` as `admin_token`. `requireAdmin` middleware hard-fails at startup if `JWT_SECRET` is the default in production.
 
-**Order history / OTP** — `POST /api/order-history/send-otp` accepts phone (10 digits) or email. Phone → WhatsApp OTP via Twilio. Email → Resend. Verified at `POST /api/order-history/verify-otp`.
+**Order history / OTP** — `POST /api/order-history/send-otp` accepts phone (10 digits) or email. Phone → WhatsApp OTP via Twilio. Email → OTP via Resend. Verified at `POST /api/order-history/verify-otp`.
+
+**Messaging** — `backend/msg91.js` handles all MSG91 WhatsApp outbound messages. Order confirmation (on payment verify) and stall blast (admin dashboard) both go through MSG91 WhatsApp templates. OTP remains on Twilio. MSG91 authkey is passed as a query param (`?authkey=`) due to Railway dynamic IPs.
+
+**Blast** — Admin dashboard sends WhatsApp blast via `POST /api/admin/blast-sms`. Local CSV blast available via `node backend/blast-sms.js /path/to/contacts.csv`. Both log results to `sms_blast_log` table.
 
 ### Product data
 
-All products, pack sizes, and prices are defined statically in `src/data/products.js`. Inventory stock levels live in the DB and are managed via the admin dashboard. Pack labels (e.g. `"6 pcs"`, `"12 pcs"`, `"18 pcs"`) must match exactly between `products.js` and the DB rows.
+All products, pack sizes, and prices are defined statically in `src/data/products.js`. Inventory stock levels live in the DB. Pack labels (e.g. `"6 pcs"`, `"12 pcs"`, `"18 pcs"`) must match exactly between `products.js` and DB rows. WhatsApp business number is exported as `whatsappPhone = '917670826759'` from `products.js`.
 
 ### DB tables
 
@@ -59,11 +63,20 @@ All products, pack sizes, and prices are defined statically in `src/data/product
 | `admin_users` | bcrypt-hashed credentials for the admin dashboard |
 | `season_pass_slots` | Total/claimed slots for the Maas season pass |
 | `otp_requests` | Rate-limited OTP tokens for order history |
+| `sms_blast_log` | Log of all blast messages sent (name, phone, status, error) |
+| `waitlist` | WhatsApp number + name collected from /hello page |
+
+### Floating UI elements
+
+Three fixed-position elements coexist:
+- `WhatsAppFloat` — bottom-right, links to business WhatsApp chat
+- `CommunityFloat` — bottom-left below HelpBot, links to `/hello` page (green pill)
+- `HelpBot` — bottom-left pill, opens contextual help drawer
 
 ## Environment variables
 
 ### Backend (`backend/.env`)
-`DATABASE_URL`, `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`, `JWT_SECRET`, `FRONTEND_URL`, `ADMIN_USERNAME`, `ADMIN_PASSWORD`, `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_WHATSAPP_FROM`, `RESEND_API_KEY`
+`DATABASE_URL`, `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`, `JWT_SECRET`, `FRONTEND_URL`, `ADMIN_USERNAME`, `ADMIN_PASSWORD`, `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_PHONE_FROM`, `RESEND_API_KEY`, `MSG91_AUTH_KEY`, `MSG91_WHATSAPP_NUMBER`, `MSG91_NAMESPACE`, `MSG91_ORDER_TEMPLATE`, `MSG91_BLAST_TEMPLATE`
 
 ### Frontend (`.env`)
 `VITE_API_URL` (Railway backend URL)
@@ -72,4 +85,3 @@ All products, pack sizes, and prices are defined statically in `src/data/product
 
 - **Frontend** → Vercel (auto-deploys from `main`). Build: `npm run build`, output: `dist/`.
 - **Backend** → Railway (`backend/` directory). Start: `node index.js`. Config: `backend/nixpacks.toml` + `backend/railway.json`.
-- **Active dev branch** → `Charan-newchanges`. PR #14 targets `main`.

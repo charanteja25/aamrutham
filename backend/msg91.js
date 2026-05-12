@@ -51,12 +51,12 @@ export async function sendOrderConfirmWhatsApp({ phone, firstName, orderId, item
   return sendTemplate({
     to: `91${phone}`,
     templateName,
-    params: [firstName, orderId, items, amount],
+    params: [String(firstName), String(orderId)],
   });
 }
 
 export async function sendBlastWhatsApp({ phone, firstName }) {
-  const templateName = process.env.MSG91_BLAST_TEMPLATE || "aamrutham_blast";
+  const templateName = process.env.MSG91_BLAST_TEMPLATE || "aamrutham_blast_";
   return sendTemplate({
     to: `91${phone}`,
     templateName,
