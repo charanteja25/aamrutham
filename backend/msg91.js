@@ -14,7 +14,7 @@ async function sendTemplate({ to, templateName, params = [], namedParams = null,
   const components = {};
   if (namedParams) {
     Object.entries(namedParams).forEach(([key, value]) => {
-      components[key] = { type: "text", value: String(value) };
+      components[`body_${key}`] = { type: "text", value: String(value), parameter_name: key };
     });
   } else {
     params.forEach((value, i) => {
