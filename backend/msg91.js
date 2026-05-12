@@ -10,11 +10,17 @@
 
 const API_URL = "https://api.msg91.com/api/v5/whatsapp/whatsapp-outbound-message/bulk/";
 
-async function sendTemplate({ to, templateName, params = [], langCode = "en" }) {
+async function sendTemplate({ to, templateName, params = [], namedParams = null, langCode = "en" }) {
   const components = {};
-  params.forEach((value, i) => {
-    components[`body_${i + 1}`] = { type: "text", value: String(value) };
-  });
+  if (namedParams) {
+    Object.entries(namedParams).forEach(([key, value]) => {
+      components[key] = { type: "text", value: String(value) };
+    });
+  } else {
+    params.forEach((value, i) => {
+      components[`body_${i + 1}`] = { type: "text", value: String(value) };
+    });
+  }
 
   const res = await fetch(API_URL, {
     method: "POST",
@@ -60,7 +66,7 @@ export async function sendBlastWhatsApp({ phone, firstName, stallName }) {
   return sendTemplate({
     to: `91${phone}`,
     templateName,
-    params: [firstName, stallName],
+    namedParams: { customer_name: firstName, stall_name: stallName },
     langCode: "en_GB",
   });
 }
