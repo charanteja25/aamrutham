@@ -607,6 +607,7 @@ function WaitlistTab() {
 // ─── SMS Blast Tab ────────────────────────────────────────────────────────────
 function SmsBlastTab() {
   const [rows, setRows] = useState([{ name: '', phone: '' }]);
+  const [stallName, setStallName] = useState('');
   const [sending, setSending] = useState(false);
   const [results, setResults] = useState(null);
 
@@ -635,13 +636,14 @@ function SmsBlastTab() {
   async function send() {
     const contacts = rows.filter(r => r.phone.trim().length === 10);
     if (contacts.length === 0) return alert('Add at least one valid 10-digit number.');
+    if (!stallName.trim()) return alert('Enter a stall name.');
     setSending(true);
     setResults(null);
     try {
       const res = await fetch(API_BASE + '/api/admin/blast-sms', {
         method: 'POST',
         headers: authHeaders(),
-        body: JSON.stringify({ contacts }),
+        body: JSON.stringify({ contacts, stallName: stallName.trim() }),
       });
       const data = await res.json();
       setResults(data.results);
@@ -657,6 +659,16 @@ function SmsBlastTab() {
     <div>
       <h2 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem' }}>SMS Blast</h2>
       <p style={{ fontSize: '0.82rem', color: '#888', marginBottom: '0.75rem' }}>Enter names and numbers manually or upload a CSV (columns: Phone Number, Name).</p>
+      <div style={{ marginBottom: '1rem' }}>
+        <label style={{ fontSize: '0.82rem', fontWeight: 600, display: 'block', marginBottom: '0.3rem' }}>Stall Name</label>
+        <input
+          value={stallName}
+          onChange={e => setStallName(e.target.value)}
+          placeholder="e.g. Hyderabad Farmer's Market"
+          style={{ padding: '0.4rem 0.75rem', border: '1.5px solid #e0e0e0', borderRadius: 6, fontSize: '0.88rem', width: '100%', maxWidth: 360 }}
+        />
+      </div>
+
       <label style={{ display: 'inline-block', padding: '0.4rem 1rem', background: '#f5f5f0', border: '1.5px solid #e0e0e0', borderRadius: 6, cursor: 'pointer', fontSize: '0.82rem', fontWeight: 600, marginBottom: '1rem' }}>
         📂 Import CSV
         <input type="file" accept=".csv" onChange={handleCSV} style={{ display: 'none' }} />

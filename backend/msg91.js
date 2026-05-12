@@ -55,12 +55,12 @@ export async function sendOrderConfirmWhatsApp({ phone, firstName, orderId, item
   });
 }
 
-export async function sendBlastWhatsApp({ phone, firstName }) {
+export async function sendBlastWhatsApp({ phone, firstName, stallName }) {
   const templateName = process.env.MSG91_BLAST_TEMPLATE || "aamrutham_blast_";
   return sendTemplate({
     to: `91${phone}`,
     templateName,
-    params: [firstName],
+    params: [firstName, stallName],
     langCode: "en_GB",
   });
 }

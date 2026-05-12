@@ -278,7 +278,7 @@ router.put("/season-pass/slots", requireAdmin, async (req, res) => {
 
 // POST /api/admin/blast-sms — one-time stall contacts blast via WhatsApp (admin only)
 router.post("/blast-sms", requireAdmin, async (req, res) => {
-  const { contacts } = req.body; // [{ phone, name }]
+  const { contacts, stallName } = req.body; // [{ phone, name }]
   if (!Array.isArray(contacts) || contacts.length === 0) {
     return res.status(400).json({ error: "contacts array required" });
   }
@@ -294,7 +294,7 @@ router.post("/blast-sms", requireAdmin, async (req, res) => {
     const firstName = (name || "Friend").split(" ")[0];
     let status = "sent", error = null;
     try {
-      await sendBlastWhatsApp({ phone, firstName });
+      await sendBlastWhatsApp({ phone, firstName, stallName: stallName || '' });
     } catch (err) {
       status = "failed";
       error = err.message;
