@@ -10,7 +10,7 @@
 
 const API_URL = "https://api.msg91.com/api/v5/whatsapp/whatsapp-outbound-message/bulk/";
 
-async function sendTemplate({ to, templateName, params = [] }) {
+async function sendTemplate({ to, templateName, params = [], langCode = "en" }) {
   const components = {};
   params.forEach((value, i) => {
     components[`body_${i + 1}`] = { type: "text", value: String(value) };
@@ -30,7 +30,7 @@ async function sendTemplate({ to, templateName, params = [] }) {
         type: "template",
         template: {
           name: templateName,
-          language: { code: "en", policy: "deterministic" },
+          language: { code: langCode, policy: "deterministic" },
           namespace: process.env.MSG91_NAMESPACE,
           to_and_components: [{
             to: [to],
@@ -61,5 +61,6 @@ export async function sendBlastWhatsApp({ phone, firstName }) {
     to: `91${phone}`,
     templateName,
     params: [firstName],
+    langCode: "en_GB",
   });
 }
